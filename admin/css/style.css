@@ -1,0 +1,70 @@
+table, td {border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;}
+/* Administration */
+.bloc {opacity:0.3;}
+/* Edition */
+.tab_edit{display:none;}
+.tableau {width:100%;border:0;padding:0;margin:5px auto;}
+.cellule {padding:5px 10px;}
+.cellule_categorie {width:100px;text-align:center;}
+.nom_categorie{margin:0;padding:0;font-weight:bold;color:#fff;}
+.cellule_symbole {width:50px;background:#ccc;text-align:center;}
+.symbole {font-family:'FontAwesome',sans-serif;margin:0;padding:0;font-weight:normal;font-size:1.6em;}
+.symbole_actif {color:#555;text-decoration:none;}
+.symbole_actif:hover {color:#000;text-decoration:none;}
+.symbole_inactif {color:#aaa;}
+.cellule_texte {background:#eee;text-align:left;}
+.texte_edit {margin:0;padding:0;text-align:left;font-weight:normal;word-wrap: break-word;}
+.texte_actif {color:#000;}
+.texte_inactif {color:#aaa;}
+.icone_edit{font-family:'FontAwesome',sans-serif;text-align:left;margin:0;padding:0;font-weight:normal;font-size:1.4em;color:#000;}
+.image_edit {border:1px solid #666;max-height:60px;text-align:left;}
+.champ {display:block;margin:0;padding:0;}
+.texte_champ {font-family:sans-serif;font-size:1em;display:block;color:#444;border:1px solid #aaa;height:200px;width:100%;min-width:100%;max-width:100%;padding:0;margin:0;}
+.texte_champ_simple {margin-top:15px!important;height:100px!important;}
+.texte_champ_simple_lien{margin-top:15px!important;height:auto!important;padding:5px 3px!important;}
+.select_champ {font-family:sans-serif;width:10em;}
+.select_lien {font-family:sans-serif;font-size:1em;display:block;color:#444;border:1px solid #aaa;height:auto;width:auto;min-width:50%;max-width:100%;padding:5px 0!important;margin:0;}
+/* Formulaire de suppression des images */
+.bouton {display:block;width:150px;font-size:1.2em;margin:15px auto 5px auto;}
+.bouton_suppr {font-family:'FontAwesome',sans-serif;display:block;width:50px;font-size:1.2em;margin:15px 0 5px 0;color:#b00;}
+#id_suppr_image{display:none;height:50px;padding:3px 0 8px 0!important;}
+.bouton_annul{color:#000;} .bouton_confirm {color:#b00;}
+/* Calendrier de réservation */
+.entetes_calendrier{width:100%;border-spacing:0;margin:0 auto;}
+.wrap_calendrier{width:100%;height:210px;overflow-x:hidden;overflow-y:scroll;}
+.calendrier{width:100%;border-spacing:0;margin:0 auto;}
+.calendrier td{border-radius:0!important;-moz-border-radius:0!important;-webkit-border-radius:0!important;}
+.calendrier td.nom_mois{border:1px solid #fff;width:12%;background:#000;color:#fff;padding:0.2em 0;text-align:center;font-size:0.8em;}
+.calendrier td.am{border:1px solid #fff;border-right:0;text-align:right;width:6%;padding:0.4em 0;}
+.calendrier td.pm{border:1px solid #fff;border-left:0;text-align:left;width:6%;padding:0.4em 0;}
+.calendrier td.libre{background:#0b0;}
+.calendrier td.reserve{background:#f80;}
+.calendrier td.occupe{background:#f00;}
+.calendrier td.ferme{background:#888;}
+p#id_nb_nuits{font-size:0.9em;margin-top:0.2em;}
+/* Videos */
+.cadre_video div {position: absolute;top: 0;left: 0;width: 100%;height: 100%;background:url('../images/invisible.png') repeat;z-index:999;}
+/* Police de symboles */
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../../icon_font/fontawesome-webfont.eot?v=3.2.1');
+  src: url('../../icon_font/fontawesome-webfont.eot?#iefix&v=3.2.1') format('embedded-opentype'), url('../../icon_font/fontawesome-webfont.woff?v=3.2.1') format('woff'), url('../../icon_font/fontawesome-webfont.ttf?v=3.2.1') format('truetype'), url('../../icon_font/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Lightbox */
+.form_lb {font-size:100%;position:relative;background:#fff;padding:20px;width:auto;max-width:500px;margin:20px auto;}
+.titre_zone {font-size:1em;font-weight:bold;margin:0.5em 0;}
+.texte_zone {font-size:0.8em;font-weight:normal;margin:0.2em 0;}
+.erreur_zone {color:#b00;}
+#id_ajustements {margin-top:10px;}
+/* Onglets */
+ul.tabs {margin:0;padding:0;list-style:none;border:0;}
+ul.tabs li {float:left;margin:0;padding:2px 6px 4px 6px;width:32px;height:28px;background:#fff;border:1px solid #fff;}
+ul.tabs li a {display:block;text-decoration:none;width:32px;height:28px;outline:none;background:url('../../images/drapeauxsombres.png') no-repeat;}
+ul.tabs li a:hover {}
+ul.tabs li.active {background:#fff;}
+ul.tabs li.active a {background:url('../../images/drapeaux.png') no-repeat;color:#fff;}
+ul.tabs li.active a:hover {color:#fff;}
+.tab_container {position:relative;clear:both;width:100%;border:0;padding:0;margin:0 0 15px 0;background:#eee;}
+.tab_content {padding:0;margin:0;}

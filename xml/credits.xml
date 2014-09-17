@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<textotheque>
+	<!-- Sections -->
+	<texte nom="credit_section_technique">Crédits techniques</texte>
+	<texte nom="credit_section_photo">Crédits photographiques</texte>
+	<texte nom="credit_prefixe_lien"></texte>
+	<!-- Font Awesome -->
+	<texte nom="credit_titre_fa">Font Awesome</texte>
+	<texte nom="credit_texte_fa">Tous les symboles utilisés dans ce site proviennent de la police de symboles [b]Font Awesome[/b], réalisée par Dave Gandy.</texte>
+	<texte nom="credit_lien_fa">http://fortawesome.github.io/Font-Awesome</texte>
+	<!-- Responsive Slides -->
+	<texte nom="credit_titre_rs">Responsive Slides</texte>
+	<texte nom="credit_texte_rs">Les diaporamas sont mis en oeuvre au moyen de [b]Responsive Slides[/b], un module JQuery écrit par Viljami Salminen.</texte>
+	<texte nom="credit_lien_rs">http://responsiveslides.com</texte>
+	<!-- Magnific Popup -->
+	<texte nom="credit_titre_mp">Magnific Popup</texte>
+	<texte nom="credit_texte_mp">Le module JQuery [b]Magnific Popup[/b] anime les galeries en [i]lightbox[/i] présentes sur le site. Ce module a été créé par Dmitry Semenov.</texte>
+	<texte nom="credit_lien_mp">http://dimsemenov.com/plugins/magnific-popup</texte>
+	<!-- Icon Drawer -->
+	<texte nom="credit_titre_id">Icon Drawer</texte>
+	<texte nom="credit_texte_id">Les drapeaux permettant de sélectionner la langue du site sont issus de la collection [b]Flag Icons[/b].</texte>
+	<texte nom="credit_lien_id">http://icondrawer.com</texte>
+	<!-- JQuery Upload -->
+	<texte nom="credit_titre_ju">JQuery Upload</texte>
+	<texte nom="credit_texte_ju">Ce site exploite également le module [b]JQuery Upload[/b] développé par Naoyuki Kanezawa.</texte>
+	<texte nom="credit_lien_ju">http://lagoscript.org</texte>
+	<!-- JQuery Cookie -->
+	<texte nom="credit_titre_jc">JQuery Cookie</texte>
+	<texte nom="credit_texte_jc">Le cookie enregistrant la préférence mobile/desktop est géré grâce à ce module.</texte>
+	<texte nom="credit_lien_jc">https://github.com/carhartl/jquery-cookie</texte>
+	<!-- JQuery TE -->
+	<texte nom="credit_titre_te">JQuery TE</texte>
+	<texte nom="credit_texte_te">Un éditeur de texte idéal pour les besoins de Petilabo.</texte>
+	<texte nom="credit_lien_te">http://jqueryte.com</texte>
+</textotheque>
