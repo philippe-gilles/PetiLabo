@@ -120,8 +120,8 @@
 	echo "</div>\n";
 	// TODO : Si IE8 ou inférieur, pas possible de lancer le script, donc édition simple en attendant meilleure solution
 	echo "<!--[if gt IE 8]>\n";
-	echo "<script>$('.texte_champ').jqte({p: false,format: false,fsize: false,left: false,center: false,right: false,sub: false,sup:false,ul: false,ol:false,indent: false,outdent: false,rule: false,source: false,remove: false});</script>\n";
+	echo "<script>$('.texte_champ').jqte({p: false,format: false,fsize: false,left: false,center: false,right: false,sub: false,sup:true,ul: false,ol:false,indent: false,outdent: false,rule: false,source: false,remove: false});</script>\n";
 	echo "<![endif]-->\n";
 	echo "<!--[if !IE]><!-->\n";
-	echo "<script>$('.texte_champ').jqte({p: false,format: false,fsize: false,left: false,center: false,right: false,sub: false,sup:false,ul: false,ol:false,indent: false,outdent: false,rule: false,source: false,remove: false});</script>\n";
+	echo "<script>$('.texte_champ').jqte({p: false,format: false,fsize: false,left: false,center: false,right: false,sub: false,sup:true,ul: false,ol:false,indent: false,outdent: false,rule: false,source: false,remove: false});</script>\n";
 	echo "<!--<![endif]-->\n";
