@@ -433,13 +433,13 @@
 				$resume = $this->texte->get_resume_actu($this->no_actu, $this->langue_page);
 				if (strlen($resume) > 0) {
 					$style_resume = "detail_resume_".$style;
-					$this->html->ecrire_paragraphe($style_resume, $resume);
+					$this->html->ecrire_paragraphe(true, $style_resume, $resume);
 				}
 				// Ecriture du texte
 				$texte = $this->texte->get_texte_actu($this->no_actu, $this->langue_page);
 				if (strlen($texte) > 0) {
 					$style_texte = "detail_texte_".$style;
-					$this->html->ecrire_paragraphe($style_texte, $texte);
+					$this->html->ecrire_paragraphe(true, $style_texte, $texte);
 				}
 			}
 		}
