@@ -1,4 +1,16 @@
-
+(function($) {
+    $.QueryString = (function(a) {
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i)
+        {
+            var p=a[i].split('=');
+            if (p.length != 2) continue;
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
+    })(window.location.search.substr(1).split('&'))
+})(jQuery);
 function redirect_mobile() {
 	url = location.href;
 	pos = url.lastIndexOf("/");
@@ -205,7 +217,9 @@ $(document).ready(function() {
 		if (id) {
 			no_actu = parseInt(id.substr(5));
 			if ((no_actu > 0) && (no_actu < 6)) {
+				var lang = $.QueryString["l"];
 				url = "actu.php?id="+no_actu;
+				if (lang) {if (lang.length > 0) {url = url+"&l="+lang;}}
 				location.href = url;
 			}
 		}

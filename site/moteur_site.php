@@ -458,53 +458,6 @@
 		protected function fermer_banniere_actu() {
 			$this->html->fermer_actu();
 		}
-		protected function ecrire_detail_actu() {
-			if (($this->est_actu) && ($this->no_actu >= 1) && ($this->no_actu <= 5)) {
-				$style = $this->module_actu->get_style();
-				$prev_actu = $this->module_actu->get_prev_actu($this->no_actu);
-				$next_actu = $this->module_actu->get_next_actu($this->no_actu);
-
-				// Ecriture de l'image
-				$image = $this->media->get_image_actu($this->no_actu);
-				if ($image) {
-					$id_alt = $image->get_alt();
-					$alt = $this->texte->get_texte($id_alt, $this->langue_page);
-					$this->html->ecrire_image_sans_legende($image, $alt, null);
-				}
-				// Ecriture du titre
-				$titre = $this->texte->get_titre_actu($this->no_actu, $this->langue_page);
-				if (strlen($titre) > 0) {
-					$style_titre = "detail_titre_".$style;
-					$this->html->ecrire_titre(2, $style_titre, $titre);
-				}
-				// Ecriture du sous-titre
-				$sous_titre = $this->texte->get_sous_titre_actu($this->no_actu, $this->langue_page);
-				if (strlen($sous_titre) > 0) {
-					$style_sous_titre = "detail_sous_titre_".$style;
-					$this->html->ecrire_titre(2, $style_sous_titre, $sous_titre);
-				}
-				// Ecriture du résumé
-				$resume = $this->texte->get_resume_actu($this->no_actu, $this->langue_page);
-				if (strlen($resume) > 0) {
-					$style_resume = "detail_resume_".$style;
-					$this->html->ecrire_paragraphe(false, $style_resume, $resume);
-				}
-				// Ecriture du texte
-				$texte = $this->texte->get_texte_actu($this->no_actu, $this->langue_page);
-				if (strlen($texte) > 0) {
-					$style_texte = "detail_texte_".$style;
-					$this->html->ecrire_paragraphe(false, $style_texte, $texte);
-				}
-				// Ecriture des liens
-				$style_prev_next = $this->site->get_style_paragraphe();
-				$prev_label = $this->texte->get_label_precedent($this->langue_page);
-				$prev_titre = $this->texte->get_titre_actu($prev_actu, $this->langue_page);
-				$next_label = $this->texte->get_label_suivant($this->langue_page);
-				$next_titre = $this->texte->get_titre_actu($next_actu, $this->langue_page);
-				$langue_lien = (strcmp($this->langue_page, $this->texte->get_langue_par_defaut()))?$this->langue_page:null;
-				$this->html->ecrire_prev_next_actu($prev_label, $prev_titre, $prev_actu, $next_label, $next_titre, $next_actu, $style_prev_next, $langue_lien);
-			}
-		}
 
 		// Méthodes privées
 		private function has_rs() {
@@ -574,11 +527,14 @@
 					// Ajout du paramètre si le lien est interne et la langue est étrangère				
 					if ($lien_interne) {
 						// En cas de lien sur un signet de la même page, on ne rajoute pas le paramètre
-						if (strncmp($lien, "#", 1)) {$ret = $lien."?"._PARAM_LANGUE."=".$langue;}
+						if (strncmp($lien, "#", 1)) {
+							// Si un paramètre est déjà présent dans l'URL le séparateur est "&"
+							$separateur = (strlen(parse_url($lien, PHP_URL_QUERY)) > 0)?"&amp;":"?";
+							$ret = $lien.$separateur._PARAM_LANGUE."=".$langue;
+						}
 					}
 				}
 			}
-			
 			return $ret;
 		}
 		private function est_url_active($lien) {

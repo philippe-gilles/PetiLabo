@@ -93,7 +93,6 @@
 	define("_PAGE_MENTIONS_LEGALES", "mentions_legales");
 	define("_PAGE_CALENDRIER_RESA", "calendrier");
 	define("_PAGE_BANNIERE_ACTU", "banniere_actu");
-	define("_PAGE_DETAIL_ACTU", "detail_actu");
 	define("_PAGE_ADDTHIS", "partage_social");
 	
 	// Attributs pour le fichier XML page

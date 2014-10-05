@@ -72,6 +72,9 @@
 			$this->menu = new xml_menu();
 			$ret = $this->menu->ouvrir(_XML_PATH._XML_MENU._XML_EXT);
 			$ret = $this->menu->ouvrir(_XML_PATH_PAGES.$this->nom_page."/"._XML_MENU._XML_EXT);
+			if ($this->site->has_module(_SITE_MODULE_ACTU)) {
+				$ret = $this->menu->ouvrir(_XML_PATH_MODULES._XML_MENU._XML_EXT);
+			}
 			// Ouverture du fichier XML page
 			$this->page = new xml_page();
 			$ret = $this->page->ouvrir(_XML_PATH_PAGES.$this->nom_page."/"._XML_PAGE._XML_EXT);
@@ -166,7 +169,8 @@
 
 		// Ecriture des titres : parsing + appel à la fonction fille
 		protected function ecrire_bloc_titre($occ) {
-			$id_texte = $this->page->lire_valeur_n(_PAGE_TITRE, $occ);
+			$id_valeur = $this->page->lire_valeur_n(_PAGE_TITRE, $occ);
+			$id_texte = $this->parser_id_crochets_actu($id_valeur);
 			// Lecture de l'attribut "niveau"
 			$niveau = (int) $this->page->lire_attribut_n(_PAGE_TITRE, $occ, _PAGE_ATTR_NIVEAU_TITRE);
 			$niveau = ($niveau)?$niveau:1;
@@ -182,7 +186,8 @@
 
 		// Ecriture des paragraphes : parsing + appel à la fonction fille
 		protected function ecrire_bloc_paragraphe($occ) {
-			$id_texte = $this->page->lire_valeur_n(_PAGE_PARAGRAPHE, $occ);
+			$id_valeur = $this->page->lire_valeur_n(_PAGE_PARAGRAPHE, $occ);
+			$id_texte = $this->parser_id_crochets_actu($id_valeur);
 			// Lecture de l'attribut "style"
 			$style_inline = $this->page->lire_attribut_n(_PAGE_PARAGRAPHE, $occ, _PAGE_ATTR_STYLE_PARAGRAPHE);
 			$style = (strlen($style_inline) > 0)?$style_inline:$this->site->get_style_paragraphe();
@@ -201,7 +206,8 @@
 
 		// Ecriture des images : parsing + appel à la fonction fille
 		protected function ecrire_bloc_image($occ) {
-			$src = $this->page->lire_valeur_n(_PAGE_IMAGE, $occ);
+			$valeur = $this->page->lire_valeur_n(_PAGE_IMAGE, $occ);
+			$src = $this->parser_id_crochets_actu($valeur);
 			$image = $this->media->get_image($src);
 			if ($image) {
 				// On récupère le alt éventuel
@@ -240,7 +246,8 @@
 
 		// Ecriture des diaporamas : parsing + appel aux fonctions filles (ouvrir, ajouter, fermer)
 		protected function ecrire_bloc_diaporama($occ) {
-			$nom_gal = $this->page->lire_valeur_n(_PAGE_DIAPORAMA, $occ);
+			$val_gal = $this->page->lire_valeur_n(_PAGE_DIAPORAMA, $occ);
+			$nom_gal = $this->parser_id_crochets_actu($val_gal);
 			$gal = $this->media->get_galerie($nom_gal);
 			if ($gal) {
 				$nb_images = $gal->get_nb_elems();
@@ -304,7 +311,8 @@
 
 		// Ecriture des vignettes : parsing + appel aux fonctions filles (ouvrir, ajouter, fermer)
 		protected function ecrire_bloc_vignettes($occ) {
-			$nom_gal = $this->page->lire_valeur_n(_PAGE_VIGNETTES, $occ);
+			$val_gal = $this->page->lire_valeur_n(_PAGE_VIGNETTES, $occ);
+			$nom_gal = $this->parser_id_crochets_actu($val_gal);
 			$nb_cols = $this->page->lire_attribut_n(_PAGE_VIGNETTES, $occ, _PAGE_ATTR_NBCOLS_VIGNETTE);
 			$nb_cols = ($nb_cols)?$nb_cols:1;
 			$nb_cols = ($nb_cols < 1)?1:$nb_cols;
@@ -330,7 +338,8 @@
 
 		// Ecriture des galeries : parsing + appel aux fonctions filles (ouvrir, ajouter, fermer)
 		protected function ecrire_bloc_galerie($occ) {
-			$nom_gal = $this->page->lire_valeur_n(_PAGE_GALERIE, $occ);
+			$val_gal = $this->page->lire_valeur_n(_PAGE_GALERIE, $occ);
+			$nom_gal = $this->parser_id_crochets_actu($val_gal);
 			$nb_cols = $this->page->lire_attribut_n(_PAGE_GALERIE, $occ, _PAGE_ATTR_NBCOLS_GALERIE);
 			$nb_cols = ($nb_cols)?$nb_cols:1;
 			$nb_cols = ($nb_cols < 1)?1:$nb_cols;
@@ -436,7 +445,8 @@
 
 		// Ecriture des menus : parsing + appel aux fonctions filles (ouvrir, ajouter, fermer)
 		protected function ecrire_bloc_menu($occ) {
-			$nom_menu = $this->page->lire_valeur_n(_PAGE_MENU, $occ);
+			$val_menu = $this->page->lire_valeur_n(_PAGE_MENU, $occ);
+			$nom_menu = $this->parser_id_crochets_actu($val_menu);
 			$alignement = $this->page->lire_attribut_n(_PAGE_MENU, $occ, _PAGE_ATTR_ALIGNEMENT);
 			$menu = $this->menu->get_menu($nom_menu);
 			if ($menu) {
@@ -448,9 +458,11 @@
 					$cle_item = (string) $menu->get_item($cpt);
 					$item = $this->menu->get_item($cle_item);
 					if ($item) {
-						$id_label = $item->get_label();
+						$id_label_brut = $item->get_label();
+						$id_label = $this->parser_id_crochets_actu($id_label_brut);
 						$id_icone = $item->get_icone();
-						$lien_simple = $item->get_lien();
+						$lien_brut = $item->get_lien();
+						$lien_simple = $this->parser_lien_crochets_actu($lien_brut);
 						$lien_editable = $item->get_lien_editable();
 						$is_editable = (strlen($lien_editable) > 0)?true:false;
 						if ($is_editable) {
@@ -745,14 +757,6 @@
 		protected function ecrire_banniere_actu($no_actu, $style) {return true;}
 		protected function fermer_banniere_actu() {return true;}
 
-		// Ecriture des détails de l'actualité
-		protected function ecrire_bloc_detail_actu() {
-			if ($this->module_actu) {
-				$this->ecrire_detail_actu();
-			}
-		}
-		protected function ecrire_detail_actu() {return true;}
-
 		// Préparation du bloc en fonction de son style
 		protected function preparer_style_bloc(&$bloc, &$style) {
 			if (($bloc) && ($style)) {
@@ -784,7 +788,45 @@
 				$this->texte->ajouter_langue($code_langue);
 			}
 		}
-		
+		private function parser_id_crochets_actu($id_valeur) {
+			$id_texte = $id_valeur;
+			if ($this->module_actu) {
+				$id_trim = trim($id_valeur);
+				$crochets_n = !(strcmp("[n]", strtolower(substr($id_trim, -3))));
+				if ($crochets_n) {
+					$id_texte = substr($id_trim, 0, strlen($id_trim)-3).($this->no_actu);
+				}
+				else {
+					$crochets_n_plus_1 = !(strcmp("[n+1]", strtolower(substr($id_trim, -5))));
+					if ($crochets_n_plus_1) {
+						$id_texte = substr($id_trim, 0, strlen($id_trim)-5).($this->module_actu->get_next_actu($this->no_actu));
+					}
+					else {
+						$crochets_n_moins_1 = !(strcmp("[n-1]", strtolower(substr($id_trim, -5))));
+						if ($crochets_n_moins_1) {
+							$id_texte = substr($id_trim, 0, strlen($id_trim)-5).($this->module_actu->get_prev_actu($this->no_actu));
+						}
+					}
+				}
+			}
+			return $id_texte;
+		}
+		private function parser_lien_crochets_actu($id_valeur) {
+			$id_texte = $id_valeur;
+			if ($this->module_actu) {
+				$id_trim = trim($id_valeur);
+				if (!(strcmp($id_trim, _HTML_PREFIXE_ACTU."-[n]"._PXP_EXT))) {
+					$id_texte =  _HTML_PATH_ACTU."?"._PARAM_ID."=".($this->no_actu);
+				}
+				elseif (!(strcmp($id_trim, _HTML_PREFIXE_ACTU."-[n+1]"._PXP_EXT))) {
+					$id_texte =  _HTML_PATH_ACTU."?"._PARAM_ID."=".($this->module_actu->get_next_actu($this->no_actu));
+				}
+				elseif (!(strcmp($id_trim, _HTML_PREFIXE_ACTU."-[n-1]"._PXP_EXT))) {
+					$id_texte =  _HTML_PATH_ACTU."?"._PARAM_ID."=".($this->module_actu->get_prev_actu($this->no_actu));
+				}
+			}
+			return $id_texte;
+		}
 		private function get_nb_items_non_vide(&$menu) {
 			$ret = 0;
 			if ($menu) {

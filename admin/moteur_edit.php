@@ -48,19 +48,13 @@
 		private $tmp = array();
 
 		// Méthodes publiques
-		public function __construct($nom_page, $no_contenu, $no_bloc) {
+		public function __construct($nom_page, $no_contenu, $no_bloc, $est_actu = false, $no_actu = 0) {
 			// Récupération du nom de la page y compris le cas actu
-			$match_actu = preg_match("/^"._HTML_PREFIXE_ACTU."-[1-5]$/", $nom_page);
-			$this->est_actu = ($match_actu == 1)?true:false;
-			if ($this->est_actu) {
-				$this->no_actu = (int) substr($nom_page, 1+strlen(_HTML_PREFIXE_ACTU));
-				$this->nom_page = _HTML_PREFIXE_ACTU;
-			}
-			else {
-				$this->nom_page = $nom_page;
-			}
+			$this->nom_page = $nom_page;
 			$this->no_contenu = $no_contenu;
 			$this->no_bloc = $no_bloc;
+			$this->est_actu = $est_actu;
+			$this->no_actu = $no_actu;
 			
 			// Chargement des structures XML
 			$this->charger_xml();
@@ -361,49 +355,6 @@
 			}
 			$this->tmp = array();
 			$this->html_edit->fermer_tableau();
-		}
-		protected function ecrire_detail_actu() {
-			if (($this->est_actu) && ($this->no_actu >= 1) && ($this->no_actu <= 5)) {
-				$this->edit_actu($this->no_actu);
-			}
-		}
-		// Fonctions privées
-		private function edit_actu($no_actu) {
-			$image = $this->media->get_image_actu($no_actu);
-			if ($image) {
-				$this->html_edit->ouvrir_tableau_simple();
-				$this->html_edit->ouvrir_ligne();
-				$titre = _EDIT_LABEL_ACTUALITE."&nbsp;n°".$no_actu;
-				$this->html_edit->ecrire_cellule_categorie($titre, _EDIT_COULEUR, 5);
-				$this->html_edit->ecrire_cellule_symbole_image($image->get_nom(), _EDIT_SYMBOLE_IMAGE);
-				$this->html_edit->ecrire_cellule_image($image->get_src());
-				$this->html_edit->fermer_ligne();
-				$id_titre = $this->texte->get_id_titre_actu($no_actu);
-				$trad_titre = $this->check_texte($id_titre);
-				$this->html_edit->ouvrir_ligne();
-				$this->html_edit->ecrire_cellule_symbole_texte($id_titre, _EDIT_SYMBOLE_LABEL, "Modifier le titre de l'actualité");
-				$this->html_edit->ecrire_cellule_texte($id_titre, $this->relook_texte($trad_titre));
-				$this->html_edit->fermer_ligne();
-				$id_sous_titre = $this->texte->get_id_sous_titre_actu($no_actu);
-				$trad_sous_titre = $this->check_texte($id_sous_titre);
-				$this->html_edit->ouvrir_ligne();
-				$this->html_edit->ecrire_cellule_symbole_texte($id_sous_titre, _EDIT_SYMBOLE_LABEL, "Modifier le sous-titre de l'actualité");
-				$this->html_edit->ecrire_cellule_texte($id_sous_titre, $this->relook_texte($trad_sous_titre));
-				$this->html_edit->fermer_ligne();
-				$id_resume = $this->texte->get_id_resume_actu($no_actu);
-				$trad_resume = $this->check_texte($id_resume);
-				$this->html_edit->ouvrir_ligne();
-				$this->html_edit->ecrire_cellule_symbole_texte($id_resume, _EDIT_SYMBOLE_LABEL, "Modifier le résumé de l'actualité");
-				$this->html_edit->ecrire_cellule_texte($id_resume, $this->relook_texte($trad_resume));
-				$this->html_edit->fermer_ligne();
-				$id_texte = $this->texte->get_id_texte_actu($no_actu);
-				$trad_texte = $this->check_texte($id_texte);
-				$this->html_edit->ouvrir_ligne();
-				$this->html_edit->ecrire_cellule_symbole_texte($id_texte, _EDIT_SYMBOLE_LABEL, "Modifier le texte d'accompagnement de l'actualité");
-				$this->html_edit->ecrire_cellule_texte($id_texte, $this->relook_texte($trad_texte));
-				$this->html_edit->fermer_ligne();
-				$this->html_edit->fermer_tableau();
-			}
 		}
 		private function construire_etiquette($titre, $nom, $separateur="&nbsp;") {
 			$etiquette = $titre.$separateur."<span style=\"font-size:0.8em;font-style:italic;\">(".$nom.")</span>";

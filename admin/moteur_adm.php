@@ -112,7 +112,7 @@
 					if ($obj_bloc->get_nb_elems_admin() > 0) {
 						if (strlen($class_edit) > 0) {$class_edit .= " ";}
 						$class_edit .= $obj_bloc->get_repere();
-						$moteur_edit = new moteur_edit($this->nom_page, $cpt_cont, $cpt_bloc);
+						$moteur_edit = new moteur_edit($this->nom_page, $cpt_cont, $cpt_bloc, $this->est_actu, $this->no_actu);
 						$moteur_edit->ecrire_corps();
 					}
 				}
@@ -404,44 +404,4 @@
 		protected function fermer_banniere_actu() {
 			$this->html->fermer_actu(false);
 		}
-		protected function ecrire_detail_actu() {
-			if (($this->est_actu) && ($this->no_actu >= 1) && ($this->no_actu <= 5)) {
-				$style = $this->module_actu->get_style();
-				$prev_actu = $this->module_actu->get_prev_actu($this->no_actu);
-				$next_actu = $this->module_actu->get_next_actu($this->no_actu);
-
-				// Ecriture de l'image
-				$image = $this->media->get_image_actu($this->no_actu);
-				if ($image) {
-					$id_alt = $image->get_alt();
-					$alt = $this->texte->get_texte($id_alt, $this->langue_page);
-					$this->html->ecrire_image_sans_legende($image, $alt, null);
-				}
-				// Ecriture du titre
-				$titre = $this->texte->get_titre_actu($this->no_actu, $this->langue_page);
-				if (strlen($titre) > 0) {
-					$style_titre = "detail_titre_".$style;
-					$this->html->ecrire_titre(2, $style_titre, $titre);
-				}
-				// Ecriture du sous-titre
-				$sous_titre = $this->texte->get_sous_titre_actu($this->no_actu, $this->langue_page);
-				if (strlen($sous_titre) > 0) {
-					$style_sous_titre = "detail_sous_titre_".$style;
-					$this->html->ecrire_titre(2, $style_sous_titre, $sous_titre);
-				}
-				// Ecriture du résumé
-				$resume = $this->texte->get_resume_actu($this->no_actu, $this->langue_page);
-				if (strlen($resume) > 0) {
-					$style_resume = "detail_resume_".$style;
-					$this->html->ecrire_paragraphe(true, $style_resume, $resume);
-				}
-				// Ecriture du texte
-				$texte = $this->texte->get_texte_actu($this->no_actu, $this->langue_page);
-				if (strlen($texte) > 0) {
-					$style_texte = "detail_texte_".$style;
-					$this->html->ecrire_paragraphe(true, $style_texte, $texte);
-				}
-			}
-		}
-
 	}
