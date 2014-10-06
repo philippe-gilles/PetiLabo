@@ -48,6 +48,7 @@
 			$this->html->charger_js(_HTTP_LOG_ADMIN."/js/upload.js");
 			$this->html->charger_js(_HTTP_LOG_ADMIN."/js/jqueryte.js");
 			$this->html->charger_js(_HTTP_LOG_ADMIN."/js/anims.js");
+			$this->charger_xml_js(true);
 		}
 		public function fermer_entete() {
 			$this->html->fermer_head();
@@ -189,6 +190,19 @@
 		}
 		protected function fermer_diaporama($nom_gal, $has_navigation, $has_boutons, $maxwidth) {
 			$this->html->fermer_diaporama(null, false, false, 0);
+		}
+		// Ecriture des carrousels (ouvrir, ajouter, fermer)
+		protected function ouvrir_carrousel($nom_gal) {
+			$this->html->ouvrir_carrousel(null);
+		}
+		protected function ajouter_carrousel($no_img, &$image, $id_alt, $largeur_max) {
+			if (($image) && (!($image->get_est_vide()))) {
+				$alt = $this->texte->get_texte($id_alt, $this->langue_page);
+				$this->html->ajouter_carrousel(false, $no_img, $image, $alt, $largeur_max);
+			}
+		}
+		protected function fermer_carrousel($nom_gal, $has_navigation, $has_boutons, $largeur_max, $nb_cols) {
+			$this->html->fermer_carrousel(null, false, false, 0, 0);
 		}
 		// Ecriture des vignettes (ouvrir, ajouter, fermer)
 		protected function ouvrir_vignettes($nom_gal) {

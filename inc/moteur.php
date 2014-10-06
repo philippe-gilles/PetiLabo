@@ -107,6 +107,9 @@
 				$this->html->ecrire_css_ie($css_ie);
 			}
 		}
+		protected function charger_xml_js($admin = false) {
+			if (!($admin)) {$this->html->charger_xml_js();}
+		}
 		protected function charger_police($nom_style) {
 			if (strlen($nom_style) > 0) {
 				$style = $this->style->get_style_texte($nom_style);
@@ -308,6 +311,38 @@
 		protected function ouvrir_diaporama($nom_gal, $largeur_max) {return true;}
 		protected function ajouter_diaporama(&$image, $id_alt, $has_legende, $id_legende, $nom_style, $est_exterieur) {return true;}
 		protected function fermer_diaporama($nom_gal, $has_navigation, $has_boutons, $largeur_max) {return true;}
+
+		// Ecriture des diaporamas : parsing + appel aux fonctions filles (ouvrir, ajouter, fermer)
+		protected function ecrire_bloc_carrousel($occ) {
+			$val_gal = $this->page->lire_valeur_n(_PAGE_CARROUSEL, $occ);
+			$nom_gal = $this->parser_id_crochets_actu($val_gal);
+			$gal = $this->media->get_galerie($nom_gal);
+			if ($gal) {
+				$nb_images = $gal->get_nb_elems();
+				$navigation = $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _MEDIA_ATTR_NAVIGATION);
+				$has_navigation = (!(strcmp(trim(strtolower($navigation)), _XML_TRUE)))?true:false;
+				$boutons = $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _MEDIA_ATTR_BOUTONS);
+				$has_boutons = (!(strcmp(trim(strtolower($boutons)), _XML_TRUE)))?true:false;
+				$largeur_max = (int) $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _MEDIA_ATTR_LARGEUR);
+				$nb_cols = (int) $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _PAGE_ATTR_NBCOLS_VIGNETTE);
+				$this->ouvrir_carrousel($nom_gal);
+				$no_img = 0;
+				for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
+					$nom_image = $gal->get_elem($cpt_img);
+					$image = $this->media->get_image($nom_image);
+					if ($image) {
+						// On récupère le alt éventuel
+						$id_alt = $image->get_alt();
+						$this->ajouter_carrousel($no_img, $image, $id_alt, $largeur_max);
+						$no_img += 1;
+					}
+				}
+				$this->fermer_carrousel($nom_gal, $has_navigation, $has_boutons, $largeur_max, $nb_cols);
+			}
+		}
+		protected function ouvrir_carrousel($nom_gal) {return true;}
+		protected function ajouter_carrousel($no_img, &$image, $id_alt, $largeur_max) {return true;}
+		protected function fermer_carrousel($nom_gal, $has_navigation, $has_boutons, $largeur_max, $nb_cols) {return true;}
 
 		// Ecriture des vignettes : parsing + appel aux fonctions filles (ouvrir, ajouter, fermer)
 		protected function ecrire_bloc_vignettes($occ) {

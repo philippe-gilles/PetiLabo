@@ -60,6 +60,8 @@
 			$this->html->charger_css("css/style.css");
 			$this->charger_xml_css(false);
 			// On charge les JS supplémentaires uniquement si nécessaire
+			$has_bx = $this->has_bx();
+			if ($has_bx) {$this->html->charger_js("js/bx.min.js");}
 			$has_rs = $this->has_rs();
 			if ($has_rs) {$this->html->charger_js("js/rs.min.js");}
 			$has_lb = $this->has_lb();
@@ -72,6 +74,7 @@
 			
 			// Chargement systématique des animations
 			$this->html->charger_js("js/anims.js");
+			$this->charger_xml_js(false);
 		}
 		public function fermer_entete() {
 			// Fermeture de l'entête
@@ -205,10 +208,22 @@
 		protected function fermer_diaporama($nom_gal, $has_navigation, $has_boutons, $largeur_max) {
 			$this->html->fermer_diaporama($nom_gal, $has_navigation, $has_boutons, $largeur_max);
 		}
+		// Ecriture des carrousels (ouvrir, ajouter, fermer)
+		protected function ouvrir_carrousel($nom_gal) {
+			$this->html->ouvrir_carrousel($nom_gal);
+		}
+		protected function ajouter_carrousel($no_img, &$image, $id_alt, $largeur_max) {
+			if (($image) && (!($image->get_est_vide()))) {
+				$alt = $this->texte->get_texte($id_alt, $this->langue_page);
+				$this->html->ajouter_carrousel(true, $no_img, $image, $alt, $largeur_max);
+			}
+		}
+		protected function fermer_carrousel($nom_gal, $has_navigation, $has_boutons, $largeur_max, $nb_cols) {
+			$this->html->fermer_carrousel($nom_gal, $has_navigation, $has_boutons, $largeur_max, $nb_cols);
+		}
 		// Ecriture des vignettes (ouvrir, ajouter, fermer)
 		protected function ouvrir_vignettes($nom_gal) {
 			$this->html->ouvrir_vignettes($nom_gal);
-			return true;
 		}
 		protected function ajouter_vignette($nom_image, $src, $lien, $id_info, $nb_cols) {
 			// La source nulle indique une image vide
@@ -460,6 +475,15 @@
 		}
 
 		// Méthodes privées
+		private function has_bx() {
+			$ret = false;
+			$nb_contenus = $this->page->get_nb_contenus();
+			for ($cpt_cont = 0;(($cpt_cont < $nb_contenus) && (!($ret)));$cpt_cont++) {
+				$obj_contenu = $this->page->get_contenu($cpt_cont);
+				if ($obj_contenu) {$ret = $obj_contenu->get_has_bx();}
+			}
+			return $ret;
+		}
 		private function has_rs() {
 			$ret = false;
 			$nb_contenus = $this->page->get_nb_contenus();
@@ -469,7 +493,6 @@
 			}
 			return $ret;
 		}
-		
 		private function has_lb() {
 			$ret = false;
 			$nb_contenus = $this->page->get_nb_contenus();
@@ -479,7 +502,6 @@
 			}
 			return $ret;
 		}
-		
 		private function has_gal() {
 			$ret = false;
 			$nb_contenus = $this->page->get_nb_contenus();

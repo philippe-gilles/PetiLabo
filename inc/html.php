@@ -323,6 +323,12 @@ class html {
 	public function charger_js($fichier) {
 		echo "<script type=\"text/javascript\" src=\""._PHP_PATH_ROOT.$fichier."\"></script>\n";
 	}
+	public function charger_xml_js() {
+		$fichier_js = _XML_PATH_JS."script.js";
+		if (file_exists($fichier_js)) {
+			echo "<script type=\"text/javascript\" src=\"".$fichier_js."\"></script>\n";
+		}
+	}
 	public function ecrire_meta_titre($titre) {
 		echo "<title>".$titre."</title>\n";
 	}
@@ -463,6 +469,52 @@ class html {
 			echo "$(\"#".$id_gal."\").responsiveSlides(".$param.");"._HTML_FIN_LIGNE;
 			echo "});"._HTML_FIN_LIGNE;
 			echo "</script>"._HTML_FIN_LIGNE;
+		}
+	}
+	public function ouvrir_carrousel($id_gal) {
+		if (strlen($id_gal) > 0) {
+			echo "<div class=\"carrousel\"><ul id=\"".$id_gal."\" class=\"bxslider\">"._HTML_FIN_LIGNE;
+		}
+		else {
+			echo "<div class=\"carrousel\" style=\"position:relative;overflow:hidden;text-align:left!important;\">"._HTML_FIN_LIGNE;
+		}
+	}
+	public function ajouter_carrousel($actif, $no_img, &$image, $alt, $largeur_max) {
+		if ($actif) {
+			echo "<li>"._HTML_FIN_LIGNE;
+			echo "<img src=\"".$image->get_src()."\" alt=\"".$alt."\" />"._HTML_FIN_LIGNE;
+			echo "</li>"._HTML_FIN_LIGNE;
+		}
+		else {
+			$style_largeur = ($largeur_max > 0)?"max-width:".$largeur_max."px;":"max-width:100%;";
+			if ($no_img == 0) {
+				echo "<img src=\"".$image->get_src()."\" alt=\"".$alt."\" style=\"".$style_largeur."\"/>"._HTML_FIN_LIGNE;
+			}
+			else {
+				if ($largeur_max > 0) {
+					$pos_x = ($largeur_max+10) * $no_img;
+					echo "<img src=\"".$image->get_src()."\" alt=\"".$alt."\" style=\"".$style_largeur."max-height:100%;position:absolute;top:0;left:".$pos_x."px;\"/>"._HTML_FIN_LIGNE;
+				}
+			}
+		}
+	}
+	public function fermer_carrousel($id_gal, $has_navigation, $has_boutons, $largeur_max, $nb_cols) {
+		if (strlen($id_gal) > 0) {
+			echo "</ul></div>"._HTML_FIN_LIGNE;
+			$param = "{";
+			if ($largeur_max > 1) {
+				$param .= "slideWidth:".$largeur_max;
+				$cols = ($nb_cols > 0)?$nb_cols:3;
+				$param .= ",minSlides:2,maxSlides:".$cols;
+				$param .= ",moveSlides:1,slideMargin:10";
+			}
+			$param .= "}";
+			echo "<script type=\"text/javascript\">"._HTML_FIN_LIGNE;
+			echo "$('.bxslider').bxSlider(".$param.");"._HTML_FIN_LIGNE;
+			echo "</script>"._HTML_FIN_LIGNE;
+		}
+		else {
+			echo "</div>"._HTML_FIN_LIGNE;
 		}
 	}
 	public function ouvrir_vignettes($id_gal) {

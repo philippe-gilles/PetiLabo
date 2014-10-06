@@ -11,6 +11,7 @@
 	define("_EDIT_LABEL_SOUS_TITRE", "Sous-titre");
 	define("_EDIT_LABEL_TEXTE", "Paragraphe");
 	define("_EDIT_LABEL_DIAPORAMA", "Diaporama");
+	define("_EDIT_LABEL_CARROUSEL", "Carrousel");
 	define("_EDIT_LABEL_VIGNETTES", "Vignettes");
 	define("_EDIT_LABEL_GALERIE", "Galerie");
 	define("_EDIT_LABEL_IMAGE", "Image");
@@ -153,6 +154,20 @@
 			$this->ecrire_image($image, $id_alt, $has_legende, 0, $id_legende, $nom_style, $est_exterieur);
 		}
 		protected function fermer_diaporama($nom_gal, $has_navigation, $has_boutons, $maxwidth) {
+			$this->compteur_galerie = 0;
+			$this->html_edit->fermer_tableau();
+		}
+		// Ecriture des carrousels (ouvrir, ajouter, fermer)
+		protected function ouvrir_carrousel($nom_gal) {
+			$this->compteur_galerie = 0;
+			$titre = $this->construire_etiquette(_EDIT_LABEL_CARROUSEL, $nom_gal);
+			$this->html_edit->ouvrir_tableau_multiple($titre, _EDIT_COULEUR, $nom_gal);
+		}
+		protected function ajouter_carrousel($no_img, &$image, $id_alt, $largeur_max) {
+			$this->compteur_galerie += 1;
+			$this->ecrire_image($image, $id_alt, false, 0, null, null, false);
+		}
+		protected function fermer_carrousel($nom_gal, $has_navigation, $has_boutons, $largeur_max, $nb_cols) {
 			$this->compteur_galerie = 0;
 			$this->html_edit->fermer_tableau();
 		}

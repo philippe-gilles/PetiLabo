@@ -78,6 +78,7 @@
 	define("_PAGE_IMAGE", "image");
 	define("_PAGE_DIAPORAMA", "diaporama");
 	define("_PAGE_VIGNETTES", "vignettes");
+	define("_PAGE_CARROUSEL", "carrousel");
 	define("_PAGE_GALERIE", "galerie");
 	define("_PAGE_TITRE", "titre");
 	define("_PAGE_TITRE_BANDEAU", "titre_bandeau");
@@ -166,6 +167,7 @@
 	define("_MEDIA_ATTR_STYLE", "style");
 	define("_MEDIA_ATTR_NAVIGATION", "navigation");
 	define("_MEDIA_ATTR_BOUTONS", "boutons");
+	define("_MEDIA_ATTR_LARGEUR", "largeur_standard");
 
 	// Préfixe et suffixe pour les icones
 	define ("_MENU_PREFIXE_ICONE", "&#xf");

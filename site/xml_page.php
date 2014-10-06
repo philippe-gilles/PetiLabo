@@ -46,6 +46,9 @@ class xml_page {
 					$position_bloc = $this->page->lire_attribut(_PAGE_ATTR_BLOC_POSITION);
 					$obj_contenu->ajouter_bloc($repere_bloc, $taille_bloc, $style_bloc, $position_bloc);
 					
+					// On contrôle l'existence d'un carrousel
+					$carrousel = $this->page->lire_valeur(_PAGE_CARROUSEL);
+					if (strlen($carrousel) > 0) {$obj_contenu->set_has_bx(true);}
 					// On contrôle l'existence d'un diaporama
 					$diaporama = $this->page->lire_valeur(_PAGE_DIAPORAMA);
 					if (strlen($diaporama) > 0) {$obj_contenu->set_has_rs(true);}

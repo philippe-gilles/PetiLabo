@@ -37,6 +37,7 @@
 	define("_XML_PATH_IMAGES_REDUITES_SITE", _XML_PATH."images/reduites/");
 	define("_XML_PATH_MODULES", _XML_PATH."modules/");
 	define("_XML_PATH_CSS", _XML_PATH."css/");
+	define("_XML_PATH_JS", _XML_PATH."js/");
 	define("_XML_PATH_INTERNE", _PHP_PATH_ROOT."xml/");
 	
 	// Définitions des fichiers XML

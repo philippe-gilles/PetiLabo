@@ -89,6 +89,7 @@ $(document).ready(function() {
 			else {$.cookie('cookie_surf', 'desktop', { path: '/' });}
 		}
 	}
+	
 	/* Activation du survol des légendes sur les images fixes */
 	$(".image_cadre").mouseenter(function() {montrer_legende($(this));});
 	$(".image_cadre").mouseleave(function() {cacher_legende($(this));});
