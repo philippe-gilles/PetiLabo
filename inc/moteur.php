@@ -384,45 +384,45 @@
 				case _PAGE_ATTR_POSITION_DROITE :
 					$this->ouvrir_galerie($nom_gal, true);
 					$this->ecrire_onglet_galerie($nom_gal, $nb_cols, true);
-					$this->ecrire_vue_galerie($nom_gal, true);
-					$this->fermer_galerie($nom_gal, true);
+					$has_legende = $this->ecrire_vue_galerie($nom_gal, true);
+					$this->fermer_galerie($nom_gal, true, $has_legende);
 					break;
 				case _PAGE_ATTR_POSITION_BAS :
 					$this->ouvrir_galerie($nom_gal, false);
 					$this->ecrire_onglet_galerie($nom_gal, $nb_cols, false);
-					$this->ecrire_vue_galerie($nom_gal, false);
-					$this->fermer_galerie($nom_gal, false);
+					$has_legende = $this->ecrire_vue_galerie($nom_gal, false);
+					$this->fermer_galerie($nom_gal, false, $has_legende);
 					break;
 				case _PAGE_ATTR_POSITION_GAUCHE :
 					$this->ouvrir_galerie($nom_gal, true);
-					$this->ecrire_vue_galerie($nom_gal, true);
+					$has_legende = $this->ecrire_vue_galerie($nom_gal, true);
 					$this->ecrire_onglet_galerie($nom_gal, $nb_cols, true);
-					$this->fermer_galerie($nom_gal, true);
+					$this->fermer_galerie($nom_gal, true, $has_legende);
 					break;
 				case _PAGE_ATTR_POSITION_HAUT :
 				default :
 					$this->ouvrir_galerie($nom_gal, false);
-					$this->ecrire_vue_galerie($nom_gal, false);
+					$has_legende = $this->ecrire_vue_galerie($nom_gal, false);
 					$this->ecrire_onglet_galerie($nom_gal, $nb_cols, false);
-					$this->fermer_galerie($nom_gal, false);
+					$this->fermer_galerie($nom_gal, false, $has_legende);
 					break;
 			}
 		}
 		protected function ecrire_vue_galerie($nom_gal, $vertical) {
+			$has_legende = false;
 			$gal = $this->media->get_galerie($nom_gal);
 			if ($gal) {
 				$nb_images = $gal->get_nb_elems();
 				if ($nb_images > 0) {
-					$nom_image_init = $gal->get_elem(0);
-					$image_init = $this->media->get_image($nom_image_init);
-					$this->ouvrir_vue_galerie($nom_gal, $image_init, $vertical);
-					$nb_images = $gal->get_nb_elems();
+					$this->ouvrir_vue_galerie($nom_gal, $vertical);
+					$idx_photo = 0;
 					for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
 						$nom_image = $gal->get_elem($cpt_img);
 						$image = $this->media->get_image($nom_image);
 						if (($image) && (!($image->get_est_vide()))) {
 							$id_legende = $image->get_legende();
 							if (strlen($id_legende) > 0) {
+								$has_legende = true;
 								$nom_style = $image->get_style_legende();
 								if (strlen($nom_style) > 0) {
 									$style = $this->media->get_style($nom_style);
@@ -441,15 +441,20 @@
 									}
 								}
 								else {
-									$nom_style = "rscaption";
+									$nom_style = "bxcaption";
 								}
-								$this->ajouter_legende_galerie($nom_gal, $id_legende, $nom_style, $cpt_img);
+								$this->ajouter_vue_galerie($nom_gal, $image, $id_legende, $nom_style, $idx_photo);
 							}
+							else {
+								$this->ajouter_vue_galerie($nom_gal, $image, null, null, $idx_photo);
+							}
+							$idx_photo += 1;
 						}
 					}
 					$this->fermer_vue_galerie($nom_gal);
 				}
 			}
+			return $has_legende;
 		}
 		protected function ecrire_onglet_galerie($nom_gal, $nb_cols, $vertical) {
 			$gal = $this->media->get_galerie($nom_gal);
@@ -457,12 +462,14 @@
 				$nb_images = $gal->get_nb_elems();
 				if ($nb_images > 0) {
 					$this->ouvrir_onglet_galerie($nom_gal, $vertical);
+					$idx_photo = 0;
 					for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
 						$nom_image = $gal->get_elem($cpt_img);
 						$image = $this->media->get_image($nom_image);
 						if ($image) {
 							$id_alt = $image->get_alt();
-							$this->ajouter_onglet_galerie($nom_gal, $image, $id_alt, $cpt_img, $nb_cols);
+							$this->ajouter_onglet_galerie($nom_gal, $image, $id_alt, $idx_photo, $nb_cols);
+							if (!($image->get_est_vide())) {$idx_photo += 1;}
 						}
 					}
 					$this->fermer_onglet_galerie($nom_gal);
@@ -470,13 +477,13 @@
 			}
 		}
 		protected function ouvrir_galerie($nom_gal, $vertical) {return true;}
-		protected function ouvrir_vue_galerie($nom_gal, &$image_init, $vertical) {return true;}
-		protected function ajouter_legende_galerie($nom_gal, $id_legende, $nom_style, $index) {return true;}
+		protected function ouvrir_vue_galerie($nom_gal, $vertical) {return true;}
+		protected function ajouter_vue_galerie($nom_gal, &$image, $id_legende, $nom_style, $index) {return true;}
 		protected function fermer_vue_galerie($nom_gal) {return true;}
 		protected function ouvrir_onglet_galerie($nom_gal, $vertical) {return true;}
 		protected function ajouter_onglet_galerie($nom_gal, &$image, $id_alt, $index, $nb_cols) {return true;}
 		protected function fermer_onglet_galerie($nom_gal) {return true;}
-		protected function fermer_galerie($nom_gal, $vertical) {return true;}
+		protected function fermer_galerie($nom_gal, $vertical, $has_legende) {return true;}
 
 		// Ecriture des menus : parsing + appel aux fonctions filles (ouvrir, ajouter, fermer)
 		protected function ecrire_bloc_menu($occ) {

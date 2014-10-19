@@ -239,12 +239,12 @@
 			$this->html->fermer_vignettes($nom_gal, $label_prec, $label_suiv, $label_fermer);
 		}
 		// Ecriture des galeries (ouvrir, ajouter, fermer)
-		protected function ouvrir_vue_galerie($nom_gal, &$image_init, $vertical) {
-			$this->html->ouvrir_vue_galerie($nom_gal, $image_init, $vertical);
+		protected function ouvrir_vue_galerie($nom_gal, $vertical) {
+			$this->html->ouvrir_vue_galerie($nom_gal, $vertical);
 		}
-		protected function ajouter_legende_galerie($nom_gal, $id_legende, $nom_style, $index) {
+		protected function ajouter_vue_galerie($nom_gal, &$image, $id_legende, $nom_style, $index) {
 			$legende = $this->texte->get_texte($id_legende, $this->langue_page);
-			$this->html->ajouter_legende_galerie($nom_gal, $legende, $nom_style, $index);
+			$this->html->ajouter_vue_galerie($nom_gal, $image, $legende, $nom_style, $index);
 		}
 		protected function fermer_vue_galerie($nom_gal) {
 			$this->html->fermer_vue_galerie($nom_gal);
@@ -261,8 +261,8 @@
 		protected function fermer_onglet_galerie($nom_gal) {
 			$this->html->fermer_onglet_galerie($nom_gal);
 		}
-		protected function fermer_galerie($nom_gal, $vertical) {
-			$this->html->fermer_galerie($nom_gal, $vertical);
+		protected function fermer_galerie($nom_gal, $vertical, $has_legende) {
+			$this->html->fermer_galerie($nom_gal, $vertical, $has_legende);
 		}
 		// Ecriture des menus (ouvrir, ajouter, fermer)
 		protected function ouvrir_menu($nom_menu, $nb_items_non_vide, $alignement) {
@@ -499,15 +499,6 @@
 			for ($cpt_cont = 0;(($cpt_cont < $nb_contenus) && (!($ret)));$cpt_cont++) {
 				$obj_contenu = $this->page->get_contenu($cpt_cont);
 				if ($obj_contenu) {$ret = $obj_contenu->get_has_lb();}
-			}
-			return $ret;
-		}
-		private function has_gal() {
-			$ret = false;
-			$nb_contenus = $this->page->get_nb_contenus();
-			for ($cpt_cont = 0;(($cpt_cont < $nb_contenus) && (!($ret)));$cpt_cont++) {
-				$obj_contenu = $this->page->get_contenu($cpt_cont);
-				if ($obj_contenu) {$ret = $obj_contenu->get_has_gal();}
 			}
 			return $ret;
 		}

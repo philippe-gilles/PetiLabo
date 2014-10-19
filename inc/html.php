@@ -510,7 +510,7 @@ class html {
 			}
 			$param .= "}";
 			echo "<script type=\"text/javascript\">"._HTML_FIN_LIGNE;
-			echo "$('.bxslider').bxSlider(".$param.");"._HTML_FIN_LIGNE;
+			echo "$('div.carrousel ul#".$id_gal."').bxSlider(".$param.");"._HTML_FIN_LIGNE;
 			echo "</script>"._HTML_FIN_LIGNE;
 		}
 		else {
@@ -542,39 +542,64 @@ class html {
 			echo "</script>"._HTML_FIN_LIGNE;
 		}
 	}
-	public function ouvrir_vue_galerie($id_gal, &$image_init, $vertical) {
+	public function ouvrir_vue_galerie($id_gal, $vertical) {
 		$classe = ($vertical)?"vue_galerie_verticale":"vue_galerie_horizontale";
-		if ($image_init) {$style="style=\"max-width:".$image_init->get_width()."px;max-height:".$image_init->get_height()."px;\"";}
-		else {$style="";}
-		echo "<div id=\"gal_".$id_gal."\" class=\"".$classe."\" ".$style.">"._HTML_FIN_LIGNE;
-		if ($image_init) {echo "<img class=\"image_galerie\" src=\"".$image_init->get_src()."\" alt=\"Galerie ".$id_gal."\" />";}
+		echo "<div class=\"".$classe."\">"._HTML_FIN_LIGNE;
+		if (strlen($id_gal) > 0) {echo "<ul id=\"gal_".$id_gal."\" class=\"bxslider\">"._HTML_FIN_LIGNE;}	
 	}
-	public function ajouter_legende_galerie($nom_gal, $legende, $nom_style, $index) {
-		$style_display = ($index == 0)?"visible":"hidden";
-		echo "<div id=\"leg_".$nom_gal."_".$index."\" class=\"legende_galerie "._CSS_PREFIXE_INTERIEUR.$nom_style." transparence_80pc\" style=\"visibility:".$style_display.";\" >"._HTML_FIN_LIGNE;
-		echo "<table class=\"tableau_legende\"><tr><td>";
-		echo "<p>".$legende."</p>"._HTML_FIN_LIGNE;
-		echo "</td></tr></table>"._HTML_FIN_LIGNE;
-		echo "</div>"._HTML_FIN_LIGNE;
+	public function ajouter_vue_galerie($id_gal, &$image, $legende, $nom_style, $index) {
+		$html_img = "<img class=\"image_galerie\" src=\"".$image->get_src()."\" alt=\"Galerie";
+		if (strlen($id_gal) > 0) {$html_img .= " ".$id_gal;}
+		$html_img .= " no ".(((int) $index)+1)."\">";
+		if (strlen($id_gal) > 0) {
+			echo "<li>"._HTML_FIN_LIGNE;
+			echo $html_img._HTML_FIN_LIGNE;
+			echo "<div id=\"leg_".$id_gal."_".$index."\" class=\"legende_galerie "._CSS_PREFIXE_INTERIEUR.$nom_style." transparence_80pc\">"._HTML_FIN_LIGNE;
+			echo "<table class=\"tableau_legende\"><tr><td>";
+			echo "<p>".$legende."</p>"._HTML_FIN_LIGNE;
+			echo "</td></tr></table>"._HTML_FIN_LIGNE;
+			echo "</div>"._HTML_FIN_LIGNE;
+			echo "</li>"._HTML_FIN_LIGNE;
+		}
+		else {echo $html_img;}
 	}
 	public function fermer_vue_galerie($id_gal) {
+		if (strlen($id_gal) > 0) {echo "</ul>";}
 		echo "</div>"._HTML_FIN_LIGNE;
 	}
 	public function ouvrir_onglet_galerie($id_gal, $vertical) {
 		$classe = ($vertical)?"onglet_galerie_verticale":"onglet_galerie_horizontale";
 		echo "<div id=\"onglet_".$id_gal."\" class=\"".$classe."\">"._HTML_FIN_LIGNE;
 	}
-	public function ajouter_onglet_galerie($nom_gal, &$image, $id_alt, $index, $nb_cols) {
+	public function ajouter_onglet_galerie($id_gal, &$image, $id_alt, $index, $nb_cols) {
 		$width = floor(100/((int) $nb_cols));
 		$width -= 2;
-		echo "<img id=\"min_".$nom_gal."_".$index."\" class=\"miniature_galerie transparence_80pc\" src=\"".$image->get_src_reduite()."\" alt=\"".$id_alt."\"  style=\"width:".$width."%;\" />"._HTML_FIN_LIGNE;
+		if (strlen($id_gal) > 0) {
+			echo "<a data-slide-index=\"".$index."\" href=\"\">";
+			echo "<img id=\"min_".$id_gal."_".$index."\" class=\"miniature_galerie transparence_80pc\" src=\"".$image->get_src_reduite()."\" alt=\"".$id_alt."\"  style=\"width:".$width."%;\" />";
+			echo "</a>"._HTML_FIN_LIGNE;
+		}
+		else {
+			echo "<img class=\"miniature_galerie transparence_80pc\" src=\"".$image->get_src_reduite()."\" alt=\"".$id_alt."\"  style=\"width:".$width."%;\" />"._HTML_FIN_LIGNE;
+		}
 	}
 	public function fermer_onglet_galerie($id_gal) {
 		echo "</div>"._HTML_FIN_LIGNE;
 	}
-	public function fermer_galerie($nom_gal, $vertical) {
+	public function fermer_galerie($id_gal, $vertical, $has_legende) {
 		if ($vertical) {
 			echo "<div style=\"clear:both;\"></div>"._HTML_FIN_LIGNE;
+			$classe = "vue_galerie_verticale";
+		}
+		else {
+			$classe = "vue_galerie_horizontale";
+		}
+		if (strlen($id_gal) > 0) {
+			echo "<script type=\"text/javascript\">"._HTML_FIN_LIGNE;
+			$param = "{mode:'fade',pages:false";
+			$param .= ",pagerCustom:'#onglet_".$id_gal."'}";
+			echo "$('div.".$classe." ul#gal_".$id_gal."').bxSlider(".$param.");"._HTML_FIN_LIGNE;
+			echo "</script>"._HTML_FIN_LIGNE;
 		}
 	}
 	public function ouvrir_menu($alignement) {

@@ -11,7 +11,6 @@
 		private $has_rs = false;
 		private $has_lb = false;
 		private $has_bx = false;
-		private $has_gal = false;
 		private $has_form = false;
 
 		// Méthodes publiques
@@ -41,12 +40,10 @@
 		public function set_has_bx($param) {$this->has_bx = ($param)?true:false;}
 		public function set_has_rs($param) {$this->has_rs = ($param)?true:false;}
 		public function set_has_lb($param) {$this->has_lb = ($param)?true:false;}
-		public function set_has_gal($param) {$this->has_gal = ($param)?true:false;}
 		public function set_has_form($param) {$this->has_form = ($param)?true:false;}
 		public function get_has_bx() {return $this->has_bx;}
 		public function get_has_rs() {return $this->has_rs;}
 		public function get_has_lb() {return $this->has_lb;}
-		public function get_has_gal() {return $this->has_gal;}
 		public function get_has_form() {return $this->has_form;}
 		public function get_semantique() {return $this->semantique;}
 		public function get_signet() {return $this->signet;}

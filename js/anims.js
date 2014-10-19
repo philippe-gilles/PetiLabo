@@ -167,27 +167,6 @@ $(document).ready(function() {
 	$(".diaporama").mouseleave(function() {
 		$(".boutons_diapo_nav").css("display", "none");
 	});
-	/* Galerie */
-	$('div[id^="onglet_"] img').click(function() {
-		var id = $(this).parent().attr('id');
-		var src = $(this).attr('src');
-		var alt = $(this).attr('alt');
-		if (alt === null) {alt = '';}
-		id_gal = id.replace('onglet_','gal_');
-		new_src = src.replace('reduites/','');
-		$('#'+id_gal).find('img').css('display','inline').attr('src',new_src).css('display', 'block').attr('alt',alt);
-		$('#'+id_gal).find('div[id^="leg_"]').css('visibility', 'hidden');
-		id_min = $(this).attr('id');
-		id_leg = id_min.replace('min_','leg_');
-		leg = $('#'+id_leg);
-		if (leg) {leg.css('visibility', 'visible');}
-	});
-	$('div[id^="onglet_"] img').mouseenter(function() {
-		$(this).css("cursor", "pointer").css("opacity", "1");
-	});
-	$('div[id^="onglet_"] img').mouseleave(function() {
-		$(this).css("cursor", "default").css("opacity", "0.8");
-	});
 	/* Actu */
 	$(".actu").mouseenter(function() {
 		$(".boutons_actu_nav").css("display", "block");

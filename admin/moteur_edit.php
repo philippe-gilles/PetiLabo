@@ -212,7 +212,7 @@
 			$titre = $this->construire_etiquette(_EDIT_LABEL_GALERIE, $nom_gal);
 			$this->html_edit->ouvrir_tableau_multiple($titre, _EDIT_COULEUR, $nom_gal);
 		}
-		protected function ajouter_legende_galerie($nom_gal, $id_legende, $nom_style, $index) {
+		protected function ajouter_vue_galerie($nom_gal, &$image, $id_legende, $nom_style, $index) {
 			$this->tmp[$index]["id_legende"] = $id_legende;
 			$this->tmp[$index]["nom_style"] = $nom_style;
 		}
@@ -230,7 +230,7 @@
 			}
 			$this->ecrire_image($image, $id_alt, $has_legende, 0, $id_legende, $nom_style, false);
 		}
-		protected function fermer_galerie($nom_gal, $vertical) {
+		protected function fermer_galerie($nom_gal, $vertical, $has_legende) {
 			$this->tmp = array();
 			$this->compteur_galerie = 0;
 			$this->html_edit->fermer_tableau();

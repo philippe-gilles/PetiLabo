@@ -49,6 +49,9 @@ class xml_page {
 					// On contrôle l'existence d'un carrousel
 					$carrousel = $this->page->lire_valeur(_PAGE_CARROUSEL);
 					if (strlen($carrousel) > 0) {$obj_contenu->set_has_bx(true);}
+					// On contrôle l'existence d'une galerie
+					$galerie = $this->page->lire_valeur(_PAGE_GALERIE);
+					if (strlen($galerie) > 0) {$obj_contenu->set_has_bx(true);}
 					// On contrôle l'existence d'un diaporama
 					$diaporama = $this->page->lire_valeur(_PAGE_DIAPORAMA);
 					if (strlen($diaporama) > 0) {$obj_contenu->set_has_rs(true);}
@@ -58,9 +61,6 @@ class xml_page {
 					// On contrôle l'existence d'une lightbox
 					$vignettes = $this->page->lire_valeur(_PAGE_VIGNETTES);
 					if (strlen($vignettes) > 0) {$obj_contenu->set_has_lb(true);}
-					// On contrôle l'existence d'une galerie
-					$galerie = $this->page->lire_valeur(_PAGE_GALERIE);
-					if (strlen($galerie) > 0) {$obj_contenu->set_has_gal(true);}
 					// On contrôle l'existence d'un formulaure de contact
 					$form_contact = $this->page->lire_valeur(_PAGE_FORM_CONTACT);
 					if (strlen($form_contact) > 0) {$obj_contenu->set_has_form(true);}

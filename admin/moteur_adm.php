@@ -219,15 +219,17 @@
 			$this->html->fermer_vignettes(null, null, null, null);
 		}
 		// Ecriture des galeries (ouvrir, ajouter, fermer)
-		protected function ouvrir_vue_galerie($nom_gal, &$image_init, $vertical) {
-			$this->html->ouvrir_vue_galerie($nom_gal, $image_init, $vertical);
+		protected function ouvrir_vue_galerie($nom_gal, $vertical) {
+			$this->html->ouvrir_vue_galerie(null, $vertical);
 		}
-		protected function ajouter_legende_galerie($nom_gal, $id_legende, $nom_style, $index) {
-			$legende = $this->texte->get_texte($id_legende, $this->langue_page);
-			$this->html->ajouter_legende_galerie($nom_gal, $legende, $nom_style, $index);
+		protected function ajouter_vue_galerie($nom_gal, &$image, $id_legende, $nom_style, $index) {
+			if ($index == 0) {
+				$legende = $this->texte->get_texte($id_legende, $this->langue_page);
+				$this->html->ajouter_vue_galerie(null, $image, $legende, $nom_style, $index);
+			}
 		}
 		protected function fermer_vue_galerie($nom_gal) {
-			$this->html->fermer_vue_galerie($nom_gal);
+			$this->html->fermer_vue_galerie(null);
 		}
 		protected function ouvrir_onglet_galerie($nom_gal, $vertical) {
 			$this->html->ouvrir_onglet_galerie($nom_gal, $vertical);
@@ -235,14 +237,14 @@
 		protected function ajouter_onglet_galerie($nom_gal, &$image, $id_alt, $index, $nb_cols) {
 			if (($image) && (!($image->get_est_vide()))) {
 				$alt = $this->texte->get_texte($id_alt, $this->langue_page);
-				$this->html->ajouter_onglet_galerie($nom_gal, $image, $alt, $index, $nb_cols);
+				$this->html->ajouter_onglet_galerie(null, $image, $alt, $index, $nb_cols);
 			}
 		}
 		protected function fermer_onglet_galerie($nom_gal) {
-			$this->html->fermer_onglet_galerie($nom_gal);
+			$this->html->fermer_onglet_galerie(null);
 		}
-		protected function fermer_galerie($nom_gal, $vertical) {
-			$this->html->fermer_galerie($nom_gal, $vertical);
+		protected function fermer_galerie($nom_gal, $vertical, $has_legende) {
+			$this->html->fermer_galerie(null, $vertical, $has_legende);
 		}
 		// Ecriture des menus (ouvrir, ajouter, fermer)
 		protected function ouvrir_menu($nom_menu, $nb_items_non_vide, $alignement) {
