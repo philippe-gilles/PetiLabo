@@ -2,7 +2,8 @@ table, td {border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;}
 /* Administration */
 .bloc {opacity:0.3;}
 /* Edition */
-.tab_edit{display:none;}
+.tab_edit_inactif{display:none;}
+.tab_edit_actif{display:block;}
 .tableau {width:100%;border:0;padding:0;margin:5px auto;}
 .cellule {padding:5px 10px;}
 .cellule_categorie {width:100px;text-align:center;}

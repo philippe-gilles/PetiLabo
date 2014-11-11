@@ -1,7 +1,6 @@
 <?php
-	inclure_site("moteur_bloc");
 
-	class moteur_contenu {
+	class xml_contenu {
 		// Propriétés
 		private $semantique = null;
 		private $signet = null;
@@ -23,7 +22,7 @@
 			if ($taille < 1) {
 				$taille = 1;
 			}
-			$this->blocs[] = new moteur_bloc($repere, $taille, $style, $position);
+			$this->blocs[] = new xml_bloc($repere, $taille, $style, $position);
 			$this->taille_totale += (int) $taille;
 		}
 

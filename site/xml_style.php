@@ -1,7 +1,4 @@
 <?php
-inclure_inc("const");
-inclure_site("xml_const", "xml_struct");
-
 define("_PADDING_INT_BLOC_TOP", "10");
 define("_PADDING_INT_BLOC_RIGHT", "10");
 define("_PADDING_INT_BLOC_BOTTOM", "10");

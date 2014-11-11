@@ -1,7 +1,5 @@
 <?php
 	require_once "inc/path.php";
-	inclure_inc("const", "param", "session");
-	inclure_site("xml_const", "xml_texte");
 	
 	// Correction pour les ancres non validées
 	function jqte_safe_string($texte) {
@@ -58,4 +56,6 @@
 		$xml_texte->enregistrer($fichier_xml);
 	}
 	// Redirection finale
-	header("Location: index.php");
+	$id_tab = $param->post(_PARAM_FRAGMENT);
+	$ret_page = preparer_redirection($session, $id_tab);
+	header("Location: ".$ret_page);

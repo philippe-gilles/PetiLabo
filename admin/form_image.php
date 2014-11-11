@@ -1,7 +1,5 @@
 <?php
 	require_once "inc/path.php";
-	inclure_inc("const", "param", "session");
-	inclure_site("xml_const", "xml_media");
 
 	class form_image {
 		private $nom_page = null;
@@ -65,6 +63,7 @@
 		$session->fermer_session();
 		exit;
 	}
+	$id_tab = $param->get(_PARAM_POINT_RETOUR);
 
 	$page = $session->get_session_param(_SESSION_PARAM_PAGE);
 	if (strlen($page) == 0) {
@@ -97,6 +96,7 @@
 			echo "<form id=\"id_suppr_image\" name=\"suppr_image\" method=\"post\" action=\"submit_image_suppr.php\">\n";
 			echo "<p class=\"champ\"><input type=\"hidden\" name=\"id_image\" value=\"".$id_image."\" /></p>\n";
 			echo "<p class=\"champ\"><input type=\"hidden\" name=\"src_image\" value=\"".$source."\" /></p>\n";
+			echo "<p class=\"champ\"><input type=\"hidden\" name=\""._PARAM_FRAGMENT."\" value=\"".$id_tab."\" /></p>\n";
 			echo "<p class=\"texte_zone\">Voulez-vous vraiment supprimer cette image ?</p>";
 			echo "<p class=\"champ\">";
 			echo "<input class=\"bouton_annul\" type=\"button\" name=\"annuler\" title=\"Annuler la suppression\" value=\"Annuler\">";
@@ -108,6 +108,7 @@
 		echo "<form id=\"id_form_image\" name=\"form_image\" enctype=\"multipart/form-data\" method=\"post\" action=\"submit_image.php\">\n";
 		echo "<p class=\"champ\"><input type=\"hidden\" name=\"id_image\" value=\"".$id_image."\" /></p>\n";
 		echo "<p class=\"champ\"><input type=\"hidden\" name=\"src_image\" value=\"".$source."\" /></p>\n";
+		echo "<p class=\"champ\"><input type=\"hidden\" name=\""._PARAM_FRAGMENT."\" value=\"".$id_tab."\" /></p>\n";
 		echo "<p class=\"champ\">\n";
 		echo "<input type=\"file\" id=\"id_upload_image\" name=\"upload_image\" onchange=\"upload('img');\" />\n";
 		echo "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"5242880\" /></p>\n";

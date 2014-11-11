@@ -1,5 +1,5 @@
 <?php
-	// Booleens
+	// Booléens
 	define("_XML_TRUE", "oui");
 	define("_XML_FALSE", "non");
 	
@@ -69,9 +69,14 @@
 	// Attributs pour le fichier XML texte
 	define("_TEXTE_ATTR_NOM", "nom");
 
-	// Balises pour le fichier XML page
+	// Balises méta pour le fichier XML page
 	define("_PAGE_META_TITRE", "meta_titre");
 	define("_PAGE_META_DESCR", "meta_descr");
+	define("_PAGE_META_TITRE_EDITABLE", "meta_titre_editable");
+	define("_PAGE_META_DESCR_EDITABLE", "meta_descr_editable");
+	define("_PAGE_META_MULTILINGUE", "meta_multilingue");
+
+	// Balises éléments pour le fichier XML page
 	define("_PAGE_CONTENU", "contenu");
 	define("_PAGE_BLOC", "bloc");
 	define("_PAGE_DRAPEAUX", "drapeaux");
@@ -94,7 +99,7 @@
 	define("_PAGE_MENTIONS_LEGALES", "mentions_legales");
 	define("_PAGE_CALENDRIER_RESA", "calendrier");
 	define("_PAGE_BANNIERE_ACTU", "banniere_actu");
-	define("_PAGE_ADDTHIS", "partage_social");
+	define("_PAGE_SOCIAL", "partage_social");
 	
 	// Attributs pour le fichier XML page
 	define("_PAGE_ATTR_CONTENU_STYLE", "style");
@@ -113,7 +118,7 @@
 	define("_PAGE_ATTR_LIEN_PJ", "lien");
 	define("_PAGE_ATTR_FORMULAIRE_STYLE", "style");
 	define("_PAGE_ATTR_SOURCE_VIDEO", "source");
-	define("_PAGE_ATTR_ADDTHIS_TAILLE", "taille");
+	define("_PAGE_ATTR_SOCIAL_TAILLE", "taille");
 	define("_PAGE_ATTR_CREDITS_TAILLE", "taille");
 	
 	// Valeurs possibles pour les attributs du fichier XML page
@@ -169,7 +174,7 @@
 	define("_MEDIA_ATTR_BOUTONS", "boutons");
 	define("_MEDIA_ATTR_LARGEUR", "largeur_standard");
 
-	// Pr�fixe et suffixe pour les icones
+	// Préfixe et suffixe pour les icones
 	define ("_MENU_PREFIXE_ICONE", "&#xf");
 	define ("_MENU_SUFFIXE_ICONE", ";");
 
@@ -275,12 +280,12 @@
 	// Attributs pour le fichier XML style
 	define("_DOCUMENT_ATTR_NOM", "nom");
 	
-	// Balises pour le module r�servations
+	// Balises pour le module réservations
 	define("_MODULE_RESA_DATE", "date");
 	define("_MODULE_RESA_ATTR_STATUT", "statut");
 	define("_MODULE_RESA_ATTR_PARTIE", "partie");
 
-	// Balises pour le module actualit�s
+	// Balises pour le module actualités
 	define("_MODULE_ACTU_SOMMAIRE_", "sommaire_");
 	define("_MODULE_ACTU_SOMMAIRE_1", "sommaire_1");
 	define("_MODULE_ACTU_SOMMAIRE_2", "sommaire_2");

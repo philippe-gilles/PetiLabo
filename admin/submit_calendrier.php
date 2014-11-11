@@ -1,7 +1,5 @@
 <?php
 	require_once "inc/path.php";
-	inclure_inc("const", "param", "session");
-	inclure_site("xml_const", "xml_module_resa");
 
 	$session = new session();
 	if (is_null($session)) {
@@ -40,4 +38,6 @@
 	}
 	
 	// Redirection finale
-	header("Location: index.php");
+	$id_tab = $param->post(_PARAM_FRAGMENT);
+	$ret_page = preparer_redirection($session, $id_tab);
+	header("Location: ".$ret_page);

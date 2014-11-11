@@ -1,6 +1,4 @@
 <?php
-inclure_inc("const");
-inclure_site("xml_const", "xml_struct");
 
 class xml_site {
 	// Propriétés issues du fichier site.xml
@@ -184,10 +182,9 @@ class xml_site {
 		return $ret;
 	}
 
-	public function extraire_css($mobile) {
+	public function extraire_css() {
 		$ret = ".exterieur {";
-		// Temporairement suspendu : if ($mobile) {$ret .= "font-size:0.8em;";}
-		if ((strlen($this->papierpeint_exterieur) > 0) && (!($mobile))) {
+		if (strlen($this->papierpeint_exterieur) > 0) {
 			$ret .= "background: url('"._XML_PATH_IMAGES_SITE.$this->papierpeint_exterieur."') no-repeat center center fixed;";
 			$ret .= "-webkit-background-size: cover;";
 			$ret .= "-moz-background-size: cover;";

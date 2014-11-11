@@ -1,7 +1,5 @@
 <?php
 	require_once "inc/path.php";
-	inclure_inc("const", "param", "session");
-	inclure_site("xml_const", "xml_document");
 
 	class form_pj {
 		private $nom_page = null;
@@ -72,6 +70,7 @@
 		$session->fermer_session();
 		exit;
 	}
+	$id_tab = $param->get(_PARAM_POINT_RETOUR);
 
 	$page = $session->get_session_param(_SESSION_PARAM_PAGE);
 	if (strlen($page) == 0) {
@@ -98,6 +97,7 @@
 		echo "<form id=\"id_form_pj\" name=\"form_pj\" enctype=\"multipart/form-data\" method=\"post\" action=\"submit_pj.php\">\n";
 		echo "<p class=\"champ\"><input type=\"hidden\" name=\"id_pj\" value=\"".$id_pj."\" /></p>\n";
 		echo "<p class=\"champ\"><input type=\"hidden\" name=\"upload_name_pj\" value=\"\" /></p>\n";
+		echo "<p class=\"champ\"><input type=\"hidden\" name=\""._PARAM_FRAGMENT."\" value=\"".$id_tab."\" /></p>\n";
 		echo "<p class=\"champ\">\n";
 		echo "<input type=\"file\" id=\"id_upload_pj\" name=\"upload_pj\" onchange=\"upload('pj');\" />\n";
 		echo "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"5242880\" /></p>\n";

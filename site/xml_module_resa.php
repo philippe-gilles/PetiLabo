@@ -1,6 +1,4 @@
 <?php
-inclure_inc("const");
-inclure_site("xml_const", "xml_struct");
 
 // Valeurs possibles des attributs
 define("_MODULE_RESA_ATTR_PARTIE_AM", "am");

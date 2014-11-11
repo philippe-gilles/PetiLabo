@@ -11,7 +11,6 @@ div,img {border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;}
 .bloc_h {vertical-align:top;}
 .bloc_m {vertical-align:middle;}
 .bloc_b {vertical-align:bottom;}
-.bloc_mobile {position:relative;text-align:center;overflow:hidden;display:block;width:auto;margin:0 auto;padding:0.25em 0.5em;}
 /* Styles de bloc */
 .bloc_scotch_hg {position:absolute;top:0;left:0;}
 .bloc_scotch_hd {position:absolute;top:0;right:0;}
@@ -32,6 +31,7 @@ div,img {border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;}
 .menu_icone_sur_label{font-family:'FontAwesome',sans-serif;font-size:250%;line-height:125%;}
 .wrap_drapeau{vertical-align:middle;}
 .drapeau{display:inline-block;background:url('../images/drapeaux.png') no-repeat;width:32px;height:32px;margin-right:3px;overflow:hidden;text-indent:32px;}
+.drapeau_inactif{display:inline-block;background:url('../images/drapeauxsombres.png') no-repeat;width:32px;height:32px;margin-right:3px;overflow:hidden;text-indent:32px;}
 /* Images et légendes */
 .image_cadre {width:100%;margin:0 auto;position:relative;}
 .image_dans_cadre {display:inline;vertical-align:middle;width:100%;}
@@ -108,6 +108,7 @@ div,img {border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;}
 .credit_cadre_img {position:relative;margin:auto;overflow:hidden;border:1px solid #666;}
 .credit_cadre_img img{position:absolute;top:0;left:0;}
 .credit_texte {text-align:justify!important;}
+.credit_copyright{text-align:center!important;}
 /* Pied de page */
 .ligne_initiale {height:1em;}
 .ligne_finale {height:6em;clear:both;}
@@ -188,7 +189,12 @@ div,img {border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;}
 .bx-wrapper .bx-caption span {color: #fff;font-family: Arial;display: block;font-size: .85em;padding: 10px;}
 div.vue_galerie_horizontale div.bx-wrapper{margin-bottom:10px!important;}
 div.vue_galerie_verticale div.bx-wrapper{margin-bottom:10!important;}
+div.vue_galerie_horizontale div.bx-wrapper div.bx-viewport {border:2px solid #fff;left:-2px;}
+div.vue_galerie_verticale div.bx-wrapper div.bx-viewport {border:1px solid #fff;left:-1px;}
+div.carrousel_admin{position:relative;overflow:hidden;text-align:left!important;}
+img.carrousel_image_admin{max-height:100%;position:absolute;top:0;}
 /* Lightbox */
+div.vignettes{text-align:center;}
 .mfp-bg {top:0;left:0;width:100%;height:100%;z-index:1042;overflow:hidden;position:fixed;background:#0b0b0b;opacity:0.8;}
 .mfp-wrap {top:0;left:0;width:100%;height:100%;z-index:1043;position:fixed;outline:none !important;-webkit-backface-visibility: hidden;}
 .mfp-container {text-align:center;position:absolute;width:100%;height:100%;left:0;top:0;padding:0 8px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box; }

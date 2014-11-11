@@ -6,23 +6,27 @@
 	<texte nom="credit_prefixe_lien"></texte>
 	<!-- Font Awesome -->
 	<texte nom="credit_titre_fa">Font Awesome</texte>
-	<texte nom="credit_texte_fa">Tous les symboles utilisés dans ce site proviennent de la police de symboles [b]Font Awesome[/b], réalisée par Dave Gandy.</texte>
+	<texte nom="credit_texte_fa">Tous les symboles utilisés dans ce site proviennent de la police de symboles &lt;b&gt;Font Awesome&lt;/b&gt;, réalisée par Dave Gandy.</texte>
 	<texte nom="credit_lien_fa">http://fortawesome.github.io/Font-Awesome</texte>
 	<!-- Responsive Slides -->
 	<texte nom="credit_titre_rs">Responsive Slides</texte>
-	<texte nom="credit_texte_rs">Les diaporamas sont mis en oeuvre au moyen de [b]Responsive Slides[/b], un module JQuery écrit par Viljami Salminen.</texte>
+	<texte nom="credit_texte_rs">Les diaporamas sont mis en oeuvre au moyen de &lt;b&gt;Responsive Slides&lt;/b&gt;, un module JQuery écrit par Viljami Salminen.</texte>
 	<texte nom="credit_lien_rs">http://responsiveslides.com</texte>
+	<!-- BX Slider -->
+	<texte nom="credit_titre_bx">BX Slider</texte>
+	<texte nom="credit_texte_bx">Depuis la version 1.3 de PetiLabo, les carrousels et les galeries sont basés sur l'excellent &lt;b&gt;BX Slider&lt;/b&gt; signé Steven Wanderski.</texte>
+	<texte nom="credit_lien_bx">http://bxslider.com/</texte>
 	<!-- Magnific Popup -->
 	<texte nom="credit_titre_mp">Magnific Popup</texte>
-	<texte nom="credit_texte_mp">Le module JQuery [b]Magnific Popup[/b] anime les galeries en [i]lightbox[/i] présentes sur le site. Ce module a été créé par Dmitry Semenov.</texte>
+	<texte nom="credit_texte_mp">Le module JQuery &lt;b&gt;Magnific Popup&lt;/b&gt; anime les galeries en [i]lightbox[/i] présentes sur le site. Ce module a été créé par Dmitry Semenov.</texte>
 	<texte nom="credit_lien_mp">http://dimsemenov.com/plugins/magnific-popup</texte>
 	<!-- Icon Drawer -->
 	<texte nom="credit_titre_id">Icon Drawer</texte>
-	<texte nom="credit_texte_id">Les drapeaux permettant de sélectionner la langue du site sont issus de la collection [b]Flag Icons[/b].</texte>
+	<texte nom="credit_texte_id">Les drapeaux permettant de sélectionner la langue du site sont issus de la collection &lt;b&gt;Flag Icons&lt;/b&gt;.</texte>
 	<texte nom="credit_lien_id">http://icondrawer.com</texte>
 	<!-- JQuery Upload -->
 	<texte nom="credit_titre_ju">JQuery Upload</texte>
-	<texte nom="credit_texte_ju">Ce site exploite également le module [b]JQuery Upload[/b] développé par Naoyuki Kanezawa.</texte>
+	<texte nom="credit_texte_ju">Ce site exploite également le module &lt;b&gt;JQuery Upload&lt;/b&gt; développé par Naoyuki Kanezawa.</texte>
 	<texte nom="credit_lien_ju">http://lagoscript.org</texte>
 	<!-- JQuery Cookie -->
 	<texte nom="credit_titre_jc">JQuery Cookie</texte>

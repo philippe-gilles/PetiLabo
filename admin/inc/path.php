@@ -3,54 +3,64 @@
 	define("_XML_PATH_ROOT", "../../xml/");
 	define("_PHP_PATH_ROOT", "../");
 	define("_PHP_PATH_INCLUDE", _PHP_PATH_ROOT."inc/");
+	define("_PHP_PATH_OBJETS", _PHP_PATH_ROOT."obj/");
 	define("_PHP_PATH_SITE", _PHP_PATH_ROOT."site/");
+	define("_PHP_PREFIXE_OBJETS", "obj_");
+	define("_PHP_PREFIXE_SITE", "xml_");
 	define("_PXP_EXT", ".php");
-	
-	// Upload des images
-	define("_UPLOAD_DOSSIER", "upload/");
-	define("_UPLOAD_FICHIER", "tmp");
-	define("_UPLOAD_EXTENSION_JPEG", "jpeg");
-	define("_UPLOAD_EXTENSION_JPG", "jpg");
-	define("_UPLOAD_EXTENSION_PNG", "png");
-	define("_UPLOAD_EXTENSION_GIF", "gif");
-	
-	// Upload des pièces jointes
-	define("_UPLOAD_EXTENSION_PJ", "pj");
 
-	// Types d'erreurs sur les fichiers uploadés
-	define("_UPLOAD_NO_ERROR", "0");
-	define("_UPLOAD_NOFILE_ERROR", "1");
-	define("_UPLOAD_MINSIZE_ERROR", "2");
-	define("_UPLOAD_MAXSIZE_ERROR", "3");
-	define("_UPLOAD_UPLOAD_ERROR", "4");
-	define("_UPLOAD_NAME_ERROR", "5");
-	define("_UPLOAD_UNKNOWN_ERROR", "6");
-	define("_UPLOAD_TYPE_ERROR", "7");
+	// Compatibilité ascendante < V2.0
+	function inclure_admin($fichier) {@require_once $fichier._PXP_EXT;}
 
-	// Types pour l'édition de texte simple
-	define("_EDIT_TYPE_COPY", "copy");
-	define("_EDIT_TYPE_ICONE", "icone");
-	define("_EDIT_TYPE_PLAN", "plan");
-	define("_EDIT_TYPE_VIDEO", "video");
-	define("_EDIT_TYPE_LIEN", "lien");
+	// Autoload >= V2.0
+    class chargeur {
+        public function __construct() {
+            spl_autoload_register(array($this, 'autoload'));
+        }
 	
-	function inclure_inc() {
-		$tab_args = func_get_args();
-		foreach ($tab_args as $fichier) {
-			require_once _PHP_PATH_INCLUDE.$fichier._PXP_EXT;
+		public function inclure_inc() {
+			$tab_args = func_get_args();
+			foreach ($tab_args as $fichier) {
+				@require_once _PHP_PATH_INCLUDE.$fichier._PXP_EXT;
+			}
 		}
+		
+		public function inclure_obj() {
+			$tab_args = func_get_args();
+			foreach ($tab_args as $fichier) {
+				@require_once _PHP_PATH_OBJETS.$fichier._PXP_EXT;
+			}
+		}
+		
+		public function inclure_site() {
+			$tab_args = func_get_args();
+			foreach ($tab_args as $fichier) {
+				@require_once _PHP_PATH_SITE.$fichier._PXP_EXT;
+			}
+		}
+
+        private function autoload($classe) {
+			$prefixe = substr($classe, 0, 4);
+			if (!(strcmp($prefixe, _PHP_PREFIXE_SITE))) {$this->inclure_site($classe);}
+			elseif (!(strcmp($prefixe, _PHP_PREFIXE_OBJETS))) {$this->inclure_obj($classe);}
+			else {$this->inclure_inc($classe);}
+        }
+    }
+
+	function preparer_redirection(&$session, $id_tab) {
+		$ret_page = "index.php";
+		if (strlen($id_tab) > 0) {
+			$ret_page .= "#".$id_tab;
+			if ($session) {$session->set_session_param(_SESSION_PARAM_FRAGMENT, $id_tab);}
+		}
+		else {
+			if ($session) {$session->unset_session_param(_SESSION_PARAM_FRAGMENT);}
+		}
+		return $ret_page;
 	}
 	
-	function inclure_site() {
-		$tab_args = func_get_args();
-		foreach ($tab_args as $fichier) {
-			require_once _PHP_PATH_SITE.$fichier._PXP_EXT;
-		}
-	}
-
-	function inclure_admin() {
-		$tab_args = func_get_args();
-		foreach ($tab_args as $fichier) {
-			require_once $fichier._PXP_EXT;
-		}
-	}
+	$chargeur = new chargeur();
+	// Chargement des constantes (pas de classes)
+	inclure_admin("inc/const");
+	$chargeur->inclure_inc("const");
+	$chargeur->inclure_site("xml_const");

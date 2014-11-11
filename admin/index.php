@@ -1,7 +1,6 @@
 <?php
 	require_once "inc/path.php";
-	inclure_inc("session");
-	inclure_admin("moteur_adm");
+	inclure_admin("moteur_admin");
 
 	$session = new session();
 	if (is_null($session)) {
@@ -16,8 +15,9 @@
 		$session->fermer_session();
 		exit;
 	}
+	$fragment = $session->get_session_param(_SESSION_PARAM_FRAGMENT);
 
-	$moteur_adm = new moteur_adm($page);
+	$moteur_adm = new moteur_admin($page, $fragment);
 	$moteur_adm->ouvrir_entete();
 	$moteur_adm->ecrire_entete();
 	$moteur_adm->fermer_entete();

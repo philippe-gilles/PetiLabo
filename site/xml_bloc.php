@@ -1,7 +1,6 @@
 <?php
-	inclure_site("xml_const");
 
-	class moteur_bloc {
+	class xml_bloc {
 		// Propriétés
 		private $repere = null;
 		private $taille = 0;
@@ -10,7 +9,6 @@
 		private $elems = array();
 		private $idx_elems = array();
 		private $nb_elems_admin = 0;
-		private $premier_titre = -1;
 
 		// Méthodes publiques
 		public function __construct($repere, $taille, $style, $position) {
@@ -22,7 +20,7 @@
 			}
 		}
 		public function ajouter_elem($balise) {
-			$tab_non_admin = array(_PAGE_DRAPEAUX, _PAGE_SAUT, _PAGE_FORM_CONTACT, _PAGE_PLAN_DU_SITE, _PAGE_CREDITS, _PAGE_MENTIONS_LEGALES);
+			$tab_non_admin = array(_PAGE_DRAPEAUX, _PAGE_SAUT, _PAGE_SOCIAL, _PAGE_FORM_CONTACT, _PAGE_PLAN_DU_SITE, _PAGE_CREDITS, _PAGE_MENTIONS_LEGALES);
 			$tab_occ = array_count_values($this->elems);
 			$nb_occ = isset($tab_occ[$balise])?(int) $tab_occ[$balise]:0;
 			$this->elems[] = $balise;
@@ -30,10 +28,6 @@
 			// On incrémente le nombre d'éléments administrables
 			if (!(in_array($balise, $tab_non_admin))) {
 				$this->nb_elems_admin += 1;
-			}
-			/* On stocke l'index du premier titre */
-			if (($this->premier_titre < 0) && (!(strcmp($balise, _PAGE_TITRE)))) {
-				$this->premier_titre = count($this->elems)-1;
 			}
 		}
 		public function set_balise_elem($index, $balise) {
@@ -52,7 +46,6 @@
 		public function get_style() {return $this->style;}
 		public function get_position() {return $this->position;}
 		public function get_nb_elems_admin() {return $this->nb_elems_admin;}
-		public function get_premier_titre() {return $this->premier_titre;}
 		
 		private function normaliser_position($param) {
 			$ret = $param;

@@ -1,7 +1,5 @@
 <?php
 	require_once "inc/path.php";
-	inclure_inc("const", "param", "session");
-	inclure_site("xml_const", "xml_media");
 
 	define("_TYPE_AJUSTEMENT_SANS", "0");
 	define("_TYPE_AJUSTEMENT_ACTUEL", "1");
@@ -310,6 +308,6 @@
 	}
 
 	// Redirection finale
-	$self = $_SERVER["PHP_SELF"];
-	$url = str_replace("submit_image.php", "index.php", $self);
-	header("Location: ".$url);
+	$id_tab = $param->post(_PARAM_FRAGMENT);
+	$ret_page = preparer_redirection($session, $id_tab);
+	header("Location: ".$ret_page);

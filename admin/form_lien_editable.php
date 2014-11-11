@@ -1,7 +1,5 @@
 <?php
 	require_once "inc/path.php";
-	inclure_inc("const", "param", "session");
-	inclure_site("xml_const", "xml_menu", "xml_texte");
 
 	class form_lien_editable {
 		private $nom_page = null;
@@ -69,6 +67,7 @@
 		$session->fermer_session();
 		exit;
 	}
+	$id_tab = $param->get(_PARAM_POINT_RETOUR);
 	$id_liste = $param->get(_PARAM_ID_LISTE);
 
 	$page = $session->get_session_param(_SESSION_PARAM_PAGE);
@@ -102,6 +101,7 @@
 	echo "</p>\n";
 	echo "<p class=\"champ\"><input type=\"hidden\" name=\"id_texte\" value=\"".$id_texte."\" /></p>\n";
 	echo "<p class=\"champ\"><input type=\"hidden\" name=\"src_texte\" value=\"".$form->get_source()."\" /></p>\n";
+	echo "<p class=\"champ\"><input type=\"hidden\" name=\""._PARAM_FRAGMENT."\" value=\"".$id_tab."\" /></p>\n";
 	echo "<p class=\"champ\"><input class=\"bouton\" type=\"submit\" name=\"valider\" value=\"Enregistrer\"></p>\n";
 	echo "</form>\n";
 	echo "</div>\n";

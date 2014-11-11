@@ -1,7 +1,5 @@
 <?php
 	require_once "inc/path.php";
-	inclure_inc("const", "param", "session");
-	inclure_site("xml_const", "xml_site", "xml_page", "xml_module_actu");
 	
 	class form_sommaire {
 		private $nom_page = null;
@@ -55,6 +53,7 @@
 		$session->fermer_session();
 		exit;
 	}
+	$id_tab = $param->get(_PARAM_POINT_RETOUR);
 
 	$page = $session->get_session_param(_SESSION_PARAM_PAGE);
 	if (strlen($page) == 0) {
@@ -78,6 +77,7 @@
 	}
 	echo "</select></p>\n";
 	echo "<p class=\"champ\"><input type=\"hidden\" name=\"id_sommaire\" value=\"".$id_sommaire."\" /></p>\n";
+	echo "<p class=\"champ\"><input type=\"hidden\" name=\""._PARAM_FRAGMENT."\" value=\"".$id_tab."\" /></p>\n";
 	echo "<p class=\"champ\"><input class=\"bouton\" type=\"submit\" name=\"valider\" value=\"Enregistrer\"></p>\n";
 	echo "</form>\n";
 	echo "</div>\n";

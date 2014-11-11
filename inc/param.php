@@ -1,15 +1,4 @@
 <?php
-	// Paramètres
-	define("_PARAM_LANGUE", "l");
-	define("_PARAM_MOBILE", "m");
-	define("_PARAM_PAGE", "page");
-	define("_PARAM_ID", "id");
-	define("_PARAM_TYPE", "t");
-	define("_PARAM_ID_LISTE", "il");
-	define("_PARAM_MDP", "mdp");
-	define("_PARAM_HASH_MDP", "sha1mdp");
-	define("_PARAM_CODE_SECRET", "cs");
-
 	class param {
 		public function get($name, $htmlentities = true) {
 			if (is_null($name)) {$ret = null;}

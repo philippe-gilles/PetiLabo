@@ -1,6 +1,11 @@
 <?php
 	@include(_PHP_PATH_ROOT."version.php");
 
+	// Constantes pour les modes d'affichage */
+	define("_PETILABO_MODE_SITE", "site");
+	define("_PETILABO_MODE_ADMIN", "admin");
+	define("_PETILABO_MODE_EDIT", "edit");
+
 	// Constantes générales
 	define("_HTTP_LOG_PREFIXE", "log");
 	define("_HTTP_LOG_ADMIN", "admin");
@@ -69,6 +74,17 @@
 	// Nom de l'image vide
 	define("_IMAGE_VIDE_1X1", "vide-1x1");
 	define("_ADMIN_IMAGE_VIDE", "admin-image-vide.png");
-	define("_ADMIN_IMAGE_VIDE_LARGEUR_MIN", "32");
-	define("_ADMIN_IMAGE_VIDE_HAUTEUR_MIN", "32");
+	
+	// Paramètres
+	define("_PARAM_LANGUE", "l");
+	define("_PARAM_MOBILE", "m");
+	define("_PARAM_PAGE", "page");
+	define("_PARAM_ID", "id");
+	define("_PARAM_TYPE", "t");
+	define("_PARAM_POINT_RETOUR", "pr");
+	define("_PARAM_FRAGMENT", "id_tab_pr");
+	define("_PARAM_ID_LISTE", "il");
+	define("_PARAM_MDP", "mdp");
+	define("_PARAM_HASH_MDP", "sha1mdp");
+	define("_PARAM_CODE_SECRET", "cs");
 	

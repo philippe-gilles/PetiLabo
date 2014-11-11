@@ -1,6 +1,4 @@
 <?php
-inclure_inc("const");
-inclure_site("xml_const", "xml_struct");
 
 class document {
 	// Propriétés

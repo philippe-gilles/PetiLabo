@@ -12,6 +12,7 @@
 	define("_SESSION_PARAM_ID", "log");
 	define("_SESSION_PARAM_TIME", "time");
 	define("_SESSION_PARAM_PAGE", "page");
+	define("_SESSION_PARAM_FRAGMENT", "fragment");
 	define("_SESSION_TIMEOUT", "600");
 	define("_SESSION_COOKIE_LIFETIME", "3600");
 	define("_SESSION_URL_FERMETURE", _PHP_PATH_ROOT."../index.php");
@@ -84,6 +85,9 @@
 				$ret = $value;
 			}
 			return $ret;
+		}
+		public function unset_session_param($name) {
+			if (strlen($name) > 0) {unset($_SESSION[$name]);}
 		}
 		public function checksum_sessid($id) {
 			$ret = (int) 0;

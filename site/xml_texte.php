@@ -1,6 +1,4 @@
 <?php
-inclure_inc("const");
-inclure_site("xml_const", "xml_struct");
 
 define("_MODULE_ACTU_TITRE", "titre_actu_");
 define("_MODULE_ACTU_SOUS_TITRE", "sous_titre_actu_");

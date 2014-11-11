@@ -1,7 +1,6 @@
 <?php
 
 	require_once "inc/path.php";
-	inclure_inc("const", "param", "session");
 
 	function get_extension($fichier) {
 		$ext = strtolower(pathinfo($fichier, PATHINFO_EXTENSION));

@@ -1,7 +1,5 @@
 <?php
 	require_once "inc/path.php";
-	inclure_inc("const", "param", "session");
-	inclure_site("xml_const", "xml_media");
 
 	$session = new session();
 	if (is_null($session)) {
@@ -53,6 +51,6 @@
 	if ($img_media) {$img_media->set_vide();}
 
 	// Redirection finale
-	$self = $_SERVER["PHP_SELF"];
-	$url = str_replace("submit_image_suppr.php", "index.php", $self);
-	header("Location: ".$url);
+	$id_tab = $param->post(_PARAM_FRAGMENT);
+	$ret_page = preparer_redirection($session, $id_tab);
+	header("Location: ".$ret_page);

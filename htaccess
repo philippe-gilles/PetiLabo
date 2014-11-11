@@ -1,0 +1,23 @@
+# .htaccess PetiLabo v2.0
+SetEnv PHP_VER 5_4
+SetEnv REGISTER_GLOBALS 0
+
+Options +FollowSymlinks
+Options -Indexes
+
+RewriteEngine on
+
+# Redirection de la page d'accueil vers index.php
+# afin d'éviter le duplicate content entre / et /index.php
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^(.*)$ http://%{HTTP_HOST}/index.php [L,R=301]
+
+# Redirection du nom de domaine vers le sous-domaine www
+# afin d'éviter le duplicate content entre les deux adresses
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+
+# Réécriture d'URL pour le référencement multilingue
+RewriteRule ^(en|es|it|de|nl|pt)$ index.php?l=$1 [QSA,L]
+RewriteRule ^(en|es|it|de|nl|pt)/$ index.php?l=$1 [QSA,L]
+RewriteRule ^(en|es|it|de|nl|pt)/(.*)$ $2?l=$1 [QSA,L]

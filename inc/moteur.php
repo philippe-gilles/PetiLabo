@@ -1,12 +1,6 @@
 <?php
-	inclure_inc("html", "param");
-	inclure_site("xml_site", "xml_style", "xml_texte", "xml_document", "xml_media", "xml_menu", "xml_page");
-	inclure_site("xml_module_actu", "xml_module_resa");
-
 	class moteur {
-		// Propriétés
-		protected $nom_domaine = null;protected $nom_page = null;
-		protected $mobile = false;
+		protected $nom_domaine = null;protected $nom_page = null;protected $dir_page = null;
 		protected $html = null;
 		protected $site = null;
 		protected $texte = null;protected $style = null;protected $document = null;
@@ -62,7 +56,7 @@
 			$ret = $this->document->ouvrir(_XML_PATH._XML_DOCUMENT._XML_EXT);
 			$ret = $this->document->ouvrir(_XML_PATH_PAGES.$this->nom_page."/"._XML_DOCUMENT._XML_EXT);
 			// Ouverture des médiathèques
-			$this->media = new xml_media($this->mobile);
+			$this->media = new xml_media();
 			$ret = $this->media->ouvrir(_XML_SOURCE_SITE, _XML_PATH._XML_MEDIA._XML_EXT);
 			$ret = $this->media->ouvrir(_XML_SOURCE_PAGE, _XML_PATH_PAGES.$this->nom_page."/"._XML_MEDIA._XML_EXT);
 			if ($this->site->has_module(_SITE_MODULE_ACTU)) {
@@ -86,26 +80,24 @@
 			$this->est_pied_interne = (strcmp($this->site->get_pied_de_page(),_SITE_PIED_DE_PAGE_INTERNE))?false:true;
 			$this->est_pied_reduit = (strcmp($this->site->get_pied_de_page(),_SITE_PIED_DE_PAGE_REDUIT))?false:true;
 			// Création de l'utilitaire html
-			$this->html = new html($this->mobile, $this->est_pied_interne, $this->est_pied_reduit);
+			$this->html = new html($this->est_pied_interne, $this->est_pied_reduit);
 		}
 		protected function charger_xml_css($admin = false) {
 			// Surcharge du fichier CSS standard
 			$this->html->charger_xml_css();
 			// CSS général
 			$css = "";
-			if ($this->site) {$css .= $this->site->extraire_css($this->mobile);}
+			if ($this->site) {$css .= $this->site->extraire_css();}
 			if ($this->style) {$css .= $this->style->extraire_css();}
 			// Si c'est pour administration on désactive les hover
 			if ($this->menu) {$css .= $this->menu->extraire_css(!($admin));}
 			if ($this->media) {$css .= $this->media->extraire_css();}
 			$this->html->ecrire_css($css);
-			// Spécifique IE7/IE8 (quand site non mobile)
-			if (!($this->mobile)) {
-				$css_ie = "";
-				if ($this->site) {$css_ie .= $this->site->extraire_css_ie();}
-				if ($this->style) {$css_ie .= $this->style->extraire_css_ie();}
-				$this->html->ecrire_css_ie($css_ie);
-			}
+			// Spécifique IE7/IE8
+			$css_ie = "";
+			if ($this->site) {$css_ie .= $this->site->extraire_css_ie();}
+			if ($this->style) {$css_ie .= $this->style->extraire_css_ie();}
+			$this->html->ecrire_css_ie($css_ie);
 		}
 		protected function charger_xml_js($admin = false) {
 			if (!($admin)) {$this->html->charger_xml_js();}
@@ -151,7 +143,8 @@
 		// Les méthodes d'écriture se contentent de parser les paramètres
 		// propres à ce type de contenu afin de les transmettre à des  
 		// méthodes génériques qui sont à implémenter dans les classes filles
-		protected function ecrire_bloc(&$obj_bloc, $cpt_cont, $cpt_bloc) {
+		protected function ecrire_bloc($mode, &$obj_bloc, $cpt_cont, $cpt_bloc) {
+			$tab_obj = array();
 			$repere = $obj_bloc->get_repere();
 			if ($repere) {
 				$this->page->pointer_sur_bloc($repere);
@@ -161,34 +154,36 @@
 					$occ = $obj_bloc->get_idx_elem($cpt_elem);
 					try {
 						$fonction = "ecrire_bloc_".$balise;
-						$this->$fonction($occ);
+						$obj = $this->$fonction($mode, $occ);
+						if ($obj) {$tab_obj[] = $obj;}
 					}
 					catch (Exception $e) {
 						echo $e->getMessage(), "\n";
 					}
 				}
 			}
+			return $tab_obj;
 		}
 
-		// Ecriture des titres : parsing + appel à la fonction fille
-		protected function ecrire_bloc_titre($occ) {
+		// Ecriture des titres
+		protected function ecrire_bloc_titre($mode, $occ) {
+			// Lecture de l'id texte
 			$id_valeur = $this->page->lire_valeur_n(_PAGE_TITRE, $occ);
 			$id_texte = $this->parser_id_crochets_actu($id_valeur);
 			// Lecture de l'attribut "niveau"
 			$niveau = (int) $this->page->lire_attribut_n(_PAGE_TITRE, $occ, _PAGE_ATTR_NIVEAU_TITRE);
-			$niveau = ($niveau)?$niveau:1;
-			$niveau = ($niveau < 1)?1:$niveau;
-			$niveau = ($niveau > 3)?3:$niveau;
+			$niveau = min(max($niveau, 1), 3);
 			// Lecture de l'attribut "style"
 			$style_inline = $this->page->lire_attribut_n(_PAGE_TITRE, $occ, _PAGE_ATTR_STYLE_PARAGRAPHE);
 			$style_titre = (strlen($style_inline) > 0)?$style_inline:$this->site->get_style_titre($niveau);
-			$this->ecrire_titre($niveau, $style_titre, $id_texte);
+			// Création de l'objet "titre"
+			$obj = new obj_titre($this->texte, $niveau, $style_titre, $id_texte);
+			if ($obj) {$obj->afficher($mode, $this->langue_page);}
+			return $obj;
 		}
-		protected function ecrire_titre($niveau, $style_titre, $id_texte) {return true;}
-		protected function ecrire_bloc_titre_bandeau($occ) {return true;}
-
-		// Ecriture des paragraphes : parsing + appel à la fonction fille
-		protected function ecrire_bloc_paragraphe($occ) {
+		// Ecriture des paragraphes
+		protected function ecrire_bloc_paragraphe($mode, $occ) {
+			// Lecture de l'id texte
 			$id_valeur = $this->page->lire_valeur_n(_PAGE_PARAGRAPHE, $occ);
 			$id_texte = $this->parser_id_crochets_actu($id_valeur);
 			// Lecture de l'attribut "style"
@@ -196,466 +191,312 @@
 			$style = (strlen($style_inline) > 0)?$style_inline:$this->site->get_style_paragraphe();
 			// Lecture du lien téléphonique
 			$lien_telephonique = $this->page->lire_attribut_n(_PAGE_PARAGRAPHE, $occ, _PAGE_ATTR_LIEN_TELEPHONIQUE);
-			$this->ecrire_paragraphe($style, $id_texte, $lien_telephonique);
+			// Création de l'objet "paragraphe"
+			$obj = new obj_paragraphe($this->texte, $style, $id_texte, $lien_telephonique);
+			if ($obj) {$obj->afficher($mode, $this->langue_page);}
+			return $obj;
 		}
-		protected function ecrire_paragraphe($style, $id_texte, $lien_telephonique) {return true;}
-
-		// Ecriture des sauts : parsing + appel à la fonction fille
-		protected function ecrire_bloc_saut($occ) {
+		// Ecriture des sauts
+		protected function ecrire_bloc_saut($mode, $occ) {
+			// Lecture de la hauteur
 			$h_saut = (float) $this->page->lire_valeur_n(_PAGE_SAUT, $occ);
-			$this->ecrire_saut($h_saut);
+			// Création de l'objet "saut"
+			$obj = new obj_saut($h_saut);
+			if ($obj) {$obj->afficher($mode, $this->langue_page);}
+			return $obj;
 		}
-		protected function ecrire_saut($hauteur) {return true;}
-
-		// Ecriture des images : parsing + appel à la fonction fille
-		protected function ecrire_bloc_image($occ) {
+		// Ecriture des images
+		protected function ecrire_bloc_image($mode, $occ) {
+			// Lecture de l'id image
 			$valeur = $this->page->lire_valeur_n(_PAGE_IMAGE, $occ);
 			$src = $this->parser_id_crochets_actu($valeur);
 			$image = $this->media->get_image($src);
-			if ($image) {
-				// On récupère le alt éventuel
-				$id_alt = $image->get_alt();
-				// On vérifie s'il faut passer une légende ou non
-				$has_legende = false;$niveau_legende = 0;
-				$est_exterieur = false;$legende = "";
-				$nom_style = "rscaption";
-				$id_legende = $image->get_legende();
-				if (strlen($id_legende) > 0) {
-					$has_legende = true;
-					$nom_style = $image->get_style_legende();
-					if (strlen($nom_style) > 0) {
-						$style = $this->media->get_style($nom_style);
-						if ($style) {
-							$niveau_legende = $style->get_niveau_titre();
-							$est_exterieur = $style->get_est_exterieur();
-							$survol = $style->get_survol();
-							if ($survol) {
-								// Le survol est désactivé pour la version mobile
-								if (!($this->mobile)) {
-									$nom_style .= " "._CSS_CLASSE_SURVOL;
-								}
-							}
-							$style_texte = $style->get_style_texte();
-							if (strlen($style_texte) > 0) {
-								$nom_style .= " "._CSS_PREFIXE_TEXTE.$style_texte;
-							}
-						}
-					}
-				}
-				$this->ecrire_image($image, $id_alt, $has_legende, $niveau_legende, $id_legende, $nom_style, $est_exterieur);
-			}
+			if (!($image)) {return null;}
+			// Création de l'objet "image"
+			$obj = $this->parser_image($image);
+			if ($obj) {$obj->afficher($mode, $this->langue_page);}
+			return $obj;
 		}
-		protected function ecrire_image(&$image, $id_alt, $has_legende, $niveau_legende, $id_legende, $nom_style, $est_exterieur) {return true;}
-
-		// Ecriture des diaporamas : parsing + appel aux fonctions filles (ouvrir, ajouter, fermer)
-		protected function ecrire_bloc_diaporama($occ) {
+		// Ecriture des diaporamas
+		protected function ecrire_bloc_diaporama($mode, $occ) {
+			// Lecture de l'id galerie
 			$val_gal = $this->page->lire_valeur_n(_PAGE_DIAPORAMA, $occ);
 			$nom_gal = $this->parser_id_crochets_actu($val_gal);
 			$gal = $this->media->get_galerie($nom_gal);
-			if ($gal) {
-				$nb_images = $gal->get_nb_elems();
-				$navigation = $this->page->lire_attribut_n(_PAGE_DIAPORAMA, $occ, _MEDIA_ATTR_NAVIGATION);
-				$has_navigation = (!(strcmp(trim(strtolower($navigation)), _XML_TRUE)))?true:false;
-				$boutons = $this->page->lire_attribut_n(_PAGE_DIAPORAMA, $occ, _MEDIA_ATTR_BOUTONS);
-				$has_boutons = (!(strcmp(trim(strtolower($boutons)), _XML_TRUE)))?true:false;
-				// Détection préalable de la largeur max
-				$largeur_max = 0;
-				for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
-					$nom_image = $gal->get_elem($cpt_img);
-					$image = $this->media->get_image($nom_image);
-					if ($image) {
-						$largeur = $image->get_width();
-						$largeur_max = ($largeur > $largeur_max)?$largeur:$largeur_max;
-					}
-				}
-				$this->ouvrir_diaporama($nom_gal, $largeur_max);
-				for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
-					$nom_image = $gal->get_elem($cpt_img);
-					$image = $this->media->get_image($nom_image);
-					if ($image) {
-						// On récupère le alt éventuel
-						$id_alt = $image->get_alt();
-						// On vérifie s'il faut passer une légende ou non
-						$has_legende = false;
-						$est_exterieur = false;
-						$nom_style = "rscaption";
-						$id_legende = $image->get_legende();
-						if (strlen($id_legende) > 0) {
-							$has_legende = true;
-							$nom_style = $image->get_style_legende();
-							$est_exterieur = false;
-							if (strlen($nom_style) > 0) {
-								$style = $this->media->get_style($nom_style);
-								if ($style) {
-									$survol = $style->get_survol();
-									if ($survol) {
-										// Le survol est désactivé pour la version mobile
-										if (!($this->mobile)) {
-											$nom_style .= " "._CSS_CLASSE_SURVOL;
-										}
-									}
-									$style_texte = $style->get_style_texte();
-									if (strlen($style_texte) > 0) {
-										$nom_style .= " "._CSS_PREFIXE_TEXTE.$style_texte;
-									}
-									$est_exterieur = $style->get_est_exterieur();
-								}
-							}
-						}
-						$this->ajouter_diaporama($image, $id_alt, $has_legende, $id_legende, $nom_style, $est_exterieur);
-					}
-				}
-				$this->fermer_diaporama($nom_gal, $has_navigation, $has_boutons, $largeur_max);
+			if (!($gal)) {return null;}
+			// Lecture de l'attribut "navigation"
+			$navigation = $this->page->lire_attribut_n(_PAGE_DIAPORAMA, $occ, _MEDIA_ATTR_NAVIGATION);
+			$has_navigation = (!(strcmp(trim(strtolower($navigation)), _XML_TRUE)))?true:false;
+			// Lecture de l'attribut "boutons"
+			$boutons = $this->page->lire_attribut_n(_PAGE_DIAPORAMA, $occ, _MEDIA_ATTR_BOUTONS);
+			$has_boutons = (!(strcmp(trim(strtolower($boutons)), _XML_TRUE)))?true:false;
+			// Création de l'objet diaporama
+			$obj = new obj_diaporama($this->texte, $nom_gal, $has_navigation, $has_boutons);
+			if (!($obj)) {return null;}
+			// Lecture des images
+			$largeur_max = 0;
+			$nb_images = $gal->get_nb_elems();
+			for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
+				$nom_image = $gal->get_elem($cpt_img);
+				$image = $this->media->get_image($nom_image);
+				if (!($image)) {continue;}
+				// Calcul de la largeur max
+				$largeur = $image->get_width();
+				$largeur_max = ($largeur > $largeur_max)?$largeur:$largeur_max;
+				// Création de l'objet "image"
+				$obj_image = $this->parser_image($image);
+				if ($obj_image) {$obj->ajouter_image($obj_image);}
 			}
+			$obj->afficher($mode, $this->langue_page, $largeur_max);
+			return $obj;
 		}
-		protected function ouvrir_diaporama($nom_gal, $largeur_max) {return true;}
-		protected function ajouter_diaporama(&$image, $id_alt, $has_legende, $id_legende, $nom_style, $est_exterieur) {return true;}
-		protected function fermer_diaporama($nom_gal, $has_navigation, $has_boutons, $largeur_max) {return true;}
-
-		// Ecriture des diaporamas : parsing + appel aux fonctions filles (ouvrir, ajouter, fermer)
-		protected function ecrire_bloc_carrousel($occ) {
+		// Ecriture des carrousels
+		protected function ecrire_bloc_carrousel($mode, $occ) {
+			// Lecture de l'id galerie
 			$val_gal = $this->page->lire_valeur_n(_PAGE_CARROUSEL, $occ);
 			$nom_gal = $this->parser_id_crochets_actu($val_gal);
 			$gal = $this->media->get_galerie($nom_gal);
-			if ($gal) {
-				$nb_images = $gal->get_nb_elems();
-				$navigation = $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _MEDIA_ATTR_NAVIGATION);
-				$has_navigation = (!(strcmp(trim(strtolower($navigation)), _XML_TRUE)))?true:false;
-				$boutons = $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _MEDIA_ATTR_BOUTONS);
-				$has_boutons = (!(strcmp(trim(strtolower($boutons)), _XML_TRUE)))?true:false;
-				$largeur_max = (int) $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _MEDIA_ATTR_LARGEUR);
-				$nb_cols = (int) $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _PAGE_ATTR_NBCOLS_VIGNETTE);
-				$this->ouvrir_carrousel($nom_gal);
-				$no_img = 0;
-				for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
-					$nom_image = $gal->get_elem($cpt_img);
-					$image = $this->media->get_image($nom_image);
-					if ($image) {
-						// On récupère le alt éventuel
-						$id_alt = $image->get_alt();
-						$this->ajouter_carrousel($no_img, $image, $id_alt, $largeur_max);
-						$no_img += 1;
-					}
-				}
-				$this->fermer_carrousel($nom_gal, $has_navigation, $has_boutons, $largeur_max, $nb_cols);
+			if (!($gal)) {return null;}
+			// Lecture de l'attribut "navigation"
+			$navigation = $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _MEDIA_ATTR_NAVIGATION);
+			$has_navigation = (!(strcmp(trim(strtolower($navigation)), _XML_TRUE)))?true:false;
+			// Lecture de l'attribut "boutons"
+			$boutons = $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _MEDIA_ATTR_BOUTONS);
+			$has_boutons = (!(strcmp(trim(strtolower($boutons)), _XML_TRUE)))?true:false;
+			// Lecture de l'attribut "largeur_standard"
+			$largeur_max = (int) $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _MEDIA_ATTR_LARGEUR);
+			// Lecture de l'attribut "nbcols"
+			$nb_cols = (int) $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _PAGE_ATTR_NBCOLS_VIGNETTE);
+			// Création de l'objet carrousel
+			$obj = new obj_carrousel($this->texte, $nom_gal, $has_navigation, $has_boutons, $largeur_max, $nb_cols);
+			if (!($obj)) {return null;}
+			$nb_images = $gal->get_nb_elems();
+			for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
+				$nom_image = $gal->get_elem($cpt_img);
+				$image = $this->media->get_image($nom_image);
+				if (!($image)) {continue;}
+				// Création de l'objet "image"
+				$obj_image = $this->parser_image($image);
+				if ($obj_image) {$obj->ajouter_image($obj_image);}
 			}
+			$obj->afficher($mode, $this->langue_page);
+			return $obj;
 		}
-		protected function ouvrir_carrousel($nom_gal) {return true;}
-		protected function ajouter_carrousel($no_img, &$image, $id_alt, $largeur_max) {return true;}
-		protected function fermer_carrousel($nom_gal, $has_navigation, $has_boutons, $largeur_max, $nb_cols) {return true;}
-
-		// Ecriture des vignettes : parsing + appel aux fonctions filles (ouvrir, ajouter, fermer)
-		protected function ecrire_bloc_vignettes($occ) {
+		// Ecriture des vignettes
+		protected function ecrire_bloc_vignettes($mode, $occ) {
+			// Lecture de l'id galerie
 			$val_gal = $this->page->lire_valeur_n(_PAGE_VIGNETTES, $occ);
 			$nom_gal = $this->parser_id_crochets_actu($val_gal);
-			$nb_cols = $this->page->lire_attribut_n(_PAGE_VIGNETTES, $occ, _PAGE_ATTR_NBCOLS_VIGNETTE);
-			$nb_cols = ($nb_cols)?$nb_cols:1;
-			$nb_cols = ($nb_cols < 1)?1:$nb_cols;
 			$gal = $this->media->get_galerie($nom_gal);
-			if ($gal) {
-				$this->ouvrir_vignettes($nom_gal);
-				$nb_images = $gal->get_nb_elems();
-				for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
-					$nom_image = $gal->get_elem($cpt_img);
-					$image = $this->media->get_image($nom_image);
-					if ($image) {
-						$id_legende = $image->get_legende();
-						$src_vignette = ($image->get_est_vide())?null:$image->get_src_reduite();
-						$this->ajouter_vignette($nom_image, $src_vignette, $image->get_src(), $id_legende, $nb_cols);
-					}
-				}
-				$this->fermer_vignettes($nom_gal);
+			if (!($gal)) {return null;}
+			// Lecture de l'attribut "nbcols"
+			$cols = $this->page->lire_attribut_n(_PAGE_VIGNETTES, $occ, _PAGE_ATTR_NBCOLS_VIGNETTE);
+			$nb_cols = max($cols, 1);
+			// Création de l'objet vignettes
+			$obj = new obj_vignettes($this->texte, $nom_gal, $nb_cols);
+			if (!($obj)) {return null;}
+			$nb_images = $gal->get_nb_elems();
+			for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
+				$nom_image = $gal->get_elem($cpt_img);
+				$image = $this->media->get_image($nom_image);
+				if (!($image)) {continue;}
+				// Création de l'objet "image"
+				$obj_image = $this->parser_image($image);
+				if ($obj_image) {$obj->ajouter_image($obj_image);}
 			}
+			$obj->afficher($mode, $this->langue_page);
+			return $obj;
 		}
-		protected function ouvrir_vignettes($nom_gal) {return true;}
-		protected function ajouter_vignette($nom_image, $src, $lien, $id_info, $nb_cols) {return true;}
-		protected function fermer_vignettes($nom_gal) {return true;}
-
-		// Ecriture des galeries : parsing + appel aux fonctions filles (ouvrir, ajouter, fermer)
-		protected function ecrire_bloc_galerie($occ) {
+		// Ecriture des galeries
+		protected function ecrire_bloc_galerie($mode, $occ) {
+			// Lecture de l'id galerie
 			$val_gal = $this->page->lire_valeur_n(_PAGE_GALERIE, $occ);
 			$nom_gal = $this->parser_id_crochets_actu($val_gal);
-			$nb_cols = $this->page->lire_attribut_n(_PAGE_GALERIE, $occ, _PAGE_ATTR_NBCOLS_GALERIE);
-			$nb_cols = ($nb_cols)?$nb_cols:1;
-			$nb_cols = ($nb_cols < 1)?1:$nb_cols;
-			// On force la position haut pour la version mobile
-			$position = ($this->mobile)?_PAGE_ATTR_POSITION_HAUT:$this->page->lire_attribut_n(_PAGE_GALERIE, $occ, _PAGE_ATTR_POSITION_GALERIE);
+			$gal = $this->media->get_galerie($nom_gal);
+			if (!($gal)) {return null;}
+			// Lecture de l'attribut "navigation"
+			$navigation = $this->page->lire_attribut_n(_PAGE_GALERIE, $occ, _MEDIA_ATTR_NAVIGATION);
+			$has_navigation = (!(strcmp(trim(strtolower($navigation)), _XML_TRUE)))?true:false;
+			// Lecture de l'attribut "boutons"
+			$boutons = $this->page->lire_attribut_n(_PAGE_GALERIE, $occ, _MEDIA_ATTR_BOUTONS);
+			$has_boutons = (!(strcmp(trim(strtolower($boutons)), _XML_TRUE)))?true:false;
+			// Lecture de l'attribut "nbcols"
+			$cols = $this->page->lire_attribut_n(_PAGE_GALERIE, $occ, _PAGE_ATTR_NBCOLS_VIGNETTE);
+			$nb_cols = max($cols, 1);
+			// Lecture de l'attribut "position"
+			$position = $this->page->lire_attribut_n(_PAGE_GALERIE, $occ, _PAGE_ATTR_POSITION_GALERIE);
+			// Création de l'objet galerie
+			$obj = new obj_galerie($this->texte, $nom_gal, $has_navigation, $has_boutons, $nb_cols);
+			if (!($obj)) {return null;}
+			$nb_images = $gal->get_nb_elems();
+			for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
+				$nom_image = $gal->get_elem($cpt_img);
+				$image = $this->media->get_image($nom_image);
+				if (!($image)) {continue;}
+				// Création de l'objet "image"
+				$obj_image = $this->parser_image($image);
+				if ($obj_image) {$obj->ajouter_image($obj_image);}
+			}
+			// Affichage de la galerie en fonction de la position
 			switch ($position) {
 				case _PAGE_ATTR_POSITION_DROITE :
-					$this->ouvrir_galerie($nom_gal, true);
-					$this->ecrire_onglet_galerie($nom_gal, $nb_cols, true);
-					$has_legende = $this->ecrire_vue_galerie($nom_gal, true);
-					$this->fermer_galerie($nom_gal, true, $has_legende);
+					$obj->afficher($mode, $this->langue_page, true, false);
 					break;
 				case _PAGE_ATTR_POSITION_BAS :
-					$this->ouvrir_galerie($nom_gal, false);
-					$this->ecrire_onglet_galerie($nom_gal, $nb_cols, false);
-					$has_legende = $this->ecrire_vue_galerie($nom_gal, false);
-					$this->fermer_galerie($nom_gal, false, $has_legende);
+					$obj->afficher($mode, $this->langue_page, false, false);
 					break;
 				case _PAGE_ATTR_POSITION_GAUCHE :
-					$this->ouvrir_galerie($nom_gal, true);
-					$has_legende = $this->ecrire_vue_galerie($nom_gal, true);
-					$this->ecrire_onglet_galerie($nom_gal, $nb_cols, true);
-					$this->fermer_galerie($nom_gal, true, $has_legende);
+					$obj->afficher($mode, $this->langue_page, true, true);
 					break;
-				case _PAGE_ATTR_POSITION_HAUT :
 				default :
-					$this->ouvrir_galerie($nom_gal, false);
-					$has_legende = $this->ecrire_vue_galerie($nom_gal, false);
-					$this->ecrire_onglet_galerie($nom_gal, $nb_cols, false);
-					$this->fermer_galerie($nom_gal, false, $has_legende);
+					$obj->afficher($mode, $this->langue_page, false, true);
 					break;
 			}
+			return $obj;
 		}
-		protected function ecrire_vue_galerie($nom_gal, $vertical) {
-			$has_legende = false;
-			$gal = $this->media->get_galerie($nom_gal);
-			if ($gal) {
-				$nb_images = $gal->get_nb_elems();
-				if ($nb_images > 0) {
-					$this->ouvrir_vue_galerie($nom_gal, $vertical);
-					$idx_photo = 0;
-					for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
-						$nom_image = $gal->get_elem($cpt_img);
-						$image = $this->media->get_image($nom_image);
-						if (($image) && (!($image->get_est_vide()))) {
-							$id_legende = $image->get_legende();
-							if (strlen($id_legende) > 0) {
-								$has_legende = true;
-								$nom_style = $image->get_style_legende();
-								if (strlen($nom_style) > 0) {
-									$style = $this->media->get_style($nom_style);
-									if ($style) {
-										$survol = $style->get_survol();
-										if ($survol) {
-											// Le survol est désactivé pour la version mobile
-											if (!($this->mobile)) {
-												$nom_style .= " "._CSS_CLASSE_SURVOL;
-											}
-										}
-										$style_texte = $style->get_style_texte();
-										if (strlen($style_texte) > 0) {
-											$nom_style .= " "._CSS_PREFIXE_TEXTE.$style_texte;
-										}
-									}
-								}
-								else {
-									$nom_style = "bxcaption";
-								}
-								$this->ajouter_vue_galerie($nom_gal, $image, $id_legende, $nom_style, $idx_photo);
-							}
-							else {
-								$this->ajouter_vue_galerie($nom_gal, $image, null, null, $idx_photo);
-							}
-							$idx_photo += 1;
-						}
-					}
-					$this->fermer_vue_galerie($nom_gal);
-				}
-			}
-			return $has_legende;
-		}
-		protected function ecrire_onglet_galerie($nom_gal, $nb_cols, $vertical) {
-			$gal = $this->media->get_galerie($nom_gal);
-			if ($gal) {
-				$nb_images = $gal->get_nb_elems();
-				if ($nb_images > 0) {
-					$this->ouvrir_onglet_galerie($nom_gal, $vertical);
-					$idx_photo = 0;
-					for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
-						$nom_image = $gal->get_elem($cpt_img);
-						$image = $this->media->get_image($nom_image);
-						if ($image) {
-							$id_alt = $image->get_alt();
-							$this->ajouter_onglet_galerie($nom_gal, $image, $id_alt, $idx_photo, $nb_cols);
-							if (!($image->get_est_vide())) {$idx_photo += 1;}
-						}
-					}
-					$this->fermer_onglet_galerie($nom_gal);
-				}
-			}
-		}
-		protected function ouvrir_galerie($nom_gal, $vertical) {return true;}
-		protected function ouvrir_vue_galerie($nom_gal, $vertical) {return true;}
-		protected function ajouter_vue_galerie($nom_gal, &$image, $id_legende, $nom_style, $index) {return true;}
-		protected function fermer_vue_galerie($nom_gal) {return true;}
-		protected function ouvrir_onglet_galerie($nom_gal, $vertical) {return true;}
-		protected function ajouter_onglet_galerie($nom_gal, &$image, $id_alt, $index, $nb_cols) {return true;}
-		protected function fermer_onglet_galerie($nom_gal) {return true;}
-		protected function fermer_galerie($nom_gal, $vertical, $has_legende) {return true;}
-
-		// Ecriture des menus : parsing + appel aux fonctions filles (ouvrir, ajouter, fermer)
-		protected function ecrire_bloc_menu($occ) {
+		// Ecriture des menus
+		protected function ecrire_bloc_menu($mode, $occ) {
+			// Lecture de l'id menu
 			$val_menu = $this->page->lire_valeur_n(_PAGE_MENU, $occ);
 			$nom_menu = $this->parser_id_crochets_actu($val_menu);
-			$alignement = $this->page->lire_attribut_n(_PAGE_MENU, $occ, _PAGE_ATTR_ALIGNEMENT);
 			$menu = $this->menu->get_menu($nom_menu);
-			if ($menu) {
-				// Création du menu
-				$nb_items_non_vides = $this->get_nb_items_non_vide($menu);
-				$this->ouvrir_menu($nom_menu, $nb_items_non_vides, $alignement);
-				$nb_items = $menu->get_nb_items();
-				for ($cpt = 0;$cpt < $nb_items; $cpt++) {
-					$cle_item = (string) $menu->get_item($cpt);
-					$item = $this->menu->get_item($cle_item);
-					if ($item) {
-						$id_label_brut = $item->get_label();
-						$id_label = $this->parser_id_crochets_actu($id_label_brut);
-						$id_icone = $item->get_icone();
-						$lien_brut = $item->get_lien();
-						$lien_simple = $this->parser_lien_crochets_actu($lien_brut);
-						$lien_editable = $item->get_lien_editable();
-						$is_editable = (strlen($lien_editable) > 0)?true:false;
-						if ($is_editable) {
-							$lien = $lien_editable;
-							$id_liste = $item->get_liste_cibles();
-						}
-						else {
-							$lien = $lien_simple;
-							$id_liste = null;
-						}
-						$id_info = $item->get_info();
-						$style = $item->get_style();
-						// On rajoute éventuellement le style texte
-						$style_menu = $this->menu->get_style($style);
-						if ($style_menu) {
-							$style_texte = $style_menu->get_style_texte();
-							if (strlen($style_texte) > 0) {
-								$pref_style = (strlen($id_label) > 0)?_CSS_PREFIXE_TEXTE:_CSS_PREFIXE_ICONE;
-								$style = $pref_style.$style_texte." "._CSS_PREFIXE_MENU.$style;
-							}
-						}
-						$this->ajouter_menu($style, $id_icone, $id_label, $lien, $id_info, $is_editable, $id_liste);
-					}
+			if (!($menu)) {return null;}
+			// Lecture de l'attribut "alignement"
+			$alignement = $this->page->lire_attribut_n(_PAGE_MENU, $occ, _PAGE_ATTR_ALIGNEMENT);
+			// Création de l'objet menu
+			$obj = new obj_menu($this->texte, $nom_menu, $alignement);
+			$nb_items = $menu->get_nb_items();
+			$nb_items_non_vides = 0;
+			for ($cpt = 0;$cpt < $nb_items; $cpt++) {
+				$cle_item = (string) $menu->get_item($cpt);
+				$item = $this->menu->get_item($cle_item);
+				if (!($item)) {continue;}
+				// Création de l'item
+				$id_label_brut = $item->get_label();
+				$id_label = $this->parser_id_crochets_actu($id_label_brut);
+				$id_style = $item->get_style();
+				$style_menu = $this->menu->get_style($id_style);
+				$obj_item = $obj->ajouter_item($item, $style_menu, $id_label);
+				// Ajout des infos sur le lien de l'item
+				$lien_brut = $item->get_lien();
+				$lien_simple = $this->parser_lien_crochets_actu($lien_brut);
+				$lien_editable = $item->get_lien_editable();
+				$is_editable = (strlen($lien_editable) > 0)?true:false;
+				if ($is_editable) {
+					$cible = $this->texte->get_texte($lien_editable, $this->langue_page);
+					$id_liste = $item->get_liste_cibles();
 				}
-				$this->fermer_menu($nb_items_non_vides);
+				else {$cible = $lien_simple;$id_liste = null;}
+				if (strlen($cible) > 0) {
+					$nb_items_non_vides += 1;
+					$lien_actif = $this->est_url_active($cible);
+					$access_key = $this->url_accesskey($cible);
+					$cible_multilingue = $this->url_multilingue($cible);
+				}
+				else {$lien_actif = false;$access_key = null;$cible_multilingue = null;}
+				$obj_item->ajouter_lien($cible_multilingue, $is_editable, $id_liste, $lien_actif, $access_key);
 			}
+			$obj->afficher($mode, $this->langue_page, $nb_items_non_vides);
+			return $obj;
 		}
-		protected function ouvrir_menu($nom_menu, $nb_items_non_vides, $alignement) {return true;}
-		protected function ajouter_menu($style, $has_icone, $id_label, $lien, $id_info, $is_editable, $id_liste) {return true;}
-		protected function fermer_menu($nb_items_non_vide) {return true;}
-
-		// Ecriture des plans : parsing + appel à la fonction fille
-		protected function ecrire_bloc_carte($occ) {
-			$id_texte = $this->page->lire_valeur_n(_PAGE_CARTE, $occ);
-			$this->ecrire_plan($id_texte);
+		// Ecriture des cartes
+		protected function ecrire_bloc_carte($mode, $occ) {
+			// Lecture de l'id texte
+			$id_valeur = $this->page->lire_valeur_n(_PAGE_CARTE, $occ);
+			$id_texte = $this->parser_id_crochets_actu($id_valeur);
+			// Création de l'objet carte
+			$obj = new obj_carte($this->texte, $id_texte);
+			if ($obj) {$obj->afficher($mode, $this->langue_page);}
+			return $obj;
 		}
-		protected function ecrire_plan($id_texte) {return true;}
-
-		// Ecriture des videos : parsing + appel à la fonction fille
-		protected function ecrire_bloc_video($occ) {
+		// Ecriture des videos 
+		protected function ecrire_bloc_video($mode, $occ) {
+			// Lecture de l'attribut source
 			$source = $this->page->lire_attribut_n(_PAGE_VIDEO, $occ, _PAGE_ATTR_SOURCE_VIDEO);
 			if (strlen($source) > 0) {
-				$id_code = $this->page->lire_valeur_n(_PAGE_VIDEO, $occ);
-				$this->ecrire_video($source, $id_code);
-			}
+				// Lecture de l'id texte
+				$id_valeur = $this->page->lire_valeur_n(_PAGE_VIDEO, $occ);
+				$id_texte = $this->parser_id_crochets_actu($id_valeur);
+				// Création de l'objet video
+				$obj = new obj_video($this->texte, $id_texte, $source);
+				if ($obj) {$obj->afficher($mode, $this->langue_page);}
+			} else {$obj = null;}
+			return $obj;
 		}
-		protected function ecrire_video($source, $id_code) {return true;}
-
-		// Ecriture des pièces jointes : parsing + appel à la fonction fille
-		protected function ecrire_bloc_piece_jointe($occ) {
-			$nom_pj = $this->page->lire_valeur_n(_PAGE_PJ, $occ);
-			$pj = $this->document->get_document($nom_pj);
-			if ($pj) {
-				// Préparation du style
-				$style = $this->site->get_style_paragraphe();
-				// Lecture de l'attribut "lien"
-				$type_lien = $this->page->lire_attribut_n(_PAGE_PJ, $occ, _PAGE_ATTR_LIEN_PJ);
-				switch ($type_lien) {
-					case _PAGE_ATTR_LIEN_IMAGE :
-					case _PAGE_ATTR_LIEN_FICHIER :
-						$lien = $type_lien;
-						break;
-					default :
-						$lien = _PAGE_ATTR_LIEN_LEGENDE;
-						break;
-				}
-				$fichier = $pj->get_fichier();
-				$id_info = $pj->get_info();
-				$id_legende = $pj->get_legende();
-				$this->ecrire_pj($nom_pj, $lien, $style, $fichier, $id_info, $id_legende);
-			}
+		// Ecriture des pièces jointes
+		protected function ecrire_bloc_piece_jointe($mode, $occ) {
+			// Lecture de l'id PJ
+			$id_pj = $this->page->lire_valeur_n(_PAGE_PJ, $occ);
+			$pj = $this->document->get_document($id_pj);
+			if (!($pj)) {return null;}
+			// Lecture de l'attribut "lien"
+			$type_lien = $this->page->lire_attribut_n(_PAGE_PJ, $occ, _PAGE_ATTR_LIEN_PJ);
+			$lien = ((strcmp($type_lien, _PAGE_ATTR_LIEN_IMAGE)) && (strcmp($type_lien, _PAGE_ATTR_LIEN_FICHIER)))?_PAGE_ATTR_LIEN_LEGENDE:$type_lien;
+			// Préparation du style par défaut
+			$style = $this->site->get_style_paragraphe();
+			// Création de l'objet PJ
+			$obj = new obj_pj($pj, $this->texte, $id_pj, $lien);
+			if ($obj) {$obj->afficher($mode, $this->langue_page, $style);}
+			return $obj;
 		}
-		protected function ecrire_pj($id_pj, $lien, $style, $fichier, $id_info, $id_legende) {return true;}
-
 		// Ecriture du formulaire de contact
-		protected function ecrire_bloc_formulaire_contact($occ) {
+		protected function ecrire_bloc_formulaire_contact($mode, $occ) {
+			// Lecture de l'attribut "style"
 			$style = $this->page->lire_attribut_n(_PAGE_FORM_CONTACT, $occ, _PAGE_ATTR_FORMULAIRE_STYLE);
-			$this->ecrire_form_contact($style);
+			// Préparation du style par défaut
+			$style_p = $this->site->get_style_paragraphe();
+			// Création de l'objet formulaire
+			$obj = new obj_formulaire($this->texte, $style);
+			if ($obj) {$obj->afficher($mode, $this->langue_page, $style_p);}
+			return $obj;
 		}
-		protected function ecrire_form_contact($style) {return true;}
-		
-		// Ecriture des drapeaux : parsing + appel aux fonctions filles (ouvrir, ajouter, fermer)
-		protected function ecrire_bloc_drapeaux($occ) {
+		// Ecriture des drapeaux
+		protected function ecrire_bloc_drapeaux($mode, $occ) {
+			// Lecture de l'attribut "alignement"
+			$alignement = $this->page->lire_attribut_n(_PAGE_DRAPEAUX, $occ, _PAGE_ATTR_ALIGNEMENT);
+			// Création de l'objet drapeaux
+			$obj = new obj_drapeaux($this->texte, $alignement, $this->page->get_meta_multilingue());
+			if (!($obj)) return null;
 			$nb_langues = $this->texte->get_nb_langues();
-			// On n'affiche les drapeaux que s'il y a plus d'une langue
-			if ($nb_langues > 1) {
-				$alignement = $this->page->lire_attribut_n(_PAGE_DRAPEAUX, $occ, _PAGE_ATTR_ALIGNEMENT);
-				$this->ouvrir_drapeaux($alignement);
-				for ($cpt_langue = 0;$cpt_langue < $nb_langues;$cpt_langue++) {
-					$langue = $this->texte->get_langue($cpt_langue);
-					$nom = $this->texte->get_nom($langue);
-					$pos = $this->texte->get_position($langue);
-					$this->ajouter_drapeau($langue, $nom, $pos);
-				}
-				$this->fermer_drapeaux();
+			for ($cpt_langue = 0;$cpt_langue < $nb_langues;$cpt_langue++) {
+				$langue = $this->texte->get_langue($cpt_langue);
+				$nom = $this->texte->get_nom($langue);
+				$pos = $this->texte->get_position($langue);
+				$href = ($this->dir_page);
+				if (strcmp($langue, $this->texte->get_langue_par_defaut())) {$href .= "/".$langue;}
+				$href .= "/".$this->nom_page._PXP_EXT;
+				if ($this->est_actu) {$href .= "?"._PARAM_ID."=".$this->no_actu;}
+				$href = str_replace("//", "/", $href);
+				$obj->ajouter_drapeau($langue, $nom, $pos, $href);
 			}
+			$obj->afficher($mode, $this->langue_page);
+			return $obj;
 		}
-		protected function ouvrir_drapeaux($alignement) {return true;}
-		protected function ajouter_drapeau($langue, $nom, $pos) {return true;}
-		protected function fermer_drapeaux() {return true;}
-
 		// Ecriture du plan du site
-		protected function ecrire_bloc_plan_du_site() {
-			$this->parcourir_plan_du_site(0, null);
-			$this->ecrire_section_plan_du_site($this->texte->get_label_pied_de_page($this->langue_page));
-			$this->ecrire_plan_pied_du_site($this->texte->get_label_mentions($this->langue_page), _HTML_PATH_MENTIONS_LEGALES, null);
-			$this->ecrire_plan_pied_du_site($this->texte->get_label_credits($this->langue_page), _HTML_PATH_CREDITS, null);
-			$this->ecrire_plan_pied_du_site($this->texte->get_label_plan($this->langue_page), _HTML_PATH_PLAN_DU_SITE, "0");
-			$this->fermer_plan_du_site();
+		protected function ecrire_bloc_plan_du_site($mode, $occ) {
+			// Création de l'objet plan du site
+			$obj = new obj_plan_du_site($this->texte);
+			$this->parcourir_plan_du_site($obj, 0, null);
+			$style_p = $this->site->get_style_paragraphe();
+			$obj->afficher($mode, $this->langue_page, $style_p);
+			return $obj;
 		}
-		protected function parcourir_plan_du_site($niveau, $parent) {
-			$nb_pages = $this->site->get_nb_pages();
-			for ($cpt = 0;$cpt < $nb_pages;$cpt++) {
-				$parent_page = $this->site->get_page_parent($cpt);
-				if (!(strcmp($parent_page, $parent))) {
-					$nom = $this->site->get_page_nom($cpt);
-					$ref = $this->site->get_page_ref($cpt);
-					$touche = $this->site->get_page_touche($cpt);
-					$this->ecrire_plan_du_site($niveau, $nom, $ref, $touche);
-					$this->parcourir_plan_du_site($niveau+1, $ref);
-				}
-			}
-		}
-		protected function ecrire_section_plan_du_site($nom) {return true;}
-		protected function ecrire_plan_du_site($niveau, $nom, $ref, $touche) {return true;}
-		protected function ecrire_plan_pied_du_site($nom, $ref, $touche) {return true;}
-		protected function fermer_plan_du_site() {return true;}
-
 		// Ecriture des crédits
-		protected function ecrire_bloc_credits($occ) {
-			$tab_credits = array("fa", "rs", "mp", "id", "ju", "jc", "te");
+		protected function ecrire_bloc_credits($mode, $occ) {
+			// Lecture du chapitre
 			$chapitre = $this->page->lire_valeur_n(_PAGE_CREDITS, $occ);
-			if ((strlen($chapitre) == 0) || (!(strcmp($chapitre, _PAGE_ATTR_CHAPITRE_TECHNIQUE)))) {
-				// On charge les textes supplémentaires pour les crédits techniques
+			$chapitre_technique = ((strlen($chapitre) == 0) || (!(strcmp($chapitre, _PAGE_ATTR_CHAPITRE_TECHNIQUE))))?true:false;
+			$chapitre_photographique = ((strlen($chapitre) == 0) || (!(strcmp($chapitre, _PAGE_ATTR_CHAPITRE_PHOTOGRAPHIQUE))))?true:false;
+			$sections_chapitre = (strlen($chapitre) == 0)?true:false;
+			// Lecture de l'attribut taille
+			$taille_vignette = (int) $this->page->lire_attribut_n(_PAGE_CREDITS, $occ, _PAGE_ATTR_CREDITS_TAILLE);
+			// En cas de crédits techniques on charge les textes supplémentaires
+			if ($chapitre_technique) {
 				$ret = $this->texte->ouvrir(_XML_SOURCE_INTERNE, _XML_PATH_INTERNE._XML_CREDITS._XML_EXT);
-				if ($ret) {
-					if (strlen($chapitre) == 0) {$this->ouvrir_credit_section("credit_section_technique");}
-					foreach ($tab_credits as $credit) {
-						$id_titre = "credit_titre_".$credit;
-						$id_lien = "credit_lien_".$credit;
-						// Seul le texte est traductible
-						$titre = $this->texte->get_texte($id_titre, $this->texte->get_langue_par_defaut());
-						$lien = $this->texte->get_texte($id_lien, $this->texte->get_langue_par_defaut());
-						$this->ecrire_credit_technique($titre, $lien, $credit, "credit_prefixe_lien");
-					}
-				}
-				$this->fermer_credit_section();
+				if (!($ret)) {$chapitre_technique = false;}
 			}
-			if ((strlen($chapitre) == 0) || (!(strcmp($chapitre, _PAGE_ATTR_CHAPITRE_PHOTOGRAPHIQUE)))) {
-				$taille_vignette = (int) $this->page->lire_attribut_n(_PAGE_CREDITS, $occ, _PAGE_ATTR_CREDITS_TAILLE);
-				// On charge toutes les images du site pour les crédits photographiques
+			// En cas de crédits photographiques on charge les images supplémentaires
+			if ($chapitre_photographique) {
 				$nb_pages = $this->site->get_nb_pages();
 				for ($cpt = 0;$cpt < $nb_pages;$cpt++) {
 					$ref = $this->site->get_page_ref($cpt);
@@ -665,164 +506,196 @@
 					$ret = $this->media->ouvrir(_XML_SOURCE_PAGE, $src_media, $cpt);
 					$ret = $this->texte->ouvrir(_XML_SOURCE_PAGE, $src_texte, $cpt);
 				}
+			}
+			// Création de l'objet credits
+			$style_p = $this->site->get_style_paragraphe();
+			$obj = new obj_credits($this->texte, $chapitre_technique, $chapitre_photographique, $sections_chapitre, $taille_vignette);
+			if (!($obj)) {return null;}
+			if ($chapitre_photographique) {
 				// Parcours des images pour repérer celles qui portent un copyright
 				$nb_images = $this->media->get_nb_images();
-				$nb_copy = 0;
 				for ($cpt = 0;$cpt < $nb_images;$cpt++) {
 					$image = $this->media->get_image_by_index($cpt);
-					if ($image) {
-						// Pas de copyright pour les images vides */
-						$est_vide = $image->get_est_vide();
-						if (!($est_vide)) {
-							$id_copyright = $image->get_copyright();
-							$src = $image->get_src_reduite();
-							if ((strlen($id_copyright) > 0) && (strlen($src) > 0)) {
-								// Si ce n'est déjà fait on ouvre la section crédits photo
-								if ($nb_copy == 0) {
-									if (strlen($chapitre) == 0) {$this->ouvrir_credit_section("credit_section_photo");}
-									$nb_copy += 1;
-								}
-								// Les copyrights ne sont pas traduits
-								$trad_copyright = trim($this->texte->get_texte($id_copyright, $this->texte->get_langue_par_defaut()));
-								if (strlen($trad_copyright) > 0) {
-									$largeur = $image->get_width();
-									$hauteur = $image->get_height();
-									$this->ecrire_credit_photo($src, $trad_copyright, $largeur, $hauteur, $taille_vignette);
-								}
-							}
-						}
-					}
+					if (!($image)) {continue;}
+					$est_vide = $image->get_est_vide();
+					if ($est_vide) {continue;}
+					$id_copyright = $image->get_copyright();
+					if (strlen($id_copyright) == 0) {continue;}
+					$copyright = trim($this->texte->get_texte($id_copyright, $this->texte->get_langue_par_defaut()));
+					if (strlen($copyright) == 0) {continue;}
+					$src = $image->get_src_reduite();
+					if (strlen($src) == 0) {continue;}
+					$obj->ajouter_credit_photo($src, $copyright, $image->get_width(), $image->get_height());
 				}
-				// Si la section est ouverte on la referme
-				if ($nb_copy > 0) {$this->fermer_credit_section();}
 			}
+			$obj->afficher($mode, $this->langue_page, $style_p);
+			return $obj;
 		}
-		protected function ouvrir_credit_section($id_texte) {return true;}
-		protected function ecrire_credit_technique($titre, $lien, $id_credit, $id_visite) {return true;}
-		protected function ecrire_credit_photo($src, $copyright, $largeur, $hauteur, $taille=0) {return true;}
-		protected function fermer_credit_section() {return true;}
-
 		// Ecriture des mentions légales
-		protected function ecrire_bloc_mentions_legales($occ) {
+		protected function ecrire_bloc_mentions_legales($mode, $occ) {
+			// Lecture du chapitre
+			$chapitre = $this->page->lire_valeur_n(_PAGE_MENTIONS_LEGALES, $occ);
+			$chapitre_mentions = ((strlen($chapitre) == 0) || (!(strcmp($chapitre, _PAGE_ATTR_CHAPITRE_LEGAL))))?true:false;
+			$chapitre_protection = ((strlen($chapitre) == 0) || (!(strcmp($chapitre, _PAGE_ATTR_CHAPITRE_PROTECTION))))?true:false;
+			$chapitre_cookies = ((strlen($chapitre) == 0) || (!(strcmp($chapitre, _PAGE_ATTR_CHAPITRE_COOKIES))))?true:false;
+			$chapitre_copyright = ((strlen($chapitre) == 0) || (!(strcmp($chapitre, _PAGE_ATTR_CHAPITRE_COPYRIGHT))))?true:false;
+			$sections_chapitre = (strlen($chapitre) == 0)?true:false;
 			// On charge les textes supplémentaires pour les mentions légales
 			$ret = $this->texte->ouvrir(_XML_SOURCE_INTERNE, _XML_PATH_INTERNE._XML_LEGAL._XML_EXT);
-			if ($ret) {
-				$chapitre = $this->page->lire_valeur_n(_PAGE_MENTIONS_LEGALES, $occ);
-
-				// Section mentions légales
-				if (strlen($chapitre) == 0) {$this->ouvrir_legal_section("legal_section_legale");}
-				if ((strlen($chapitre) == 0) || (!(strcmp($chapitre, _PAGE_ATTR_CHAPITRE_LEGAL)))) {
-					$this->ecrire_legal_mentions("legal_le_site", "legal_est_edite", "legal_responsable", "legal_hebergement");
-				}
-				if (strlen($chapitre) == 0) {$this->ouvrir_legal_section("legal_section_protection");}
-				if ((strlen($chapitre) == 0) || (!(strcmp($chapitre, _PAGE_ATTR_CHAPITRE_PROTECTION)))) {
-					$this->ecrire_legal_protection("legal_le_site", "legal_protection", "legal_cnil");
-				}
-				// Section cookies
-				if (strlen($chapitre) == 0) {$this->ouvrir_legal_section("legal_section_cookies");}
-				if ((strlen($chapitre) == 0) || (!(strcmp($chapitre, _PAGE_ATTR_CHAPITRE_COOKIES)))) {
-					$this->ecrire_legal_cookies("legal_le_site", "legal_cookies");
-				}
-				// Section copyright
-				if (strlen($chapitre) == 0) {$this->ouvrir_legal_section("legal_section_copyright");}
-				if ((strlen($chapitre) == 0) || (!(strcmp($chapitre, _PAGE_ATTR_CHAPITRE_COPYRIGHT)))) {
-					$this->ecrire_legal_copyright("legal_propriete", "legal_reproduction", "legal_infraction");
-				}
-			}
+			// Création de l'objet mentions légales
+			$style_p = $this->site->get_style_paragraphe();
+			$obj = new obj_mentions_legales($this->texte, $chapitre_mentions, $chapitre_protection, $chapitre_cookies, $chapitre_copyright, $sections_chapitre);
+			if (!($obj)) {return null;}
+			// Ajout des informations
+			$adr_site = $this->site->get_url_racine();
+			$obj->ajouter_site($adr_site);
+			$nom_editeur = $this->site->get_proprietaire();
+			$adr_editeur = $this->site->get_adresse();
+			$tel_editeur = $this->site->get_telephone();
+			$rcs_editeur = $this->site->get_rcs();
+			$siret_editeur = $this->site->get_siret();
+			$obj->ajouter_editeur($nom_editeur, $adr_editeur, $tel_editeur, $rcs_editeur, $siret_editeur);
+			$redacteur = $this->site->get_redacteur();
+			$obj->ajouter_redacteur($redacteur);
+			$hebergeur = $this->site->get_hebergeur();
+			$obj->ajouter_hebergeur($hebergeur);
+			$no_cnil = $this->site->get_cnil();
+			$obj->ajouter_cnil($no_cnil);
+			// Affichage
+			$obj->afficher($mode, $this->langue_page, $style_p);
+			return $obj;
 		}
-		protected function ouvrir_legal_section($id_texte) {return true;}
-		protected function ecrire_legal_mentions($id_le_site, $id_est_edite, $id_resp, $id_hebergement) {return true;}
-		protected function ecrire_legal_cookies($id_le_site, $id_cookies) {return true;}
-		protected function ecrire_legal_copyright($id_propriete, $id_reproduction, $id_infraction) {return true;}
-		protected function ecrire_legal_protection($site, $id_protection, $id_cnil) {return true;}
-
-		// Boutons partage social
-		protected function ecrire_bloc_partage_social($occ) {
-			$forme = $this->page->lire_valeur_n(_PAGE_ADDTHIS, $occ);
-			if (strcmp($forme, _PAGE_ATTR_FORME_ROND)) {$forme = _PAGE_ATTR_FORME_CARRE;}
+		// Ecriture des boutons de partage social
+		protected function ecrire_bloc_partage_social($mode, $occ) {
+			// Lecture de la forme des boutons
+			$forme = $this->page->lire_valeur_n(_PAGE_SOCIAL, $occ);
+			$forme_carree = (strcmp($forme, _PAGE_ATTR_FORME_ROND))?true:false;
 			// Lecture de l'attribut "taille"
-			$taille = $this->page->lire_attribut_n(_PAGE_ADDTHIS, $occ, _PAGE_ATTR_ADDTHIS_TAILLE);
-			if ($taille <> 32) {$taille = 48;}
-			$this->ecrire_addthis($forme, $taille);
+			$taille = (int) $this->page->lire_attribut_n(_PAGE_SOCIAL, $occ, _PAGE_ATTR_SOCIAL_TAILLE);
+			$grande_taille = ($taille < 33)?false:true;
+			// Récupération des données du partage
+			$titre = urlencode(trim($this->page->get_meta_titre()));
+			$url = urlencode("http://".$_SERVER["SERVER_NAME"].$_SERVER["PHP_SELF"]);
+			// Création de l'objet partage social
+			$obj = new obj_partage_social($this->texte, $url, $titre, $forme_carree, $grande_taille);
+			if ($obj) {$obj->afficher($mode, $this->langue_page);}
+			return $obj;
 		}
-		protected function ecrire_addthis($forme, $taille) {return true;}
 		// Ecriture d'un calendrier de réservation
-		protected function ecrire_bloc_calendrier($occ) {
-			if ($this->module_resa) {
-				$id_cal = $this->page->lire_valeur_n(_PAGE_CALENDRIER_RESA, $occ);
-				if (strlen($id_cal) > 0) {
-					$ret = $this->module_resa->ouvrir($id_cal, _XML_PATH_MODULES.$id_cal."/"._XML_MODULE_RESA._XML_EXT);
-					if ($ret) {
-						$mois = (int) date("n");$an = (int) date("Y");
-						$this->ouvrir_calendrier_resa($id_cal, $mois, $an);
-						for ($cpt = 0;$cpt < 12;$cpt++) {
-							$jour_sem = ((int) date("N", mktime(0, 0, 0, $mois, 1, $an)) - 1);
-							$date_deb = mktime(0, 0, 0, $mois, (1 - $jour_sem), $an);
-							$jour_deb = (int) date("j", $date_deb);
-							$mois_deb = (int) date("n", $date_deb);
-							$an_deb = (int) date("Y", $date_deb);
-							$this->ecrire_calendrier_resa($id_cal, $jour_deb, $mois_deb, $an_deb, $mois, $an);
-							$mois += 1;if ($mois == 13) {$mois = 1;$an += 1;}
-						}
-						$this->fermer_calendrier_resa($id_cal);
-					}
-				}
-			}
+		protected function ecrire_bloc_calendrier($mode, $occ) {
+			if (!($this->module_resa)) {return null;}
+			// Lecture de l'id calendrier
+			$id_cal = $this->page->lire_valeur_n(_PAGE_CALENDRIER_RESA, $occ);
+			if (strlen($id_cal) == 0) {return null;}
+			$this->module_resa->ouvrir($id_cal, _XML_PATH_MODULES.$id_cal."/"._XML_MODULE_RESA._XML_EXT);
+			// Création de l'objet calendrier
+			$obj = new obj_calendrier($this->module_resa, $this->texte, $id_cal);
+			if ($obj) {$obj->afficher($mode, $this->langue_page);}
+			return $obj;
 		}
-		protected function ouvrir_calendrier_resa($id_cal, $mois, $an) {return true;}
-		protected function ecrire_calendrier_resa($id_cal, $jour_deb, $mois_deb, $an_deb, $mois, $an) {return true;}
-		protected function fermer_calendrier_resa($id_cal) {return true;}
 		// Ecriture de la bannière d'actualités
-		protected function ecrire_bloc_banniere_actu($occ) {
-			if ($this->module_actu) {
-				$nb_actus = $this->page->lire_valeur_n(_PAGE_BANNIERE_ACTU, $occ);
-				$style = $this->module_actu->get_style();
-				// Détection préalable de la largeur max
-				$largeur_max = 0;
-				for ($cpt=0; $cpt<$nb_actus; $cpt++) {
-					$no_actu = $this->module_actu->get_sommaire($cpt);
-					$image = $this->media->get_image_actu($no_actu);
-					if ($image) {
-						$largeur = $image->get_width();
-						$largeur_max = ($largeur > $largeur_max)?$largeur:$largeur_max;
-					}
-				}
-				$this->ouvrir_banniere_actu($largeur_max);
-				for ($cpt=0; $cpt<$nb_actus; $cpt++) {
-					$no_actu = $this->module_actu->get_sommaire($cpt);
-					$this->ecrire_banniere_actu($no_actu, $style);
-				}
-				$this->fermer_banniere_actu();
+		protected function ecrire_bloc_banniere_actu($mode, $occ) {
+			if (!($this->module_actu)) {return null;}
+			// Lecture du nombre d'actualités
+			$nb_actus = $this->page->lire_valeur_n(_PAGE_BANNIERE_ACTU, $occ);
+			// Création de l'objet diaporama
+			$style = $this->module_actu->get_style();
+			$obj = new obj_actu($this->texte, $style);
+			// Ajout des actualités
+			for ($cpt = 1;$cpt <= 5;$cpt++) {
+				$image = $this->media->get_image_actu($cpt);
+				$obj->ajouter_actu($image, $cpt);
 			}
+			// Ajout du sommaire
+			for ($cpt=0; $cpt < $nb_actus; $cpt++) {
+				$no_actu = $this->module_actu->get_sommaire($cpt);
+				$obj->ajouter_sommaire($no_actu);
+			}
+			$obj->afficher($mode, $this->langue_page);
+			return $obj;
 		}
-		protected function ouvrir_banniere_actu($largeur_max) {return true;}
-		protected function ecrire_banniere_actu($no_actu, $style) {return true;}
-		protected function fermer_banniere_actu() {return true;}
 
-		// Préparation du bloc en fonction de son style
-		protected function preparer_style_bloc(&$bloc, &$style) {
-			if (($bloc) && ($style)) {
-				$type_bordure = $style->get_type_bordure();
-				if (!(strcmp($type_bordure, _STYLE_ATTR_TYPE_BORDURE_BANDEAU))) {
-					$idx_premier_titre = $bloc->get_premier_titre();
-					if ($idx_premier_titre >= 0) {
-						$repere = $bloc->get_repere();
-						if ($repere) {
-							$this->page->pointer_sur_bloc($repere);
-							$id_texte = $this->page->lire_valeur_n(_PAGE_TITRE, 0);
-							if (strlen($id_texte) > 0) {
-								$trad_texte = $this->texte->get_texte($id_texte, $this->langue_page);
-								$style->set_titre_bandeau($trad_texte);
-								$style->set_style_titre_bandeau($this->site->get_style_titre(3));
-								$bloc->set_balise_elem($idx_premier_titre, _PAGE_TITRE_BANDEAU);
-							}
-						}
+		protected function url_accesskey($lien) {
+			$ret = null;
+			if (strlen($lien) > 0) {
+				$nb_pages = $this->site->get_nb_pages();
+				for ($cpt = 0;(($cpt < $nb_pages) && (strlen($ret) == 0));$cpt++) {
+					$ref = $this->site->get_page_ref($cpt);
+					if (!(strcmp($lien, $ref))) {
+						$ret = $this->site->get_page_touche($cpt);
 					}
 				}
 			}
+			return $ret;
+		}
+		protected function url_multilingue($lien) {
+			// Passage d'une page multilingue à une page non multilingue
+			if (strlen($lien) == 0) {return null;}
+			if (!(strcmp($this->langue_page, $this->texte->get_langue_par_defaut()))) {return $lien;}
+			if (!($this->page->get_meta_multilingue())) {return $lien;}
+			$lien_interne = $this->est_url_interne($lien);
+			if (!($lien_interne)) {return $lien;}
+			// Ouverture des méta de la page cible
+			$cible = basename($lien);$ext = strpos($cible, _PXP_EXT);
+			$page_cible = substr($cible, 0, (int) $ext);
+			$xml_cible = new xml_page();
+			$ret = $xml_cible->ouvrir(_XML_PATH_PAGES.$page_cible."/"._XML_PAGE._XML_EXT);
+			if ($ret) {
+				$multilingue = $xml_cible->get_meta_multilingue();
+				if (!($multilingue)) {
+					$lien = $this->dir_page."/".$cible;
+					$lien = str_replace("//", "/", $lien);
+				}
+			}
+			return $lien;
+		}
+
+		protected function est_url_active($lien) {
+			// On récupère le nom de la page en cours
+			$page_en_cours = ($this->nom_page)._PXP_EXT;
+			$ret = !(strcmp($lien, $page_en_cours));
+			return $ret;
+		}
+		protected function est_url_interne($lien) {
+			$ret = true;
+			$struct_url = parse_url($lien);
+			$host = isset($struct_url["host"])?$struct_url["host"]:null;
+			// Si host absent, on est en interne
+			if ($host) {
+				// Si host identique au domaine, on est en interne
+				$ret = !(strcmp($host, $this->nom_domaine));
+			}
+			return $ret;
 		}
 
 		// Méthodes privées
+		private function parcourir_plan_du_site(&$obj, $niveau, $parent) {
+			$nb_pages = $this->site->get_nb_pages();
+			for ($cpt = 0;$cpt < $nb_pages;$cpt++) {
+				$parent_page = $this->site->get_page_parent($cpt);
+				if (!(strcmp($parent_page, $parent))) {
+					$nom = $this->site->get_page_nom($cpt);
+					$ref = $this->site->get_page_ref($cpt);
+					$touche = $this->site->get_page_touche($cpt);
+					$obj->ajouter_entree($niveau, $nom, $ref, $touche);
+					$this->parcourir_plan_du_site($obj, $niveau+1, $ref);
+				}
+			}
+		}
+
+		private function parser_image(&$image) {
+			// Lecture du style de légende
+			$nom_style = $image->get_style_legende();
+			$style = (strlen($nom_style) > 0)?$this->media->get_style($nom_style):null;
+			// Lecture du lien de l'image
+			$lien = $image->get_lien();
+			$access_key = $this->url_accesskey($lien);
+			$lien_multilingue = $this->url_multilingue($lien);
+			// Création de l'objet "image"
+			$obj = new obj_image($image, $style, $this->texte, $lien_multilingue, $access_key);
+			return $obj;
+		}
+
 		private function charger_liste_langues() {
 			$nb_langues = $this->site->get_nb_langues();
 			for ($cpt_langue = 0;$cpt_langue < $nb_langues;$cpt_langue++) {
@@ -868,36 +741,5 @@
 				}
 			}
 			return $id_texte;
-		}
-		private function get_nb_items_non_vide(&$menu) {
-			$ret = 0;
-			if ($menu) {
-				$nb_items = $menu->get_nb_items();
-				if (!($menu->get_has_editable())) {
-					$ret = $nb_items;
-				}
-				else {
-					for ($cpt = 0;$cpt < $nb_items; $cpt++) {
-						$cle_item = (string) $menu->get_item($cpt);
-						$item = $this->menu->get_item($cle_item);
-						if ($item) {
-							$lien_simple = $item->get_lien();
-							if (strlen($lien_simple) > 0) {
-								$ret += 1;
-							}
-							else {
-								$lien_editable = $item->get_lien_editable();
-								if (strlen($lien_editable) > 0) {
-									$lien = $this->texte->get_texte($lien_editable, $this->langue_page);
-									if (strlen($lien) > 0) {
-										$ret += 1;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			return $ret;
 		}
 	}

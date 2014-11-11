@@ -1,6 +1,5 @@
 <?php
 	require_once "inc/path.php";
-	inclure_inc("const", "param", "session");
 
 	$session = new session();
 	if (is_null($session)) {

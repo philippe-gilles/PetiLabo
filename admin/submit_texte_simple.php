@@ -1,8 +1,6 @@
 <?php
 
 	require_once "inc/path.php";
-	inclure_inc("const", "param", "session");
-	inclure_site("xml_const", "xml_texte");
 
 	$session = new session();
 	if (is_null($session)) {header("Location: "._SESSION_URL_FERMETURE);exit;}
@@ -49,4 +47,6 @@
 		$xml_texte->enregistrer($fichier_xml);
 	}
 	// Redirection finale
-	header("Location: index.php");
+	$id_tab = $param->post(_PARAM_FRAGMENT);
+	$ret_page = preparer_redirection($session, $id_tab);
+	header("Location: ".$ret_page);

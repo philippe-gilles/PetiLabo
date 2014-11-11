@@ -1,6 +1,4 @@
 <?php
-inclure_inc("const");
-inclure_site("xml_const", "xml_struct");
 
 define("_MODULE_ACTU_IMAGE", "image_actu_");
 define("_IMAGE_EXTENSION_JPEG", "jpeg");
@@ -10,11 +8,16 @@ define("_IMAGE_EXTENSION_GIF", "gif");
 
 class style_media {
 	// Propriétés
+	private $nom = null;
 	private $marge_ext_haut = 0;private $marge_ext_bas = 0;private $marge_ext_gauche = 0;private $marge_ext_droite = 0;
 	private $marge_int_haut = 0;private $marge_int_bas = 0;private $marge_int_gauche = 0;private $marge_int_droite = 0;
 	private $couleur_fond = null;private $couleur_texte = null;private $survol = false;
 	private $style_texte = null;private $lien_souligne = false;private $niveau_titre = 0;
-
+	
+	// Constructeur
+	public function __construct($nom) {
+		$this->nom = $nom;
+	}
 	// Manipulateurs
 	public function set_marge_haut($param) {
 		if ($param >= 0) {
@@ -77,6 +80,7 @@ class style_media {
 	}
 
 	// Accesseurs
+	public function get_nom() {return $this->nom;}
 	public function get_marge_int_haut() {return $this->marge_int_haut;}
 	public function get_marge_int_bas() {return $this->marge_int_bas;}
 	public function get_marge_int_gauche() {return $this->marge_int_gauche;}
@@ -179,12 +183,6 @@ class xml_media {
 	private $styles = array();
 	private $images = array();
 	private $galeries = array();
-	private $mobile = false;
-
-	// Méthodes publiques
-	public function __construct($mobile=false) {
-		$this->mobile = $mobile;
-	}
 
 	// Méthodes publiques
 	function ouvrir($source, $nom, $suffixe = null) {
@@ -209,7 +207,7 @@ class xml_media {
 					$survol = $xml_media->lire_n_valeur(_MEDIA_STYLE_LEGENDE_SURVOL, $cpt);
 					
 					// Création de l'objet images
-					$style = new style_media();
+					$style = new style_media($nom);
 					$style->set_marge_haut($marge_haut);
 					$style->set_marge_bas($marge_bas);
 					$style->set_marge_gauche($marge_gauche);
@@ -259,14 +257,8 @@ class xml_media {
 							
 							// Création de l'objet images
 							$image = new img_media($source, $nom);
-							if ($this->mobile) {
-								$image->set_src($src_reduite);
-								$image->set_src_reduite($src_reduite);
-							}
-							else {
-								$image->set_src($src);
-								$image->set_src_reduite($src_reduite);
-							}
+							$image->set_src($src);
+							$image->set_src_reduite($src_reduite);
 							$image->set_alt($alt);
 							$image->set_legende($legende);
 							$key_copy = (strlen($suffixe) > 0)?$copyright."_".$suffixe:$copyright;
