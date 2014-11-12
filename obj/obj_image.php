@@ -58,6 +58,7 @@ class obj_image extends obj_editable {
 	private $obj_legende = null;
 	private $id_alt = null;
 	private $id_info = null;
+	private $id_copyright = null;
 	private $url_lien = null;
 	private $touche_lien = null;
 
@@ -67,6 +68,7 @@ class obj_image extends obj_editable {
 		$this->obj_texte = $obj_texte;
 		
 		$this->id_alt = $obj_media->get_alt();
+		$this->id_copyright = $obj_media->get_copyright();
 		$this->url_lien = $url_lien;
 		$this->touche_lien = $touche_lien;
 
@@ -194,11 +196,10 @@ class obj_image extends obj_editable {
 			$this->ecrire_cellule_symbole_texte_brut($this->id_alt, _EDIT_SYMBOLE_ALT, "Modifier le texte alternatif de l'image");
 			$this->ecrire_cellule_texte($this->id_alt, $alt);
 			$this->fermer_ligne();
-			$id_copyright = $this->obj_media->get_copyright();
 			$copyright = $this->check_texte($this->obj_texte, $this->id_copyright, $langue);
 			$this->ouvrir_ligne();
-			$this->ecrire_cellule_symbole_texte_simple(_EDIT_TYPE_COPY, $id_copyright, _EDIT_SYMBOLE_COPY, "Modifier le copyright de l'image");
-			$this->ecrire_cellule_texte($id_copyright, $copyright);
+			$this->ecrire_cellule_symbole_texte_simple(_EDIT_TYPE_COPY, $this->id_copyright, _EDIT_SYMBOLE_COPY, "Modifier le copyright de l'image");
+			$this->ecrire_cellule_texte($this->id_copyright, $copyright);
 			$this->fermer_ligne();
 			if ($this->obj_legende) {
 				$this->obj_legende->set_id_tab($this->id_tab);

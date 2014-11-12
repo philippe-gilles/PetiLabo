@@ -21,6 +21,9 @@ define("_EDIT_LABEL_CALENDRIER", "Calendrier");
 define("_EDIT_LABEL_BANNIERE_ACTUALITE", "Bannière d'actualités");
 define("_EDIT_LABEL_ACTUALITE", "Actualité");
 define("_EDIT_LABEL_SOMMAIRE", "Sommaire");
+define("_EDIT_LABEL_META", "Balises méta");
+define("_EDIT_LABEL_META_TITRE", "Méta titre");
+define("_EDIT_LABEL_META_DESCR", "Méta description");
 
 // Constantes pour les symboles
 define("_EDIT_SYMBOLE_LABEL", "15c");
@@ -35,6 +38,7 @@ define("_EDIT_SYMBOLE_PLAN", "041");
 define("_EDIT_SYMBOLE_VIDEO", "03d");
 define("_EDIT_SYMBOLE_SOMMAIRE", "03a");
 define("_EDIT_SYMBOLE_CALENDRIER", "073");
+define("_EDIT_SYMBOLE_META", "024");
 	
 class obj_editable extends obj_html {
 
