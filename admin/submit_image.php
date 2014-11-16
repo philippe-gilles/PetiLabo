@@ -14,13 +14,19 @@
 		const ratio_reduction = 0.7;
 
 		// Propriétés
-		private $src = null;private $ext = null;
+		private $src = null;private $src_reduite = null;
+		private $dest = null;private $dest_reduite = null;
+		private $ext = null;
 		private $largeur = 0;private $hauteur = 0;
 		private $largeur_standard = 0;private $hauteur_standard = 0;
 		
-		public function __construct($src, $ext) {
+		public function __construct($src, $src_reduite, $dest, $dest_reduite, $ext) {
 			$f_exists = @file_exists($src);
+			$f_reduite_exists = @file_exists($src_reduite);
 			$this->src = ($f_exists)?$src:null;
+			$this->src_reduite = ($f_reduite_exists)?$src_reduite:null;
+			$this->dest = $dest;
+			$this->dest_reduite = $dest_reduite;
 			$this->ext = $ext;
 
 			if (strlen($this->src) > 0) {
@@ -58,11 +64,13 @@
 						$delta_h = 0;
 					}
 					$image->retailler($this->get_largeur(), $this->get_hauteur(), $delta_l, $delta_h);
-					@copy($image->get_src(), $this->get_src());
+					$status = @copy($image->get_src(), $this->get_dest());
+					if ($status) {@unlink($this->get_src());}
 					$largeur_reduite = (int) ($this->get_largeur() * self::ratio_reduction);
 					$hauteur_reduite = (int) ($this->get_hauteur() * self::ratio_reduction);
 					$image->retailler($largeur_reduite, $hauteur_reduite, 0, 0);
-					@rename($image->get_src(), $this->get_src_reduite());
+					$status = @rename($image->get_src(), $this->get_dest_reduite());
+					if ($status) {@unlink($this->get_src_reduite());}
 					break;
 				case _TYPE_AJUSTEMENT_ORIGINE :
 					if (($this->get_largeur_standard() > 0) && ($this->get_hauteur_standard() > 0)) {
@@ -95,34 +103,36 @@
 					if (($this->get_largeur_standard() > 0) || ($this->get_hauteur_standard() > 0)) {
 						$image->retailler($largeur, $hauteur, $delta_l, $delta_h);
 					}
-					@copy($image->get_src(), $this->get_src());
+					$status = @copy($image->get_src(), $this->get_dest());
+					if ($status) {@unlink($this->get_src());}
 					if (($this->get_largeur_standard() > 0) || ($this->get_hauteur_standard() > 0)) {
 						$largeur_reduite = (int) ($largeur * self::ratio_reduction);
 						$hauteur_reduite = (int) ($hauteur * self::ratio_reduction);
 						$image->retailler($largeur_reduite, $hauteur_reduite, 0, 0);
 					}
-					@rename($image->get_src(), $this->get_src_reduite());
+					$status = @rename($image->get_src(), $this->get_dest_reduite());
+					if ($status) {@unlink($this->get_src_reduite());}
 					break;
 				case _TYPE_AJUSTEMENT_SANS :
 				default :
 					// Pas de retaillage : on effectue une simple copie
-					@copy($image->get_src(), $this->get_src());
+					$status = @copy($image->get_src(), $this->get_dest());
+					if ($status) {@unlink($this->get_src());}
 					$largeur_reduite = (int) ($image->get_largeur() * self::ratio_reduction);
 					$hauteur_reduite = (int) ($image->get_hauteur() * self::ratio_reduction);
 					$image->retailler($largeur_reduite, $hauteur_reduite, 0, 0);
-					@rename($image->get_src(), $this->get_src_reduite());
+					$status = @rename($image->get_src(), $this->get_dest_reduite());
+					if ($status) {@unlink($this->get_src_reduite());}
 					break;
 			}
 		}
 		
 		public function set_largeur_standard($param) {$this->largeur_standard = (int) $param;}
 		public function set_hauteur_standard($param) {$this->hauteur_standard = (int) $param;}
-
-		public function get_src_reduite() {
-			$ret = _XML_PATH_IMAGES_REDUITES_SITE.basename($this->src);
-			return $ret;
-		}
+		public function get_src_reduite() {return $this->src_reduite;}
 		public function get_src() {return $this->src;}
+		public function get_dest_reduite() {return $this->dest_reduite;}
+		public function get_dest() {return $this->dest;}
 		public function get_ext() {return $this->ext;}
 		public function get_largeur() {return $this->largeur;}
 		public function get_hauteur() {return $this->hauteur;}
@@ -217,11 +227,6 @@
 			return false;
 		}
 	}
-	function get_extension($fichier) {
-		$ext = strtolower(pathinfo($fichier, PATHINFO_EXTENSION));
-		$ret = ($ext == _UPLOAD_EXTENSION_JPEG)?_UPLOAD_EXTENSION_JPG:$ext;
-		return $ret;
-	}
 
 	$session = new session();
 	if (is_null($session)) {
@@ -290,15 +295,18 @@
 		$ext_1 = _UPLOAD_EXTENSION_GIF;
 	}
 
-	$img_1 = new fichier_image($src_1, $ext_1);
+	$img_1 = new fichier_image($src_1, null, null, null, $ext_1);
 	if (!($img_1->is_null())) {
 		$xml_media = new xml_media();
 		$xml_media->ouvrir($src_image, $fichier_xml);
 		$img_media = $xml_media->get_image($id_image);
 		if ($img_media) {
 			$src_0 = $img_media->get_src();
-			$ext_0 = get_extension($src_0);
-			$img_0 = new fichier_image($src_0, $ext_0);
+			$src_reduite_0 = $img_media->get_src_reduite();
+			$dest_0 = $img_media->get_dest();
+			$dest_reduite_0 = $img_media->get_dest_reduite();
+			$ext_0 = $img_media->get_extension();
+			$img_0 = new fichier_image($src_0, $src_reduite_0, $dest_0, $dest_reduite_0, $ext_0);
 			if (!($img_0->is_null())) {
 				$img_0->set_largeur_standard($img_media->get_width_standard());
 				$img_0->set_hauteur_standard($img_media->get_height_standard());

@@ -117,11 +117,13 @@ class img_media {
 	// Propriétés
 	private $nom = null;private $source = null;
 	private $src = null;private $src_reduite = null;
+	private $dest = null;private $dest_reduite = null;
 	private $alt = null;private $legende = null;private $copyright = null;
 	private $lien = null;
 	private $width_standard = 0;private $height_standard = 0;
 	private $width = 0;private $height = 0;
 	private $style_legende = null;
+	private $base = null;private $version = 0;
 
 	public function __construct($source, $nom) {
 		$this->source = $source;
@@ -131,6 +133,8 @@ class img_media {
 	// Manipulateurs
 	public function set_src($param) {$this->src = $param;}
 	public function set_src_reduite($param) {$this->src_reduite = $param;}
+	public function set_dest($param) {$this->dest = $param;}
+	public function set_dest_reduite($param) {$this->dest_reduite = $param;}
 	public function set_alt($param) {$this->alt = $param;}
 	public function set_legende($param) {$this->legende = $param;}
 	public function set_copyright($param) {$this->copyright = $param;}
@@ -140,11 +144,15 @@ class img_media {
 	public function set_height($param) {$this->height = $param;}
 	public function set_style_legende($param) {$this->style_legende = $param;}
 	public function set_lien($param) {$this->lien = $param;}
+	public function set_base($param) {$this->base = $param;}
+	public function set_version($param) {$this->version = $param;}
 	public function set_vide() {
 		$extension = $this->get_extension();
 		$image_vide = _IMAGE_VIDE_1X1.".".$extension;
 		@copy(_PHP_PATH_ROOT."images/".$image_vide, $this->src);
 		@copy(_PHP_PATH_ROOT."images/".$image_vide, $this->src_reduite);
+		@rename($this->src, $this->dest);$this->src = $this->dest;
+		@rename($this->src_reduite, $this->dest_reduite);$this->src_reduite = $this->dest_reduite;
 		list($this->width, $this->height) = @getimagesize($this->src);
 	}
 
@@ -153,6 +161,8 @@ class img_media {
 	public function get_nom() {return $this->nom;}
 	public function get_src() {return $this->src;}
 	public function get_src_reduite() {return $this->src_reduite;}
+	public function get_dest() {return $this->dest;}
+	public function get_dest_reduite() {return $this->dest_reduite;}
 	public function get_alt() {return $this->alt;}
 	public function get_legende() {return $this->legende;}
 	public function get_copyright() {return $this->copyright;}
@@ -162,6 +172,8 @@ class img_media {
 	public function get_height() {return $this->height;}
 	public function get_style_legende() {return $this->style_legende;}
 	public function get_lien() {return $this->lien;}
+	public function get_base() {return $this->base;}
+	public function get_version() {return $this->version;}
 	public function get_est_vide() {return (($this->width == 1) && ($this->height == 1)); }
 	public function get_extension() {
 		$ext = strtolower(@pathinfo($this->src, PATHINFO_EXTENSION));
@@ -229,10 +241,14 @@ class xml_media {
 			for ($cpt = 0;$cpt < $nb_images; $cpt++) {
 				$nom = $xml_media->lire_n_attribut(_MEDIA_ATTR_NOM, $cpt);
 				if (strlen($nom) > 0) {
-					$src = $xml_media->lire_n_valeur(_MEDIA_IMAGE_SRC, $cpt);
-					if ($src) {
-						$src_reduite = _XML_PATH_IMAGES_REDUITES_SITE.$src;
-						$src = _XML_PATH_IMAGES_SITE.$src;
+					$fichier = $xml_media->lire_n_valeur(_MEDIA_IMAGE_SRC, $cpt);
+					if (strlen($fichier) > 0) {
+						list($base, $extension) = $this->parser_extension($fichier);
+						$version = $this->parser_version(_XML_PATH_IMAGES_SITE, _XML_PATH_IMAGES_REDUITES_SITE, $base, $extension);
+						$src_reduite = sprintf("%s%s-v%03d%s", _XML_PATH_IMAGES_REDUITES_SITE, $base, $version, $extension);
+						$src = sprintf("%s%s-v%03d%s", _XML_PATH_IMAGES_SITE, $base, $version, $extension);
+						$dest_reduite = sprintf("%s%s-v%03d%s", _XML_PATH_IMAGES_REDUITES_SITE, $base, ((int) $version) + 1, $extension);
+						$dest = sprintf("%s%s-v%03d%s", _XML_PATH_IMAGES_SITE, $base, ((int) $version) + 1, $extension);
 
 						// Vérifications
 						if (file_exists($src)) {
@@ -257,17 +273,16 @@ class xml_media {
 							
 							// Création de l'objet images
 							$image = new img_media($source, $nom);
-							$image->set_src($src);
-							$image->set_src_reduite($src_reduite);
-							$image->set_alt($alt);
-							$image->set_legende($legende);
+							$image->set_src($src);$image->set_src_reduite($src_reduite);
+							$image->set_dest($dest);$image->set_dest_reduite($dest_reduite);
+							$image->set_alt($alt);$image->set_legende($legende);
 							$key_copy = (strlen($suffixe) > 0)?$copyright."_".$suffixe:$copyright;
 							$image->set_copyright($key_copy);
 							$image->set_lien($lien);
+							$image->set_base($base);$image->set_version($version);
 							$image->set_width_standard($largeur_standard);
 							$image->set_height_standard($hauteur_standard);
-							$image->set_width($width);
-							$image->set_height($height);
+							$image->set_width($width);$image->set_height($height);
 							$image->set_style_legende($nom_style);
 							$key = (strlen($suffixe) > 0)?$nom."_".$suffixe:$nom;
 							$this->images[$key] = $image;
@@ -373,5 +388,42 @@ class xml_media {
 		$ret .= ";";
 		
 		return $ret;
+	}
+	
+	private function parser_extension($fichier) {
+		$point = (int) strpos($fichier, ".");
+		if ($point > 0) {
+			$ext = substr($fichier, $point);
+			$base = substr($fichier, 0, $point);
+		}
+		else {
+			$ext = "";
+			$base = $fichier;
+		}
+		return (array($base, $ext));
+	}
+	
+	private function parser_version($dir, $dir_reduite, $base, $ext) {
+		$version = 0;
+		$src = $dir."/".$base.$ext;
+		if (file_exists($src)) {
+			$dest = $dir."/".$base."-v000".$ext;
+			@rename($src, $dest);
+			$src_reduite = $dir_reduite."/".$base.$ext;
+			$dest_reduite = $dir_reduite."/".$base."-v000".$ext;
+			@rename($src_reduite, $dest_reduite);
+		}
+		else {
+			$pattern = $dir."/".$base."-v[0-9][0-9][0-9]".$ext;
+			$list = glob($pattern);
+			$nb_list = count($list);
+			if ($nb_list > 1) {
+				for ($cpt = 0;$cpt < ($nb_list - 1); $cpt++) {@unlink($list[$cpt]);}
+			}
+			$fichier = @basename($list[((int) ($nb_list - 1))]);
+			$scan = sscanf($fichier, $base."-v%d".$ext);
+			if (count($scan) > 0) {$version = $scan[0];}
+		}
+		return $version;
 	}
 }

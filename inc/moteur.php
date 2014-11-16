@@ -574,10 +574,17 @@
 			$taille = (int) $this->page->lire_attribut_n(_PAGE_SOCIAL, $occ, _PAGE_ATTR_SOCIAL_TAILLE);
 			$grande_taille = ($taille < 33)?false:true;
 			// Récupération des données du partage
-			$titre = urlencode(trim($this->page->get_meta_titre()));
+			$titre_editable = $this->page->get_meta_titre_editable();
+			if (strlen($titre_editable) > 0) {
+				$titre = $this->texte->get_texte($titre_editable, $this->langue_page);
+			}
+			else {
+				$titre = $this->page->get_meta_titre();
+			}
+			$titre_partage = urlencode(trim($titre));
 			$url = urlencode("http://".$_SERVER["SERVER_NAME"].$_SERVER["PHP_SELF"]);
 			// Création de l'objet partage social
-			$obj = new obj_partage_social($this->texte, $url, $titre, $forme_carree, $grande_taille);
+			$obj = new obj_partage_social($this->texte, $url, $titre_partage, $forme_carree, $grande_taille);
 			if ($obj) {$obj->afficher($mode, $this->langue_page);}
 			return $obj;
 		}

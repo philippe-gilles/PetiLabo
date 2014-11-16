@@ -80,7 +80,9 @@
 		public function ouvrir_corps() {
 			// Corps
 			$this->html->ouvrir_body($this->police_par_defaut);
-			
+			// Cas de Google Analytics
+			$code_ga = $this->page->get_meta_ga();
+			if (strlen($code_ga) > 0) {$this->html->inserer_ga($code_ga);}
 			// Traitement du cas papier peint <= IE8
 			$papierpeint = $this->site->get_papierpeint_exterieur();
 			if (strlen($papierpeint) > 0) {$this->html->afficher_papierpeint_ie($papierpeint);}

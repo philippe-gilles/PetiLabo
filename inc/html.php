@@ -97,6 +97,18 @@ class html {
 		$this->fermer_pp($admin);
 		echo "</div>\n";
 	}
+	public function inserer_ga($code_ga) {
+		$src_js = _PHP_PATH_ROOT."js/ga-template.js";
+		$file_js = fopen($src_js, "r");
+		if (!($file_js)) {return;}
+		echo "<script type=\"text/javascript\">\n";
+		while ($ligne_js = fgets($file_js)) {
+			$sortie_js = str_replace("_IDENTIFIANT_GOOGLE_ANALYTICS", $code_ga, $ligne_js);
+			echo $sortie_js;
+		}
+		fclose($file_js);
+		echo "</script>\n";
+	}
 	private function ouvrir_pp($admin) {
 		echo "<div class=\"ligne_finale\"></div>\n";
 		$this->ouvrir_balise_html5("footer");
