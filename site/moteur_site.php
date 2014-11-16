@@ -55,13 +55,13 @@
 			$this->html->charger_css("css/style.css");
 			$this->charger_xml_css(false);
 			// On charge les JS supplémentaires uniquement si nécessaire
-			$has_bx = $this->has_bx();
+			$has_bx = $this->page->has_bx();
 			if ($has_bx) {$this->html->charger_js("js/bx.min.js");}
-			$has_rs = $this->has_rs();
+			$has_rs = $this->page->has_rs();
 			if ($has_rs) {$this->html->charger_js("js/rs.min.js");}
-			$has_lb = $this->has_lb();
+			$has_lb = $this->page->has_lb();
 			if ($has_lb) {$this->html->charger_js("js/lb.min.js");}
-			$has_form = $this->has_form();
+			$has_form = $this->page->has_form();
 			if ($has_form) {
 				$this->html->charger_js("js/form_".$this->langue_page.".js");
 				$this->html->charger_js("js/form.js");
@@ -82,7 +82,10 @@
 			$this->html->ouvrir_body($this->police_par_defaut);
 			// Cas de Google Analytics
 			$code_ga = $this->page->get_meta_ga();
-			if (strlen($code_ga) > 0) {$this->html->inserer_ga($code_ga);}
+			if (strlen($code_ga) > 0) {
+				$this->html->inserer_panneau_ga();
+				$this->html->inserer_ga($code_ga);
+			}
 			// Traitement du cas papier peint <= IE8
 			$papierpeint = $this->site->get_papierpeint_exterieur();
 			if (strlen($papierpeint) > 0) {$this->html->afficher_papierpeint_ie($papierpeint);}
@@ -158,42 +161,6 @@
 			$descr = $this->page->get_meta_descr();
 			$descr_editable = $this->page->get_meta_descr_editable();
 			$ret = (strlen($descr_editable) > 0)?$this->texte->get_texte($descr_editable, $this->langue_page):$descr;
-			return $ret;
-		}
-		private function has_bx() {
-			$ret = false;
-			$nb_contenus = $this->page->get_nb_contenus();
-			for ($cpt_cont = 0;(($cpt_cont < $nb_contenus) && (!($ret)));$cpt_cont++) {
-				$obj_contenu = $this->page->get_contenu($cpt_cont);
-				if ($obj_contenu) {$ret = $obj_contenu->get_has_bx();}
-			}
-			return $ret;
-		}
-		private function has_rs() {
-			$ret = false;
-			$nb_contenus = $this->page->get_nb_contenus();
-			for ($cpt_cont = 0;(($cpt_cont < $nb_contenus) && (!($ret)));$cpt_cont++) {
-				$obj_contenu = $this->page->get_contenu($cpt_cont);
-				if ($obj_contenu) {$ret = $obj_contenu->get_has_rs();}
-			}
-			return $ret;
-		}
-		private function has_lb() {
-			$ret = false;
-			$nb_contenus = $this->page->get_nb_contenus();
-			for ($cpt_cont = 0;(($cpt_cont < $nb_contenus) && (!($ret)));$cpt_cont++) {
-				$obj_contenu = $this->page->get_contenu($cpt_cont);
-				if ($obj_contenu) {$ret = $obj_contenu->get_has_lb();}
-			}
-			return $ret;
-		}
-		private function has_form() {
-			$ret = false;
-			$nb_contenus = $this->page->get_nb_contenus();
-			for ($cpt_cont = 0;(($cpt_cont < $nb_contenus) && (!($ret)));$cpt_cont++) {
-				$obj_contenu = $this->page->get_contenu($cpt_cont);
-				if ($obj_contenu) {$ret = $obj_contenu->get_has_form();}
-			}
 			return $ret;
 		}
 	}

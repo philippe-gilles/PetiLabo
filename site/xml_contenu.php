@@ -7,10 +7,6 @@
 		private $style = null;
 		private $blocs = array();
 		private $taille_totale = 0;
-		private $has_rs = false;
-		private $has_lb = false;
-		private $has_bx = false;
-		private $has_form = false;
 
 		// Méthodes publiques
 		public function __construct($signet, $style, $semantique = null) {
@@ -19,9 +15,7 @@
 			if (strlen($style) > 0) {$this->style = $style;}
 		}
 		public function ajouter_bloc($repere, $taille, $style, $position) {
-			if ($taille < 1) {
-				$taille = 1;
-			}
+			if ($taille < 1) {$taille = 1;}
 			$this->blocs[] = new xml_bloc($repere, $taille, $style, $position);
 			$this->taille_totale += (int) $taille;
 		}
@@ -36,14 +30,6 @@
 				}
 			}
 		}
-		public function set_has_bx($param) {$this->has_bx = ($param)?true:false;}
-		public function set_has_rs($param) {$this->has_rs = ($param)?true:false;}
-		public function set_has_lb($param) {$this->has_lb = ($param)?true:false;}
-		public function set_has_form($param) {$this->has_form = ($param)?true:false;}
-		public function get_has_bx() {return $this->has_bx;}
-		public function get_has_rs() {return $this->has_rs;}
-		public function get_has_lb() {return $this->has_lb;}
-		public function get_has_form() {return $this->has_form;}
 		public function get_semantique() {return $this->semantique;}
 		public function get_signet() {return $this->signet;}
 		public function get_style() {return $this->style;}

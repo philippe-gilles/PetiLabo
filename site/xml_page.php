@@ -11,6 +11,10 @@ class xml_page {
 	private $meta_ga = null;
 	private $contenu = array();
 	private $nb_actus = 0;
+	private $has_rs = false;
+	private $has_lb = false;
+	private $has_bx = false;
+	private $has_form = false;
 
 	public function ouvrir($nom) {
 		$this->page = new xml_struct();
@@ -49,22 +53,25 @@ class xml_page {
 					
 					// On contrôle l'existence d'un carrousel
 					$carrousel = $this->page->lire_valeur(_PAGE_CARROUSEL);
-					if (strlen($carrousel) > 0) {$obj_contenu->set_has_bx(true);}
+					if (strlen($carrousel) > 0) {$this->has_bx = true;}
 					// On contrôle l'existence d'une galerie
 					$galerie = $this->page->lire_valeur(_PAGE_GALERIE);
-					if (strlen($galerie) > 0) {$obj_contenu->set_has_bx(true);}
+					if (strlen($galerie) > 0) {$this->has_bx = true;}
 					// On contrôle l'existence d'un diaporama
 					$diaporama = $this->page->lire_valeur(_PAGE_DIAPORAMA);
-					if (strlen($diaporama) > 0) {$obj_contenu->set_has_rs(true);}
+					if (strlen($diaporama) > 0) {$this->has_rs = true;}
 					// On contrôle l'existence d'un module d'actualité
 					$nb_actus = (int) $this->page->lire_valeur(_PAGE_BANNIERE_ACTU);
-					if ($nb_actus > 0) {$this->nb_actus = $nb_actus;$obj_contenu->set_has_rs(true);}
+					if ($nb_actus > 0) {
+						$this->nb_actus = $nb_actus;
+						$this->has_rs = true;
+					}
 					// On contrôle l'existence d'une lightbox
 					$vignettes = $this->page->lire_valeur(_PAGE_VIGNETTES);
-					if (strlen($vignettes) > 0) {$obj_contenu->set_has_lb(true);}
-					// On contrôle l'existence d'un formulaure de contact
+					if (strlen($vignettes) > 0) {$this->has_lb = true;}
+					// On contrôle l'existence d'un formulaire de contact
 					$form_contact = $this->page->lire_valeur(_PAGE_FORM_CONTACT);
-					if (strlen($form_contact) > 0) {$obj_contenu->set_has_form(true);}
+					if (strlen($form_contact) > 0) {$this->has_form = true;}
 
 					// Parcours des éléments dans le bloc
 					$nb_elems = $this->page->compter_enfants();
@@ -120,7 +127,12 @@ class xml_page {
 	}
 	public function get_meta_ga() {return $this->meta_ga;}
 	public function get_nb_actus() {return $this->nb_actus;}
-	
+	public function has_ga() {return ((strlen($this->meta_ga) > 0)?true:false);}
+	public function has_bx() {return $this->has_bx;}
+	public function has_rs() {return $this->has_rs;}
+	public function has_lb() {return $this->has_lb;}
+	public function has_form() {return $this->has_form;}
+
 	private function lire_balises_meta() {
 		// Lecture des meta titre et description
 		$this->meta_titre = $this->page->lire_valeur(_PAGE_META_TITRE);

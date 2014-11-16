@@ -97,6 +97,9 @@ class html {
 		$this->fermer_pp($admin);
 		echo "</div>\n";
 	}
+	public function inserer_panneau_ga() {
+		// TODO : Gestion du panneau conformément à la loi européenne sur les cookies
+	}
 	public function inserer_ga($code_ga) {
 		$src_js = _PHP_PATH_ROOT."js/ga-template.js";
 		$file_js = fopen($src_js, "r");
