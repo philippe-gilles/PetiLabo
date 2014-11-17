@@ -18,7 +18,7 @@ class html {
 	public function fermer() {
 		echo "</html>";
 	}
-	public function ouvrir_head($root="") {
+	public function ouvrir_head() {
 		echo "<head>\n";
 		echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />\n";
 		echo "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" />\n";
@@ -97,20 +97,38 @@ class html {
 		$this->fermer_pp($admin);
 		echo "</div>\n";
 	}
-	public function inserer_panneau_ga() {
-		// TODO : Gestion du panneau conformément à la loi européenne sur les cookies
+	public function inserer_panneau_ga($le_site, $nom_site, $installer_ga, $accepter, $refuser) {
+		$cookie_set = isset($_COOKIE["petilabo_ga"]);
+		if ($cookie_set) {
+			$cookie_val = $_COOKIE["petilabo_ga"];
+			if ((strcmp($cookie_val, "ok")) && (strcmp($cookie_val, "nok"))) {$cookie_set = false;}
+		}
+		if ($cookie_set) {return;}
+		$incipit = $le_site;
+		$incipit .= (strlen($nom_site) > 0)?(" <strong>".trim($nom_site)."</strong>"):"";
+		$incipit .= " ".$installer_ga;
+		echo "<div class=\"wrap_panneau_ga\">\n";
+		echo "<div class=\"panneau_ga\">";
+		echo "<p class=\"incipit_ga\">".$incipit." :</p>";
+		echo "<form class=\"form_ga\" method=\"post\" action=\"petilabo/inc/cookie_ok.php\"><input type=\"submit\" value=\"".$accepter."\"/></form>";
+		echo "<form class=\"form_ga\" method=\"post\" action=\"petilabo/inc/cookie_nok.php\"><input type=\"submit\" value=\"".$refuser."\"/></form>";
+		echo "</div>\n</div>\n";
 	}
 	public function inserer_ga($code_ga) {
-		$src_js = _PHP_PATH_ROOT."js/ga-template.js";
-		$file_js = fopen($src_js, "r");
-		if (!($file_js)) {return;}
-		echo "<script type=\"text/javascript\">\n";
-		while ($ligne_js = fgets($file_js)) {
-			$sortie_js = str_replace("_IDENTIFIANT_GOOGLE_ANALYTICS", $code_ga, $ligne_js);
-			echo $sortie_js;
+		$cookie_set = isset($_COOKIE["petilabo_ga"]);
+		$cookie_ok = ($cookie_set)?(!(strcmp($_COOKIE["petilabo_ga"], "ok"))):false;
+		if ($cookie_ok) {
+			$src_js = _PHP_PATH_ROOT."js/ga-template.js";
+			$file_js = fopen($src_js, "r");
+			if (!($file_js)) {return;}
+			echo "<script type=\"text/javascript\">\n";
+			while ($ligne_js = fgets($file_js)) {
+				$sortie_js = str_replace("_IDENTIFIANT_GOOGLE_ANALYTICS", $code_ga, $ligne_js);
+				echo $sortie_js;
+			}
+			fclose($file_js);
+			echo "</script>\n";
 		}
-		fclose($file_js);
-		echo "</script>\n";
 	}
 	private function ouvrir_pp($admin) {
 		echo "<div class=\"ligne_finale\"></div>\n";

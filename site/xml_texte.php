@@ -203,6 +203,39 @@ class xml_texte {
 		_LANGUE_IT=>"Chiama con Skype",
 		_LANGUE_NL=>"Bellen met Skype",
 		_LANGUE_PT=>"Chamada com Skype");
+	private $tab_le_site = array(
+		_LANGUE_DE=>"Die Web-Site",
+		_LANGUE_EN=>"The website", 
+		_LANGUE_ES=>"El sitio",
+		_LANGUE_FR=>"Le site",
+		_LANGUE_IT=>"Et sito",
+		_LANGUE_NL=>"De website",
+		_LANGUE_PT=>"O sítio");
+	private $tab_installer_ga = array(
+		_LANGUE_DE=>"will das Google Analytics Cookie Mess Publikum installieren XXX",
+		_LANGUE_EN=>"wishes to install the Google Analytics cookie for audience measurement", 
+		_LANGUE_ES=>"quiere instalar el cookie de Google Analytics por la medición de audiencias",
+		_LANGUE_FR=>"souhaite installer le cookie de mesure d'audience Google Analytics",
+		_LANGUE_IT=>"vuole installare di cookie Google Analytics per la misurazione dell'audience",
+		_LANGUE_NL=>"wil een Google Analytics cookie te installeren voor het meten van publiek",
+		_LANGUE_PT=>"quer instalar um cookie Google Analytics para medir audiências");
+	private $tab_accepter = array(
+		_LANGUE_DE=>"Ich nehme",
+		_LANGUE_EN=>"I agree", 
+		_LANGUE_ES=>"Acepto",
+		_LANGUE_FR=>"J'accepte",
+		_LANGUE_IT=>"Acconsento",
+		_LANGUE_NL=>"Ik accepteer",
+		_LANGUE_PT=>"Aceito");
+	private $tab_refuser = array(
+		_LANGUE_DE=>"Ich weigere",
+		_LANGUE_EN=>"I disagree", 
+		_LANGUE_ES=>"Me niego",
+		_LANGUE_FR=>"Je refuse",
+		_LANGUE_IT=>"Rifiuto",
+		_LANGUE_NL=>"Ik weiger",
+		_LANGUE_PT=>"Me recuso");	
+
 	private $xml_struct = null;
 	private $liste_langues = array();
 	private $textes = array();
@@ -296,6 +329,10 @@ class xml_texte {
 	public function get_tab_statut_resa($langue) {return $this->tab_statut_resa[$langue];}
 	public function get_label_appeler_tel($langue) {return $this->tab_appeler_tel[$langue];}
 	public function get_label_appeler_skype($langue) {return $this->tab_appeler_skype[$langue];}
+	public function get_label_le_site($langue) {return $this->tab_le_site[$langue];}
+	public function get_label_installer_ga($langue) {return $this->tab_installer_ga[$langue];}
+	public function get_label_accepter($langue) {return $this->tab_accepter[$langue];}
+	public function get_label_refuser($langue) {return $this->tab_refuser[$langue];}
 	
 	public function get_id_titre_actu($no) {return _MODULE_ACTU_TITRE.$no;}
 	public function get_id_sous_titre_actu($no) {return _MODULE_ACTU_SOUS_TITRE.$no;}

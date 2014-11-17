@@ -130,6 +130,12 @@ div,img {border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;}
 .liens_pp_sans_social{margin-top:1.4em;}
 .icone_pp a {color:#fff;text-decoration:none;}
 .icone_pp a:hover {color:#aaa;text-decoration:none;}
+/* Google Analytics */
+div.wrap_panneau_ga{text-align:center;width:100%;background:#988;padding:2px;margin:0;border-radius:0;-moz-border-radius:0;-webkit-border-radius:0;}
+div.panneau_ga{overflow:hidden;display:inline-block;font-size:80%;padding-top:5px;}
+p.incipit_ga{float:left;padding-top:2px;}
+form.form_ga{float:left;margin:0 15px;}
+form.form_ga input{font-size:0.9em;}
 /* Police d'icones */
 @font-face {
   font-family: 'FontAwesome';

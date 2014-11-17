@@ -37,10 +37,9 @@
 			}
 		}
 		public function ouvrir_entete() {
-			$url_canonique = $this->site->get_url_racine()."/".($this->nom_page)._PXP_EXT;
 			// Ouverture de l'entête
 			$this->html->ouvrir($this->langue_page);
-			$this->html->ouvrir_head($url_canonique);
+			$this->html->ouvrir_head();
 		}
 		public function ecrire_entete() {
 			// Ecriture de l'entête
@@ -83,7 +82,11 @@
 			// Cas de Google Analytics
 			$code_ga = $this->page->get_meta_ga();
 			if (strlen($code_ga) > 0) {
-				$this->html->inserer_panneau_ga();
+				$le_site = $this->texte->get_label_le_site($this->langue_page);
+				$installer_ga = $this->texte->get_label_installer_ga($this->langue_page);
+				$accepter = $this->texte->get_label_accepter($this->langue_page);
+				$refuser = $this->texte->get_label_refuser($this->langue_page);
+				$this->html->inserer_panneau_ga($le_site, $this->site->get_url_racine(), $installer_ga, $accepter, $refuser);
 				$this->html->inserer_ga($code_ga);
 			}
 			// Traitement du cas papier peint <= IE8
