@@ -97,38 +97,54 @@ class html {
 		$this->fermer_pp($admin);
 		echo "</div>\n";
 	}
-	public function inserer_panneau_ga($le_site, $nom_site, $installer_ga, $accepter, $refuser) {
-		$cookie_set = isset($_COOKIE["petilabo_ga"]);
-		if ($cookie_set) {
-			$cookie_val = $_COOKIE["petilabo_ga"];
-			if ((strcmp($cookie_val, "ok")) && (strcmp($cookie_val, "nok"))) {$cookie_set = false;}
+	public function inserer_panneau_ga($loi_cookie, $le_site, $nom_site, $texte_ga, $poursuite_ga, $accepter, $refuser) {
+		if (!(strcmp($loi_cookie, _SITE_ATTR_LOI_COOKIE_FORT))) {
+			$this->inserer_panneau_ga_fort($le_site, $nom_site, $texte_ga, $poursuite_ga, $accepter, $refuser);
 		}
-		if ($cookie_set) {return;}
+		elseif (!(strcmp($loi_cookie, _SITE_ATTR_LOI_COOKIE_MOYEN))) {
+			$this->inserer_panneau_ga_moyen($le_site, $nom_site, $texte_ga, $poursuite_ga);
+		}
+	}
+
+	public function inserer_ga($code_ga) {
+		$src_js = _PHP_PATH_ROOT."js/ga-template.js";
+		$file_js = fopen($src_js, "r");
+		if (!($file_js)) {return;}
+		echo "<script type=\"text/javascript\">\n";
+		while ($ligne_js = fgets($file_js)) {
+			$sortie_js = str_replace("_IDENTIFIANT_GOOGLE_ANALYTICS", $code_ga, $ligne_js);
+			echo $sortie_js;
+		}
+		fclose($file_js);
+		echo "</script>\n";
+	}
+
+	private function inserer_panneau_ga_fort($le_site, $nom_site, $texte_ga, $poursuite_ga, $accepter, $refuser) {
 		$incipit = $le_site;
 		$incipit .= (strlen($nom_site) > 0)?(" <strong>".trim($nom_site)."</strong>"):"";
-		$incipit .= " ".$installer_ga;
-		echo "<div class=\"wrap_panneau_ga\">\n";
+		$incipit .= " ".$texte_ga;
+		echo "<div class=\"wrap_panneau_ga\">";
 		echo "<div class=\"panneau_ga\">";
 		echo "<p class=\"incipit_ga\">".$incipit." :</p>";
-		echo "<form class=\"form_ga\" method=\"post\" action=\"petilabo/inc/cookie_ok.php\"><input type=\"submit\" value=\"".$accepter."\"/></form>";
-		echo "<form class=\"form_ga\" method=\"post\" action=\"petilabo/inc/cookie_nok.php\"><input type=\"submit\" value=\"".$refuser."\"/></form>";
-		echo "</div>\n</div>\n";
+		echo "<div class=\"boutons_ga\">";
+		echo "<form class=\"form_ga_1\" method=\"post\" action=\"petilabo/inc/cookie_ok.php\"><input type=\"submit\" value=\"".$accepter."\"/></form>";
+		echo "<form class=\"form_ga_2\" method=\"post\" action=\"petilabo/inc/cookie_nok.php\"><input type=\"submit\" value=\"".$refuser."\"/></form>";
+		echo "<div style=\"clear:both;\"></div></div></div>";
+		echo "<p class=\"poursuite_ga\">".$poursuite_ga."</p>";
+		echo "</div>\n";
 	}
-	public function inserer_ga($code_ga) {
-		$cookie_set = isset($_COOKIE["petilabo_ga"]);
-		$cookie_ok = ($cookie_set)?(!(strcmp($_COOKIE["petilabo_ga"], "ok"))):false;
-		if ($cookie_ok) {
-			$src_js = _PHP_PATH_ROOT."js/ga-template.js";
-			$file_js = fopen($src_js, "r");
-			if (!($file_js)) {return;}
-			echo "<script type=\"text/javascript\">\n";
-			while ($ligne_js = fgets($file_js)) {
-				$sortie_js = str_replace("_IDENTIFIANT_GOOGLE_ANALYTICS", $code_ga, $ligne_js);
-				echo $sortie_js;
-			}
-			fclose($file_js);
-			echo "</script>\n";
-		}
+	private function inserer_panneau_ga_moyen($le_site, $nom_site, $texte_ga, $poursuite_ga) {
+		$incipit = $le_site;
+		$incipit .= (strlen($nom_site) > 0)?(" <strong>".trim($nom_site)."</strong>"):"";
+		$incipit .= " ".$texte_ga;
+		echo "<div class=\"wrap_panneau_ga\">";
+		echo "<div class=\"panneau_ga\">";
+		echo "<p class=\"incipit_ga\">".$incipit." &nbsp; </p>";
+		echo "<div class=\"boutons_ga\">";
+		echo "<form class=\"form_ga_1\" method=\"post\" action=\"petilabo/inc/cookie_ok.php\"><input type=\"submit\" value=\"OK\"/></form>";
+		echo "<div style=\"clear:both;\"></div></div></div>";
+		echo "<p class=\"poursuite_ga\">".$poursuite_ga."</p>";
+		echo "</div>\n";
 	}
 	private function ouvrir_pp($admin) {
 		echo "<div class=\"ligne_finale\"></div>\n";

@@ -15,7 +15,7 @@
 	<texte nom="legal_cnil">est déclaré à la CNIL sous le n°</texte>
 	<!-- Section cookie -->
 	<texte nom="legal_cookies_petilabo">Par principe, la plateforme PetiLabo ne nécessite aucun cookie pour fonctionner.</texte>
-	<texte nom="legal_cookies_site">, cependant, intègre le cookie Google Analytics à des fins de mesure d'audience. Un service de désactivation de ce cookie est en cours de développement afin de laisser le choix au visiteur. En attendant, pour ne pas figurer dans les mesures d'audience de Google Analytics, le visiteur doit désactiver l'usage des cookies pour ce site. Cela n'aura aucune conséquence sur l'expérience de surf.</texte>
+	<texte nom="legal_cookies_site">, cependant, intègre le cookie Google Analytics à des fins de mesure d'audience. Conformément à la loi européenne sur les cookies, vous pouvez à tout moment accepter ou refuser ce cookie au moyen des boutons ci-dessous.</texte>
 	<!-- Section copyright -->
 	<texte nom="legal_propriete">est propriétaire des droits de propriété intellectuelle ou bien détient les droits d'usage sur tous les éléments accessibles sur le site, notamment les textes, images et vidéos.</texte>
 	<texte nom="legal_reproduction">Toute reproduction, représentation, modification, publication, adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite, sauf autorisation préalable de</texte>

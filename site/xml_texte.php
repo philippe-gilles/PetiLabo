@@ -212,13 +212,29 @@ class xml_texte {
 		_LANGUE_NL=>"De website",
 		_LANGUE_PT=>"O sítio");
 	private $tab_installer_ga = array(
-		_LANGUE_DE=>"will das Google Analytics Cookie Mess Publikum installieren XXX",
+		_LANGUE_DE=>"will das Google Analytics Cookie Mess Publikum installieren",
 		_LANGUE_EN=>"wishes to install the Google Analytics cookie for audience measurement", 
 		_LANGUE_ES=>"quiere instalar el cookie de Google Analytics por la medición de audiencias",
 		_LANGUE_FR=>"souhaite installer le cookie de mesure d'audience Google Analytics",
 		_LANGUE_IT=>"vuole installare di cookie Google Analytics per la misurazione dell'audience",
 		_LANGUE_NL=>"wil een Google Analytics cookie te installeren voor het meten van publiek",
-		_LANGUE_PT=>"quer instalar um cookie Google Analytics para medir audiências");
+		_LANGUE_PT=>"quer instalar o cookie Google Analytics para medir audiências");
+	private $tab_utiliser_ga = array(
+		_LANGUE_DE=>"benutzt Google Analytics Cookie Mess Publikum installieren  <a href=\"legal.php#cookies\"><em style='font-size:90%;'>(Weiterlesen)</em></a>",
+		_LANGUE_EN=>"uses the Google Analytics cookie for audience measurement  <a href=\"legal.php#cookies\"><em style='font-size:90%;'>(learn more)</em></a>", 
+		_LANGUE_ES=>"utiliza el cookie de Google Analytics por la medición de audiencias  <a href=\"legal.php#cookies\"><em style='font-size:90%;'>(leer más)</em></a>",
+		_LANGUE_FR=>"utilise le cookie de mesure d'audience Google Analytics  <a href=\"legal.php#cookies\"><em style='font-size:90%;'>(en savoir plus)</em></a>",
+		_LANGUE_IT=>"utilizza il cookie Google Analytics per la misurazione dell'audience  <a href=\"legal.php#cookies\"><em style='font-size:90%;'>(ulteriori informazioni)</em></a>",
+		_LANGUE_NL=>"maakt gebruik van Google Analytics cookie te installeren voor het meten van publiek  <a href=\"legal.php#cookies\"><em style='font-size:90%;'>(lees verder)</em></a>",
+		_LANGUE_PT=>"usa o cookie Google Analytics para medir audiências  <a href=\"legal.php#cookies\"><em style='font-size:90%;'>(Leia mais)</em></a>");
+	private $tab_poursuite = array(
+		_LANGUE_DE=>"Notez qu'en visitant de nouvelles pages sur ce site, vous acceptez implicitement ce cookie.",
+		_LANGUE_EN=>"Note that visiting new pages on this site means that you implicitly accept this cookie.",
+		_LANGUE_ES=>"Observe que visitando otras páginas en este sitio, usted acepta implícitamente esta cookie.",
+		_LANGUE_FR=>"Notez qu'en visitant de nouvelles pages sur ce site, vous acceptez implicitement ce cookie.",
+		_LANGUE_IT=>"Please note that visiting new pages on this site, you implicitly agree to this cookie.",
+		_LANGUE_NL=>"Notez qu'en visitant de nouvelles pages sur ce site, vous acceptez implicitement ce cookie.",
+		_LANGUE_PT=>"Notez qu'en visitant de nouvelles pages sur ce site, vous acceptez implicitement ce cookie.");
 	private $tab_accepter = array(
 		_LANGUE_DE=>"Ich nehme",
 		_LANGUE_EN=>"I agree", 
@@ -331,6 +347,8 @@ class xml_texte {
 	public function get_label_appeler_skype($langue) {return $this->tab_appeler_skype[$langue];}
 	public function get_label_le_site($langue) {return $this->tab_le_site[$langue];}
 	public function get_label_installer_ga($langue) {return $this->tab_installer_ga[$langue];}
+	public function get_label_utiliser_ga($langue) {return $this->tab_utiliser_ga[$langue];}
+	public function get_label_poursuite_ga($langue) {return $this->tab_poursuite[$langue];}
 	public function get_label_accepter($langue) {return $this->tab_accepter[$langue];}
 	public function get_label_refuser($langue) {return $this->tab_refuser[$langue];}
 	

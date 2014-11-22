@@ -4,3 +4,5 @@
 .pied_de_page{filter: alpha(opacity=70);}
 .transparence_80pc {filter: alpha(opacity=80);}
 .mfp-bg {filter: alpha(opacity=80);}
+.panneau_ga {zoom: 1;display:inline;}
+.wrap_panneau_ga {filter: alpha(opacity=90);}

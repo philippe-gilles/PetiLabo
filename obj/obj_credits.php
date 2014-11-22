@@ -52,7 +52,7 @@ class obj_credits extends obj_html {
 		$this->chapitre_photographique = $chapitre_photographique;
 		$this->sections_chapitre = $sections_chapitre;
 		$this->taille_vignette = $taille_vignette;
-		$this->tab_technique = array("fa", "rs", "bx", "mp", "id", "ju", "jc", "te");
+		$this->tab_technique = array("fa", "rs", "bx", "mp", "id", "ju", "te");
 	}
 	
 	public function ajouter_credit_photo($src, $copyright, $largeur, $hauteur) {

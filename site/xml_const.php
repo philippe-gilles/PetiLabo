@@ -37,6 +37,12 @@
 	define("_SITE_SOCIAL_YOUTUBE", "youtube");
 	define("_SITE_SOCIAL_FLICKR", "flickr");
 	define("_SITE_PIED_DE_PAGE", "pied_de_page");
+	define("_SITE_LOI_COOKIE", "loi_cookie");
+
+	// Valeurs possibles pour l'attribut loi cookie
+	define("_SITE_ATTR_LOI_COOKIE_FAIBLE", "faible");
+	define("_SITE_ATTR_LOI_COOKIE_MOYEN", "moyen");
+	define("_SITE_ATTR_LOI_COOKIE_FORT", "fort");
 
 	// Balises pour le fichier XML site (site.xml)
 	define("_SITE_STYLE_TITRE_1", "style_titre_1");

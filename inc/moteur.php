@@ -561,6 +561,8 @@
 			$obj->ajouter_hebergeur($hebergeur);
 			$no_cnil = $this->site->get_cnil();
 			$obj->ajouter_cnil($no_cnil);
+			$cookie_info = $this->site->has_loi_cookie();
+			$obj->ajouter_cookie_info($cookie_info);
 			// Affichage
 			$obj->afficher($mode, $this->langue_page, $style_p);
 			return $obj;

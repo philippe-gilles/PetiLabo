@@ -1,7 +1,7 @@
 <?php
 	// Le refus est acté pour un mois
 	$duree = 3600*24*30;
-	setcookie("petilabo_ga", "nok", time() + $duree, "/");
+	setcookie("petilabo_google_analytics", "nok", time() + $duree, "/");
 
 	// Retour à la page appelante
 	$referer = (isset($_SERVER['HTTP_REFERER']))?$_SERVER['HTTP_REFERER']:null;

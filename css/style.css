@@ -1,7 +1,7 @@
 /* Général */
 html, body, div, a, p, h1, h2, h3, img, ul, table, tr, td {margin:0;padding:0;border:0;}
 html {font-size:100%;color:#000;height:100%;}
-body {height:100%;}
+body {height:100%;position:relative;}
 div,img {border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;}
 /* Blocs et contenu */
 .global {position: relative;min-height: 100%; }
@@ -131,11 +131,17 @@ div,img {border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;}
 .icone_pp a {color:#fff;text-decoration:none;}
 .icone_pp a:hover {color:#aaa;text-decoration:none;}
 /* Google Analytics */
-div.wrap_panneau_ga{text-align:center;width:100%;background:#988;padding:2px;margin:0;border-radius:0;-moz-border-radius:0;-webkit-border-radius:0;}
+div.wrap_panneau_ga{text-align:center;width:100%;background:#988;padding:8px 2px;margin:0;border-radius:0;-moz-border-radius:0;-webkit-border-radius:0;top:0;left:0;position:fixed;height:auto;opacity:0.95;z-index:9999;vertical-align:middle;-webkit-box-shadow: 0px 2px 2px 0px rgba(50, 50, 50, 0.75);-moz-box-shadow:0px 2px 2px 0px rgba(50, 50, 50, 0.75);box-shadow:0px 2px 2px 0px rgba(50, 50, 50, 0.75);}
 div.panneau_ga{overflow:hidden;display:inline-block;font-size:80%;padding-top:5px;}
 p.incipit_ga{float:left;padding-top:2px;}
-form.form_ga{float:left;margin:0 15px;}
-form.form_ga input{font-size:0.9em;}
+p.poursuite_ga{font-size:80%;margin:8px 0;}
+div.boutons_ga{float:left;text-align:center;}
+form.form_ga_1, form.form_ga_2{display:inline;margin:0 15px;}
+form.form_ga_1 input, form.form_ga_2 input{font-size:0.9em;}
+@media screen and (max-width: 800px) {
+p.incipit_ga{float:none;display:inline-block;}
+div.boutons_ga{float:none;display:inline-block;margin-top:6px;}
+}
 /* Police d'icones */
 @font-face {
   font-family: 'FontAwesome';
@@ -271,7 +277,7 @@ img.mfp-img {width: auto;max-width:100%;height:auto;display:block;line-height:0;
   .mfp-img-mobile .mfp-bottom-bar:empty {padding:0; }
   .mfp-img-mobile .mfp-counter {right:5px;top:3px; }
   .mfp-img-mobile .mfp-close {top:0;right:0;width:35px;height:35px;line-height:35px;background:rgba(0, 0, 0, 0.6);position:fixed;text-align:center;padding:0; }
-  .mfp-img-mobile .mfp-figure small {display:inline;margin-left:5px; } 
+  .mfp-img-mobile .mfp-figure small {display:inline;margin-left:5px; }
 }
 @media all and (max-width: 900px) {
   .mfp-arrow {-webkit-transform: scale(0.75);transform: scale(0.75); }

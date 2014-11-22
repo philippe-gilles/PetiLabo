@@ -1,6 +1,8 @@
 <?php
 	// La classe moteur_site hérite de la classe moteur
 	class moteur_site extends moteur {
+	
+		private $cookies = null;
 
 		// Méthodes publiques
 		public function __construct() {
@@ -21,6 +23,9 @@
 				$param_actu = $param->get(_PARAM_ID);
 				$this->no_actu = (int) $param_actu;
 			}
+			
+			// Initialisation des cookies
+			$this->cookies = new cookies($this->nom_page);
 
 			// Chargement des structures XML
 			$this->charger_xml();
@@ -37,6 +42,7 @@
 			}
 		}
 		public function ouvrir_entete() {
+			$this->cookies->init();
 			// Ouverture de l'entête
 			$this->html->ouvrir($this->langue_page);
 			$this->html->ouvrir_head();
@@ -49,7 +55,6 @@
 			$this->charger_polices_par_defaut();
 			// Chargement en local de JQuery
 			$this->html->charger_js("js/jquery.js");
-			$this->html->charger_js("js/jquery.cookie.js");
 			// CSS
 			$this->html->charger_css("css/style.css");
 			$this->charger_xml_css(false);
@@ -82,12 +87,23 @@
 			// Cas de Google Analytics
 			$code_ga = $this->page->get_meta_ga();
 			if (strlen($code_ga) > 0) {
+				$loi_cookie = $this->site->get_loi_cookie();
 				$le_site = $this->texte->get_label_le_site($this->langue_page);
-				$installer_ga = $this->texte->get_label_installer_ga($this->langue_page);
+				if (!(strcmp($loi_cookie, _SITE_ATTR_LOI_COOKIE_FORT))) {
+					$texte_ga = $this->texte->get_label_installer_ga($this->langue_page);
+				}
+				else {
+					$texte_ga = $this->texte->get_label_utiliser_ga($this->langue_page);
+				}
+				$poursuite = $this->texte->get_label_poursuite_ga($this->langue_page);
 				$accepter = $this->texte->get_label_accepter($this->langue_page);
 				$refuser = $this->texte->get_label_refuser($this->langue_page);
-				$this->html->inserer_panneau_ga($le_site, $this->site->get_url_racine(), $installer_ga, $accepter, $refuser);
-				$this->html->inserer_ga($code_ga);
+				if (!($this->cookies->is_set())) {
+					$this->html->inserer_panneau_ga($loi_cookie, $le_site, $this->site->get_url_racine(), $texte_ga, $poursuite, $accepter, $refuser);
+				}
+				if ((!($this->site->has_loi_cookie())) || ($this->cookies->is_ok())) {
+					$this->html->inserer_ga($code_ga);
+				}
 			}
 			// Traitement du cas papier peint <= IE8
 			$papierpeint = $this->site->get_papierpeint_exterieur();

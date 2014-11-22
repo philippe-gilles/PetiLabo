@@ -16,6 +16,7 @@ class obj_mentions_legales extends obj_html {
 	private $nom_hebergeur = null;
 	private $nom_site = null;
 	private $no_cnil = null;
+	private $cookie_info = false;
 
 	public function __construct(&$obj_texte, $chapitre_mentions, $chapitre_protection, $chapitre_cookies, $chapitre_copyright, $sections_chapitre) {
 		$this->obj_texte = $obj_texte;
@@ -48,6 +49,10 @@ class obj_mentions_legales extends obj_html {
 	
 	public function ajouter_site($nom_site) {
 		$this->nom_site = $nom_site;
+	}
+	
+	public function ajouter_cookie_info($cookie_info) {
+		$this->cookie_info = $cookie_info;
 	}
 
 	public function afficher($mode, $langue, $style_p = null) {
@@ -119,8 +124,17 @@ class obj_mentions_legales extends obj_html {
 		$le_site = $this->obj_texte->get_texte("legal_le_site", $langue);
 		$cookies_site = $this->obj_texte->get_texte("legal_cookies_site", $langue);
 		echo "<br />"._HTML_FIN_LIGNE;
-		$this->ecrire_legal($le_site." <strong>".$this->nom_site."</strong> ".$cookies_site, $classe);
-		echo "<br />"._HTML_FIN_LIGNE;
+		if ($this->cookie_info) {
+			$accepter = $this->obj_texte->get_label_accepter($langue);
+			$refuser = $this->obj_texte->get_label_refuser($langue);
+			$this->ecrire_legal($le_site." <strong>".$this->nom_site."</strong> ".$cookies_site, $classe);
+			echo "<br />"._HTML_FIN_LIGNE;
+			echo "<div>";
+			echo "<form class=\"form_ga_1\" method=\"post\" action=\"petilabo/inc/cookie_ok.php\"><input type=\"submit\" value=\"".$accepter."\"/></form>";
+			echo "<form class=\"form_ga_2\" method=\"post\" action=\"petilabo/inc/cookie_nok.php\"><input type=\"submit\" value=\"".$refuser."\"/></form>";
+			echo "<div style=\"clear:both;\"></div></div>"._HTML_FIN_LIGNE;
+			echo "<br />"._HTML_FIN_LIGNE;
+		}
 	}
 	
 	private function ecrire_legal_copyright($mode, $langue, $classe) {

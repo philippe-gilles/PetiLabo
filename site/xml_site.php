@@ -18,6 +18,7 @@ class xml_site {
 	private $modules = array();
 	private $plan = array();
 	private $social = array();
+	private $loi_cookie = null;
 	private $pied_de_page = null;
 
 	// Accesseurs
@@ -82,6 +83,8 @@ class xml_site {
 		if ($ret) {$ret = $ret[_SITE_PLAN_PAGE_PARENT];}
 		return $ret;
 	}
+	public function get_loi_cookie() {return (strlen($this->loi_cookie) > 0)?$this->loi_cookie:_SITE_ATTR_LOI_COOKIE_FAIBLE;}
+	public function has_loi_cookie() {return (strlen($this->loi_cookie) > 0)?true:false;}
 
 	// Méthodes publiques
 	public function ouvrir($nom) {
@@ -161,6 +164,15 @@ class xml_site {
 			$this->hebergeur = (strlen($hebergeur) > 0)?$hebergeur:$this->hebergeur;
 			$cnil = $xml_site->lire_valeur(_SITE_CNIL);
 			$this->cnil = (strlen($cnil) > 0)?$cnil:$this->cnil;
+			$loi_cookie = $xml_site->lire_valeur(_SITE_LOI_COOKIE);
+			if (strlen($loi_cookie) > 0) {
+				if ((strcmp($loi_cookie, _SITE_ATTR_LOI_COOKIE_MOYEN)) && (strcmp($loi_cookie, _SITE_ATTR_LOI_COOKIE_FORT))) {
+					$this->loi_cookie = _SITE_ATTR_LOI_COOKIE_FAIBLE;
+				}
+				else {
+					$this->loi_cookie = $loi_cookie;
+				}
+			}
 			$pdp = $xml_site->lire_valeur(_SITE_PIED_DE_PAGE);
 			$this->pied_de_page = (strlen($pdp) > 0)?$pdp:$this->pied_de_page;
 
