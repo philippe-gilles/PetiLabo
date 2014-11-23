@@ -75,7 +75,7 @@ class obj_mentions_legales extends obj_html {
 		// Section copyright
 		if ($this->chapitre_copyright) {
 			if ($this->sections_chapitre) {$this->ecrire_section("legal_section_copyright", $langue, $classe);}
-			$this->ecrire_legal_copyright("legal_propriete", "legal_reproduction", "legal_infraction");
+			$this->ecrire_legal_copyright($mode, $langue, $classe);
 		}
 	}
 	
