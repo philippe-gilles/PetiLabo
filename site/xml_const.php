@@ -224,6 +224,8 @@
 	define("_STYLE_CONTENU_MARGE_BAS", "marge_bas");
 	define("_STYLE_CONTENU_COULEUR_FOND", "couleur_fond");
 	define("_STYLE_CONTENU_MOTIF_FOND", "motif_fond");
+	define("_STYLE_CONTENU_PAPIERPEINT_FOND", "papierpeint_fond");
+	define("_STYLE_CONTENU_TYPE_SPECIAL", "type_special");
 	define("_STYLE_BLOC", "style_bloc");
 	define("_STYLE_BLOC_MARGE_HAUT", "marge_haut");
 	define("_STYLE_BLOC_MARGE_BAS", "marge_bas");
@@ -231,6 +233,7 @@
 	define("_STYLE_BLOC_MARGE_DROITE", "marge_droite");
 	define("_STYLE_BLOC_COULEUR_FOND", "couleur_fond");
 	define("_STYLE_BLOC_MOTIF_FOND", "motif_fond");
+	define("_STYLE_BLOC_PAPIERPEINT_FOND", "papierpeint_fond");
 	define("_STYLE_BLOC_BORDURE", "bordure");
 	define("_STYLE_TEXTE", "style_texte");
 	define("_STYLE_TEXTE_POLICE", "police");
@@ -277,7 +280,7 @@
 	define("_STYLE_ATTR_TYPE_BORDURE_MOTIF", "motif");
 	define("_STYLE_ATTR_TYPE_BORDURE_OMBRE", "ombre");
 	define("_STYLE_ATTR_TYPE_BORDURE_SCOTCH", "scotch");
-	define("_STYLE_ATTR_TYPE_BORDURE_BANDEAU", "bandeau");
+	define("_STYLE_ATTR_TYPE_SPECIAL_PLEIN_ECRAN", "plein_ecran");
 	
 	// Balises pour les documents
 	define("_DOCUMENT_DOC", "document");

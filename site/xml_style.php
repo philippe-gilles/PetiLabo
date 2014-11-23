@@ -8,7 +8,8 @@ class style_contenu {
 	// Propriétés
 	private $nom = null;
 	private $marge_haut = 0;private $marge_bas = 0;
-	private $couleur_fond = null;private $motif_fond = null;
+	private $couleur_fond = null;private $motif_fond = null;private $papierpeint_fond = null;
+	private $type_special = null;
 
 	public function __construct($nom) {$this->nom = $nom;}
 
@@ -17,6 +18,8 @@ class style_contenu {
 	public function set_marge_bas($param) {$this->marge_bas = (int) $param;}
 	public function set_couleur_fond($param) {$this->couleur_fond = $param;}
 	public function set_motif_fond($param) {$this->motif_fond = $param;}
+	public function set_papierpeint_fond($param) {$this->papierpeint_fond = $param;}
+	public function set_type_special($param) {$this->type_special = $param;}
 
 	// Accesseurs
 	public function get_nom() {return $this->nom;}
@@ -24,13 +27,15 @@ class style_contenu {
 	public function get_marge_bas() {return $this->marge_bas;}
 	public function get_couleur_fond() {return $this->couleur_fond;}
 	public function get_motif_fond() {return $this->motif_fond;}
+	public function get_papierpeint_fond() {return $this->papierpeint_fond;}
+	public function get_type_special() {return $this->type_special;}
 }
 
 class style_bloc {
 	// Propriétés
 	private $nom = null;
 	private $marge_haut = 0;private $marge_bas = 0;private $marge_gauche = 0;private $marge_droite = 0;
-	private $couleur_fond = null;private $motif_fond = null;
+	private $couleur_fond = null;private $motif_fond = null;private $papierpeint_fond = null;
 	private $bordure = null;private $type_bordure = null;
 	private $titre_bandeau = null;private $style_titre_bandeau = null;
 
@@ -43,6 +48,7 @@ class style_bloc {
 	public function set_marge_droite($param) {$this->marge_droite = (int) $param;}
 	public function set_couleur_fond($param) {$this->couleur_fond = $param;}
 	public function set_motif_fond($param) {$this->motif_fond = $param;}
+	public function set_papierpeint_fond($param) {$this->papierpeint_fond = $param;}
 	public function set_bordure($param) {$this->bordure = $param;}
 	public function set_type_bordure($param) {$this->type_bordure = $param;}
 	public function set_titre_bandeau($param) {$this->titre_bandeau = $param;}
@@ -56,6 +62,7 @@ class style_bloc {
 	public function get_marge_droite() {return $this->marge_droite;}
 	public function get_couleur_fond() {return $this->couleur_fond;}
 	public function get_motif_fond() {return $this->motif_fond;}
+	public function get_papierpeint_fond() {return $this->papierpeint_fond;}
 	public function get_bordure() {return $this->bordure;}
 	public function get_type_bordure() {return $this->type_bordure;}
 	public function get_titre_bandeau() {return $this->titre_bandeau;}
@@ -183,12 +190,16 @@ class xml_style {
 					$marge_bas = $xml_style->lire_n_valeur(_STYLE_CONTENU_MARGE_BAS, $cpt);
 					$couleur_fond = $xml_style->lire_n_valeur(_STYLE_CONTENU_COULEUR_FOND, $cpt);
 					$motif_fond = $xml_style->lire_n_valeur(_STYLE_CONTENU_MOTIF_FOND, $cpt);
+					$papierpeint_fond = $xml_style->lire_n_valeur(_STYLE_CONTENU_PAPIERPEINT_FOND, $cpt);
+					$type_special = $xml_style->lire_n_valeur(_STYLE_CONTENU_TYPE_SPECIAL, $cpt);
 					// Création du style de bloc
 					$style = new style_contenu($nom);
 					$style->set_marge_haut($marge_haut);
 					$style->set_marge_bas($marge_bas);
 					$style->set_couleur_fond($couleur_fond);
 					$style->set_motif_fond($motif_fond);
+					$style->set_papierpeint_fond($papierpeint_fond);
+					$style->set_type_special($type_special);
 					$this->styles_contenus[$nom] = $style;
 				}
 			}
@@ -205,6 +216,7 @@ class xml_style {
 					$marge_droite = $xml_style->lire_n_valeur(_STYLE_BLOC_MARGE_DROITE, $cpt);
 					$couleur_fond = $xml_style->lire_n_valeur(_STYLE_BLOC_COULEUR_FOND, $cpt);
 					$motif_fond = $xml_style->lire_n_valeur(_STYLE_BLOC_MOTIF_FOND, $cpt);
+					$papierpeint_fond = $xml_style->lire_n_valeur(_STYLE_BLOC_PAPIERPEINT_FOND, $cpt);
 					$bordure = $xml_style->lire_n_valeur(_STYLE_BLOC_BORDURE, $cpt);
 					// En cas de bordure on va lire le type de bordure
 					if (strlen($bordure) > 0) {
@@ -225,6 +237,7 @@ class xml_style {
 					$style->set_marge_droite($marge_droite);
 					$style->set_couleur_fond($couleur_fond);
 					$style->set_motif_fond($motif_fond);
+					$style->set_papierpeint_fond($papierpeint_fond);
 					$style->set_bordure($bordure);
 					$style->set_type_bordure($type_bordure);
 					$this->styles_blocs[$nom] = $style;
@@ -338,6 +351,23 @@ class xml_style {
 				if (strlen($couleur_fond) > 0) {$css .= "background:".$couleur_fond.";";}
 				$motif_fond = $style->get_motif_fond();
 				if (strlen($motif_fond) > 0) {$css .= "background:url('"._XML_PATH_IMAGES_SITE.$motif_fond."') repeat;";}
+				$papierpeint_fond = $style->get_papierpeint_fond();
+				if (strlen($papierpeint_fond) > 0) {
+					$css .= "background:url('"._XML_PATH_IMAGES_SITE.$papierpeint_fond."') no-repeat center center;";
+					$css .= "-webkit-background-size: cover;";
+					$css .= "-moz-background-size: cover;";
+					$css .= "-o-background-size: cover;";
+					$css .= "background-size: cover;";
+				}
+				$type_special = $style->get_type_special();
+				switch ($type_special) {
+					case _STYLE_ATTR_TYPE_SPECIAL_PLEIN_ECRAN :
+						// TODO : Compatibilité IE7 et IE8 (avec Javascript)
+						$css .= "height:100vh;";
+						break;
+					default :
+						break;
+				}
 				$css .= "}"._CSS_FIN_LIGNE;
 			}
 		}
@@ -377,13 +407,18 @@ class xml_style {
 				if (strlen($fond) > 0) {$css .= "background:".$fond.";";}
 				$motif_fond = $style->get_motif_fond();
 				if (strlen($motif_fond) > 0) {$css .= "background:url('"._XML_PATH_IMAGES_SITE.$motif_fond."') repeat;";}
+				$papierpeint_fond = $style->get_papierpeint_fond();
+				if (strlen($papierpeint_fond) > 0) {
+					$css .= "background:url('"._XML_PATH_IMAGES_SITE.$papierpeint_fond."') no-repeat center center;";
+					$css .= "-webkit-background-size: cover;";
+					$css .= "-moz-background-size: cover;";
+					$css .= "-o-background-size: cover;";
+					$css .= "background-size: cover;";
+				}
 				// Le padding-top est augmenté en cas de bandeau ou de scotch
 				switch ($type_bordure) {
 					case _STYLE_ATTR_TYPE_BORDURE_SCOTCH :
 						$padding_top = "20px";
-						break;
-					case _STYLE_ATTR_TYPE_BORDURE_BANDEAU :
-						$padding_top = "3.8em";
 						break;
 					default :
 						$padding_top = _PADDING_INT_BLOC_TOP."px";
@@ -533,31 +568,7 @@ class xml_style {
 		return $css;
 	}
 	public function extraire_css_ie() {
-		$css = "";
-		/* foreach ($this->styles_blocs as $nom_style => $style) {
-			if ($style) {
-				$marge_h = $style->get_marge_haut();
-				$marge_b = $style->get_marge_bas();
-				$marge_g = $style->get_marge_gauche();
-				$marge_d = $style->get_marge_droite();
-				$bordure = $style->get_bordure();
-				$type_bordure = $style->get_type_bordure();
-				if ($type_bordure == _STYLE_ATTR_TYPE_BORDURE_OMBRE) {
-					$distance = (int) (($marge_h + $marge_b + $marge_g + $marge_d) / 4);
-					$strength = (int) ((int) $distance)/2;
-					$css .= "."._CSS_PREFIXE_EXTERIEUR.$nom_style." {padding:".$distance."px;}"._CSS_FIN_LIGNE;
-					$css .= "."._CSS_PREFIXE_INTERIEUR.$nom_style." {";
-					.= "margin-left:-".$distance."px;margin-top:-".$distance."px;zoom:1;filter:\n";
-					$css .= "filter:\n";
-					$css .= "progid:DXImageTransform.Microsoft.Shadow(Color=".$bordure.", Strength=".$strength.", Direction=0),\n";
-					$css .= "progid:DXImageTransform.Microsoft.Shadow(Color=".$bordure.", Strength=".$strength.", Direction=90),\n";
-					$css .= "progid:DXImageTransform.Microsoft.Shadow(Color=".$bordure.", Strength=".$strength.", Direction=180),\n";
-					$css .= "progid:DXImageTransform.Microsoft.Shadow(Color=".$bordure.", Strength=".$strength.", Direction=270);";
-					$css .= "}"._CSS_FIN_LIGNE;
-				}
-			}
-		} */
-		return $css;
+		$css = "";return $css;
 	}
 
 	private function format_marge_1($marge) {
