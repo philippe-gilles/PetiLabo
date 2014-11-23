@@ -82,6 +82,7 @@
 	define("_PAGE_META_DESCR_EDITABLE", "meta_descr_editable");
 	define("_PAGE_META_MULTILINGUE", "meta_multilingue");
 	define("_PAGE_META_GOOGLE_ANALYTICS", "meta_google_analytics");
+	define("_PAGE_META_NOINDEX", "meta_noindex");
 
 	// Balises éléments pour le fichier XML page
 	define("_PAGE_CONTENU", "contenu");

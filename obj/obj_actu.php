@@ -110,7 +110,6 @@ class obj_actu extends obj_editable {
 	}
 
 	public function afficher($mode, $langue) {
-		$langue_affichee = (strcmp($mode, _PETILABO_MODE_SITE))?$this->obj_texte->get_langue_par_defaut():$langue;
 		$style_largeur = ($this->largeur_max > 0)?" style=\"max-width:".$this->largeur_max."px;\"":"";
 		if (strcmp($mode, _PETILABO_MODE_EDIT)) {
 			echo "<div class=\"actu\"".$style_largeur.">"._HTML_FIN_LIGNE;
@@ -118,7 +117,7 @@ class obj_actu extends obj_editable {
 			foreach ($this->tab_sommaire as $entree) {
 				$index = (int) $entree;
 				$actu = ($index > 0)?$this->tab_actu[$index]:null;
-				if ($actu) {$actu->afficher($mode, $langue_affichee);}
+				if ($actu) {$actu->afficher($mode, $langue);}
 			}
 			echo "</ul>"._HTML_FIN_LIGNE;
 			echo "</div>"._HTML_FIN_LIGNE;
@@ -148,7 +147,7 @@ class obj_actu extends obj_editable {
 			// Actualités
 			for ($cpt = 1;$cpt <= 5;$cpt++) {
 				$actu = $this->tab_actu[$cpt];
-				if ($actu) {$actu->afficher($mode, $langue_affichee);}
+				if ($actu) {$actu->afficher($mode, $langue);}
 			}
 			$this->fermer_tableau();
 		}

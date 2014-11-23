@@ -16,10 +16,9 @@ class obj_calendrier extends obj_editable {
 	}
 
 	public function afficher($mode, $langue) {
-		$langue_affichee = (strcmp($mode, _PETILABO_MODE_SITE))?$this->obj_texte->get_langue_par_defaut():$langue;
 		if (strcmp($mode, _PETILABO_MODE_EDIT)) {
-			$tab_mois = $this->obj_texte->get_tab_mois($langue_affichee);
-			$tab_statut_resa = $this->obj_texte->get_tab_statut_resa($langue_affichee);
+			$tab_mois = $this->obj_texte->get_tab_mois($langue);
+			$tab_statut_resa = $this->obj_texte->get_tab_statut_resa($langue);
 			$disabled = (strcmp($mode, _PETILABO_MODE_SITE))?" disabled=\"disabled\"":"";
 			$mois = $this->mois;$an = $this->an;
 			echo "<select id=\"select_".$this->id_cal."\" class=\"select_resa\" ".$disabled.">"._HTML_FIN_LIGNE;
@@ -37,7 +36,7 @@ class obj_calendrier extends obj_editable {
 				$jour_deb = (int) date("j", $date_deb);
 				$mois_deb = (int) date("n", $date_deb);
 				$an_deb = (int) date("Y", $date_deb);
-				$this->ecrire_calendrier_resa($mode, $cpt, $jour_deb, $mois_deb, $an_deb, $mois, $an, $langue_affichee);
+				$this->ecrire_calendrier_resa($mode, $cpt, $jour_deb, $mois_deb, $an_deb, $mois, $an, $langue);
 				$mois += 1;if ($mois == 13) {$mois = 1;$an += 1;}
 			}
 			echo "</div><div class=\"legende_resa\"><p>"._HTML_FIN_LIGNE;

@@ -24,7 +24,7 @@ class obj_paragraphe extends obj_editable {
 			if (strlen($texte) > 0) {echo "<p class=\"".$classe."\">".$texte."</p>"._HTML_FIN_LIGNE;}
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_ADMIN))) {
-			$texte = $this->obj_texte->get_texte($this->id_texte, $this->obj_texte->get_langue_par_defaut());
+			$texte = $this->obj_texte->get_texte($this->id_texte, $langue);
 			$classe = "paragraphe ".$this->style;
 			if (strlen($texte) > 0) {echo "<p class=\"".$classe."\">".$texte."</p>"._HTML_FIN_LIGNE;}
 			else {echo "<p class=\"".$classe."\">...</p>"._HTML_FIN_LIGNE;}

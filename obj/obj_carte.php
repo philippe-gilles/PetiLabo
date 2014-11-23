@@ -24,7 +24,7 @@ class obj_carte extends obj_editable {
 			echo "</a></div>"._HTML_FIN_LIGNE;
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_ADMIN))) {
-			$texte = $this->obj_texte->get_texte($this->id_texte, $this->obj_texte->get_langue_par_defaut());
+			$texte = $this->obj_texte->get_texte($this->id_texte, $langue);
 			$src_carte = $this->get_src_carte_distante($texte, $langue);
 			$this->reinit_carte();
 			echo "<div>"._HTML_FIN_LIGNE;
@@ -32,7 +32,7 @@ class obj_carte extends obj_editable {
 			echo "</div>"._HTML_FIN_LIGNE;
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_EDIT))) {
-			$texte = $this->check_texte($this->obj_texte, $this->id_texte, $this->obj_texte->get_langue_par_defaut());
+			$texte = $this->check_texte($this->obj_texte, $this->id_texte, $langue);
 			$this->ouvrir_tableau_simple();
 			$this->ouvrir_ligne();
 			$this->ecrire_cellule_categorie(_EDIT_LABEL_PLAN, _EDIT_COULEUR, 1);

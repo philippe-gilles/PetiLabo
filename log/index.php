@@ -33,6 +33,7 @@
 	$html = new html();
 	$html->ouvrir();
 	$html->ouvrir_head();
+	$html->ecrire_meta_noindex();
 	$html->ecrire_meta_titre("Accès privé");
 	echo "<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"css/log.css\" />\n";
 	$html->charger_js("js/jquery.js");

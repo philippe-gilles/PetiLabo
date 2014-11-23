@@ -60,9 +60,8 @@ class obj_credits extends obj_html {
 	}
 
 	public function afficher($mode, $langue, $style_p = null) {
-		$langue_affichee = (strcmp($mode, _PETILABO_MODE_SITE))?$this->obj_texte->get_langue_par_defaut():$langue;
-		if ($this->chapitre_technique) {$this->afficher_technique($mode, $langue_affichee, $style_p);}
-		if ($this->chapitre_photographique) {$this->afficher_photographique($mode, $langue_affichee, $style_p);}
+		if ($this->chapitre_technique) {$this->afficher_technique($mode, $langue, $style_p);}
+		if ($this->chapitre_photographique) {$this->afficher_photographique($mode, $langue, $style_p);}
 	}
 
 	private function afficher_technique($mode, $langue, $style_p) {

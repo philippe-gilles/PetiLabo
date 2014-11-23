@@ -29,17 +29,9 @@
 
 			// Chargement des structures XML
 			$this->charger_xml();
-
-			// Récupération de la langue en cours
-			if (isset($_GET[_PARAM_LANGUE])) {
-				$param = $_GET[_PARAM_LANGUE];
-				$param_clean = str_replace("\0", '', $param);
-				$param_sec = htmlentities($param_clean, ENT_COMPAT | ENT_XHTML, "UTF-8");
-				$this->langue_page = $this->texte->verifier_langue($param_sec);
-			}
-			else {
-				$this->langue_page = $this->texte->get_langue_par_defaut();
-			}
+			
+			// Chargement de la langue
+			$this->charger_langue();
 		}
 		public function ouvrir_entete() {
 			$this->cookies->init();
@@ -49,6 +41,8 @@
 		}
 		public function ecrire_entete() {
 			// Ecriture de l'entête
+			$noindex = $this->page->get_meta_noindex();
+			if ($noindex) {$this->html->ecrire_meta_noindex();}
 			$this->html->ecrire_meta_titre($this->get_meta_titre());
 			$this->html->ecrire_meta_descr($this->get_meta_descr());
 			// Chargement des polices utilisées dans les styles
@@ -121,9 +115,6 @@
 
 		public function fermer_corps() {
 			$proprietaire = $this->site->get_proprietaire();
-			$mentions = $this->texte->get_label_mentions($this->langue_page);
-			$credits = $this->texte->get_label_credits($this->langue_page);
-			$plan = $this->texte->get_label_plan($this->langue_page);
 			$webmaster = $this->texte->get_label_webmaster($this->langue_page);
 			$social = $this->texte->get_label_social($this->langue_page);
 			$tab_social = $this->site->get_social();
@@ -134,7 +125,7 @@
 				$param_actu = $param->get(_PARAM_ID);
 				if (strlen($param_actu) > 0) {$page .= "-".$param_actu;}
 			}
-			$this->html->fermer_page(false, $page, $proprietaire, $mentions, $credits, $plan, $webmaster, $social, $tab_social);
+			$this->html->fermer_page(false, $page, $proprietaire, $webmaster, $social, $tab_social);
 			$this->html->fermer_body();
 			$this->html->fermer();
 		}

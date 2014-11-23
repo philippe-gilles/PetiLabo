@@ -28,10 +28,10 @@ class obj_galerie extends obj_editable {
 			$this->afficher_site($langue, $vertical, $vue_d_abord);
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_ADMIN))) {
-			$this->afficher_admin($this->obj_texte->get_langue_par_defaut(), $vertical, $vue_d_abord);
+			$this->afficher_admin($langue, $vertical, $vue_d_abord);
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_EDIT))) {
-			$this->afficher_edit($this->obj_texte->get_langue_par_defaut());
+			$this->afficher_edit($langue);
 		}
 	}
 	

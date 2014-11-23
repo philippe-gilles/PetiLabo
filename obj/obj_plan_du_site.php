@@ -48,11 +48,10 @@ class obj_plan_du_site extends obj_html {
 
 	public function afficher($mode, $langue, $style_p) {
 		if ((!(strcmp($mode, _PETILABO_MODE_SITE))) || (!(strcmp($mode, _PETILABO_MODE_ADMIN)))){
-			$langue_page = (strcmp($mode, _PETILABO_MODE_SITE))?$this->obj_texte->get_langue_par_defaut():$langue;
 			foreach ($this->tab_entrees as $obj_entree) {
-				if ($obj_entree) {$obj_entree->afficher($mode, $langue_page, $style_p);}
+				if ($obj_entree) {$obj_entree->afficher($mode, $langue, $style_p);}
 			}
-			$this->afficher_pied($langue_page, $style_p);
+			$this->afficher_pied($langue, $style_p);
 		}
 	}
 	

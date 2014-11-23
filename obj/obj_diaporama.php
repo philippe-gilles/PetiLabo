@@ -23,10 +23,10 @@ class obj_diaporama extends obj_editable {
 			$this->afficher_site($langue, $largeur);
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_ADMIN))) {
-			$this->afficher_admin($this->obj_texte->get_langue_par_defaut(), $largeur);
+			$this->afficher_admin($langue, $largeur);
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_EDIT))) {
-			$this->afficher_edit($this->obj_texte->get_langue_par_defaut());
+			$this->afficher_edit($langue);
 		}
 	}
 	

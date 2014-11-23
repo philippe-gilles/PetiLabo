@@ -27,10 +27,10 @@ class obj_carrousel extends obj_editable {
 			$this->afficher_site($langue);
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_ADMIN))) {
-			$this->afficher_admin($this->obj_texte->get_langue_par_defaut());
+			$this->afficher_admin($langue);
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_EDIT))) {
-			$this->afficher_edit($this->obj_texte->get_langue_par_defaut());
+			$this->afficher_edit($langue);
 		}
 	}
 	

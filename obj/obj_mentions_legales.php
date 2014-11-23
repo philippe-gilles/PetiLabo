@@ -56,26 +56,25 @@ class obj_mentions_legales extends obj_html {
 	}
 
 	public function afficher($mode, $langue, $style_p = null) {
-		$langue_affichee = (strcmp($mode, _PETILABO_MODE_SITE))?$this->obj_texte->get_langue_par_defaut():$langue;
 		$classe  = (strlen($style_p) > 0)?_CSS_PREFIXE_TEXTE.$style_p:"";
 		// Section mentions légales
 		if ($this->chapitre_mentions) {
-			if ($this->sections_chapitre) {$this->ecrire_section("legal_section_legale", $langue_affichee, $classe);}
+			if ($this->sections_chapitre) {$this->ecrire_section("legal_section_legale", $langue, $classe);}
 			$this->ecrire_legal_mentions($mode, $langue, $classe);
 		}
 		// Section protection
 		if ($this->chapitre_protection) {
-			if ($this->sections_chapitre) {$this->ecrire_section("legal_section_protection", $langue_affichee, $classe);}
+			if ($this->sections_chapitre) {$this->ecrire_section("legal_section_protection", $langue, $classe);}
 			$this->ecrire_legal_protection($mode, $langue, $classe);
 		}
 		// Section cookies
 		if ($this->chapitre_cookies) {
-			if ($this->sections_chapitre) {$this->ecrire_section("legal_section_cookies", $langue_affichee, $classe);}
+			if ($this->sections_chapitre) {$this->ecrire_section("legal_section_cookies", $langue, $classe);}
 			$this->ecrire_legal_cookies($mode, $langue, $classe);
 		}
 		// Section copyright
 		if ($this->chapitre_copyright) {
-			if ($this->sections_chapitre) {$this->ecrire_section("legal_section_copyright", $langue_affichee, $classe);}
+			if ($this->sections_chapitre) {$this->ecrire_section("legal_section_copyright", $langue, $classe);}
 			$this->ecrire_legal_copyright("legal_propriete", "legal_reproduction", "legal_infraction");
 		}
 	}
@@ -130,8 +129,9 @@ class obj_mentions_legales extends obj_html {
 			$this->ecrire_legal($le_site." <strong>".$this->nom_site."</strong> ".$cookies_site, $classe);
 			echo "<br />"._HTML_FIN_LIGNE;
 			echo "<div>";
-			echo "<form class=\"form_ga_1\" method=\"post\" action=\"petilabo/inc/cookie_ok.php\"><input type=\"submit\" value=\"".$accepter."\"/></form>";
-			echo "<form class=\"form_ga_2\" method=\"post\" action=\"petilabo/inc/cookie_nok.php\"><input type=\"submit\" value=\"".$refuser."\"/></form>";
+			$disabled = (strcmp($mode, _PETILABO_MODE_SITE))?" disabled=\"disabled\"":"";
+			echo "<form class=\"form_ga_1\" method=\"post\" action=\"petilabo/inc/cookie_ok.php\"><input type=\"submit\" value=\"".$accepter."\"".$disabled."/></form>";
+			echo "<form class=\"form_ga_2\" method=\"post\" action=\"petilabo/inc/cookie_nok.php\"><input type=\"submit\" value=\"".$refuser."\"".$disabled."/></form>";
 			echo "<div style=\"clear:both;\"></div></div>"._HTML_FIN_LIGNE;
 			echo "<br />"._HTML_FIN_LIGNE;
 		}

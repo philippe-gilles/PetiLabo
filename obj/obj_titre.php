@@ -19,7 +19,7 @@ class obj_titre extends obj_editable {
 			if (strlen($texte) > 0) {echo "<h".$this->niveau." class=\"titre ".$this->style."\">".$texte."</h".$this->niveau.">"._HTML_FIN_LIGNE;}
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_ADMIN))) {
-			$texte = $this->obj_texte->get_texte($this->id_texte, $this->obj_texte->get_langue_par_defaut());
+			$texte = $this->obj_texte->get_texte($this->id_texte, $langue);
 			if (strlen($texte) > 0) {echo "<h".$this->niveau." class=\"titre ".$this->style."\">".$texte."</h".$this->niveau.">"._HTML_FIN_LIGNE;}
 			else {echo "<h".$this->niveau." class=\"titre ".$this->style."\">...</h".$this->niveau.">"._HTML_FIN_LIGNE;}
 		}

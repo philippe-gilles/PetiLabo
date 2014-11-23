@@ -30,7 +30,7 @@ class obj_video extends obj_editable {
 			}
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_ADMIN))) {
-			$texte = $this->obj_texte->get_texte($this->id_texte, $this->obj_texte->get_langue_par_defaut());
+			$texte = $this->obj_texte->get_texte($this->id_texte, $langue);
 			$src = $this->get_src($texte);
 			if (strlen($src) > 0) {
 				echo "<div class=\"wrap_video\"><img class=\"image_cadre\" src=\"".$src."\" alt=\"".$this->source."\" /></div>"._HTML_FIN_LIGNE;
@@ -40,7 +40,7 @@ class obj_video extends obj_editable {
 			}
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_EDIT))) {
-			$texte = $this->check_texte($this->obj_texte, $this->id_texte, $this->obj_texte->get_langue_par_defaut());
+			$texte = $this->check_texte($this->obj_texte, $this->id_texte, $langue);
 			$src = (strlen($texte) > 0)?$this->get_src($texte):null;
 			$this->ouvrir_tableau_simple();
 			$this->ouvrir_ligne();

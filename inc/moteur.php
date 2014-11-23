@@ -11,6 +11,30 @@
 		protected $polices = array();protected $police_par_defaut = null;
 		protected $est_pied_interne = false;protected $est_pied_reduit = false;
 
+		protected function charger_langue() {
+			// Récupération de la langue en cours
+			if (isset($_GET[_PARAM_LANGUE])) {
+				$param = $_GET[_PARAM_LANGUE];
+				$param_clean = str_replace("\0", '', $param);
+				$param_sec = htmlentities($param_clean, ENT_COMPAT | ENT_XHTML, "UTF-8");
+				if ($this->texte) {$this->langue_page = $this->texte->verifier_langue($param_sec);}
+			}
+			else {
+				if ($this->texte) {$this->langue_page = $this->texte->get_langue_par_defaut();}
+			}
+
+			// Initialisations pour le pied de page
+			$lien_legal = $this->url_multilingue(_HTML_PATH_MENTIONS_LEGALES);
+			$lien_credits = $this->url_multilingue(_HTML_PATH_CREDITS);
+			$lien_plan_du_site = $this->url_multilingue(_HTML_PATH_PLAN_DU_SITE);
+			$lien_interne = $this->url_multilingue(_HTML_PATH_VERSIONS);
+			$this->html->set_liens_multilingues_pp($lien_legal, $lien_credits, $lien_plan_du_site, $lien_interne);
+			$label_legal = $this->texte->get_label_mentions($this->langue_page);
+			$label_credits = $this->texte->get_label_credits($this->langue_page);
+			$label_plan_du_site = $this->texte->get_label_plan($this->langue_page);
+			$label_interne = "Versions";
+			$this->html->set_labels_multilingues_pp($label_legal, $label_credits, $label_plan_du_site, $label_interne);
+		}
 		protected function charger_xml() {
 			// Création des structures au niveau site
 			$this->site = new xml_site();
@@ -79,6 +103,7 @@
 			// Positionnement du drapeau "interne/externe"
 			$this->est_pied_interne = (strcmp($this->site->get_pied_de_page(),_SITE_PIED_DE_PAGE_INTERNE))?false:true;
 			$this->est_pied_reduit = (strcmp($this->site->get_pied_de_page(),_SITE_PIED_DE_PAGE_REDUIT))?false:true;
+
 			// Création de l'utilitaire html
 			$this->html = new html($this->est_pied_interne, $this->est_pied_reduit);
 		}

@@ -8,6 +8,7 @@ class xml_page {
 	private $meta_titre_editable = null;
 	private $meta_descr_editable = null;
 	private $meta_multilingue = null;
+	private $meta_noindex = null;
 	private $meta_ga = null;
 	private $contenu = array();
 	private $nb_actus = 0;
@@ -125,6 +126,10 @@ class xml_page {
 		$ret = (strcmp($this->meta_multilingue, _XML_FALSE))?true:false;
 		return $ret;
 	}
+	public function get_meta_noindex() {
+		$ret = (strcmp($this->meta_noindex, _XML_TRUE))?false:true;
+		return $ret;
+	}
 	public function get_meta_ga() {return $this->meta_ga;}
 	public function get_nb_actus() {return $this->nb_actus;}
 	public function has_ga() {return ((strlen($this->meta_ga) > 0)?true:false);}
@@ -142,5 +147,7 @@ class xml_page {
 		$this->meta_ga = $this->page->lire_valeur(_PAGE_META_GOOGLE_ANALYTICS);
 		$multilingue = trim(strtolower($this->page->lire_valeur(_PAGE_META_MULTILINGUE)));
 		$this->meta_multilingue = (strlen($multilingue) > 0)?$multilingue:_XML_TRUE;
+		$noindex = trim(strtolower($this->page->lire_valeur(_PAGE_META_NOINDEX)));
+		$this->meta_noindex = (strlen($noindex) > 0)?$noindex:_XML_FALSE;
 	}
 }

@@ -19,8 +19,8 @@
 			$this->fragment = $fragment;
 			// Chargement des structures XML
 			$this->charger_xml();
-			// La langue d'administration est la langue par défaut
-			$this->langue_page = $this->texte->get_langue_par_defaut();
+			// Chargement de la langue
+			$this->charger_langue();
 		}
 		public function ouvrir_entete() {
 			$this->html->ouvrir($this->langue_page);
@@ -29,6 +29,7 @@
 		public function ecrire_entete() {
 			echo "<meta http-equiv=\"Pragma\" content=\"no-cache\">";
 			echo "<meta http-equiv=\"Expires\" content=\"-1\">\n";
+			$this->html->ecrire_meta_noindex();
 			// Ecriture de l'entête
 			$this->html->ecrire_meta_titre("Administration");
 			// Chargement des polices utilisées dans les styles
@@ -70,13 +71,10 @@
 		}
 		public function fermer_corps() {
 			$proprietaire = $this->site->get_proprietaire();
-			$mentions = $this->texte->get_label_mentions($this->langue_page);
-			$credits = $this->texte->get_label_credits($this->langue_page);
-			$plan = $this->texte->get_label_plan($this->langue_page);
 			$webmaster = $this->texte->get_label_webmaster($this->langue_page);
 			$social = $this->texte->get_label_social($this->langue_page);
 			$tab_social = $this->site->get_social();
-			$this->html->fermer_page(true, "deconnect.php", $proprietaire, $mentions, $credits, $plan, $webmaster, $social, $tab_social);
+			$this->html->fermer_page(true, "deconnect.php", $proprietaire, $webmaster, $social, $tab_social);
 			$this->html->ecrire_js("$('.symbole').magnificPopup({type: 'ajax',tClose:'Fermer',tLoading:'Chargement...'});");
 			$this->html->fermer_body();
 			$this->html->fermer();

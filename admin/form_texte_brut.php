@@ -6,12 +6,13 @@
 		private $id_edit = null;
 		private $site = null;
 		private $texte = null;
+		private $langue_edition = null;
 		private $nb_langues = 0;
 		private $langues = array();
 		private $traductions = array();
 		private $positions = array();
 		
-		public function __construct($nom_page, $id_edit) {
+		public function __construct($nom_page, $langue_param, $id_edit) {
 			$this->nom_page = $nom_page;
 			$this->id_edit = $id_edit;
 			
@@ -26,6 +27,9 @@
 			// Gestion des textes
 			$this->texte = new xml_texte();
 			
+			// Langue en cours d'édition
+			$this->langue_edition = (strlen($langue_param) == 2)?$langue_param:$this->texte->get_langue_par_defaut();
+
 			// Création de la liste des langues
 			$this->nb_langues = $this->site->get_nb_langues();
 			for ($cpt_langue = 0;$cpt_langue < $this->nb_langues;$cpt_langue++) {
@@ -54,7 +58,7 @@
 				$this->traductions[((int) $cpt_langue)] = $this->texte->get_texte($id_edit, $code_langue);
 			}
 		}
-		
+		public function get_langue_edition() {return ($this->langue_edition);}
 		public function get_nb_langues() {return ((int) $this->nb_langues);}
 		public function get_source() {return $this->source_edit;}
 		public function get_code_langue($cpt) {return $this->langues[((int) $cpt)];}
@@ -84,15 +88,17 @@
 		$session->fermer_session();
 		exit;
 	}
-	
-	$form = new form_texte($page, $id_texte);
+
+	$langue_param = $param->get(_PARAM_LANGUE);
+	$form = new form_texte($page, $langue_param, $id_texte);
 
 	echo "<div class=\"form_lb\">\n";
 	echo "<form id=\"id_form_texte\" name=\"form_texte\" accept-charset=\"UTF-8\" method=\"post\" action=\"submit_texte.php\">\n";
 	echo "<ul class=\"tabs\">\n";
 	for ($cpt = 0;$cpt < $form->get_nb_langues(); $cpt++) {
+		$code_edition = $form->get_langue_edition();
 		$code_langue = $form->get_code_langue($cpt);
-		$active = ($cpt == 0)?" class=\"active\"":"";
+		$active = (strcmp($code_edition, $code_langue))?"":" class=\"active\"";
 		echo "<li".$active.">";
 		echo "<a style=\"background-position:".$form->get_position($cpt)."\" href=\"#tab".$cpt."\" title=\"".strtoupper($code_langue)."\">&nbsp;</a>";
 		echo "</li>";
@@ -103,9 +109,10 @@
 	for ($cpt = 0;$cpt < $form->get_nb_langues(); $cpt++) {
 		$texte = $form->get_traduction($cpt);
 		$texte = $form->strip_tags_attributes($texte);
+		$code_edition = $form->get_langue_edition();
 		$code_langue = $form->get_code_langue($cpt);
 		$id_champ = "id_texte_".$code_langue;
-		$display = ($cpt == 0)?"block":"none";
+		$display = (strcmp($code_edition, $code_langue))?"none":"block";
 		echo "<div id=\"tab".$cpt."\" class=\"tab_content\" style=\"display:".$display."\">";
 		echo "<p class=\"champ\">";
 		echo "<textarea class=\"texte_champ\" id=\"".$id_champ."\" name=\"".$code_langue."\" rows=\"3\">".$texte."</textarea>";

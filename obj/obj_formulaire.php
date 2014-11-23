@@ -14,7 +14,7 @@ class obj_formulaire extends obj_html {
 			$this->afficher_champs(true, $langue, $style_p);
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_ADMIN))) {
-			$this->afficher_champs(false, $this->obj_texte->get_langue_par_defaut(), $style_p);
+			$this->afficher_champs(false, $langue, $style_p);
 		}
 	}
 

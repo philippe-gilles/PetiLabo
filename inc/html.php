@@ -4,11 +4,33 @@ class html {
 	// Types de pied de page
 	private $interne = false;
 	private $reduit = false;
+	// Labels du pied de page
+	private $label_legal = null;
+	private $label_credits = null;
+	private $label_plan_du_site = null;
+	private $label_interne = null;
+	// Liens du pied de page
+	private $lien_legal = null;
+	private $lien_credits = null;
+	private $lien_plan_du_site = null;
+	private $lien_interne = null;
 
 	// Méthodes publiques
 	public function __construct($interne=false, $reduit=false) {
 		$this->interne = (int) $interne;
 		$this->reduit = (int) $reduit;
+	}
+	public function set_labels_multilingues_pp($label_legal, $label_credits, $label_plan_du_site, $label_interne) {
+		$this->label_legal = $label_legal;
+		$this->label_credits = $label_credits;
+		$this->label_plan_du_site = $label_plan_du_site;
+		$this->label_interne = $label_interne;
+	}
+	public function set_liens_multilingues_pp($lien_legal, $lien_credits, $lien_plan_du_site, $lien_interne) {
+		$this->lien_legal = $lien_legal;
+		$this->lien_credits = $lien_credits;
+		$this->lien_plan_du_site = $lien_plan_du_site;
+		$this->lien_interne = $lien_interne;
 	}
 	public function ouvrir($langue="fr") {
 		echo "<!doctype html>\n";
@@ -86,12 +108,12 @@ class html {
 			echo "<div class=\"page interieur\">\n";
 		}
 	}
-	public function fermer_page($admin, $page, $proprietaire, $mentions, $credits, $plan, $webmaster, $social, $tab_social) {
+	public function fermer_page($admin, $page, $proprietaire, $webmaster, $social, $tab_social) {
 		echo "</div>\n";
 		$this->ouvrir_pp($admin);
 		$this->ecrire_copy_admin_pp($admin, $page, $proprietaire);
 		$this->ouvrir_balise_html5("nav");
-		$this->ecrire_liens_pp($admin, $proprietaire, $mentions, $credits, $plan, $webmaster, $tab_social, $page);
+		$this->ecrire_liens_pp($admin, $proprietaire, $webmaster, $tab_social, $page);
 		$this->ecrire_social_pp($admin, $social, $tab_social);
 		$this->fermer_balise_html5("nav");
 		$this->fermer_pp($admin);
@@ -151,17 +173,17 @@ class html {
 		$this->ouvrir_balise_html5("footer");
 		echo "<div class=\"pied_de_page pied_de_page_fixe\">\n";
 	}
-	private function ecrire_liens_pp($admin, $proprietaire, $mentions, $credits, $plan, $webmaster, $tab_social, $page) {
+	private function ecrire_liens_pp($admin, $proprietaire, $webmaster, $tab_social, $page) {
 		if (!($this->reduit)) {
 			$html = "<span class=\"icone_pp\">&#xf05a;</span>&nbsp;&nbsp;";
-			$html .= ($admin)?$mentions:"<a href=\""._HTML_PATH_MENTIONS_LEGALES."\" rel=\"nofollow\">".$mentions."</a>";
+			$html .= ($admin)?$this->label_legal:"<a href=\"".$this->lien_legal."\" rel=\"nofollow\">".$this->label_legal."</a>";
 			$html .= "&nbsp; &nbsp; <span class=\"icone_pp\">&#xf12e;</span>&nbsp;&nbsp;";
-			$html .= ($admin)?$credits:"<a href=\""._HTML_PATH_CREDITS."\" rel=\"nofollow\">".$credits."</a>";
+			$html .= ($admin)?$this->label_credits:"<a href=\"".$this->lien_credits."\" rel=\"nofollow\">".$this->label_credits."</a>";
 			$html .= "&nbsp; &nbsp; <span class=\"icone_pp\">&#xf0e8;</span>&nbsp;&nbsp;";
-			$html .= ($admin)?$plan:"<a href=\""._HTML_PATH_PLAN_DU_SITE."\" rel=\"nofollow\" accesskey=\"0\">".$plan."</a>";
+			$html .= ($admin)?$this->label_plan_du_site:"<a href=\"".$this->lien_plan_du_site."\" rel=\"nofollow\" accesskey=\"0\">".$this->label_plan_du_site."</a>";
 			if ($this->interne) {
 				$html .= "&nbsp; &nbsp; <span class=\"icone_pp\">&#xf0cb;</span>&nbsp;&nbsp;";
-				$html .= ($admin)?"Versions":"<a href=\""._HTML_PATH_VERSIONS."\">Versions</a>";
+				$html .= ($admin)?$this->label_interne:"<a href=\"".$this->lien_interne."\">".$this->label_interne."</a>";
 			}
 			else {
 				$html .= "&nbsp; &nbsp; <span class=\"icone_pp\">&#xf0c3;</span>&nbsp;&nbsp;";
