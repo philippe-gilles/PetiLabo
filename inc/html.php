@@ -227,10 +227,12 @@ class html {
 		echo "</div>\n";
 		$this->fermer_balise_html5("footer");
 	}
-	public function ouvrir_contenu($no_cont, $nb_blocs, $style) {
+	public function ouvrir_contenu($no_cont, $nb_blocs, $style, $style_type = null) {
 		$pluriel = ($nb_blocs < 2)?"":"s";
-		echo "<!-- Contenu n°".(((int) $no_cont)+1)." : ".$nb_blocs." bloc".$pluriel." -->\n";
+		$type_contenu = (strlen($style_type)>0)?"de type ".str_replace("_", " ", $style_type)." ":"";
+		echo "<!-- Contenu n°".(((int) $no_cont)+1)." ".$type_contenu.": ".$nb_blocs." bloc".$pluriel." -->\n";
 		$classe_style = (strlen($style)>0)?" "._CSS_PREFIXE_CONTENU.$style:"";
+		$classe_style .= (strlen($style_type)>0)?" "._CSS_PREFIXE_CONTENU.$style_type:"";
 		echo "<div id=\"contenu_".((int) $no_cont)."\" class=\"contenu".$classe_style."\">"._HTML_FIN_LIGNE;
 	}
 	public function fermer_contenu() {
@@ -327,6 +329,11 @@ class html {
 	}
 	public function charger_js($fichier) {
 		echo "<script type=\"text/javascript\" src=\""._PHP_PATH_ROOT.$fichier."\"></script>\n";
+	}
+	public function charger_js_ie($fichier) {
+		echo "<!--[if lte IE 8]>\n";
+		echo "<script type=\"text/javascript\" src=\""._PHP_PATH_ROOT.$fichier."\"></script>\n";
+		echo "<![endif]-->\n";
 	}
 	public function charger_xml_js() {
 		$fichier_js = _XML_PATH_JS."script.js";

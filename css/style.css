@@ -4,7 +4,7 @@ html {font-size:100%;color:#000;height:100%;}
 body {height:100%;position:relative;}
 div,img {border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;}
 /* Blocs et contenu */
-.global {position: relative;min-height: 100%; }
+.global {position: relative;min-height:100%;}
 .page {margin:0 auto;padding:1em;}
 .contenu {text-align:center;width:100%;margin:0.5em 0;}
 .bloc {position:relative;text-align:center;overflow:hidden;display:inline-block;}

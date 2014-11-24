@@ -332,7 +332,7 @@ class xml_style {
 		return $ret;
 	}
 
-	public function get_style_contenu($nom) {return $this->styles_contenus[$nom];}
+	public function get_style_contenu($nom) {return (isset($this->styles_contenus[$nom])?$this->styles_contenus[$nom]:null);}
 	public function get_style_bloc($nom) {return $this->styles_blocs[$nom];}
 	public function get_style_texte($nom) {return $this->styles_textes[$nom];}
 	public function get_style_formulaire($nom) {return $this->styles_formulaires[$nom];}

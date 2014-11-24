@@ -67,6 +67,7 @@
 			
 			// Chargement systématique des animations
 			$this->html->charger_js("js/anims.js");
+			$this->html->charger_js_ie("js/ie.js");
 			$this->charger_xml_js(false);
 		}
 
@@ -109,7 +110,12 @@
 			$nb_contenus = $this->page->get_nb_contenus();
 			for ($cpt_cont = 0;$cpt_cont < $nb_contenus;$cpt_cont++) {
 				$obj_contenu = $this->page->get_contenu($cpt_cont);
-				if ($obj_contenu) {$this->ecrire_contenu($obj_contenu, $cpt_cont, false);}
+				if ($obj_contenu) {
+					$style = $obj_contenu->get_style();
+					$obj_style = $this->style->get_style_contenu($style);
+					$type_contenu = ($obj_style)?$obj_style->get_type_special():null;
+					$this->ecrire_contenu($obj_contenu, $cpt_cont, $type_contenu, false);
+				}
 			}
 		}
 
@@ -131,13 +137,13 @@
 		}
 
 		// Méthodes protégées
-		protected function ecrire_contenu(&$obj_contenu, $cpt_cont, $admin) {
+		protected function ecrire_contenu(&$obj_contenu, $cpt_cont, $type_contenu, $admin) {
 			$nb_blocs = $obj_contenu->get_nb_blocs();
 			$style_contenu = $obj_contenu->get_style();
 			$signet_contenu = $obj_contenu->get_signet();
 			$semantique_contenu = $obj_contenu->get_semantique();
 			$this->html->ouvrir_balise_html5($semantique_contenu);
-			$this->html->ouvrir_contenu($cpt_cont, $nb_blocs, $style_contenu);
+			$this->html->ouvrir_contenu($cpt_cont, $nb_blocs, $style_contenu, $type_contenu);
 			if (strlen($signet_contenu) > 0) {$this->html->ecrire_signet($signet_contenu);}
 			for ($cpt_bloc = 0;$cpt_bloc < $nb_blocs; $cpt_bloc++) {
 				$obj_bloc = $obj_contenu->get_bloc($cpt_bloc);

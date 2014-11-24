@@ -46,6 +46,7 @@
 			$this->html->charger_js(_HTTP_LOG_ADMIN."/js/upload.js");
 			$this->html->charger_js(_HTTP_LOG_ADMIN."/js/jqueryte.js");
 			$this->html->charger_js(_HTTP_LOG_ADMIN."/js/anims.js");
+			$this->html->charger_js_ie(_HTTP_LOG_ADMIN."/js/ie.js");
 			$this->charger_xml_js(true);
 		}
 		public function fermer_entete() {
@@ -66,7 +67,12 @@
 			$nb_contenus = $this->page->get_nb_contenus();
 			for ($cpt_cont = 0;$cpt_cont < $nb_contenus;$cpt_cont++) {
 				$obj_contenu = $this->page->get_contenu($cpt_cont);
-				if ($obj_contenu) {$this->ecrire_contenu($obj_contenu, $cpt_cont, true);}
+				if ($obj_contenu) {
+					$style = $obj_contenu->get_style();
+					$obj_style = $this->style->get_style_contenu($style);
+					$type_contenu = ($obj_style)?$obj_style->get_type_special():null;
+					$this->ecrire_contenu($obj_contenu, $cpt_cont, $type_contenu, true);
+				}
 			}
 		}
 		public function fermer_corps() {
@@ -80,11 +86,11 @@
 			$this->html->fermer();
 		}
 		// Méthodes protégées
-		protected function ecrire_contenu(&$obj_contenu, $cpt_cont, $admin) {
+		protected function ecrire_contenu(&$obj_contenu, $cpt_cont, $type_contenu, $admin) {
 			$tab_bloc = array();$no_bloc = array();
 			$nb_blocs = $obj_contenu->get_nb_blocs();
 			$style_contenu = $obj_contenu->get_style();
-			$this->html->ouvrir_contenu($cpt_cont, $nb_blocs, $style_contenu);
+			$this->html->ouvrir_contenu($cpt_cont, $nb_blocs, $style_contenu, $type_contenu);
 			// Partie admin
 			for ($cpt_bloc = 0;$cpt_bloc < $nb_blocs; $cpt_bloc++) {
 				$obj_bloc = $obj_contenu->get_bloc($cpt_bloc);
