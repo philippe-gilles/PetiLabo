@@ -53,7 +53,7 @@
 			// Ouverture des modules facultatifs
 			if ($this->site->has_module(_SITE_MODULE_ACTU)) {
 				$this->module_actu = new xml_module_actu();
-				$ret = $this->module_actu->ouvrir(_XML_PATH_MODULES._XML_MODULE_ACTU._XML_EXT);
+				$this->module_actu->ouvrir(_XML_PATH_MODULES._XML_MODULE_ACTU._XML_EXT);
 			}
 			if ($this->site->has_module(_SITE_MODULE_RESA)) {
 				$this->module_resa = new xml_module_resa();
@@ -63,17 +63,18 @@
 			// Création de la liste des langues utilisées sur le site
 			$this->charger_liste_langues();
 			// Lecture des textes pour le site et la page
-			$ret = $this->texte->ouvrir(_XML_SOURCE_SITE, _XML_PATH._XML_TEXTE._XML_EXT);
-			$ret = $this->texte->ouvrir(_XML_SOURCE_PAGE, _XML_PATH_PAGES.$this->nom_page."/"._XML_TEXTE._XML_EXT);
+			$this->texte->ouvrir(_XML_SOURCE_SITE, _XML_PATH._XML_TEXTE._XML_EXT);
+			$this->texte->ouvrir(_XML_SOURCE_PAGE, _XML_PATH_PAGES.$this->nom_page."/"._XML_TEXTE._XML_EXT);
 			if ($this->site->has_module(_SITE_MODULE_ACTU)) {
-				$ret = $this->texte->ouvrir(_XML_SOURCE_MODULE, _XML_PATH_MODULES._XML_TEXTE._XML_EXT);
+				$this->texte->ouvrir(_XML_SOURCE_MODULE, _XML_PATH_MODULES._XML_TEXTE._XML_EXT);
 			}
+			$this->texte->ouvrir(_XML_SOURCE_INTERNE, _XML_PATH_INTERNE._XML_TRADUCTION._XML_EXT);
 			// Ouverture des styles
 			$this->style = new xml_style();
-			$ret = $this->style->ouvrir(_XML_PATH._XML_STYLE._XML_EXT);
-			$ret = $this->style->ouvrir(_XML_PATH_PAGES.$this->nom_page."/"._XML_STYLE._XML_EXT);
+			$this->style->ouvrir(_XML_PATH._XML_STYLE._XML_EXT);
+			$this->style->ouvrir(_XML_PATH_PAGES.$this->nom_page."/"._XML_STYLE._XML_EXT);
 			if ($this->site->has_module(_SITE_MODULE_ACTU)) {
-				$ret = $this->style->ouvrir(_XML_PATH_MODULES._XML_STYLE._XML_EXT);
+				$this->style->ouvrir(_XML_PATH_MODULES._XML_STYLE._XML_EXT);
 			}
 			// Ouverture des documents
 			$this->document = new xml_document();
@@ -81,17 +82,17 @@
 			$ret = $this->document->ouvrir(_XML_PATH_PAGES.$this->nom_page."/"._XML_DOCUMENT._XML_EXT);
 			// Ouverture des médiathèques
 			$this->media = new xml_media();
-			$ret = $this->media->ouvrir(_XML_SOURCE_SITE, _XML_PATH._XML_MEDIA._XML_EXT);
-			$ret = $this->media->ouvrir(_XML_SOURCE_PAGE, _XML_PATH_PAGES.$this->nom_page."/"._XML_MEDIA._XML_EXT);
+			$this->media->ouvrir(_XML_SOURCE_SITE, _XML_PATH._XML_MEDIA._XML_EXT);
+			$this->media->ouvrir(_XML_SOURCE_PAGE, _XML_PATH_PAGES.$this->nom_page."/"._XML_MEDIA._XML_EXT);
 			if ($this->site->has_module(_SITE_MODULE_ACTU)) {
-				$ret = $this->media->ouvrir(_XML_SOURCE_MODULE, _XML_PATH_MODULES._XML_MEDIA._XML_EXT);
+				$this->media->ouvrir(_XML_SOURCE_MODULE, _XML_PATH_MODULES._XML_MEDIA._XML_EXT);
 			}
 			// Ouverture des menuthèques
 			$this->menu = new xml_menu();
-			$ret = $this->menu->ouvrir(_XML_PATH._XML_MENU._XML_EXT);
-			$ret = $this->menu->ouvrir(_XML_PATH_PAGES.$this->nom_page."/"._XML_MENU._XML_EXT);
+			$this->menu->ouvrir(_XML_PATH._XML_MENU._XML_EXT);
+			$this->menu->ouvrir(_XML_PATH_PAGES.$this->nom_page."/"._XML_MENU._XML_EXT);
 			if ($this->site->has_module(_SITE_MODULE_ACTU)) {
-				$ret = $this->menu->ouvrir(_XML_PATH_MODULES._XML_MENU._XML_EXT);
+				$this->menu->ouvrir(_XML_PATH_MODULES._XML_MENU._XML_EXT);
 			}
 			// Ouverture du fichier XML page
 			$this->page = new xml_page();
@@ -221,7 +222,7 @@
 			if ($obj) {$obj->afficher($mode, $this->langue_page);}
 			return $obj;
 		}
-		// Ecriture des paragraphes
+		// Ecriture des symboles
 		protected function ecrire_bloc_symbole($mode, $occ) {
 			// Lecture de l'id texte
 			$id_valeur = $this->page->lire_valeur_n(_PAGE_SYMBOLE, $occ);

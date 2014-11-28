@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<textotheque>
+<petilabo>
 	<!-- Sections -->
 	<texte nom="legal_section_legale">Informations légales</texte>
 	<texte nom="legal_section_protection">Données personnelles</texte>
@@ -20,4 +20,4 @@
 	<texte nom="legal_propriete">est propriétaire des droits de propriété intellectuelle ou bien détient les droits d'usage sur tous les éléments accessibles sur le site, notamment les textes, images et vidéos.</texte>
 	<texte nom="legal_reproduction">Toute reproduction, représentation, modification, publication, adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite, sauf autorisation préalable de</texte>
 	<texte nom="legal_infraction">Toute exploitation non autorisée du site sera considérée comme contrefaçon et sera poursuivie conformément aux dispositions des articles L.335-2 et suivants du Code de Propriété Intellectuelle.</texte>
-</textotheque>
+</petilabo>

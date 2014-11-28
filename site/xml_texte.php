@@ -11,158 +11,10 @@ class xml_texte {
 
 	// Propriétés
 	private $tab_langues = array(_LANGUE_DE, _LANGUE_EN, _LANGUE_ES, _LANGUE_FR, _LANGUE_IT, _LANGUE_NL, _LANGUE_PT);
-	private $nom_langues = array(
-		_LANGUE_DE=>"Deutsch",
-		_LANGUE_EN=>"English", 
-		_LANGUE_ES=>"Español",
-		_LANGUE_FR=>"Français",
-		_LANGUE_IT=>"Italiano",
-		_LANGUE_NL=>"Nederlands",
-		_LANGUE_PT=>"Português");
-	private $css_pos_langues = array(
-		_LANGUE_DE=>"0 0",
-		_LANGUE_EN=>"-40px 0", 
-		_LANGUE_ES=>"-80px 0",
-		_LANGUE_FR=>"-120px 0",
-		_LANGUE_IT=>"-160px 0",
-		_LANGUE_NL=>"-200px 0",
-		_LANGUE_PT=>"-240px 0");
-	private $tab_precedent = array(
-		_LANGUE_DE=>"Bisherige",
-		_LANGUE_EN=>"Previous", 
-		_LANGUE_ES=>"Anterior",
-		_LANGUE_FR=>"Précédent",
-		_LANGUE_IT=>"Precedente",
-		_LANGUE_NL=>"Vorige",
-		_LANGUE_PT=>"Anterior");
-	private $tab_suivant = array(
-		_LANGUE_DE=>"Nächste",
-		_LANGUE_EN=>"Next", 
-		_LANGUE_ES=>"Siguiente",
-		_LANGUE_FR=>"Suivant",
-		_LANGUE_IT=>"Successivo",
-		_LANGUE_NL=>"Volgende",
-		_LANGUE_PT=>"Seguinte");
-	private $tab_fermer = array(
-		_LANGUE_DE=>"Schließen",
-		_LANGUE_EN=>"Close", 
-		_LANGUE_ES=>"Cerrar",
-		_LANGUE_FR=>"Fermer",
-		_LANGUE_IT=>"Chiudere",
-		_LANGUE_NL=>"Sluiten",
-		_LANGUE_PT=>"Fechar");
-	private $tab_nom = array(
-		_LANGUE_DE=>"Nachnamen",
-		_LANGUE_EN=>"Name", 
-		_LANGUE_ES=>"Apellidos",
-		_LANGUE_FR=>"Nom",
-		_LANGUE_IT=>"Cognome",
-		_LANGUE_NL=>"Achternaam",
-		_LANGUE_PT=>"Apelido");
-	private $tab_prenom = array(
-		_LANGUE_DE=>"Vorname",
-		_LANGUE_EN=>"First name", 
-		_LANGUE_ES=>"Nombre",
-		_LANGUE_FR=>"Prénom",
-		_LANGUE_IT=>"Nome",
-		_LANGUE_NL=>"Voornaam",
-		_LANGUE_PT=>"Nome");
-	private $tab_tel = array(
-		_LANGUE_DE=>"Telefonnummer",
-		_LANGUE_EN=>"Phone number", 
-		_LANGUE_ES=>"Teléfono",
-		_LANGUE_FR=>"Téléphone",
-		_LANGUE_IT=>"Telefono",
-		_LANGUE_NL=>"Telefoonnummer",
-		_LANGUE_PT=>"Telefone");
-	private $tab_email = array(
-		_LANGUE_DE=>"E-mail",
-		_LANGUE_EN=>"E-mail", 
-		_LANGUE_ES=>"E-mail",
-		_LANGUE_FR=>"E-mail",
-		_LANGUE_IT=>"E-mail",
-		_LANGUE_NL=>"E-mail",
-		_LANGUE_PT=>"E-mail");
-	private $tab_message = array(
-		_LANGUE_DE=>"Nachricht",
-		_LANGUE_EN=>"Message", 
-		_LANGUE_ES=>"Mensaje",
-		_LANGUE_FR=>"Message",
-		_LANGUE_IT=>"Messaggio",
-		_LANGUE_NL=>"Bericht",
-		_LANGUE_PT=>"Mensagem");
-	private $tab_captcha = array(
-		_LANGUE_DE=>"Sicherheitscode",
-		_LANGUE_EN=>"Security code", 
-		_LANGUE_ES=>"Código de seguridad",
-		_LANGUE_FR=>"Code de sécurité",
-		_LANGUE_IT=>"Codice di sicurezza",
-		_LANGUE_NL=>"Veiligheidscode",
-		_LANGUE_PT=>"Código de segurança");
-	private $tab_envoyer = array(
-		_LANGUE_DE=>"Senden",
-		_LANGUE_EN=>"Send", 
-		_LANGUE_ES=>"Enviar",
-		_LANGUE_FR=>"Envoyer",
-		_LANGUE_IT=>"Invia",
-		_LANGUE_NL=>"Verzenden",
-		_LANGUE_PT=>"Enviar");
-	private $tab_mentions = array(
-		_LANGUE_DE=>"Impressum",
-		_LANGUE_EN=>"Legal notice", 
-		_LANGUE_ES=>"Aviso legal",
-		_LANGUE_FR=>"Mentions légales",
-		_LANGUE_IT=>"Colophon",
-		_LANGUE_NL=>"Afdruk",
-		_LANGUE_PT=>"Aviso legal");
-	private $tab_credits = array(
-		_LANGUE_DE=>"Credits",
-		_LANGUE_EN=>"Credits", 
-		_LANGUE_ES=>"Credits",
-		_LANGUE_FR=>"Crédits",
-		_LANGUE_IT=>"Credits",
-		_LANGUE_NL=>"Credits",
-		_LANGUE_PT=>"Credits");
-	private $tab_plan = array(
-		_LANGUE_DE=>"Web-Site Karte",
-		_LANGUE_EN=>"Site map", 
-		_LANGUE_ES=>"Mapa del sitio",
-		_LANGUE_FR=>"Plan du site",
-		_LANGUE_IT=>"Mappa del sito",
-		_LANGUE_NL=>"Site map",
-		_LANGUE_PT=>"Plano do sítio");
-	private $tab_webmaster = array(
-		_LANGUE_DE=>"PetiLabo",
-		_LANGUE_EN=>"PetiLabo", 
-		_LANGUE_ES=>"PetiLabo",
-		_LANGUE_FR=>"PetiLabo",
-		_LANGUE_IT=>"PetiLabo",
-		_LANGUE_NL=>"PetiLabo",
-		_LANGUE_PT=>"PetiLabo");
-	private $tab_pied_de_page = array(
-		_LANGUE_DE=>"Fuß Seite",
-		_LANGUE_EN=>"Footer", 
-		_LANGUE_ES=>"Pie de página",
-		_LANGUE_FR=>"Pied de page",
-		_LANGUE_IT=>"Piede di pagina",
-		_LANGUE_NL=>"Voet van bladzijde",
-		_LANGUE_PT=>"Pé de página");
-	private $tab_social = array(
-		_LANGUE_DE=>"Und über soziale Netzwerke",
-		_LANGUE_EN=>"And on social networks", 
-		_LANGUE_ES=>"Y en las redes sociales",
-		_LANGUE_FR=>"Et aussi sur les réseaux sociaux",
-		_LANGUE_IT=>"Ed anche sulle reti sociali",
-		_LANGUE_NL=>"En op sociale netwerken",
-		_LANGUE_PT=>"E também sobre as redes sociais");
-	private $tab_accesskey = array(
-		_LANGUE_DE=>"Tastenkombination",
-		_LANGUE_EN=>"Keyboard shortcut", 
-		_LANGUE_ES=>"Tecla aceleradora",
-		_LANGUE_FR=>"Raccourci clavier",
-		_LANGUE_IT=>"Scorciatoia da tastiera",
-		_LANGUE_NL=>"Functietoets",
-		_LANGUE_PT=>"Atalho de teclado");
+	private $nom_langues = array(_LANGUE_DE=>"Deutsch",_LANGUE_EN=>"English",_LANGUE_ES=>"Español",_LANGUE_FR=>"Français",_LANGUE_IT=>"Italiano",_LANGUE_NL=>"Nederlands",_LANGUE_PT=>"Português");
+	private $css_pos_langues = array(_LANGUE_DE=>"0 0",_LANGUE_EN=>"-40px 0",_LANGUE_ES=>"-80px 0",_LANGUE_FR=>"-120px 0",_LANGUE_IT=>"-160px 0",_LANGUE_NL=>"-200px 0",_LANGUE_PT=>"-240px 0");
+		
+	private $tab_icones = array("glass" =>"000","music" =>"001","search" =>"002","envelope-o" =>"003","heart" =>"004","star" =>"005","star-o" =>"006","user" =>"007","film" =>"008","th-large" =>"009","th" =>"00a","th-list" =>"00b","check" =>"00c","close" =>"00d","search-plus" =>"00e","search-minus" =>"010","power-off" =>"011","signal" =>"012","cog" =>"013","trash-o" =>"014","home" =>"015","file-o" =>"016","clock-o" =>"017","road" =>"018","download" =>"019","arrow-circle-o-down" =>"01a","arrow-circle-o-up" =>"01b","inbox" =>"01c","play-circle-o" =>"01d","repeat" =>"01e","refresh" =>"021","list-alt" =>"022","lock" =>"023","flag" =>"024","headphones" =>"025","volume-off" =>"026","volume-down" =>"027","volume-up" =>"028","qrcode" =>"029","barcode" =>"02a","tag" =>"02b","tags" =>"02c","book" =>"02d","bookmark" =>"02e","print" =>"02f","camera" =>"030","font" =>"031","bold" =>"032","italic" =>"033","text-height" =>"034","text-width" =>"035","align-left" =>"036","align-center" =>"037","align-right" =>"038","align-justify" =>"039","list" =>"03a","outdent" =>"03b","indent" =>"03c","video-camera" =>"03d","picture-o" =>"03e","pencil" =>"040","map-marker" =>"041","adjust" =>"042","tint" =>"043","edit" =>"044","share-square-o" =>"045","check-square-o" =>"046","arrows" =>"047","step-backward" =>"048","fast-backward" =>"049","backward" =>"04a","play" =>"04b","pause" =>"04c","stop" =>"04d","forward" =>"04e","fast-forward" =>"050","step-forward" =>"051","eject" =>"052","chevron-left" =>"053","chevron-right" =>"054","plus-circle" =>"055","minus-circle" =>"056","times-circle" =>"057","check-circle" =>"058","question-circle" =>"059","info-circle" =>"05a","crosshairs" =>"05b","times-circle-o" =>"05c","check-circle-o" =>"05d","ban" =>"05e","arrow-left" =>"060","arrow-right" =>"061","arrow-up" =>"062","arrow-down" =>"063","share" =>"064","expand" =>"065","compress" =>"066","plus" =>"067","minus" =>"068","asterisk" =>"069","exclamation-circle" =>"06a","gift" =>"06b","leaf" =>"06c","fire" =>"06d","eye" =>"06e","eye-slash" =>"070","warning" =>"071","plane" =>"072","calendar" =>"073","random" =>"074","comment" =>"075","magnet" =>"076","chevron-up" =>"077","chevron-down" =>"078","retweet" =>"079","shopping-cart" =>"07a","folder" =>"07b","folder-open" =>"07c","arrows-v" =>"07d","arrows-h" =>"07e","bar-chart" =>"080","twitter-square" =>"081","facebook-square" =>"082","camera-retro" =>"083","key" =>"084","cogs" =>"085","comments" =>"086","thumbs-o-up" =>"087","thumbs-o-down" =>"088","star-half" =>"089","heart-o" =>"08a","sign-out" =>"08b","linkedin-square" =>"08c","thumb-tack" =>"08d","external-link" =>"08e","sign-in" =>"090","trophy" =>"091","github-square" =>"092","upload" =>"093","lemon-o" =>"094","phone" =>"095","square-o" =>"096","bookmark-o" =>"097","phone-square" =>"098","twitter" =>"099","facebook" =>"09a","github" =>"09b","unlock" =>"09c","credit-card" =>"09d","rss" =>"09e","hdd-o" =>"0a0","bullhorn" =>"0a1","bell" =>"0f3","certificate" =>"0a3","hand-o-right" =>"0a4","hand-o-left" =>"0a5","hand-o-up" =>"0a6","hand-o-down" =>"0a7","arrow-circle-left" =>"0a8","arrow-circle-right" =>"0a9","arrow-circle-up" =>"0aa","arrow-circle-down" =>"0ab","globe" =>"0ac","wrench" =>"0ad","tasks" =>"0ae","filter" =>"0b0","briefcase" =>"0b1","arrows-alt" =>"0b2","users" =>"0c0","link" =>"0c1","cloud" =>"0c2","flask" =>"0c3","cut" =>"0c4","copy" =>"0c5","paperclip" =>"0c6","floppy-o" =>"0c7","square" =>"0c8","bars" =>"0c9","list-ul" =>"0ca","list-ol" =>"0cb","strikethrough" =>"0cc","underline" =>"0cd","table" =>"0ce","magic" =>"0d0","truck" =>"0d1","pinterest" =>"0d2","pinterest-square" =>"0d3","google-plus-square" =>"0d4","google-plus" =>"0d5","money" =>"0d6","caret-down" =>"0d7","caret-up" =>"0d8","caret-left" =>"0d9","caret-right" =>"0da","columns" =>"0db","sort" =>"0dc","sort-desc" =>"0dd","sort-asc" =>"0de","envelope" =>"0e0","linkedin" =>"0e1","rotate-left" =>"0e2","legal" =>"0e3","dashboard" =>"0e4","comment-o" =>"0e5","comments-o" =>"0e6","flash" =>"0e7","sitemap" =>"0e8","umbrella" =>"0e9","clipboard" =>"0ea","lightbulb-o" =>"0eb","exchange" =>"0ec","cloud-download" =>"0ed","cloud-upload" =>"0ee","user-md" =>"0f0","stethoscope" =>"0f1","suitcase" =>"0f2","bell-o" =>"0a2","coffee" =>"0f4","cutlery" =>"0f5","file-text-o" =>"0f6","building-o" =>"0f7","hospital-o" =>"0f8","ambulance" =>"0f9","medkit" =>"0fa","fighter-jet" =>"0fb","beer" =>"0fc","h-square" =>"0fd","plus-square" =>"0fe","angle-double-left" =>"100","angle-double-right" =>"101","angle-double-up" =>"102","angle-double-down" =>"103","angle-left" =>"104","angle-right" =>"105","angle-up" =>"106","angle-down" =>"107","desktop" =>"108","laptop" =>"109","tablet" =>"10a","mobile" =>"10b","circle-o" =>"10c","quote-left" =>"10d","quote-right" =>"10e","spinner" =>"110","circle" =>"111","reply" =>"112","github-alt" =>"113","folder-o" =>"114","folder-open-o" =>"115","smile-o" =>"118","frown-o" =>"119","meh-o" =>"11a","gamepad" =>"11b","keyboard-o" =>"11c","flag-o" =>"11d","flag-checkered" =>"11e","terminal" =>"120","code" =>"121","reply-all" =>"122","star-half-o" =>"123","location-arrow" =>"124","crop" =>"125","code-fork" =>"126","chain-broken" =>"127","question" =>"128","info" =>"129","exclamation" =>"12a","superscript" =>"12b","subscript" =>"12c","eraser" =>"12d","puzzle-piece" =>"12e","microphone" =>"130","microphone-slash" =>"131","shield" =>"132","calendar-o" =>"133","fire-extinguisher" =>"134","rocket" =>"135","maxcdn" =>"136","chevron-circle-left" =>"137","chevron-circle-right" =>"138","chevron-circle-up" =>"139","chevron-circle-down" =>"13a","html5" =>"13b","css3" =>"13c","anchor" =>"13d","unlock-alt" =>"13e","bullseye" =>"140","ellipsis-h" =>"141","ellipsis-v" =>"142","rss-square" =>"143","play-circle" =>"144","ticket" =>"145","minus-square" =>"146","minus-square-o" =>"147","level-up" =>"148","level-down" =>"149","check-square" =>"14a","pencil-square" =>"14b","external-link-square" =>"14c","share-square" =>"14d","compass" =>"14e","caret-square-o-down" =>"150","caret-square-o-up" =>"151","caret-square-o-right" =>"152","eur" =>"153","gbp" =>"154","usd" =>"155","inr" =>"156","jpy" =>"157","rub" =>"158","krw" =>"159","bitcoin" =>"15a","file" =>"15b","file-text" =>"15c","sort-alpha-asc" =>"15d","sort-alpha-desc" =>"15e","sort-amount-asc" =>"160","sort-amount-desc" =>"161","sort-numeric-asc" =>"162","sort-numeric-desc" =>"163","thumbs-up" =>"164","thumbs-down" =>"165","youtube-square" =>"166","youtube" =>"167","xing" =>"168","xing-square" =>"169","youtube-play" =>"16a","dropbox" =>"16b","stack-overflow" =>"16c","instagram" =>"16d","flickr" =>"16e","adn" =>"170","bitbucket" =>"171","bitbucket-square" =>"172","tumblr" =>"173","tumblr-square" =>"174","long-arrow-down" =>"175","long-arrow-up" =>"176","long-arrow-left" =>"177","long-arrow-right" =>"178","apple" =>"179","windows" =>"17a","android" =>"17b","linux" =>"17c","dribbble" =>"17d","skype" =>"17e","foursquare" =>"180","trello" =>"181","female" =>"182","male" =>"183","gittip" =>"184","sun-o" =>"185","moon-o" =>"186","archive" =>"187","bug" =>"188","vk" =>"189","weibo" =>"18a","renren" =>"18b","pagelines" =>"18c","stack-exchange" =>"18d","arrow-circle-o-right" =>"18e","arrow-circle-o-left" =>"190","caret-square-o-left" =>"191","dot-circle-o" =>"192","wheelchair" =>"193","vimeo-square" =>"194","try" =>"195","plus-square-o" =>"196","space-shuttle" =>"197","slack" =>"198","envelope-square" =>"199","wordpress" =>"19a","openid" =>"19b","university" =>"19c","graduation-cap" =>"19d","yahoo" =>"19e","google" =>"1a0","reddit" =>"1a1","reddit-square" =>"1a2","stumbleupon-circle" =>"1a3","stumbleupon" =>"1a4","delicious" =>"1a5","digg" =>"1a6","pied-piper" =>"1a7","pied-piper-alt" =>"1a8","drupal" =>"1a9","joomla" =>"1aa","language" =>"1ab","fax" =>"1ac","building" =>"1ad","child" =>"1ae","paw" =>"1b0","spoon" =>"1b1","cube" =>"1b2","cubes" =>"1b3","behance" =>"1b4","behance-square" =>"1b5","steam" =>"1b6","steam-square" =>"1b7","recycle" =>"1b8","car" =>"1b9","taxi" =>"1ba","tree" =>"1bb","spotify" =>"1bc","deviantart" =>"1bd","soundcloud" =>"1be","database" =>"1c0","file-pdf-o" =>"1c1","file-word-o" =>"1c2","file-excel-o" =>"1c3","file-powerpoint-o" =>"1c4","file-image-o" =>"1c5","file-archive-o" =>"1c6","file-audio-o" =>"1c7","file-video-o" =>"1c8","file-code-o" =>"1c9","vine" =>"1ca","codepen" =>"1cb","jsfiddle" =>"1cc","life-ring" =>"1cd","circle-o-notch" =>"1ce","rebel" =>"1d0","empire" =>"1d1","git-square" =>"1d2","git" =>"1d3","hacker-news" =>"1d4","tencent-weibo" =>"1d5","qq" =>"1d6","wechat" =>"1d7","paper-plane" =>"1d8","paper-plane-o" =>"1d9","history" =>"1da","circle-thin" =>"1db","header" =>"1dc","paragraph" =>"1dd","sliders" =>"1de","share-alt" =>"1e0","share-alt-square" =>"1e1","bomb" =>"1e2","soccer-ball-o" =>"1e3","tty" =>"1e4","binoculars" =>"1e5","plug" =>"1e6","slideshare" =>"1e7","twitch" =>"1e8","yelp" =>"1e9","newspaper-o" =>"1ea","wifi" =>"1eb","calculator" =>"1ec","paypal" =>"1ed","google-wallet" =>"1ee","cc-visa" =>"1f0","cc-mastercard" =>"1f1","cc-discover" =>"1f2","cc-amex" =>"1f3","cc-paypal" =>"1f4","cc-stripe" =>"1f5","bell-slash" =>"1f6","bell-slash-o" =>"1f7","trash" =>"1f8","copyright" =>"1f9","at" =>"1fa","eyedropper" =>"1fb","paint-brush" =>"1fc","birthday-cake" =>"1fd","area-chart" =>"1fe","pie-chart" =>"200","line-chart" =>"201","lastfm" =>"202","lastfm-square" =>"203","toggle-off" =>"204","toggle-on" =>"205","bicycle" =>"206","bus" =>"207","ioxhost" =>"208","angellist" =>"209","cc" =>"20a","shekel" =>"20b","meanpath" =>"20c");
 	private $tab_mois = array(
 		_LANGUE_DE=>array("", "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"),
 		_LANGUE_EN=>array("", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"), 
@@ -187,71 +39,6 @@ class xml_texte {
 		_LANGUE_IT=>array("Disponibile", "Prenotato", "Occupato", "Chiuso"),
 		_LANGUE_NL=>array("Beschikbaar", "Geboekt", "Bezet", "Gesloten"),
 		_LANGUE_PT=>array("Disponível", "Reservado", "Ocupado", "Fechado"));
-	private $tab_appeler_tel = array(
-		_LANGUE_DE=>"Wahltelefon",
-		_LANGUE_EN=>"Dial", 
-		_LANGUE_ES=>"Marque el",
-		_LANGUE_FR=>"Composer le",
-		_LANGUE_IT=>"Comporre il",
-		_LANGUE_NL=>"Kies het",
-		_LANGUE_PT=>"Disque o");
-	private $tab_appeler_skype = array(
-		_LANGUE_DE=>"Rufen mit Skype",
-		_LANGUE_EN=>"Call with Skype", 
-		_LANGUE_ES=>"Llamar con Skype",
-		_LANGUE_FR=>"Appeler avec Skype",
-		_LANGUE_IT=>"Chiama con Skype",
-		_LANGUE_NL=>"Bellen met Skype",
-		_LANGUE_PT=>"Chamada com Skype");
-	private $tab_le_site = array(
-		_LANGUE_DE=>"Die Web-Site",
-		_LANGUE_EN=>"The website", 
-		_LANGUE_ES=>"El sitio",
-		_LANGUE_FR=>"Le site",
-		_LANGUE_IT=>"Et sito",
-		_LANGUE_NL=>"De website",
-		_LANGUE_PT=>"O sítio");
-	private $tab_installer_ga = array(
-		_LANGUE_DE=>"will das Google Analytics Cookie Mess Publikum installieren",
-		_LANGUE_EN=>"wishes to install the Google Analytics cookie for audience measurement", 
-		_LANGUE_ES=>"quiere instalar el cookie de Google Analytics por la medición de audiencias",
-		_LANGUE_FR=>"souhaite installer le cookie de mesure d'audience Google Analytics",
-		_LANGUE_IT=>"vuole installare di cookie Google Analytics per la misurazione dell'audience",
-		_LANGUE_NL=>"wil een Google Analytics cookie te installeren voor het meten van publiek",
-		_LANGUE_PT=>"quer instalar o cookie Google Analytics para medir audiências");
-	private $tab_utiliser_ga = array(
-		_LANGUE_DE=>"benutzt Google Analytics Cookie Mess Publikum installieren  <a href=\"legal.php#cookies\"><em style='font-size:90%;'>(Weiterlesen)</em></a>",
-		_LANGUE_EN=>"uses the Google Analytics cookie for audience measurement  <a href=\"legal.php#cookies\"><em style='font-size:90%;'>(learn more)</em></a>", 
-		_LANGUE_ES=>"utiliza el cookie de Google Analytics por la medición de audiencias  <a href=\"legal.php#cookies\"><em style='font-size:90%;'>(leer más)</em></a>",
-		_LANGUE_FR=>"utilise le cookie de mesure d'audience Google Analytics  <a href=\"legal.php#cookies\"><em style='font-size:90%;'>(en savoir plus)</em></a>",
-		_LANGUE_IT=>"utilizza il cookie Google Analytics per la misurazione dell'audience  <a href=\"legal.php#cookies\"><em style='font-size:90%;'>(ulteriori informazioni)</em></a>",
-		_LANGUE_NL=>"maakt gebruik van Google Analytics cookie te installeren voor het meten van publiek  <a href=\"legal.php#cookies\"><em style='font-size:90%;'>(lees verder)</em></a>",
-		_LANGUE_PT=>"usa o cookie Google Analytics para medir audiências  <a href=\"legal.php#cookies\"><em style='font-size:90%;'>(Leia mais)</em></a>");
-	private $tab_poursuite = array(
-		_LANGUE_DE=>"Notez qu'en visitant de nouvelles pages sur ce site, vous acceptez implicitement ce cookie.",
-		_LANGUE_EN=>"Note that visiting new pages on this site means that you implicitly accept this cookie.",
-		_LANGUE_ES=>"Observe que visitando otras páginas en este sitio, usted acepta implícitamente esta cookie.",
-		_LANGUE_FR=>"Notez qu'en visitant de nouvelles pages sur ce site, vous acceptez implicitement ce cookie.",
-		_LANGUE_IT=>"Please note that visiting new pages on this site, you implicitly agree to this cookie.",
-		_LANGUE_NL=>"Notez qu'en visitant de nouvelles pages sur ce site, vous acceptez implicitement ce cookie.",
-		_LANGUE_PT=>"Notez qu'en visitant de nouvelles pages sur ce site, vous acceptez implicitement ce cookie.");
-	private $tab_accepter = array(
-		_LANGUE_DE=>"Ich nehme",
-		_LANGUE_EN=>"I agree", 
-		_LANGUE_ES=>"Acepto",
-		_LANGUE_FR=>"J'accepte",
-		_LANGUE_IT=>"Acconsento",
-		_LANGUE_NL=>"Ik accepteer",
-		_LANGUE_PT=>"Aceito");
-	private $tab_refuser = array(
-		_LANGUE_DE=>"Ich weigere",
-		_LANGUE_EN=>"I disagree", 
-		_LANGUE_ES=>"Me niego",
-		_LANGUE_FR=>"Je refuse",
-		_LANGUE_IT=>"Rifiuto",
-		_LANGUE_NL=>"Ik weiger",
-		_LANGUE_PT=>"Me recuso");	
-
 	private $xml_struct = null;
 	private $liste_langues = array();
 	private $textes = array();
@@ -305,6 +92,16 @@ class xml_texte {
 		}
 		return $ret;
 	}
+	public function get_icone($nom, $langue) {
+		$val = $this->get_texte($nom, $langue);
+		if (strlen($val) > 0) {
+			$val = str_replace("fa-", "", $val);
+			if (array_key_exists($val, $this->tab_icones)) {$val = $this->tab_icones[$val];}
+			$ret = "&#xf".$val.";";
+		}
+		else {$ret = null;}
+		return $ret;
+	}
 	public function get_source($nom) {return $this->sources[$nom];}
 	
 	public function ajouter_langue($param) {
@@ -323,35 +120,36 @@ class xml_texte {
 		}
 		return $ret;
 	}
-	public function get_label_precedent($langue) {return $this->tab_precedent[$langue];}
-	public function get_label_suivant($langue) {return $this->tab_suivant[$langue];}
-	public function get_label_fermer($langue) {return $this->tab_fermer[$langue];}
-	public function get_label_nom($langue) {return $this->tab_nom[$langue];}
-	public function get_label_prenom($langue) {return $this->tab_prenom[$langue];}
-	public function get_label_tel($langue) {return $this->tab_tel[$langue];}
-	public function get_label_email($langue) {return $this->tab_email[$langue];}
-	public function get_label_message($langue) {return $this->tab_message[$langue];}
-	public function get_label_captcha($langue) {return $this->tab_captcha[$langue];}
-	public function get_label_envoyer($langue) {return $this->tab_envoyer[$langue];}
-	public function get_label_mentions($langue) {return $this->tab_mentions[$langue];}
-	public function get_label_credits($langue) {return $this->tab_credits[$langue];}
-	public function get_label_plan($langue) {return $this->tab_plan[$langue];}
-	public function get_label_webmaster($langue) {return $this->tab_webmaster[$langue];}
-	public function get_label_pied_de_page($langue) {return $this->tab_pied_de_page[$langue];}
-	public function get_label_social($langue) {return $this->tab_social[$langue];}
-	public function get_label_accesskey($langue) {return $this->tab_accesskey[$langue];}
+	public function get_label_precedent($langue) {return $this->get_texte("trad_petilabo_precedent", $langue);}
+	public function get_label_suivant($langue) {return $this->get_texte("trad_petilabo_suivant", $langue);}
+	public function get_label_fermer($langue) {return $this->get_texte("trad_petilabo_fermer", $langue);}
+	public function get_label_nom($langue) {return $this->get_texte("trad_petilabo_nom", $langue);}
+	public function get_label_prenom($langue) {return $this->get_texte("trad_petilabo_prenom", $langue);}
+	public function get_label_tel($langue) {return $this->get_texte("trad_petilabo_tel", $langue);}
+	public function get_label_email($langue) {return $this->get_texte("trad_petilabo_email", $langue);}
+	public function get_label_message($langue) {return $this->get_texte("trad_petilabo_message", $langue);}
+	public function get_label_captcha($langue) {return $this->get_texte("trad_petilabo_captcha", $langue);}
+	public function get_label_envoyer($langue) {return $this->get_texte("trad_petilabo_envoyer", $langue);}
+	public function get_label_mentions($langue) {return $this->get_texte("trad_petilabo_mentions", $langue);}
+	public function get_label_credits($langue) {return $this->get_texte("trad_petilabo_credits", $langue);}
+	public function get_label_plan($langue) {return $this->get_texte("trad_petilabo_plan", $langue);}
+	public function get_label_webmaster($langue) {return $this->get_texte("trad_petilabo_webmaster", $langue);}
+	public function get_label_pied_de_page($langue) {return $this->get_texte("trad_petilabo_pied_de_page", $langue);}
+	public function get_label_social($langue) {return $this->get_texte("trad_petilabo_social", $langue);}
+	public function get_label_accesskey($langue) {return $this->get_texte("trad_petilabo_accesskey", $langue);}
+	public function get_label_appeler_tel($langue) {return $this->get_texte("trad_petilabo_appeler_tel", $langue);}
+	public function get_label_appeler_skype($langue) {return $this->get_texte("trad_petilabo_appeler_skype", $langue);}
+	public function get_label_le_site($langue) {return $this->get_texte("trad_petilabo_le_site", $langue);}
+	public function get_label_installer_ga($langue) {return $this->get_texte("trad_petilabo_installer_ga", $langue);}
+	public function get_label_utiliser_ga($langue) {return $this->get_texte("trad_petilabo_utiliser_ga", $langue);}
+	public function get_label_poursuite_ga($langue) {return $this->get_texte("trad_petilabo_poursuite", $langue);}
+	public function get_label_accepter($langue) {return $this->get_texte("trad_petilabo_accepter", $langue);}
+	public function get_label_refuser($langue) {return $this->get_texte("trad_petilabo_refuser", $langue);}
+	
 	public function get_tab_mois($langue) {return $this->tab_mois[$langue];}
 	public function get_tab_semaine($langue) {return $this->tab_semaine[$langue];}
 	public function get_tab_statut_resa($langue) {return $this->tab_statut_resa[$langue];}
-	public function get_label_appeler_tel($langue) {return $this->tab_appeler_tel[$langue];}
-	public function get_label_appeler_skype($langue) {return $this->tab_appeler_skype[$langue];}
-	public function get_label_le_site($langue) {return $this->tab_le_site[$langue];}
-	public function get_label_installer_ga($langue) {return $this->tab_installer_ga[$langue];}
-	public function get_label_utiliser_ga($langue) {return $this->tab_utiliser_ga[$langue];}
-	public function get_label_poursuite_ga($langue) {return $this->tab_poursuite[$langue];}
-	public function get_label_accepter($langue) {return $this->tab_accepter[$langue];}
-	public function get_label_refuser($langue) {return $this->tab_refuser[$langue];}
-	
+
 	public function get_id_titre_actu($no) {return _MODULE_ACTU_TITRE.$no;}
 	public function get_id_sous_titre_actu($no) {return _MODULE_ACTU_SOUS_TITRE.$no;}
 	public function get_id_resume_actu($no) {return _MODULE_ACTU_RESUME.$no;}

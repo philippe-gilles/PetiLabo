@@ -190,7 +190,11 @@ class obj_editable extends obj_html {
 		else {$id = null;$trad = null;}
 		return $trad;
 	}
-	
+	protected function check_icone(&$obj_texte, &$id, $langue) {
+		if ($obj_texte->existe_texte($id)) {$trad = $obj_texte->get_icone($id, $langue);}
+		else {$id = null;$trad = null;}
+		return $trad;
+	}
 	private function build_param($id) {
 		$ret = "";
 		if (strlen($id) > 0) {$ret .= _PARAM_ID."=".$id;}

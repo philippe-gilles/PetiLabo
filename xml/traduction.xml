@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<petilabo>
+	<texte nom="trad_petilabo_precedent">{de}Bisherige{en}Previous{es}Anterior{fr}Précédent{it}Precedente{nl}Vorige{pt}Anterior</texte>
+	<texte nom="trad_petilabo_suivant">{de}Nächste{en}Next{es}Siguiente{fr}Suivant{it}Successivo{nl}Volgende{pt}Seguinte</texte>
+	<texte nom="trad_petilabo_fermer">{de}Schließen{en}Close{es}Cerrar{fr}Fermer{it}Chiudere{nl}Sluiten{pt}Fechar</texte>
+	<texte nom="trad_petilabo_nom">{de}Nachnamen{en}Name{es}Apellidos{fr}Nom{it}Cognome{nl}Achternaam{pt}Apelido</texte>
+	<texte nom="trad_petilabo_prenom">{de}Vorname{en}First name{es}Nombre{fr}Prénom{it}Nome{nl}Voornaam{pt}Nome</texte>
+	<texte nom="trad_petilabo_tel">{de}Telefonnummer{en}Phone number{es}Teléfono{fr}Téléphone{it}Telefono{nl}Telefoonnummer{pt}Telefone</texte>
+	<texte nom="trad_petilabo_email">{de}E-mail{en}E-mail{es}E-mail{fr}E-mail{it}E-mail{nl}E-mail{pt}E-mail</texte>
+	<texte nom="trad_petilabo_message">{de}Nachricht{en}Message{es}Mensaje{fr}Message{it}Messaggio{nl}Bericht{pt}Mensagem</texte>
+	<texte nom="trad_petilabo_captcha">{de}Sicherheitscode{en}Security code{es}Código de seguridad{fr}Code de sécurité{it}Codice di sicurezza{nl}Veiligheidscode{pt}Código de segurança</texte>
+	<texte nom="trad_petilabo_envoyer">{de}Senden{en}Send{es}Enviar{fr}Envoyer{it}Invia{nl}Verzenden{pt}Enviar</texte>
+	<texte nom="trad_petilabo_mentions">{de}Impressum{en}Legal notice{es}Aviso legal{fr}Mentions légales{it}Colophon{nl}Afdruk{pt}Aviso legal</texte>
+	<texte nom="trad_petilabo_credits">{de}Credits{en}Credits{es}Credits{fr}Crédits{it}Credits{nl}Credits{pt}Credits</texte>
+	<texte nom="trad_petilabo_plan">{de}Web-Site Karte{en}Site map{es}Mapa del sitio{fr}Plan du site{it}Mappa del sito{nl}Site map{pt}Plano do sítio</texte>
+	<texte nom="trad_petilabo_webmaster">{de}PetiLabo{en}PetiLabo{es}PetiLabo{fr}PetiLabo{it}PetiLabo{nl}PetiLabo{pt}PetiLabo</texte>
+	<texte nom="trad_petilabo_pied_de_page">{de}Fuß Seite{en}Footer{es}Pie de página{fr}Pied de page{it}Piede di pagina{nl}Voet van bladzijde{pt}Pé de página</texte>
+	<texte nom="trad_petilabo_social">{de}Und über soziale Netzwerke{en}And on social networks{es}Y en las redes sociales{fr}Et aussi sur les réseaux sociaux{it}Ed anche sulle reti sociali{nl}En op sociale netwerken{pt}E também sobre as redes sociais</texte>
+	<texte nom="trad_petilabo_accesskey">{de}Tastenkombination{en}Keyboard shortcut{es}Tecla aceleradora{fr}Raccourci clavier{it}Scorciatoia da tastiera{nl}Functietoets{pt}Atalho de teclado</texte>
+	<texte nom="trad_petilabo_appeler_tel">{de}Wahltelefon{en}Dial{es}Marque el{fr}Composer le{it}Comporre il{nl}Kies het{pt}Disque o</texte>
+	<texte nom="trad_petilabo_appeler_skype">{de}Rufen mit Skype{en}Call with Skype{es}Llamar con Skype{fr}Appeler avec Skype{it}Chiama con Skype{nl}Bellen met Skype{pt}Chamada com Skype</texte>
+	<texte nom="trad_petilabo_le_site">{de}Die Web-Site{en}The website{es}El sitio{fr}Le site{it}Et sito{nl}De website{pt}O sítio</texte>
+	<texte nom="trad_petilabo_installer_ga">{de}will das Google Analytics Cookie Mess Publikum installieren{en}wishes to install the Google Analytics cookie for audience measurement{es}quiere instalar el cookie de Google Analytics por la medición de audiencias{fr}souhaite installer le cookie de mesure d'audience Google Analytics{it}vuole installare di cookie Google Analytics per la misurazione dell'audience{nl}wil een Google Analytics cookie te installeren voor het meten van publiek{pt}quer instalar o cookie Google Analytics para medir audiências</texte>
+	<texte nom="trad_petilabo_utiliser_ga">{de}benutzt Google Analytics Cookie Mess Publikum installieren  &lt;a href='legal.php#cookies'&gt;&lt;em style='font-size:90%;'>(Weiterlesen)&lt;/em&gt;&lt;/a&gt;{en}uses the Google Analytics cookie for audience measurement  &lt;a href='legal.php#cookies'&gt;&lt;em style='font-size:90%;'>(learn more)&lt;/em&gt;&lt;/a&gt;{es}utiliza el cookie de Google Analytics por la medición de audiencias  &lt;a href='legal.php#cookies'&gt;&lt;em style='font-size:90%;'>(leer más)&lt;/em&gt;&lt;/a&gt;{fr}utilise le cookie de mesure d'audience Google Analytics  &lt;a href='legal.php#cookies'&gt;&lt;em style='font-size:90%;'>(en savoir plus)&lt;/em&gt;&lt;/a&gt;{it}utilizza il cookie Google Analytics per la misurazione dell'audience  &lt;a href='legal.php#cookies'&gt;&lt;em style='font-size:90%;'>(ulteriori informazioni)&lt;/em&gt;&lt;/a&gt;{nl}maakt gebruik van Google Analytics cookie te installeren voor het meten van publiek  &lt;a href='legal.php#cookies'&gt;&lt;em style='font-size:90%;'>(lees verder)&lt;/em&gt;&lt;/a&gt;{pt}usa o cookie Google Analytics para medir audiências  &lt;a href='legal.php#cookies'&gt;&lt;em style='font-size:90%;'>(Leia mais)&lt;/em&gt;&lt;/a&gt;</texte>
+	<texte nom="trad_petilabo_poursuite">{de}Notez qu'en visitant de nouvelles pages sur ce site, vous acceptez implicitement ce cookie.{en}Note that visiting new pages on this site means that you implicitly accept this cookie.{es}Observe que visitando otras páginas en este sitio, usted acepta implícitamente esta cookie.{fr}Notez qu'en visitant de nouvelles pages sur ce site, vous acceptez implicitement ce cookie.{it}Please note that visiting new pages on this site, you implicitly agree to this cookie.{nl}Notez qu'en visitant de nouvelles pages sur ce site, vous acceptez implicitement ce cookie.{pt}Notez qu'en visitant de nouvelles pages sur ce site, vous acceptez implicitement ce cookie.</texte>
+	<texte nom="trad_petilabo_accepter">{de}Ich nehme{en}I agree{es}Acepto{fr}J'accepte{it}Acconsento{nl}Ik accepteer{pt}Aceito</texte>
+	<texte nom="trad_petilabo_refuser">{de}Ich weigere{en}I disagree{es}Me niego{fr}Je refuse{it}Rifiuto{nl}Ik weiger{pt}Me recuso</texte>
+</petilabo>

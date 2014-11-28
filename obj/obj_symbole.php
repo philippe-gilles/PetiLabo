@@ -12,21 +12,21 @@ class obj_symbole extends obj_editable {
 
 	public function afficher($mode, $langue) {
 		if (!(strcmp($mode, _PETILABO_MODE_SITE))) {
-			$texte = $this->obj_texte->get_texte($this->id_texte, $langue);
+			$icone = $this->obj_texte->get_icone($this->id_texte, $langue);
 			$classe = "paragraphe ".$this->style;
-			if (strlen($texte) > 0) {echo "<p class=\"".$classe."\">"._ICONE_PREFIXE.$texte._ICONE_SUFFIXE."</p>"._HTML_FIN_LIGNE;}
+			if (strlen($icone) > 0) {echo "<p class=\"".$classe."\">".$icone."</p>"._HTML_FIN_LIGNE;}
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_ADMIN))) {
-			$texte = $this->obj_texte->get_texte($this->id_texte, $langue);
+			$icone = $this->obj_texte->get_icone($this->id_texte, $langue);
 			$classe = "paragraphe ".$this->style;
-			if (strlen($texte) > 0) {echo "<p class=\"".$classe."\">"._ICONE_PREFIXE.$texte._ICONE_SUFFIXE."</p>"._HTML_FIN_LIGNE;}
+			if (strlen($icone) > 0) {echo "<p class=\"".$classe."\">".$icone."</p>"._HTML_FIN_LIGNE;}
 			else {echo "<p class=\"".$classe."\">.</p>"._HTML_FIN_LIGNE;}
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_EDIT))) {
-			$texte = $this->check_texte($this->obj_texte, $this->id_texte, $langue);
+			$icone = $this->check_texte($this->obj_texte, $this->id_texte, $langue);
 			$this->ouvrir_tableau_simple();
 			$this->ouvrir_ligne();
-			$icone = _ICONE_PREFIXE.$texte._ICONE_SUFFIXE;
+			$icone = $this->obj_texte->get_icone($this->id_texte, $langue);
 			$this->ecrire_cellule_categorie(_EDIT_LABEL_SYMBOLE, _EDIT_COULEUR, 1);
 			$this->ecrire_cellule_symbole_texte_simple(_EDIT_TYPE_ICONE, $this->id_texte, _EDIT_SYMBOLE_ICONE, "Modifier le code du symbole");
 			$this->ecrire_cellule_icone($icone);

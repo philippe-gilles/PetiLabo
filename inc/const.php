@@ -46,6 +46,7 @@
 	define("_XML_PATH_INTERNE", _PHP_PATH_ROOT."xml/");
 	
 	// Définitions des fichiers XML
+	define("_XML_TRADUCTION", "traduction");
 	define("_XML_LEGAL", "legal");
 	define("_XML_CREDITS", "credits");
 	define("_XML_GENERAL", "general");

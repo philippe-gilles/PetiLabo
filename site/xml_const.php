@@ -8,10 +8,6 @@
 	define("_XML_SOURCE_PAGE", "page");
 	define("_XML_SOURCE_MODULE", "module");
 	define("_XML_SOURCE_INTERNE", "interne");
-	
-	// Préfixe et suffixe pour les icones
-	define ("_ICONE_PREFIXE", "&#xf");
-	define ("_ICONE_SUFFIXE", ";");
 
 	// Balises pour le fichier XML site (general.xml)
 	define("_SITE_RACINE", "racine");

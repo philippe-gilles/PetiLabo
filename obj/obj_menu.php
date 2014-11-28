@@ -57,12 +57,11 @@ class obj_item extends obj_editable {
 
 	protected function afficher_site($langue) {
 		$label = $this->obj_texte->get_texte($this->id_label, $langue);
-		$icone = $this->obj_texte->get_texte($this->id_icone, $langue);
+		$icone = $this->obj_texte->get_icone($this->id_icone, $langue);
 		if (strlen($this->cible) > 0) {
 			if (strlen($icone) > 0) {
-				$code_icone = _ICONE_PREFIXE.$icone._ICONE_SUFFIXE;
-				if (strlen($label) > 0) {$label = "<span class=\"menu_icone_sur_label\">".$code_icone."</span><br/>".$label;}
-				else {$label = $code_icone;}
+				if (strlen($label) > 0) {$label = "<span class=\"menu_icone_sur_label\">".$icone."</span><br/>".$label;}
+				else {$label = $icone;}
 			}
 			$info = $this->obj_texte->get_texte($this->id_info, $langue);
 			if ($this->is_active) {
@@ -78,11 +77,10 @@ class obj_item extends obj_editable {
 	
 	protected function afficher_admin($langue) {
 		$label = $this->obj_texte->get_texte($this->id_label, $langue);
-		$icone = $this->obj_texte->get_texte($this->id_icone, $langue);
+		$icone = $this->obj_texte->get_icone($this->id_icone, $langue);
 		if (strlen($icone) > 0) {
-			$code_icone = _ICONE_PREFIXE.$icone._ICONE_SUFFIXE;
-			if (strlen($label) > 0) {$label = "<span class=\"menu_icone_sur_label\">".$code_icone."</span><br/>".$label;}
-			else {$label = $code_icone;}
+			if (strlen($label) > 0) {$label = "<span class=\"menu_icone_sur_label\">".$icone."</span><br/>".$label;}
+			else {$label = $icone;}
 		}
 		echo "<a class=\"item_menu ".$this->style."\">".$label."</a>"._HTML_FIN_LIGNE;
 	}
@@ -94,8 +92,7 @@ class obj_item extends obj_editable {
 		$this->ouvrir_ligne();
 		$this->ecrire_cellule_categorie(_EDIT_LABEL_ITEM, _EDIT_COULEUR, $nb_lignes);
 		if (strlen($this->id_icone)>0) {
-			$trad_icone = $this->check_texte($this->obj_texte, $this->id_icone, $langue);
-			$icone = _ICONE_PREFIXE.$trad_icone._ICONE_SUFFIXE;
+			$icone = $this->check_icone($this->obj_texte, $this->id_icone, $langue);
 			$this->ecrire_cellule_symbole_texte_simple(_EDIT_TYPE_ICONE, $this->id_icone, _EDIT_SYMBOLE_ICONE, "Modifier le code de l'icône");
 			$this->ecrire_cellule_icone($icone);
 			$this->fermer_ligne();
