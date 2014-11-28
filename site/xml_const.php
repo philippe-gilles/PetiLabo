@@ -8,6 +8,10 @@
 	define("_XML_SOURCE_PAGE", "page");
 	define("_XML_SOURCE_MODULE", "module");
 	define("_XML_SOURCE_INTERNE", "interne");
+	
+	// Préfixe et suffixe pour les icones
+	define ("_ICONE_PREFIXE", "&#xf");
+	define ("_ICONE_SUFFIXE", ";");
 
 	// Balises pour le fichier XML site (general.xml)
 	define("_SITE_RACINE", "racine");
@@ -96,6 +100,7 @@
 	define("_PAGE_TITRE", "titre");
 	define("_PAGE_TITRE_BANDEAU", "titre_bandeau");
 	define("_PAGE_PARAGRAPHE", "paragraphe");
+	define("_PAGE_SYMBOLE", "symbole");
 	define("_PAGE_SAUT", "saut");
 	define("_PAGE_MENU", "menu");
 	define("_PAGE_CARTE", "carte");
@@ -182,10 +187,6 @@
 	define("_MEDIA_ATTR_BOUTONS", "boutons");
 	define("_MEDIA_ATTR_LARGEUR", "largeur_standard");
 
-	// Préfixe et suffixe pour les icones
-	define ("_MENU_PREFIXE_ICONE", "&#xf");
-	define ("_MENU_SUFFIXE_ICONE", ";");
-
 	// Balises pour le fichier XML menu
 	define("_MENU_STYLE", "style_item");
 	define("_MENU_STYLE_TEXTE", "style_texte");
@@ -242,6 +243,7 @@
 	define("_STYLE_TEXTE_COULEUR_SURVOL", "couleur_survol");
 	define("_STYLE_TEXTE_TAILLE", "taille");
 	define("_STYLE_TEXTE_ALIGNEMENT", "alignement");
+	define("_STYLE_TEXTE_DECORATION", "decoration");
 	define("_STYLE_FORMULAIRE", "style_formulaire");
 	define("_STYLE_FORMULAIRE_TEXTE_CHAMP", "couleur_texte_champ");
 	define("_STYLE_FORMULAIRE_FOND_CHAMP", "couleur_fond_champ");
@@ -276,6 +278,8 @@
 	define("_STYLE_ATTR_ALIGNEMENT_CENTRE", "centre");
 	define("_STYLE_ATTR_ALIGNEMENT_DROITE", "droite");
 	define("_STYLE_ATTR_ALIGNEMENT_JUSTIFIE", "justifie");
+	define("_STYLE_ATTR_DECORATION_GRAS", "gras");
+	define("_STYLE_ATTR_DECORATION_ITALIQUE", "italique");
 	define("_STYLE_ATTR_TYPE_BORDURE_COULEUR", "couleur");
 	define("_STYLE_ATTR_TYPE_BORDURE_MOTIF", "motif");
 	define("_STYLE_ATTR_TYPE_BORDURE_OMBRE", "ombre");

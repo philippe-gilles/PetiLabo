@@ -7,6 +7,7 @@ define("_EDIT_COULEUR", "#444");
 define("_EDIT_LABEL_TITRE", "Titre");
 define("_EDIT_LABEL_SOUS_TITRE", "Sous-titre");
 define("_EDIT_LABEL_TEXTE", "Paragraphe");
+define("_EDIT_LABEL_SYMBOLE", "Symbole");
 define("_EDIT_LABEL_DIAPORAMA", "Diaporama");
 define("_EDIT_LABEL_CARROUSEL", "Carrousel");
 define("_EDIT_LABEL_VIGNETTES", "Vignettes");

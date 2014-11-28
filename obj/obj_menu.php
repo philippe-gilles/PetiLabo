@@ -60,7 +60,7 @@ class obj_item extends obj_editable {
 		$icone = $this->obj_texte->get_texte($this->id_icone, $langue);
 		if (strlen($this->cible) > 0) {
 			if (strlen($icone) > 0) {
-				$code_icone = _MENU_PREFIXE_ICONE.$icone._MENU_SUFFIXE_ICONE;
+				$code_icone = _ICONE_PREFIXE.$icone._ICONE_SUFFIXE;
 				if (strlen($label) > 0) {$label = "<span class=\"menu_icone_sur_label\">".$code_icone."</span><br/>".$label;}
 				else {$label = $code_icone;}
 			}
@@ -80,7 +80,7 @@ class obj_item extends obj_editable {
 		$label = $this->obj_texte->get_texte($this->id_label, $langue);
 		$icone = $this->obj_texte->get_texte($this->id_icone, $langue);
 		if (strlen($icone) > 0) {
-			$code_icone = _MENU_PREFIXE_ICONE.$icone._MENU_SUFFIXE_ICONE;
+			$code_icone = _ICONE_PREFIXE.$icone._ICONE_SUFFIXE;
 			if (strlen($label) > 0) {$label = "<span class=\"menu_icone_sur_label\">".$code_icone."</span><br/>".$label;}
 			else {$label = $code_icone;}
 		}
@@ -95,7 +95,7 @@ class obj_item extends obj_editable {
 		$this->ecrire_cellule_categorie(_EDIT_LABEL_ITEM, _EDIT_COULEUR, $nb_lignes);
 		if (strlen($this->id_icone)>0) {
 			$trad_icone = $this->check_texte($this->obj_texte, $this->id_icone, $langue);
-			$icone = _MENU_PREFIXE_ICONE.$trad_icone._MENU_SUFFIXE_ICONE;
+			$icone = _ICONE_PREFIXE.$trad_icone._ICONE_SUFFIXE;
 			$this->ecrire_cellule_symbole_texte_simple(_EDIT_TYPE_ICONE, $this->id_icone, _EDIT_SYMBOLE_ICONE, "Modifier le code de l'icône");
 			$this->ecrire_cellule_icone($icone);
 			$this->fermer_ligne();

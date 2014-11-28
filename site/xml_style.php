@@ -73,8 +73,7 @@ class style_texte {
 	// Propriétés
 	private $police = null;
 	private $couleur = null;private $couleur_lien = null;private $couleur_survol = null;
-	private $taille = 0;
-	private $alignement = null;
+	private $taille = 0;private $alignement = null;private $decoration = null;
 
 	// Manipulateurs
 	public function set_police($param) {$this->police = $param;}
@@ -83,6 +82,7 @@ class style_texte {
 	public function set_couleur_survol($param) {$this->couleur_survol = $param;}
 	public function set_taille($param) {$this->taille = (float) $param;}
 	public function set_alignement($param) {$this->alignement = $this->normaliser_alignement($param);}
+	public function set_decoration($param) {$this->decoration = $this->normaliser_decoration($param);}
 
 	// Accesseurs
 	public function get_police() {return $this->police;}
@@ -91,6 +91,7 @@ class style_texte {
 	public function get_couleur_survol() {return $this->couleur_survol;}
 	public function get_taille() {return $this->taille;}
 	public function get_alignement() {return $this->alignement;}
+	public function get_decoration() {return $this->decoration;}
 	
 	private function normaliser_alignement($param) {
 		$ret = $param;
@@ -100,6 +101,11 @@ class style_texte {
 				$ret = _STYLE_ATTR_ALIGNEMENT_CENTRE;
 			}
 		}
+		return $ret;
+	}
+	private function normaliser_decoration($param) {
+		$param = trim(strtolower($param));
+		$ret = ((strcmp($param, _STYLE_ATTR_DECORATION_GRAS)) && (strcmp($param, _STYLE_ATTR_DECORATION_ITALIQUE)))?null:$param;
 		return $ret;
 	}
 }
@@ -256,6 +262,7 @@ class xml_style {
 					$couleur_survol = $xml_style->lire_n_valeur(_STYLE_TEXTE_COULEUR_SURVOL, $cpt);
 					$taille = $xml_style->lire_n_valeur(_STYLE_TEXTE_TAILLE, $cpt);
 					$alignement = $xml_style->lire_n_valeur(_STYLE_TEXTE_ALIGNEMENT, $cpt);
+					$decoration = $xml_style->lire_n_valeur(_STYLE_TEXTE_DECORATION, $cpt);
 					// Création du style de texte
 					$style = new style_texte();
 					$style->set_police($police);
@@ -264,6 +271,7 @@ class xml_style {
 					$style->set_couleur_survol($couleur_survol);
 					$style->set_taille($taille);
 					$style->set_alignement($alignement);
+					$style->set_decoration($decoration);
 					$this->styles_textes[$nom] = $style;
 				}
 			}
@@ -464,6 +472,10 @@ class xml_style {
 				}
 				$alignement = $style->get_alignement();
 				$css .= $this->extraire_css_alignement($alignement);
+				$decoration = $style->get_decoration();
+				if (!(strcmp($decoration, _STYLE_ATTR_DECORATION_GRAS))) {
+					$css .= "font-weight:bold;";
+				}
 				$css .= "padding:0;";
 				$css .= "}"._CSS_FIN_LIGNE;
 				// Style équivalent pour les icones
@@ -476,6 +488,15 @@ class xml_style {
 				if ($taille > 0) {
 					$size = (float) $taille;
 					$css .= "font-size:".$size."em;";
+				}
+				$alignement = $style->get_alignement();
+				$css .= $this->extraire_css_alignement($alignement);
+				$decoration = $style->get_decoration();
+				if (!(strcmp($decoration, _STYLE_ATTR_DECORATION_GRAS))) {
+					$css .= "font-weight:bold;";
+				}
+				elseif (!(strcmp($decoration, _STYLE_ATTR_DECORATION_ITALIQUE))) {
+					$css .= "font-style:italic;";
 				}
 				$css .= "}"._CSS_FIN_LIGNE;
 				// Style pour les liens dans le paragraphe
@@ -491,7 +512,6 @@ class xml_style {
 					$css .= "color:".$couleur_survol.";";
 					$css .= "}"._CSS_FIN_LIGNE;
 				}
-
 			}
 		}
 		// Styles de formulaire

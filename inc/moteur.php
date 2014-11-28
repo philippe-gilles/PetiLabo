@@ -221,6 +221,19 @@
 			if ($obj) {$obj->afficher($mode, $this->langue_page);}
 			return $obj;
 		}
+		// Ecriture des paragraphes
+		protected function ecrire_bloc_symbole($mode, $occ) {
+			// Lecture de l'id texte
+			$id_valeur = $this->page->lire_valeur_n(_PAGE_SYMBOLE, $occ);
+			$id_texte = $this->parser_id_crochets_actu($id_valeur);
+			// Lecture de l'attribut "style"
+			$style_inline = $this->page->lire_attribut_n(_PAGE_SYMBOLE, $occ, _PAGE_ATTR_STYLE_PARAGRAPHE);
+			$style = (strlen($style_inline) > 0)?$style_inline:$this->site->get_style_paragraphe();
+			// Création de l'objet "symbole"
+			$obj = new obj_symbole($this->texte, $style, $id_texte);
+			if ($obj) {$obj->afficher($mode, $this->langue_page);}
+			return $obj;
+		}
 		// Ecriture des sauts
 		protected function ecrire_bloc_saut($mode, $occ) {
 			// Lecture de la hauteur
