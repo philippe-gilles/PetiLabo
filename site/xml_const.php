@@ -65,9 +65,10 @@
 	// Valeurs possibles pour les attributs du fichier XML site
 	define("_SITE_MODULE_ACTU", "actu");
 	define("_SITE_MODULE_RESA", "resa");
+	define("_SITE_PIED_DE_PAGE_MANUEL", "manuel");
+	define("_SITE_PIED_DE_PAGE_AUTO", "standard");
 	define("_SITE_PIED_DE_PAGE_REDUIT", "reduit");
 	define("_SITE_PIED_DE_PAGE_INTERNE", "interne");
-	define("_SITE_PIED_DE_PAGE_EXTERNE", "externe");
 
 	// Balises pour le fichier XML texte
 	define("_TEXTE_TEXTE", "texte");
@@ -109,6 +110,7 @@
 	define("_PAGE_CALENDRIER_RESA", "calendrier");
 	define("_PAGE_BANNIERE_ACTU", "banniere_actu");
 	define("_PAGE_SOCIAL", "partage_social");
+	define("_PAGE_BOUTON_ADMIN", "bouton_admin");
 	
 	// Attributs pour le fichier XML page
 	define("_PAGE_ATTR_CONTENU_STYLE", "style");
@@ -129,6 +131,7 @@
 	define("_PAGE_ATTR_SOURCE_VIDEO", "source");
 	define("_PAGE_ATTR_SOCIAL_TAILLE", "taille");
 	define("_PAGE_ATTR_CREDITS_TAILLE", "taille");
+	define("_PAGE_ATTR_STYLE_BOUTON", "style");
 	
 	// Valeurs possibles pour les attributs du fichier XML page
 	define("_PAGE_ATTR_ALIGNEMENT_HAUT", "haut");
@@ -281,6 +284,7 @@
 	define("_STYLE_ATTR_TYPE_BORDURE_OMBRE", "ombre");
 	define("_STYLE_ATTR_TYPE_BORDURE_SCOTCH", "scotch");
 	define("_STYLE_ATTR_TYPE_SPECIAL_PLEIN_ECRAN", "plein_ecran");
+	define("_STYLE_ATTR_TYPE_SPECIAL_PIED_DE_PAGE", "pied_de_page");
 	
 	// Balises pour les documents
 	define("_DOCUMENT_DOC", "document");

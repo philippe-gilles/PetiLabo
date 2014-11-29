@@ -367,15 +367,6 @@ class xml_style {
 					$css .= "-o-background-size: cover;";
 					$css .= "background-size: cover;";
 				}
-				$type_special = $style->get_type_special();
-				switch ($type_special) {
-					case _STYLE_ATTR_TYPE_SPECIAL_PLEIN_ECRAN :
-						// TODO : Compatibilité IE7 et IE8 (avec Javascript)
-						$css .= "height:100vh;";
-						break;
-					default :
-						break;
-				}
 				$css .= "}"._CSS_FIN_LIGNE;
 			}
 		}

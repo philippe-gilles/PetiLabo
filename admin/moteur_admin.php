@@ -71,7 +71,7 @@
 					$style = $obj_contenu->get_style();
 					$obj_style = $this->style->get_style_contenu($style);
 					$type_contenu = ($obj_style)?$obj_style->get_type_special():null;
-					$this->ecrire_contenu($obj_contenu, $cpt_cont, $type_contenu, true);
+					$this->ecrire_contenu($obj_contenu, $cpt_cont, $type_contenu);
 				}
 			}
 		}
@@ -86,7 +86,7 @@
 			$this->html->fermer();
 		}
 		// Méthodes protégées
-		protected function ecrire_contenu(&$obj_contenu, $cpt_cont, $type_contenu, $admin) {
+		protected function ecrire_contenu(&$obj_contenu, $cpt_cont, $type_contenu) {
 			$tab_bloc = array();$no_bloc = array();
 			$nb_blocs = $obj_contenu->get_nb_blocs();
 			$style_contenu = $obj_contenu->get_style();
@@ -100,7 +100,7 @@
 				$nom_style = $obj_bloc->get_style();
 				if (strlen($nom_style) > 0) {$style = $this->style->get_style_bloc($nom_style);}
 				// Ouverture du bloc et de son style
-				$this->html->ouvrir_bloc($obj_bloc, $obj_contenu->get_taille_totale(), $admin);
+				$this->html->ouvrir_bloc($obj_bloc, $obj_contenu->get_taille_totale(), true);
 				if ($style) {$this->html->ouvrir_style_bloc($style);}
 				// Ecriture du bloc
 				$tab_obj = $this->ecrire_bloc(_PETILABO_MODE_ADMIN, $obj_bloc, $cpt_cont, $cpt_bloc);
@@ -112,6 +112,7 @@
 				if ($style) {$this->html->fermer_style_bloc($style);}
 				$this->html->fermer_bloc($obj_bloc);
 			}
+			$this->html->fermer_contenu();
 			// Partie edit
 			$nb_tab_blocs = count($tab_bloc);
 			for ($cpt_bloc = 0;$cpt_bloc < $nb_tab_blocs; $cpt_bloc++) {
@@ -124,6 +125,5 @@
 				}
 				$this->html->fermer_tab();
 			}
-			$this->html->fermer_contenu();
 		}
 	}

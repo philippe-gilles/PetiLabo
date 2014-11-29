@@ -3,10 +3,12 @@ html, body, div, a, p, h1, h2, h3, img, ul, table, tr, td {margin:0;padding:0;bo
 html {font-size:100%;color:#000;height:100%;}
 body {height:100%;position:relative;}
 div,img {border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;}
-/* Blocs et contenu */
 .global {position: relative;min-height:100%;}
 .page {margin:0 auto;padding:1em;}
+/* Blocs et contenu */
 .contenu {text-align:center;width:100%;margin:0.5em 0;}
+.contenu_plein_ecran{height:100vh;}
+.contenu_pied_de_page{font-size:90%;line-height:1em;margin:0!important;border-radius:0;-moz-border-radius:0;-webkit-border-radius:0;}
 .bloc {position:relative;text-align:center;overflow:hidden;display:inline-block;}
 .bloc_h {vertical-align:top;}
 .bloc_m {vertical-align:middle;}
@@ -14,9 +16,6 @@ div,img {border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;}
 /* Styles de bloc */
 .bloc_scotch_hg {position:absolute;top:0;left:0;}
 .bloc_scotch_hd {position:absolute;top:0;right:0;}
-.bloc_bandeau {position:absolute;top:0.5em;left:0;right:0;height:1.5em;padding:0.5em;border:2px solid #666666;}
-.bloc_bandeau_gauche {position:absolute;top:3em;left:0;background:url('../images/bandeau.png');background-position:top left;}
-.bloc_bandeau_droite {position:absolute;top:3em;right:0;background:url('../images/bandeau.png');background-position:top right;}
 /* Titres et paragraphes */
 .titre {font-weight:normal;}
 .paragraphe {margin-top:0.2em;margin-bottom:0.2em;}
@@ -124,6 +123,8 @@ div,img {border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;}
 .switch_pp {font-size:4em;line-height:1em;}
 .copy_pp {font-size:1em;font-style:italic;margin:1em 0 0.5em 0;}
 .admin_pp {font-size:1em;margin:1em 0 0 0;padding:0;}
+.manuel_site_pp {font-size:1em;margin:1em;padding:0;}
+.manuel_admin_pp {font-size:2em;margin:0.5em;padding:1em;}
 .liens_pp {font-size:1em;text-align:center;margin-top:0.5em;}
 .liens_pp a {color:#fff;}
 .liens_pp a:hover {color:#aaa;}

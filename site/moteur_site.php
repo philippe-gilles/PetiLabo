@@ -114,7 +114,7 @@
 					$style = $obj_contenu->get_style();
 					$obj_style = $this->style->get_style_contenu($style);
 					$type_contenu = ($obj_style)?$obj_style->get_type_special():null;
-					$this->ecrire_contenu($obj_contenu, $cpt_cont, $type_contenu, false);
+					$this->ecrire_contenu($obj_contenu, $cpt_cont, $type_contenu);
 				}
 			}
 		}
@@ -137,7 +137,7 @@
 		}
 
 		// Méthodes protégées
-		protected function ecrire_contenu(&$obj_contenu, $cpt_cont, $type_contenu, $admin) {
+		protected function ecrire_contenu(&$obj_contenu, $cpt_cont, $type_contenu) {
 			$nb_blocs = $obj_contenu->get_nb_blocs();
 			$style_contenu = $obj_contenu->get_style();
 			$signet_contenu = $obj_contenu->get_signet();
@@ -153,7 +153,7 @@
 					$nom_style = $obj_bloc->get_style();
 					if (strlen($nom_style) > 0) {$style = $this->style->get_style_bloc($nom_style);}
 					// Ouverture du bloc et de son style
-					$this->html->ouvrir_bloc($obj_bloc, $obj_contenu->get_taille_totale(), $admin);
+					$this->html->ouvrir_bloc($obj_bloc, $obj_contenu->get_taille_totale(), false);
 					if ($style) {$this->html->ouvrir_style_bloc($style);}
 					// Ecriture du bloc
 					$this->ecrire_bloc(_PETILABO_MODE_SITE, $obj_bloc, $cpt_cont, $cpt_bloc);

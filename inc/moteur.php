@@ -9,7 +9,7 @@
 		protected $module_actu = null;protected $est_actu = false;protected $no_actu = 0;
 		protected $module_resa = null;
 		protected $polices = array();protected $police_par_defaut = null;
-		protected $est_pied_interne = false;protected $est_pied_reduit = false;
+		protected $est_pied_interne = false;protected $est_pied_reduit = false;protected $est_pied_manuel = false;
 
 		protected function charger_langue() {
 			// Récupération de la langue en cours
@@ -104,9 +104,10 @@
 			// Positionnement du drapeau "interne/externe"
 			$this->est_pied_interne = (strcmp($this->site->get_pied_de_page(),_SITE_PIED_DE_PAGE_INTERNE))?false:true;
 			$this->est_pied_reduit = (strcmp($this->site->get_pied_de_page(),_SITE_PIED_DE_PAGE_REDUIT))?false:true;
+			$this->est_pied_manuel = (strcmp($this->site->get_pied_de_page(),_SITE_PIED_DE_PAGE_MANUEL))?false:true;
 
 			// Création de l'utilitaire html
-			$this->html = new html($this->est_pied_interne, $this->est_pied_reduit);
+			$this->html = new html($this->est_pied_manuel, $this->est_pied_interne, $this->est_pied_reduit);
 		}
 		protected function charger_xml_css($admin = false) {
 			// Surcharge du fichier CSS standard
@@ -626,6 +627,17 @@
 			$url = urlencode("http://".$_SERVER["SERVER_NAME"].$_SERVER["PHP_SELF"]);
 			// Création de l'objet partage social
 			$obj = new obj_partage_social($this->texte, $url, $titre_partage, $forme_carree, $grande_taille);
+			if ($obj) {$obj->afficher($mode, $this->langue_page);}
+			return $obj;
+		}
+		// Ecriture du bouton admin
+		protected function ecrire_bloc_bouton_admin($mode, $occ) {
+			// Lecture de l'attribut "alignement"
+			$alignement = $this->page->lire_attribut_n(_PAGE_BOUTON_ADMIN, $occ, _PAGE_ATTR_ALIGNEMENT);
+			// Lecture de l'attribut "style"
+			$style_inline = $this->page->lire_attribut_n(_PAGE_BOUTON_ADMIN, $occ, _PAGE_ATTR_STYLE_BOUTON);
+			// Création de l'objet partage social
+			$obj = new obj_bouton_admin($this->texte, $this->nom_page, $alignement, $style_inline);
 			if ($obj) {$obj->afficher($mode, $this->langue_page);}
 			return $obj;
 		}

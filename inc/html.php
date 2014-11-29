@@ -2,6 +2,7 @@
 
 class html {
 	// Types de pied de page
+	private $manuel = false;
 	private $interne = false;
 	private $reduit = false;
 	// Labels du pied de page
@@ -16,7 +17,8 @@ class html {
 	private $lien_interne = null;
 
 	// Méthodes publiques
-	public function __construct($interne=false, $reduit=false) {
+	public function __construct($manuel = false, $interne=false, $reduit=false) {
+		$this->manuel = (int) $manuel;
 		$this->interne = (int) $interne;
 		$this->reduit = (int) $reduit;
 	}
@@ -110,13 +112,15 @@ class html {
 	}
 	public function fermer_page($admin, $page, $proprietaire, $webmaster, $social, $tab_social) {
 		echo "</div>\n";
-		$this->ouvrir_pp($admin);
-		$this->ecrire_copy_admin_pp($admin, $page, $proprietaire);
-		$this->ouvrir_balise_html5("nav");
-		$this->ecrire_liens_pp($admin, $proprietaire, $webmaster, $tab_social, $page);
-		$this->ecrire_social_pp($admin, $social, $tab_social);
-		$this->fermer_balise_html5("nav");
-		$this->fermer_pp($admin);
+		if (!($this->manuel)) {
+			$this->ouvrir_pp($admin);
+			$this->ecrire_copy_admin_pp($admin, $page, $proprietaire);
+			$this->ouvrir_balise_html5("nav");
+			$this->ecrire_liens_pp($admin, $proprietaire, $webmaster, $tab_social, $page);
+			$this->ecrire_social_pp($admin, $social, $tab_social);
+			$this->fermer_balise_html5("nav");
+			$this->fermer_pp($admin);
+		}
 		echo "</div>\n";
 	}
 	public function inserer_panneau_ga($loi_cookie, $le_site, $nom_site, $texte_ga, $poursuite_ga, $accepter, $refuser) {
