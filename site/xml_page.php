@@ -99,8 +99,12 @@ class xml_page {
 	}
 	
 	public function lire_valeur_n($balise, $index) {
-		$ret = null;
-		if ($this->page) {$ret = $this->page->lire_valeur_n($balise, $index);}
+		$ret = ($this->page)?$this->page->lire_valeur_n($balise, $index):null;
+		return $ret;
+	}
+	
+	public function lire_html_n($balise, $index) {
+		$ret = ($this->page)?$this->page->lire_html_n($balise, $index):null;
 		return $ret;
 	}
 	

@@ -636,8 +636,17 @@
 			$alignement = $this->page->lire_attribut_n(_PAGE_BOUTON_ADMIN, $occ, _PAGE_ATTR_ALIGNEMENT);
 			// Lecture de l'attribut "style"
 			$style_inline = $this->page->lire_attribut_n(_PAGE_BOUTON_ADMIN, $occ, _PAGE_ATTR_STYLE_BOUTON);
-			// Création de l'objet partage social
-			$obj = new obj_bouton_admin($this->texte, $this->nom_page, $alignement, $style_inline);
+			// Création de l'objet bouton admin
+			$obj = new obj_bouton_admin($this->nom_page, $alignement, $style_inline);
+			if ($obj) {$obj->afficher($mode, $this->langue_page);}
+			return $obj;
+		}
+		// Ecriture du code html
+		protected function ecrire_bloc_html($mode, $occ) {
+			// Lecture du code html
+			$code_html = $this->page->lire_html_n(_PAGE_CODE_HTML, $occ);
+			// Création de l'objet html
+			$obj = new obj_code_html($code_html);
 			if ($obj) {$obj->afficher($mode, $this->langue_page);}
 			return $obj;
 		}

@@ -111,6 +111,7 @@
 	define("_PAGE_BANNIERE_ACTU", "banniere_actu");
 	define("_PAGE_SOCIAL", "partage_social");
 	define("_PAGE_BOUTON_ADMIN", "bouton_admin");
+	define("_PAGE_CODE_HTML", "html");
 	
 	// Attributs pour le fichier XML page
 	define("_PAGE_ATTR_CONTENU_STYLE", "style");

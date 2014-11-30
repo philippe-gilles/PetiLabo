@@ -1,12 +1,10 @@
 <?php
 class obj_bouton_admin extends obj_html {
-	private $obj_texte = null;
 	private $page = null;
 	private $alignement = null;
 	private $style = null;
 
-	public function __construct(&$obj_texte, $page, $alignement, $style) {
-		$this->obj_texte = $obj_texte;
+	public function __construct($page, $alignement, $style) {
 		$this->page = $page;
 		$this->alignement = $alignement;
 		$this->style = $style;

@@ -20,7 +20,7 @@
 			}
 		}
 		public function ajouter_elem($balise) {
-			$tab_non_admin = array(_PAGE_DRAPEAUX, _PAGE_SAUT, _PAGE_SOCIAL, _PAGE_FORM_CONTACT, _PAGE_PLAN_DU_SITE, _PAGE_CREDITS, _PAGE_MENTIONS_LEGALES, _PAGE_BOUTON_ADMIN);
+			$tab_non_admin = array(_PAGE_DRAPEAUX, _PAGE_SAUT, _PAGE_SOCIAL, _PAGE_FORM_CONTACT, _PAGE_PLAN_DU_SITE, _PAGE_CREDITS, _PAGE_MENTIONS_LEGALES, _PAGE_BOUTON_ADMIN, _PAGE_CODE_HTML);
 			$tab_occ = array_count_values($this->elems);
 			$nb_occ = isset($tab_occ[$balise])?(int) $tab_occ[$balise]:0;
 			$this->elems[] = $balise;
