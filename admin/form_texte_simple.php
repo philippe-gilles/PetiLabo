@@ -3,6 +3,7 @@
 
 	define("_EDIT_SIMPLE_TITRE_COPY", "Copyright de l'image");
 	define("_EDIT_SIMPLE_TITRE_ICONE", "Code de l'icone");
+	define("_EDIT_SIMPLE_LIEN_ICONE", "http://fortawesome.github.io/Font-Awesome/icons/");
 	define("_EDIT_SIMPLE_TITRE_PLAN", "Adresse du plan");
 	define("_EDIT_SIMPLE_TITRE_VIDEO", "Identifiant de la video");
 	define("_EDIT_SIMPLE_TITRE_LIEN", "Destination du lien");
@@ -100,6 +101,7 @@
 		echo "<input class=\"texte_champ texte_champ_simple_lien\" name=\"".$form->get_langue_par_defaut()."\" value=\"".$texte."\" />";
 	}
 	echo "</p>\n";
+	if (!(strcmp($type, _EDIT_TYPE_ICONE))) {echo "<br/><p style=\"text-align:right;\"><a href=\""._EDIT_SIMPLE_LIEN_ICONE."\" title=\"Ouvrir la liste des icones dans un nouvel onglet\" target=\"_blank\">Ouvrir la liste des icônes</a></p><br/>\n";}
 	echo "<p class=\"champ\"><input type=\"hidden\" name=\"id_texte\" value=\"".$id_texte."\" /></p>\n";
 	echo "<p class=\"champ\"><input type=\"hidden\" name=\"src_texte\" value=\"".$form->get_source()."\" /></p>\n";
 	echo "<p class=\"champ\"><input type=\"hidden\" name=\""._PARAM_FRAGMENT."\" value=\"".$id_tab."\" /></p>\n";
