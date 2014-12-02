@@ -80,14 +80,14 @@
 			$this->document = new xml_document();
 			$ret = $this->document->ouvrir(_XML_PATH._XML_DOCUMENT._XML_EXT);
 			$ret = $this->document->ouvrir(_XML_PATH_PAGES.$this->nom_page."/"._XML_DOCUMENT._XML_EXT);
-			// Ouverture des médiathèques
+			// Ouverture des médias
 			$this->media = new xml_media();
 			$this->media->ouvrir(_XML_SOURCE_SITE, _XML_PATH._XML_MEDIA._XML_EXT);
 			$this->media->ouvrir(_XML_SOURCE_PAGE, _XML_PATH_PAGES.$this->nom_page."/"._XML_MEDIA._XML_EXT);
 			if ($this->site->has_module(_SITE_MODULE_ACTU)) {
 				$this->media->ouvrir(_XML_SOURCE_MODULE, _XML_PATH_MODULES._XML_MEDIA._XML_EXT);
 			}
-			// Ouverture des menuthèques
+			// Ouverture des menus
 			$this->menu = new xml_menu();
 			$this->menu->ouvrir(_XML_PATH._XML_MENU._XML_EXT);
 			$this->menu->ouvrir(_XML_PATH_PAGES.$this->nom_page."/"._XML_MENU._XML_EXT);
@@ -101,7 +101,18 @@
 				echo "<p>Erreur lors de l'ouverture du fichier XML page</p>\n";
 				return null;
 			}
-			// Positionnement du drapeau "interne/externe"
+			// Traitement des librairies
+			$nb_librairies = $this->page->get_nb_librairies();
+			for ($cpt = 0;$cpt < $nb_librairies; $cpt++) {
+				$nom_librairie = $this->page->get_librairie($cpt);
+				$chemin = _XML_PATH_LIBRAIRIE.$nom_librairie."/";
+				$source = _XML_SOURCE_LIBRAIRIE."_".$nom_librairie;
+				$this->texte->ouvrir($source, $chemin._XML_TEXTE._XML_EXT);
+				$this->style->ouvrir($chemin._XML_STYLE._XML_EXT);
+				$this->media->ouvrir($source, $chemin._XML_MEDIA._XML_EXT);
+				$this->menu->ouvrir($chemin._XML_MENU._XML_EXT);
+			}
+			// Positionnement du type de pied de page
 			$this->est_pied_interne = (strcmp($this->site->get_pied_de_page(),_SITE_PIED_DE_PAGE_INTERNE))?false:true;
 			$this->est_pied_reduit = (strcmp($this->site->get_pied_de_page(),_SITE_PIED_DE_PAGE_REDUIT))?false:true;
 			$this->est_pied_manuel = (strcmp($this->site->get_pied_de_page(),_SITE_PIED_DE_PAGE_MANUEL))?false:true;

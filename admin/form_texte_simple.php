@@ -12,6 +12,7 @@
 		private $nom_page = null;
 		private $id_edit = null;
 		private $site = null;
+		private $page = null;
 		private $texte = null;
 		private $tab_titre = array(
 			_EDIT_TYPE_COPY=>_EDIT_SIMPLE_TITRE_COPY,
@@ -40,6 +41,17 @@
 			$this->texte->ouvrir(_XML_SOURCE_PAGE, _XML_PATH_PAGES.$this->nom_page."/"._XML_TEXTE._XML_EXT);
 			if ($this->site->has_module(_SITE_MODULE_ACTU)) {
 				$ret = $this->texte->ouvrir(_XML_SOURCE_MODULE, _XML_PATH_MODULES._XML_TEXTE._XML_EXT);
+			}
+			// Traitement des librairies
+			$this->page = new xml_page();
+			$ret = $this->page->ouvrir(_XML_PATH_PAGES.$this->nom_page."/"._XML_PAGE._XML_EXT, true);
+			if ($ret) {
+				$nb_librairies = $this->page->get_nb_librairies();
+				for ($cpt = 0;$cpt < $nb_librairies; $cpt++) {
+					$nom_librairie = $this->page->get_librairie($cpt);
+					$source = _XML_SOURCE_LIBRAIRIE."_".$nom_librairie;
+					$this->texte->ouvrir($source, _XML_PATH_LIBRAIRIE.$nom_librairie."/"._XML_TEXTE._XML_EXT);
+				}
 			}
 			
 			// Récupération de la source de l'id

@@ -6,6 +6,7 @@
 		private $id_edit = null;
 		private $id_liste = null;
 		private $texte = null;
+		private $page = null;
 		private $menu = null;
 		private $liste_cibles = null;
 		
@@ -15,14 +16,27 @@
 			
 			// Chargement des menus
 			$this->menu = new xml_menu();
-			$ret = $this->menu->ouvrir(_XML_PATH._XML_MENU._XML_EXT);
-			$ret = $this->menu->ouvrir(_XML_PATH_PAGES.$this->nom_page."/"._XML_MENU._XML_EXT);
+			$this->menu->ouvrir(_XML_PATH._XML_MENU._XML_EXT);
+			$this->menu->ouvrir(_XML_PATH_PAGES.$this->nom_page."/"._XML_MENU._XML_EXT);
 			
 			// Chargement des textes
 			$this->texte = new xml_texte();
 			$this->texte->ouvrir(_XML_SOURCE_SITE, _XML_PATH._XML_TEXTE._XML_EXT);
 			$this->texte->ouvrir(_XML_SOURCE_PAGE, _XML_PATH_PAGES.$this->nom_page."/"._XML_TEXTE._XML_EXT);
-			
+
+			// Traitement des librairies
+			$this->page = new xml_page();
+			$ret = $this->page->ouvrir(_XML_PATH_PAGES.$this->nom_page."/"._XML_PAGE._XML_EXT, true);
+			if ($ret) {
+				$nb_librairies = $this->page->get_nb_librairies();
+				for ($cpt = 0;$cpt < $nb_librairies; $cpt++) {
+					$nom_librairie = $this->page->get_librairie($cpt);
+					$source = _XML_SOURCE_LIBRAIRIE."_".$nom_librairie;
+					$this->texte->ouvrir($source, _XML_PATH_LIBRAIRIE.$nom_librairie."/"._XML_TEXTE._XML_EXT);
+					$this->menu->ouvrir(_XML_PATH_LIBRAIRIE.$nom_librairie."/"._XML_MENU._XML_EXT);
+				}
+			}
+
 			// Récupération de la source de l'id
 			$this->source_edit = $this->texte->get_source($id_edit);
 			if (!($this->source_edit)) {

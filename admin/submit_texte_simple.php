@@ -27,6 +27,10 @@
 	if (!(strcmp($src_texte, _XML_SOURCE_SITE))) {$fichier_xml = _XML_PATH._XML_TEXTE._XML_EXT;}
 	elseif (!(strcmp($src_texte, _XML_SOURCE_PAGE))) {$fichier_xml = _XML_PATH_PAGES.$page."/"._XML_TEXTE._XML_EXT;}
 	elseif (!(strcmp($src_texte, _XML_SOURCE_MODULE))) {$fichier_xml = _XML_PATH_MODULES._XML_TEXTE._XML_EXT;}
+	elseif (!(strncmp($src_texte, _XML_SOURCE_LIBRAIRIE, strlen(_XML_SOURCE_LIBRAIRIE)))) {
+		$nom_librairie = substr($src_texte, strlen(_XML_SOURCE_LIBRAIRIE)+1);
+		$fichier_xml = _XML_PATH_LIBRAIRIE.$nom_librairie."/"._XML_TEXTE._XML_EXT;
+	}
 	else {
 		$session->fermer_session();
 		header("HTTP/1.0 404 Not Found");

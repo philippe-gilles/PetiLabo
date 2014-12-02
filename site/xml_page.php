@@ -11,13 +11,14 @@ class xml_page {
 	private $meta_noindex = null;
 	private $meta_ga = null;
 	private $contenu = array();
+	private $librairie = array();
 	private $nb_actus = 0;
 	private $has_rs = false;
 	private $has_lb = false;
 	private $has_bx = false;
 	private $has_form = false;
 
-	public function ouvrir($nom) {
+	public function ouvrir($nom, $lib_only = false) {
 		$this->page = new xml_struct();
 		$ret = $this->page->ouvrir($nom);
 		if ($ret) {
@@ -32,6 +33,15 @@ class xml_page {
 			// Parcours des contenus dans la page
 			for ($cpt_cont = 0;$cpt_cont < $nb_contenus; $cpt_cont++) {
 				$this->page->pointer_sur_repere(_PAGE_CONTENU);
+				$src = trim($this->page->lire_n_attribut(_PAGE_ATTR_CONTENU_SRC, $cpt_cont));
+				if (strlen($src) > 0) {
+					$path = _XML_PATH_LIBRAIRIE.$src."/"._XML_CONTENU._XML_EXT;
+					if (file_exists($path)) {
+						if (!($lib_only)) {$this->page->charger_sur_index($path, $cpt_cont);}
+						$this->librairie[] = $src;
+					}
+				}
+				if ($lib_only) {continue;}
 				$signet_contenu = $this->page->lire_n_attribut(_PAGE_ATTR_CONTENU_SIGNET, $cpt_cont);
 				$style_contenu = $this->page->lire_n_attribut(_PAGE_ATTR_CONTENU_STYLE, $cpt_cont);
 				$semantique_contenu = $this->page->lire_n_attribut(_PAGE_ATTR_CONTENU_SEMANTIQUE, $cpt_cont);
@@ -122,6 +132,8 @@ class xml_page {
 
 	public function get_nb_contenus() {return count($this->contenu);}
 	public function get_contenu($index) {return $this->contenu[$index];}
+	public function get_nb_librairies() {return count($this->librairie);}
+	public function get_librairie($index) {return $this->librairie[$index];}
 	public function get_meta_titre() {return $this->meta_titre;}
 	public function get_meta_descr() {return $this->meta_descr;}
 	public function get_meta_titre_editable() {return $this->meta_titre_editable;}

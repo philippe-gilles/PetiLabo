@@ -5,6 +5,7 @@
 		private $nom_page = null;
 		private $id_edit = null;
 		private $media = null;
+		private $page = null;
 		private $image = null;
 		
 		public function __construct($nom_page, $id_edit) {
@@ -15,6 +16,18 @@
 			$this->media->ouvrir(_XML_SOURCE_SITE, _XML_PATH._XML_MEDIA._XML_EXT);
 			$this->media->ouvrir(_XML_SOURCE_PAGE, _XML_PATH_PAGES.$this->nom_page."/"._XML_MEDIA._XML_EXT);
 			$this->media->ouvrir(_XML_SOURCE_MODULE, _XML_PATH_MODULES._XML_MEDIA._XML_EXT);
+
+			// Traitement des librairies
+			$this->page = new xml_page();
+			$ret = $this->page->ouvrir(_XML_PATH_PAGES.$this->nom_page."/"._XML_PAGE._XML_EXT, true);
+			if ($ret) {
+				$nb_librairies = $this->page->get_nb_librairies();
+				for ($cpt = 0;$cpt < $nb_librairies; $cpt++) {
+					$nom_librairie = $this->page->get_librairie($cpt);
+					$source = _XML_SOURCE_LIBRAIRIE."_".$nom_librairie;
+					$this->media->ouvrir($source, _XML_PATH_LIBRAIRIE.$nom_librairie."/"._XML_MEDIA._XML_EXT);
+				}
+			}
 
 			// Récupération de la source de l'original
 			$this->image = $this->media->get_image($id_edit);

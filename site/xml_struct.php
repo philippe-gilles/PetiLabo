@@ -8,7 +8,10 @@ class xml_struct {
 	// Méthodes publiques
 	public function ouvrir($fichier) {
 		if (file_exists($fichier)) {
-			$this->xml = simplexml_load_file($fichier);
+			// Ouverture avec gestion des éventuels xi:include
+			$this->xml = new SimpleXMLElement($fichier, 0, true);
+			$dom = dom_import_simplexml($this->xml);
+			$dom->ownerDocument->xinclude();
 			$this->pointeur = &$this->xml;
 		}
 		else {
@@ -125,6 +128,19 @@ class xml_struct {
 			$this->pointeur = &$this->pointeur[$index];
 			if ($this->pointeur) {
 				$ret = true;
+			}
+		}
+		return $ret;
+	}
+	public function charger_sur_index($fichier, $index) {
+		$ret = false;
+		if ($this->pointeur) {
+			$xmlReplace = new SimpleXMLElement($fichier, 0, true);
+			if ($xmlReplace) {
+				$domToChange = dom_import_simplexml($this->pointeur[$index]);
+				$domReplace = dom_import_simplexml($xmlReplace);
+				$nodeImport = $domToChange->ownerDocument->importNode($domReplace, TRUE);
+				$domToChange->parentNode->replaceChild($nodeImport, $domToChange);
 			}
 		}
 		return $ret;

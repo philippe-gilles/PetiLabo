@@ -7,6 +7,7 @@
 	define("_XML_SOURCE_SITE", "site");
 	define("_XML_SOURCE_PAGE", "page");
 	define("_XML_SOURCE_MODULE", "module");
+	define("_XML_SOURCE_LIBRAIRIE", "librairie");
 	define("_XML_SOURCE_INTERNE", "interne");
 
 	// Balises pour le fichier XML site (general.xml)
@@ -135,6 +136,7 @@
 	define("_PAGE_ATTR_STYLE_BOUTON", "style");
 	
 	// Valeurs possibles pour les attributs du fichier XML page
+	define("_PAGE_ATTR_CONTENU_SRC", "src");
 	define("_PAGE_ATTR_ALIGNEMENT_HAUT", "haut");
 	define("_PAGE_ATTR_ALIGNEMENT_MILIEU", "milieu");
 	define("_PAGE_ATTR_ALIGNEMENT_BAS", "bas");
