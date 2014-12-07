@@ -124,15 +124,16 @@ class obj_mentions_legales extends obj_html {
 		$cookies_site = $this->obj_texte->get_texte("legal_cookies_site", $langue);
 		echo "<br />"._HTML_FIN_LIGNE;
 		if ($this->cookie_info) {
+			echo "<div class=\"panneau_legal_cookies\">"._HTML_FIN_LIGNE;
 			$accepter = $this->obj_texte->get_label_accepter($langue);
 			$refuser = $this->obj_texte->get_label_refuser($langue);
 			$this->ecrire_legal($le_site." <strong>".$this->nom_site."</strong> ".$cookies_site, $classe);
 			echo "<br />"._HTML_FIN_LIGNE;
-			echo "<div>";
+			echo "<div class=\"panneau_legal_boutons_cookies\">"._HTML_FIN_LIGNE;
 			$disabled = (strcmp($mode, _PETILABO_MODE_SITE))?" disabled=\"disabled\"":"";
 			echo "<form class=\"form_ga_1\" method=\"post\" action=\"petilabo/inc/cookie_ok.php\"><input type=\"submit\" value=\"".$accepter."\"".$disabled."/></form>";
 			echo "<form class=\"form_ga_2\" method=\"post\" action=\"petilabo/inc/cookie_nok.php\"><input type=\"submit\" value=\"".$refuser."\"".$disabled."/></form>";
-			echo "<div style=\"clear:both;\"></div></div>"._HTML_FIN_LIGNE;
+			echo "<div style=\"clear:both;\"></div></div></div>"._HTML_FIN_LIGNE;
 			echo "<br />"._HTML_FIN_LIGNE;
 		}
 	}

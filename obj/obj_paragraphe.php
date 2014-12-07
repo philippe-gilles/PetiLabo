@@ -19,7 +19,7 @@ class obj_paragraphe extends obj_editable {
 			if (strlen($this->lien_telephonique) > 0) {
 				$classe .= " paragraphe_tel";
 				$title = $this->obj_texte->get_label_appeler_tel($langue);
-				$texte ="<a class=\"lien_tel\" href=\"tel:".$this->lien_telephonique."\" title=\"".$title."\">".$texte."</a>";
+				$texte ="<a class=\"lien_tel\" href=\"tel:".$this->lien_telephonique."\" title=\"".$title." ".$this->lien_telephonique."\">".$texte."</a>";
 			}
 			if (strlen($texte) > 0) {echo "<p class=\"".$classe."\">".$texte."</p>"._HTML_FIN_LIGNE;}
 		}
