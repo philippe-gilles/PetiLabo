@@ -5,6 +5,7 @@ body {height:100%;position:relative;}
 div,img {border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;}
 .global {position: relative;min-height:100%;}
 .page {margin:0 auto;padding:1em;}
+a:focus {outline:0;}
 /* Blocs et contenu */
 .contenu {text-align:center;width:100%;margin:0.5em 0;}
 .contenu_plein_ecran{height:100vh;}
