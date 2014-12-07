@@ -576,7 +576,7 @@
 					if (strlen($copyright) == 0) {continue;}
 					$src = $image->get_src_reduite();
 					if (strlen($src) == 0) {continue;}
-					$obj->ajouter_credit_photo($src, $copyright, $image->get_width(), $image->get_height());
+					$obj->ajouter_credit_photo($src, $copyright);
 				}
 			}
 			$obj->afficher($mode, $this->langue_page, $style_p);

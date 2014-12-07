@@ -2,22 +2,28 @@
 
 define("_CREDIT_ID_TITRE_SECTION_TECHNIQUE", "credit_section_technique");
 define("_CREDIT_ID_TITRE_SECTION_PHOTOGRAPHIQUE", "credit_section_photo");
+define("_CREDIT_TAILLE_STANDARD_VIGNETTE_PHOTO", "185");
 
 class obj_photo {
 	private $src = null;
 	private $copyright = null;
-	private $largeur = null;
-	private $hauteur = null;
+	private $largeur = 0;
+	private $hauteur = 0;
 
-	public function __construct($src, $copyright, $largeur, $hauteur) {
+	public function __construct($src, $copyright) {
 		$this->src = $src;
 		$this->copyright = $copyright;
-		$this->largeur = $largeur;
-		$this->hauteur = $hauteur;
+		if (file_exists($this->src)) {
+			list($this->largeur, $this->hauteur) = @getimagesize($this->src);
+		}
+		else {
+			$this->largeur = (int) _CREDIT_TAILLE_STANDARD_VIGNETTE_PHOTO;
+			$this->hauteur = (int) _CREDIT_TAILLE_STANDARD_VIGNETTE_PHOTO;
+		}
 	}
 
 	public function afficher($taille, $style_p) {
-		if ($taille == 0) {$taille = 185;} elseif ($taille < 50) {$taille = 50;}
+		if ($taille == 0) {$taille = (int) _CREDIT_TAILLE_STANDARD_VIGNETTE_PHOTO;} elseif ($taille < 50) {$taille = 50;}
 		$classe_copy  = (strlen($style_p) > 0)?_CSS_PREFIXE_TEXTE.$style_p:"";
 		echo "<div class=\"credit_cadre_photo\" style=\"width:".$taille."px;\">"._HTML_FIN_LIGNE;
 		echo "<div class=\"credit_cadre_img\" style=\"width:".$taille."px;height:".$taille."px;\">"._HTML_FIN_LIGNE;
@@ -55,8 +61,8 @@ class obj_credits extends obj_html {
 		$this->tab_technique = array("fa", "rs", "bx", "mp", "id", "ju", "te");
 	}
 	
-	public function ajouter_credit_photo($src, $copyright, $largeur, $hauteur) {
-		$this->tab_photos[] = new obj_photo($src, $copyright, $largeur, $hauteur);
+	public function ajouter_credit_photo($src, $copyright) {
+		$this->tab_photos[] = new obj_photo($src, $copyright);
 	}
 
 	public function afficher($mode, $langue, $style_p = null) {
