@@ -42,11 +42,22 @@ class html {
 	public function fermer() {
 		echo "</html>";
 	}
-	public function ouvrir_head() {
+	public function ouvrir_head($tab_langues = null) {
 		echo "<head>\n";
 		echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />\n";
 		echo "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" />\n";
 		echo "<meta name=\"generator\" content=\"PetiLabo "._VERSION_PETILABO."\" />\n";
+		if (!($tab_langues)) {return;}
+		if (!(is_array($tab_langues))) {return;}
+		if (count($tab_langues) != 2) {return;}
+		$nb_href = count($tab_langues["href"]);
+		$nb_hreflang = count($tab_langues["hreflang"]);
+		if (($nb_href != $nb_hreflang) || ($nb_href < 2)) {return;}
+		for ($cpt = 0;$cpt < $nb_href;$cpt++) {
+			$href = $tab_langues["href"][$cpt];
+			$hreflang = $tab_langues["hreflang"][$cpt];
+			echo "<link rel=\"alternate\" href=\"".$href."\" hreflang=\"".$hreflang."\" />\n";
+		}
 	}
 	public function fermer_head() {
 		echo "</head>\n";

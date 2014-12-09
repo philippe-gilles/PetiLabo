@@ -34,10 +34,25 @@
 			$this->charger_langue();
 		}
 		public function ouvrir_entete() {
+			$tab_langues = array("href" => array(), "hreflang" =>array());
+			$page_multilingue = $this->page->get_meta_multilingue();
+
 			$this->cookies->init();
-			// Ouverture de l'entête
 			$this->html->ouvrir($this->langue_page);
-			$this->html->ouvrir_head();
+			if ($page_multilingue) {
+				$nb_langues = $this->texte->get_nb_langues();
+				if ($nb_langues > 1) {
+					$racine = $this->get_racine();
+					for ($cpt = 0;$cpt < $nb_langues; $cpt++) {
+						$langue = $this->texte->get_langue($cpt);
+						$href = $racine.((strcmp($langue, $this->texte->get_langue_par_defaut()))?($langue."/"):"");
+						$href .= $this->nom_page._PXP_EXT;
+						$tab_langues["href"][] = $href;
+						$tab_langues["hreflang"][] = $langue;
+					}
+				}
+			}
+			$this->html->ouvrir_head($tab_langues);
 		}
 		public function ecrire_entete() {
 			// Ecriture de l'entête
@@ -178,5 +193,16 @@
 			$descr_editable = $this->page->get_meta_descr_editable();
 			$ret = (strlen($descr_editable) > 0)?$this->texte->get_texte($descr_editable, $this->langue_page):$descr;
 			return $ret;
+		}
+		private function get_racine() {
+			$racine = $this->site->get_url_racine();
+			if (strlen($racine) == 0) {
+				$racine = "http://".$this->nom_domaine.$this->dir_page."/";
+			}
+			else {
+				if (strcmp(substr($racine, 4), "http")) {$racine = "http://".$racine;}
+				if (strcmp(substr($racine, -1), "/")) {$racine .= "/";}
+			}
+			return $racine;
 		}
 	}
