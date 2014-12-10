@@ -467,6 +467,9 @@ class xml_style {
 				if (!(strcmp($decoration, _STYLE_ATTR_DECORATION_GRAS))) {
 					$css .= "font-weight:bold;";
 				}
+				elseif (!(strcmp($decoration, _STYLE_ATTR_DECORATION_ITALIQUE))) {
+					$css .= "font-style:italic;";
+				}
 				$css .= "padding:0;";
 				$css .= "}"._CSS_FIN_LIGNE;
 				// Style équivalent pour les icones
