@@ -31,7 +31,6 @@
 	define("_HTML_PATH_MENTIONS_LEGALES", "legal.php");
 	define("_HTML_PATH_CREDITS", "credits.php");
 	define("_HTML_PATH_PLAN_DU_SITE", "plandusite.php");
-	define("_HTML_PATH_VERSIONS", "versions.php");
 	define("_HTML_PATH_WEBMASTER", "http://www.petilabo.net");
 
 	// Chemins pour les fichiers XML

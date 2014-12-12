@@ -9,7 +9,7 @@
 		protected $module_actu = null;protected $est_actu = false;protected $no_actu = 0;
 		protected $module_resa = null;
 		protected $polices = array();protected $police_par_defaut = null;
-		protected $est_pied_interne = false;protected $est_pied_reduit = false;protected $est_pied_manuel = false;
+		protected $est_pied_reduit = false;protected $est_pied_manuel = false;
 
 		protected function charger_langue() {
 			// Récupération de la langue en cours
@@ -27,13 +27,11 @@
 			$lien_legal = $this->url_multilingue(_HTML_PATH_MENTIONS_LEGALES);
 			$lien_credits = $this->url_multilingue(_HTML_PATH_CREDITS);
 			$lien_plan_du_site = $this->url_multilingue(_HTML_PATH_PLAN_DU_SITE);
-			$lien_interne = $this->url_multilingue(_HTML_PATH_VERSIONS);
-			$this->html->set_liens_multilingues_pp($lien_legal, $lien_credits, $lien_plan_du_site, $lien_interne);
+			$this->html->set_liens_multilingues_pp($lien_legal, $lien_credits, $lien_plan_du_site);
 			$label_legal = $this->texte->get_label_mentions($this->langue_page);
 			$label_credits = $this->texte->get_label_credits($this->langue_page);
 			$label_plan_du_site = $this->texte->get_label_plan($this->langue_page);
-			$label_interne = "Versions";
-			$this->html->set_labels_multilingues_pp($label_legal, $label_credits, $label_plan_du_site, $label_interne);
+			$this->html->set_labels_multilingues_pp($label_legal, $label_credits, $label_plan_du_site);
 		}
 		protected function charger_xml() {
 			// Création des structures au niveau site
@@ -113,12 +111,11 @@
 				$this->menu->ouvrir($chemin._XML_MENU._XML_EXT);
 			}
 			// Positionnement du type de pied de page
-			$this->est_pied_interne = (strcmp($this->site->get_pied_de_page(),_SITE_PIED_DE_PAGE_INTERNE))?false:true;
 			$this->est_pied_reduit = (strcmp($this->site->get_pied_de_page(),_SITE_PIED_DE_PAGE_REDUIT))?false:true;
 			$this->est_pied_manuel = (strcmp($this->site->get_pied_de_page(),_SITE_PIED_DE_PAGE_MANUEL))?false:true;
 
 			// Création de l'utilitaire html
-			$this->html = new html($this->est_pied_manuel, $this->est_pied_interne, $this->est_pied_reduit);
+			$this->html = new html($this->est_pied_manuel, $this->est_pied_reduit);
 		}
 		protected function charger_xml_css($admin = false) {
 			// Surcharge du fichier CSS standard

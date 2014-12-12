@@ -69,7 +69,6 @@
 	define("_SITE_PIED_DE_PAGE_MANUEL", "manuel");
 	define("_SITE_PIED_DE_PAGE_AUTO", "standard");
 	define("_SITE_PIED_DE_PAGE_REDUIT", "reduit");
-	define("_SITE_PIED_DE_PAGE_INTERNE", "interne");
 
 	// Balises pour le fichier XML texte
 	define("_TEXTE_TEXTE", "texte");

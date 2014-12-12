@@ -3,36 +3,30 @@
 class html {
 	// Types de pied de page
 	private $manuel = false;
-	private $interne = false;
 	private $reduit = false;
 	// Labels du pied de page
 	private $label_legal = null;
 	private $label_credits = null;
 	private $label_plan_du_site = null;
-	private $label_interne = null;
 	// Liens du pied de page
 	private $lien_legal = null;
 	private $lien_credits = null;
 	private $lien_plan_du_site = null;
-	private $lien_interne = null;
 
 	// Méthodes publiques
-	public function __construct($manuel = false, $interne=false, $reduit=false) {
+	public function __construct($manuel = false, $reduit=false) {
 		$this->manuel = (int) $manuel;
-		$this->interne = (int) $interne;
 		$this->reduit = (int) $reduit;
 	}
-	public function set_labels_multilingues_pp($label_legal, $label_credits, $label_plan_du_site, $label_interne) {
+	public function set_labels_multilingues_pp($label_legal, $label_credits, $label_plan_du_site) {
 		$this->label_legal = $label_legal;
 		$this->label_credits = $label_credits;
 		$this->label_plan_du_site = $label_plan_du_site;
-		$this->label_interne = $label_interne;
 	}
-	public function set_liens_multilingues_pp($lien_legal, $lien_credits, $lien_plan_du_site, $lien_interne) {
+	public function set_liens_multilingues_pp($lien_legal, $lien_credits, $lien_plan_du_site) {
 		$this->lien_legal = $lien_legal;
 		$this->lien_credits = $lien_credits;
 		$this->lien_plan_du_site = $lien_plan_du_site;
-		$this->lien_interne = $lien_interne;
 	}
 	public function ouvrir($langue="fr") {
 		echo "<!doctype html>\n";
@@ -196,16 +190,10 @@ class html {
 			$html .= ($admin)?$this->label_credits:"<a href=\"".$this->lien_credits."\" rel=\"nofollow\">".$this->label_credits."</a>";
 			$html .= "&nbsp; &nbsp; <span class=\"icone_pp\">&#xf0e8;</span>&nbsp;&nbsp;";
 			$html .= ($admin)?$this->label_plan_du_site:"<a href=\"".$this->lien_plan_du_site."\" rel=\"nofollow\" accesskey=\"0\">".$this->label_plan_du_site."</a>";
-			if ($this->interne) {
-				$html .= "&nbsp; &nbsp; <span class=\"icone_pp\">&#xf0cb;</span>&nbsp;&nbsp;";
-				$html .= ($admin)?$this->label_interne:"<a href=\"".$this->lien_interne."\">".$this->label_interne."</a>";
-			}
-			else {
-				$html .= "&nbsp; &nbsp; <span class=\"icone_pp\">&#xf0c3;</span>&nbsp;&nbsp;";
-				// Attribut nofollow en dehors de la page d'accueil
-				$rel = (strcmp($page, "index"))?" rel=\"nofollow\"":"";
-				$html .= ($admin)?$webmaster:"<a target=\"_blank\" href=\""._HTML_PATH_WEBMASTER."\"".$rel.">".$webmaster."</a>";
-			}
+			$html .= "&nbsp; &nbsp; <span class=\"icone_pp\">&#xf0c3;</span>&nbsp;&nbsp;";
+			// Attribut nofollow en dehors de la page d'accueil
+			$rel = (strcmp($page, "index"))?" rel=\"nofollow\"":"";
+			$html .= ($admin)?$webmaster:"<a target=\"_blank\" href=\""._HTML_PATH_WEBMASTER."\"".$rel.">".$webmaster."</a>";
 			$classe = (count($tab_social) > 0)?"":" liens_pp_sans_social";
 			echo "<p class=\"liens_pp".$classe."\">".$html."</p>\n";
 		}
