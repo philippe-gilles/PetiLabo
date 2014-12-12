@@ -489,12 +489,15 @@
 		}
 		// Ecriture du formulaire de contact
 		protected function ecrire_bloc_formulaire_contact($mode, $occ) {
+			// Lecture de l'id galerie
+			$val_form = trim(strtolower($this->page->lire_valeur_n(_PAGE_FORM_CONTACT, $occ)));
+			$form_court = (strcmp($val_form, _PAGE_ATTR_FORMULAIRE_COURT))?false:true;
 			// Lecture de l'attribut "style"
 			$style = $this->page->lire_attribut_n(_PAGE_FORM_CONTACT, $occ, _PAGE_ATTR_FORMULAIRE_STYLE);
 			// Préparation du style par défaut
 			$style_p = $this->site->get_style_paragraphe();
 			// Création de l'objet formulaire
-			$obj = new obj_formulaire($this->texte, $style);
+			$obj = new obj_formulaire($this->texte, $form_court, $style);
 			if ($obj) {$obj->afficher($mode, $this->langue_page, $style_p);}
 			return $obj;
 		}

@@ -146,6 +146,8 @@
 	define("_PAGE_ATTR_LIEN_IMAGE", "image");
 	define("_PAGE_ATTR_LIEN_LEGENDE", "legende");
 	define("_PAGE_ATTR_LIEN_FICHIER", "fichier");
+	define("_PAGE_ATTR_FORMULAIRE_COURT", "court");
+	define("_PAGE_ATTR_FORMULAIRE_LONG", "long");
 	define("_PAGE_ATTR_SOURCE_YOUTUBE", "youtube");
 	define("_PAGE_ATTR_SOURCE_DAILYMOTION", "dailymotion");
 	define("_PAGE_ATTR_SOURCE_VIMEO", "vimeo");

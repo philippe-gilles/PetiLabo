@@ -32,6 +32,8 @@
 	define("_HTML_PATH_CREDITS", "credits.php");
 	define("_HTML_PATH_PLAN_DU_SITE", "plandusite.php");
 	define("_HTML_PATH_WEBMASTER", "http://www.petilabo.net");
+	define("_HTML_PATH_SUBMIT_FORM_COURT", "mail_court.php");
+	define("_HTML_PATH_SUBMIT_FORM_LONG", "mail_long.php");
 
 	// Chemins pour les fichiers XML
 	define("_XML_PATH", _XML_PATH_ROOT);
