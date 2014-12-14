@@ -57,6 +57,16 @@ class xml_struct {
 			$this->pointeur[0] = $valeur;
 		}
 	}
+	public function add_balise($balise) {
+		if ($this->pointeur) {
+			$this->pointeur->addChild($balise);
+		}
+	}
+	public function add_balise_valeur($balise, $valeur) {
+		if ($this->pointeur) {
+			$this->pointeur->addChild($balise, $valeur);
+		}
+	}
 	public function lire_n_valeur($balise, $index) {
 		$ret = null;
 		if ($this->pointeur) {
@@ -173,7 +183,11 @@ class xml_struct {
 		$this->pointeur = &$this->reperes[$nom];
 	}
 	public function enregistrer($fichier) {
-		$this->xml->asXML($fichier);
+		$dom = new DOMDocument('1.0', 'UTF-8');
+		$dom->preserveWhiteSpace = false;
+		$dom->formatOutput = true;
+		$dom->loadXML($this->xml->asXML());
+		$dom->save($fichier);
 	}
 	public function afficher() {
 		echo "<pre>\n";

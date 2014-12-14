@@ -298,6 +298,16 @@
 	
 	// Attributs pour le fichier XML style
 	define("_DOCUMENT_ATTR_NOM", "nom");
+
+	// Balises pour le fichier XML config mail
+	define("_MAIL_CONFIG_DELAI_SUCCES", "delai_apres_succes");
+	define("_MAIL_CONFIG_DELAI_ECHEC", "delai_apres_echec");
+	define("_MAIL_CONFIG_MAX_JOUR", "max_envois_par_jour");
+	
+	// Balises pour le fichier XML journal antiflooding
+	define("_MAIL_FLOOD_HORODATAGE_SUCCES", "horodatage_succes");
+	define("_MAIL_FLOOD_HORODATAGE_ECHEC", "horodatage_echec");
+	define("_MAIL_FLOOD_COMPTAGE_ENVOIS", "comptage_envois");
 	
 	// Balises pour le module réservations
 	define("_MODULE_RESA_DATE", "date");

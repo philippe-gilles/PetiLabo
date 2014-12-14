@@ -489,7 +489,7 @@
 		}
 		// Ecriture du formulaire de contact
 		protected function ecrire_bloc_formulaire_contact($mode, $occ) {
-			// Lecture de l'id galerie
+			// Lecture du type de formulaire (court ou long)
 			$val_form = trim(strtolower($this->page->lire_valeur_n(_PAGE_FORM_CONTACT, $occ)));
 			$form_court = (strcmp($val_form, _PAGE_ATTR_FORMULAIRE_COURT))?false:true;
 			// Lecture de l'attribut "style"
