@@ -31,11 +31,19 @@ class obj_formulaire extends obj_html {
 
 		$disabled = ($actif)?"":" disabled=\"disabled\"";
 		$suffixe_id_form = ($this->version_courte)?"_court":"_long";
-		$action_php = ($this->version_courte)?_HTML_PATH_SUBMIT_FORM_COURT:_HTML_PATH_SUBMIT_FORM_LONG;
 		if (strlen($style_p) > 0) {$style_p = " "._CSS_PREFIXE_TEXTE.$style_p;}
 	
+		$mail_util = new mail_util();
+		$autorisation = $mail_util->check_flooding();
+		if ($autorisation) {
+			$action_php = _PHP_PATH_INCLUDE;
+			$action_php .= ($this->version_courte)?_HTML_PATH_SUBMIT_FORM_COURT:_HTML_PATH_SUBMIT_FORM_LONG;
+		}
+		else {
+			$action_php = "#";
+		}
 		echo "<div class=\"formulaire_cadre\">"._HTML_FIN_LIGNE;
-		echo "<form id=\"id_form_contact".$suffixe_id_form."\" method=\"post\" action=\""._PHP_PATH_INCLUDE.$action_php."\">"._HTML_FIN_LIGNE;
+		echo "<form id=\"id_form_contact".$suffixe_id_form."\" method=\"post\" action=\"".$action_php."\">"._HTML_FIN_LIGNE;
 		// Champs du formulaire
 		$this->ecrire_contact_texte($style_p, $this->style, true, $nom, "nom", false, false, $actif);
 		if (!($this->version_courte)) {

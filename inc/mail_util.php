@@ -208,6 +208,25 @@ class mail_util {
 	}
 	
 	// Gestion du flooding
+	public function check_flooding() {
+		$ret = true;
+		if ($this->anti_flooding) {
+			if (array_key_exists($this->balise_ip_courante, $this->tab_journal)) {
+				$obj_ip = $this->tab_journal[$this->balise_ip_courante];
+				if ($obj_ip) {
+					$horodatage_reference = time();
+					$horodatage_echec = $obj_ip->get_horodatage_echec();
+					$horodatage_succes = $obj_ip->get_horodatage_succes();
+					$comptage_envois = $obj_ip->get_comptage_envois();
+					$delai_echec = $horodatage_reference - $horodatage_echec;
+					$delai_succes = $horodatage_reference - $horodatage_succes;
+					$ret = (($delai_echec > $this->delai_apres_echec) && ($delai_succes > $this->delai_apres_succes) && ($comptage_envois < $this->max_envois_par_jour));
+				}
+			}
+		}
+		return $ret;
+	}
+	
 	private function get_balise_ip() {
 		$balise_ip = null;
 		$adresse_ip = trim(strtolower($this->get_adresse_ip()));
@@ -331,24 +350,6 @@ class mail_util {
 			$xml_journal->pointer_sur_origine();
 			$xml_journal->enregistrer($nom_journal);
 		}
-	}
-	private function check_flooding() {
-		$ret = true;
-		if ($this->anti_flooding) {
-			if (array_key_exists($this->balise_ip_courante, $this->tab_journal)) {
-				$obj_ip = $this->tab_journal[$this->balise_ip_courante];
-				if ($obj_ip) {
-					$horodatage_reference = time();
-					$horodatage_echec = $obj_ip->get_horodatage_echec();
-					$horodatage_succes = $obj_ip->get_horodatage_succes();
-					$comptage_envois = $obj_ip->get_comptage_envois();
-					$delai_echec = $horodatage_reference - $horodatage_echec;
-					$delai_succes = $horodatage_reference - $horodatage_succes;
-					$ret = (($delai_echec > $this->delai_apres_echec) && ($delai_succes > $this->delai_apres_succes) && ($comptage_envois < $this->max_envois_par_jour));
-				}
-			}
-		}
-		return $ret;
 	}
 
 	private function get_adresse_ip() {
