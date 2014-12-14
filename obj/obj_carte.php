@@ -26,15 +26,15 @@ class obj_carte extends obj_editable {
 			$texte = $this->obj_texte->get_texte($this->id_texte, $langue);
 			$lien_carte = $this->get_ref_carte($texte);
 			$src_carte = $this->get_src_carte($texte, $langue);
-			echo "<div><a href=\"".$lien_carte."\" title=\"Google Maps\" target=\"_blank\">"._HTML_FIN_LIGNE;
+			echo "<div class=\"wrap_plan\"><a class=\"ancre_plan\" href=\"".$lien_carte."\" title=\"Google Maps\" target=\"_blank\">"._HTML_FIN_LIGNE;
 			echo "<img class=\"image_cadre image_plan_".$this->orientation."\" src=\"".$src_carte."\" alt=\"".$texte."\" />";
 			echo "</a></div>"._HTML_FIN_LIGNE;
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_ADMIN))) {
 			$texte = $this->obj_texte->get_texte($this->id_texte, $langue);
 			$src_carte = $this->get_src_carte_distante($texte, $langue);
-			$this->reinit_carte();
-			echo "<div>"._HTML_FIN_LIGNE;
+			$this->reinit_carte($langue);
+			echo "<div class=\"wrap_plan\">"._HTML_FIN_LIGNE;
 			echo "<img class=\"image_cadre image_plan_".$this->orientation."\" src=\"".$src_carte."\" alt=\"".$texte."\" />";
 			echo "</div>"._HTML_FIN_LIGNE;
 		}
@@ -77,8 +77,8 @@ class obj_carte extends obj_editable {
 		$ref_carte = sprintf(_CARTE_TEMPLATE_REF, urlencode($texte));
 		return $ref_carte;
 	}
-	private function reinit_carte() {
-		$carte_locale = $this->get_src_carte_locale();
+	private function reinit_carte($langue) {
+		$carte_locale = $this->get_src_carte_locale($langue);
 		@unlink($carte_locale);
 	}
 	private function copier_carte($carte_distante, $carte_locale) {

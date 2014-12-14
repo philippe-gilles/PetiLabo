@@ -193,6 +193,7 @@
 	define("_MEDIA_ATTR_STYLE", "style");
 	define("_MEDIA_ATTR_NAVIGATION", "navigation");
 	define("_MEDIA_ATTR_BOUTONS", "boutons");
+	define("_MEDIA_ATTR_AUTO", "auto");
 	define("_MEDIA_ATTR_LARGEUR", "largeur_standard");
 
 	// Balises pour le fichier XML menu

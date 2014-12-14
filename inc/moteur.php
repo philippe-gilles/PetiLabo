@@ -311,12 +311,15 @@
 			// Lecture de l'attribut "boutons"
 			$boutons = $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _MEDIA_ATTR_BOUTONS);
 			$has_boutons = (!(strcmp(trim(strtolower($boutons)), _XML_TRUE)))?true:false;
+			// Lecture de l'attribut "auto"
+			$auto = $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _MEDIA_ATTR_AUTO);
+			$has_auto = (!(strcmp(trim(strtolower($auto)), _XML_TRUE)))?true:false;
 			// Lecture de l'attribut "largeur_standard"
 			$largeur_max = (int) $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _MEDIA_ATTR_LARGEUR);
 			// Lecture de l'attribut "nbcols"
 			$nb_cols = (int) $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _PAGE_ATTR_NBCOLS_VIGNETTE);
 			// Création de l'objet carrousel
-			$obj = new obj_carrousel($this->texte, $nom_gal, $has_navigation, $has_boutons, $largeur_max, $nb_cols);
+			$obj = new obj_carrousel($this->texte, $nom_gal, $has_navigation, $has_boutons, $has_auto, $largeur_max, $nb_cols);
 			if (!($obj)) {return null;}
 			$nb_images = $gal->get_nb_elems();
 			for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {

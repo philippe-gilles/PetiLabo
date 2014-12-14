@@ -5,15 +5,17 @@ class obj_carrousel extends obj_editable {
 	private $nom = null;
 	private $has_navigation = false;
 	private $has_boutons = false;
+	private $has_auto = false;
 	private $largeur_max = 0;
 	private $nb_cols = 0;
 	private $tab_images = array();
 
-	public function __construct(&$obj_texte, $nom, $has_navigation, $has_boutons, $largeur_max, $nb_cols) {
+	public function __construct(&$obj_texte, $nom, $has_navigation, $has_boutons, $has_auto, $largeur_max, $nb_cols) {
 		$this->obj_texte = $obj_texte;
 		$this->nom = $nom;
 		$this->has_navigation = $has_navigation;
 		$this->has_boutons = $has_boutons;
+		$this->has_auto = $has_auto;
 		$this->largeur_max = $largeur_max;
 		$this->nb_cols = $nb_cols;
 	}
@@ -44,7 +46,11 @@ class obj_carrousel extends obj_editable {
 		}
 		echo "</ul></div>"._HTML_FIN_LIGNE;
 		$param = "{";
+		if ($this->has_auto) {
+			$param .= "auto:true";
+		}
 		if ($this->largeur_max > 1) {
+			$param .= ($this->has_auto)?",":"";
 			$param .= "slideWidth:".$this->largeur_max;
 			$cols = ($this->nb_cols > 0)?$this->nb_cols:3;
 			$param .= ",minSlides:2,maxSlides:".$cols;
