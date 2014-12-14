@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<petilabo>
+	<image nom="logo_petilabo">
+		<fichier>logo-pl.png</fichier>
+		<alt>alt_logo_pl</alt>
+		<lien>http://www.petilabo.net</lien>
+	</image>
+</petilabo>

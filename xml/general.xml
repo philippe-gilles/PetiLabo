@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<petilabo>
+	<racine>www.votre-site.com</racine>
+	<proprietaire>Votre nom</proprietaire>
+	<destinataire>votre-adresse@email.fr</destinataire>
+	<langue>fr</langue>
+	<pied_de_page>reduit</pied_de_page>
+</petilabo>

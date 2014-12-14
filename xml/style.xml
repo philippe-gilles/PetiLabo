@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<petilabo>
+	<style_texte nom="texte_normal">
+		<couleur>#000</couleur>
+		<taille>1</taille>
+	</style_texte>
+</petilabo>

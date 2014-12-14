@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<petilabo>
+	<!-- Méta -->
+	<texte nom="meta_titre">PetiLabo</texte>
+	<texte nom="meta_descr">Et maintenant, à vous !</texte>
+	<!-- Texte -->
+	<texte nom="message_bientot">Ici bientôt votre site :-)</texte>
+	<!-- Images -->
+	<texte nom="alt_logo_pl">Logo PetiLabo</texte>
+</petilabo>

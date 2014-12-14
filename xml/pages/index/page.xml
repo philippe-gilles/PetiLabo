@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<petilabo>
+<meta_titre_editable>meta_titre</meta_titre_editable>
+<meta_descr_editable>meta_descr</meta_descr_editable>
+<contenu>
+	<bloc>
+		<image>logo_petilabo</image>
+		<saut>1</saut>
+		<paragraphe>message_bientot</paragraphe>
+	</bloc>
+</contenu>
+</petilabo>
