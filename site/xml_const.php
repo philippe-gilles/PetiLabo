@@ -127,6 +127,8 @@
 	define("_PAGE_ATTR_LIEN_TELEPHONIQUE", "telephone");
 	define("_PAGE_ATTR_NBCOLS_GALERIE", "cols");
 	define("_PAGE_ATTR_POSITION_GALERIE", "position");
+	define("_PAGE_ATTR_CARTE_ZOOM", "zoom");
+	define("_PAGE_ATTR_CARTE_ORIENTATION", "orientation");
 	define("_PAGE_ATTR_LIEN_PJ", "lien");
 	define("_PAGE_ATTR_FORMULAIRE_STYLE", "style");
 	define("_PAGE_ATTR_SOURCE_VIDEO", "source");
@@ -144,6 +146,9 @@
 	define("_PAGE_ATTR_POSITION_GAUCHE", "gauche");
 	define("_PAGE_ATTR_POSITION_DROITE", "droite");
 	define("_PAGE_ATTR_LIEN_IMAGE", "image");
+	define("_PAGE_ATTR_CARTE_PORTRAIT", "portrait");
+	define("_PAGE_ATTR_CARTE_PAYSAGE", "paysage");
+	define("_PAGE_ATTR_CARTE_CARRE", "carre");
 	define("_PAGE_ATTR_LIEN_LEGENDE", "legende");
 	define("_PAGE_ATTR_LIEN_FICHIER", "fichier");
 	define("_PAGE_ATTR_FORMULAIRE_COURT", "court");

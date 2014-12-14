@@ -44,7 +44,7 @@
 ?>
 	<div class="container">
 	<h1>Accès privé</h1>
-	<p class="status_msg">Identifiant ou mot de passe erroné !</p>
+	<p class="status_msg">Identifiant ou mot de passe erroné&nbsp;!</p>
 	<div class="panneau">
 	<form id="id_log" method="post" action="connect.php">
 	<p class="wrap_champ"><label for="id_id">Identifiant</label><input class="champ" type="text" id="id_id" name="id" /></p>

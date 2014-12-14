@@ -452,8 +452,15 @@
 			// Lecture de l'id texte
 			$id_valeur = $this->page->lire_valeur_n(_PAGE_CARTE, $occ);
 			$id_texte = $this->parser_id_crochets_actu($id_valeur);
+			// Lecture de l'attribut "zoom"
+			$val_zoom = $this->page->lire_attribut_n(_PAGE_CARTE, $occ, _PAGE_ATTR_CARTE_ZOOM);
+			if (strlen($val_zoom) > 0) {$zoom = min(max(((int) $val_zoom), 1), 3);}
+			else {$zoom = 2;}
+			// Lecture de l'attribut "orientation"
+			$val_orientation = trim(strtolower($this->page->lire_attribut_n(_PAGE_CARTE, $occ, _PAGE_ATTR_CARTE_ORIENTATION)));
+			$orientation = ((strcmp($val_orientation, _PAGE_ATTR_CARTE_PORTRAIT)) && (strcmp($val_orientation, _PAGE_ATTR_CARTE_CARRE)))?_PAGE_ATTR_CARTE_PAYSAGE:$val_orientation;
 			// Création de l'objet carte
-			$obj = new obj_carte($this->texte, $id_texte);
+			$obj = new obj_carte($this->texte, $id_texte, $zoom, $orientation);
 			if ($obj) {$obj->afficher($mode, $this->langue_page);}
 			return $obj;
 		}
