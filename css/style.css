@@ -1,4 +1,4 @@
-/* Général */
+/* GÃ©nÃ©ral */
 html, body, div, a, p, h1, h2, h3, img, ul, table, tr, td {margin:0;padding:0;border:0;}
 html {font-size:100%;color:#000;height:100%;}
 body {height:100%;position:relative;}
@@ -35,7 +35,7 @@ a:focus {outline:0;}
 .drapeau_inactif{display:inline-block;background:url('../images/drapeauxsombres.png') no-repeat;width:32px;height:32px;margin-right:3px;overflow:hidden;text-indent:32px;}
 a.drapeau{-webkit-transition:opacity 100ms linear;-moz-transition:opacity 100ms linear;transition:opacity 100ms linear;}
 a.drapeau:hover{opacity:0.6;}
-/* Images et légendes */
+/* Images et lÃ©gendes */
 .image_cadre {width:100%;margin:0 auto;position:relative;}
 .image_dans_cadre {display:inline;vertical-align:middle;width:100%;}
 .cadre_legende {position:absolute;overflow:hidden;}
@@ -43,7 +43,7 @@ a.drapeau:hover{opacity:0.6;}
 .tableau_legende {width:100%;height:100%;}
 .tableau_legende td {vertical-align:middle;}
 .transparence_80pc{opacity:0.8;}
-/* Pièces jointes */
+/* PiÃ¨ces jointes */
 .file {width:67px;height:39px;padding:0;background:url('../images/blank.png') no-repeat;padding-top:30px;}
 .filetype {font-size:12px;background:#b80000;color:#fff;font-weight:bold;margin:0;padding:0;width:50px;height:24px;line-height:24px;text-align:center;border-radius:5px;overflow:hidden;}
 .filetype a {color:#fff;text-decoration:none;}
@@ -69,7 +69,7 @@ a.drapeau:hover{opacity:0.6;}
 .image_plan_portrait {max-width:400px;max-height:600px;}
 a.ancre_plan{-webkit-transition:opacity 100ms linear;-moz-transition:opacity 100ms linear;transition:opacity 100ms linear;}
 a.ancre_plan:hover{opacity:0.8;}
-/* Calendrier de réservation */
+/* Calendrier de rÃ©servation */
 .wrap_resa{width:100%;max-width:35em;margin:0 auto;height:13.8em;overflow:hidden;padding:0;}
 .mois_resa{width:100%;height:13.8em;overflow:hidden;margin:0;padding:0;}
 .tab_resa{width:100%;border-collapse:collapse;}
