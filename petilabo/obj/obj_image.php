@@ -106,7 +106,7 @@ class obj_image extends obj_editable {
 	public function afficher_brut($mode, $langue, $classe = null, $style_inline = null) {
 		$alt = " alt=\"".$this->obj_texte->get_texte($this->id_alt, $langue)."\"";
 		$src = " src=\"".$this->obj_media->get_src()."\"";
-		$class = (strlen($classe) > 0)?" class=\"".$classe."\"":"";
+		$class = " class=\"".((strlen($classe) > 0)?$classe." ":"")."image_brute\"";
 		$style = (strlen($style_inline) > 0)?" style=\"".$style_inline."\"":"";
 		echo "<img ".$class.$src.$alt.$style."/>"._HTML_FIN_LIGNE;
 	}
@@ -116,7 +116,7 @@ class obj_image extends obj_editable {
 		$info = (strlen($this->id_info) > 0)?" title=\"".$this->obj_texte->get_texte($this->id_info, $langue)."\"":"";		
 		$alt = " alt=\"".$this->obj_texte->get_texte($this->id_alt, $langue)."\"";
 		$src = " src=\"".$this->obj_media->get_src_reduite()."\"";
-		$class = (strlen($classe) > 0)?" class=\"".$classe."\"":"";
+		$class = " class=\"".((strlen($classe) > 0)?$classe." ":"")."image_reduite\"";
 		$style = (strlen($style_inline) > 0)?" style=\"".$style_inline."\"":"";
 		if ($lien) {echo "<a ".$href.$info."/>"._HTML_FIN_LIGNE;}
 		echo "<img ".$class.$src.$alt.$info.$style."/>"._HTML_FIN_LIGNE;
@@ -126,7 +126,7 @@ class obj_image extends obj_editable {
 	public function afficher_vide($langue, $classe = null, $style_inline = null) {
 		$alt = " alt=\"".$this->obj_texte->get_texte($this->id_alt, $langue)."\"";
 		$src = " src=\"./images/"._ADMIN_IMAGE_VIDE."\"";
-		$class = (strlen($classe) > 0)?" class=\"".$classe."\"":"";
+		$class = " class=\"".((strlen($classe) > 0)?$classe." ":"")."image_vide\"";
 		$style = (strlen($style_inline) > 0)?" style=\"".$style_inline."\"":"";
 		echo "<img ".$class.$src.$alt.$style."/>"._HTML_FIN_LIGNE;
 	}

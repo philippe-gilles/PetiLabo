@@ -30,12 +30,12 @@ class obj_photo {
 		if ($this->largeur > $this->hauteur) {
 			$nouvelle_largeur = ($this->largeur * $taille)/$this->hauteur;
 			$position = (int) (-(($nouvelle_largeur - $taille)/2));
-			echo "<img src=\"".$this->src."\" style=\"height:".$taille."px;left:".$position."px;\" />"._HTML_FIN_LIGNE;
+			echo "<img class=\"image_reduite\" src=\"".$this->src."\" style=\"height:".$taille."px;left:".$position."px;\" />"._HTML_FIN_LIGNE;
 		}
 		else {
 			$nouvelle_hauteur = ($this->hauteur * $taille)/$this->largeur;
 			$position = (int) (-(($nouvelle_hauteur - $taille)/2));
-			echo "<img src=\"".$this->src."\" style=\"width:".$taille."px;top:".$position."px;\" />"._HTML_FIN_LIGNE;
+			echo "<img class=\"image_reduite\" src=\"".$this->src."\" style=\"width:".$taille."px;top:".$position."px;\" />"._HTML_FIN_LIGNE;
 		}
 		echo "</div>"._HTML_FIN_LIGNE;
 		echo "<p class=\"paragraphe credit_copyright ".$classe_copy."\">&copy;&nbsp;".$this->copyright."</p>"._HTML_FIN_LIGNE;
