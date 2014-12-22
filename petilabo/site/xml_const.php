@@ -184,6 +184,8 @@
 	define("_MEDIA_IMAGE_LIEN", "lien");
 	define("_MEDIA_IMAGE_LARGEUR_STANDARD", "largeur_standard");
 	define("_MEDIA_IMAGE_HAUTEUR_STANDARD", "hauteur_standard");
+	define("_MEDIA_IMAGE_LARGEUR_REDUITE", "largeur_reduite");
+	define("_MEDIA_IMAGE_HAUTEUR_REDUITE", "hauteur_reduite");
 	define("_MEDIA_IMAGE_COPYRIGHT", "copyright");
 	define("_MEDIA_GALERIE", "galerie");
 	define("_MEDIA_GALERIE_ELEMENT", "element");

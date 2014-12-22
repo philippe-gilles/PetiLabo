@@ -19,6 +19,7 @@
 		private $ext = null;
 		private $largeur = 0;private $hauteur = 0;
 		private $largeur_standard = 0;private $hauteur_standard = 0;
+		private $width_reduite = 0;private $height_reduite = 0;
 		
 		public function __construct($src, $src_reduite, $dest, $dest_reduite, $ext) {
 			$f_exists = @file_exists($src);
@@ -28,7 +29,6 @@
 			$this->dest = $dest;
 			$this->dest_reduite = $dest_reduite;
 			$this->ext = $ext;
-
 			if (strlen($this->src) > 0) {
 				list($this->largeur, $this->hauteur) = @getimagesize($this->src);
 			}
@@ -47,46 +47,20 @@
 			return $ret;
 		}
 		public function remplacer(&$image, $type_ajustement) {
-			$rapport_1 = (float) (((float) $image->get_largeur()) / ((float) $image->get_hauteur()));
 			switch ($type_ajustement) {
 				case _TYPE_AJUSTEMENT_ACTUEL :
-					$rapport_0 = (float) (((float) $this->get_largeur()) / ((float) $this->get_hauteur()));
-					if ($rapport_0 > $rapport_1) {
-						$delta_l = 0;
-						$delta_h = (int) (($image->get_hauteur() * $this->get_largeur() - $image->get_largeur() * $this->get_hauteur()) / (2 * $this->get_largeur()));
-					}
-					elseif ($rapport_0 < $rapport_1) {
-						$delta_l = (int) (($image->get_largeur() * $this->get_hauteur() - $image->get_hauteur() * $this->get_largeur()) / (2 * $this->get_hauteur()));
-						$delta_h = 0;
-					}
-					else {
-						$delta_l = 0;
-						$delta_h = 0;
-					}
+					// Taille actuelle
+					list($delta_l, $delta_h) = $this->calculer_delta($image, $this->get_largeur(), $this->get_hauteur());
 					$image->retailler($this->get_largeur(), $this->get_hauteur(), $delta_l, $delta_h);
 					$status = @copy($image->get_src(), $this->get_dest());
 					if ($status) {@unlink($this->get_src());}
-					$largeur_reduite = (int) ($this->get_largeur() * self::ratio_reduction);
-					$hauteur_reduite = (int) ($this->get_hauteur() * self::ratio_reduction);
-					$image->retailler($largeur_reduite, $hauteur_reduite, 0, 0);
-					$status = @rename($image->get_src(), $this->get_dest_reduite());
-					if ($status) {@unlink($this->get_src_reduite());}
+					// Taille réduite
+					$this->generer_reduite($image);
 					break;
 				case _TYPE_AJUSTEMENT_ORIGINE :
+					// Taille standard
 					if (($this->get_largeur_standard() > 0) && ($this->get_hauteur_standard() > 0)) {
-						$rapport_std = (float) (((float) $this->get_largeur_standard()) / ((float) $this->get_hauteur_standard()));
-						if ($rapport_std > $rapport_1) {
-							$delta_l = 0;
-							$delta_h = (int) (($image->get_hauteur() * $this->get_largeur_standard() - $image->get_largeur() * $this->get_hauteur_standard()) / (2 * $this->get_largeur_standard()));
-						}
-						elseif ($rapport_std < $rapport_1) {
-							$delta_l = (int) (($image->get_largeur() * $this->get_hauteur_standard() - $image->get_hauteur() * $this->get_largeur_standard()) / (2 * $this->get_hauteur_standard()));
-							$delta_h = 0;
-						}
-						else {
-							$delta_l = 0;
-							$delta_h = 0;
-						}
+						list($delta_l, $delta_h) = $this->calculer_delta($image, $this->get_largeur_standard(), $this->get_hauteur_standard());
 						$largeur = $this->get_largeur_standard();
 						$hauteur = $this->get_hauteur_standard();
 					}
@@ -105,30 +79,24 @@
 					}
 					$status = @copy($image->get_src(), $this->get_dest());
 					if ($status) {@unlink($this->get_src());}
-					if (($this->get_largeur_standard() > 0) || ($this->get_hauteur_standard() > 0)) {
-						$largeur_reduite = (int) ($largeur * self::ratio_reduction);
-						$hauteur_reduite = (int) ($hauteur * self::ratio_reduction);
-						$image->retailler($largeur_reduite, $hauteur_reduite, 0, 0);
-					}
-					$status = @rename($image->get_src(), $this->get_dest_reduite());
-					if ($status) {@unlink($this->get_src_reduite());}
+					// Taille réduite
+					$this->generer_reduite($image);
 					break;
 				case _TYPE_AJUSTEMENT_SANS :
 				default :
 					// Pas de retaillage : on effectue une simple copie
 					$status = @copy($image->get_src(), $this->get_dest());
 					if ($status) {@unlink($this->get_src());}
-					$largeur_reduite = (int) ($image->get_largeur() * self::ratio_reduction);
-					$hauteur_reduite = (int) ($image->get_hauteur() * self::ratio_reduction);
-					$image->retailler($largeur_reduite, $hauteur_reduite, 0, 0);
-					$status = @rename($image->get_src(), $this->get_dest_reduite());
-					if ($status) {@unlink($this->get_src_reduite());}
+					// Taille réduite
+					$this->generer_reduite($image);
 					break;
 			}
 		}
 		
 		public function set_largeur_standard($param) {$this->largeur_standard = (int) $param;}
 		public function set_hauteur_standard($param) {$this->hauteur_standard = (int) $param;}
+		public function set_largeur_reduite($param) {$this->largeur_reduite = (int) $param;}
+		public function set_hauteur_reduite($param) {$this->hauteur_reduite = (int) $param;}
 		public function get_src_reduite() {return $this->src_reduite;}
 		public function get_src() {return $this->src;}
 		public function get_dest_reduite() {return $this->dest_reduite;}
@@ -138,6 +106,8 @@
 		public function get_hauteur() {return $this->hauteur;}
 		public function get_largeur_standard() {return $this->largeur_standard;}
 		public function get_hauteur_standard() {return $this->hauteur_standard;}
+		public function get_largeur_reduite() {return $this->largeur_reduite;}
+		public function get_hauteur_reduite() {return $this->hauteur_reduite;}
 
 		private function retailler($nouvelle_largeur, $nouvelle_hauteur, $delta_largeur, $delta_hauteur, $reduite = false) {
 			$ret = false;
@@ -218,6 +188,47 @@
 			}
 			return $ret;
 		}
+		
+		private function generer_reduite(&$image) {
+			if (($this->get_largeur_reduite() > 0) && ($this->get_hauteur_reduite() > 0)) {
+				list($delta_l, $delta_h) = $this->calculer_delta($image, $this->get_largeur_reduite(), $this->get_hauteur_reduite());
+				$largeur = $this->get_largeur_reduite();
+				$hauteur = $this->get_hauteur_reduite();
+			}
+			elseif (($this->get_largeur_reduite() > 0) && ($this->get_hauteur_reduite() <= 0)) {
+				$delta_l = 0;$delta_h = 0;
+				$largeur = $this->get_largeur_reduite();
+				$hauteur = $image->get_hauteur() * (float) (((float) $this->get_largeur_reduite()) / ((float) $image->get_largeur()));
+			}
+			elseif (($this->get_largeur_reduite() <= 0) && ($this->get_hauteur_reduite() > 0)) {
+				$delta_l = 0;$delta_h = 0;
+				$hauteur = $this->get_hauteur_reduite();
+				$largeur = $image->get_largeur() * (float) (((float) $this->get_hauteur_reduite()) / ((float) $image->get_hauteur()));
+			}
+			if (($this->get_largeur_reduite() > 0) || ($this->get_hauteur_reduite() > 0)) {
+				$image->retailler($largeur, $hauteur, $delta_l, $delta_h);
+				$status = @rename($image->get_src(), $this->get_dest_reduite());
+				if ($status) {@unlink($this->get_src_reduite());}
+			}
+		}
+		private function calculer_delta(&$image, $largeur, $hauteur) {
+			$rapport_1 = (float) (((float) $image->get_largeur()) / ((float) $image->get_hauteur()));
+			$rapport_0 = (float) (((float) $largeur) / ((float) $hauteur));
+			if ($rapport_0 > $rapport_1) {
+				$delta_l = 0;
+				$delta_h = (int) (($image->get_hauteur() * $largeur - $image->get_largeur() * $hauteur) / (2 * $largeur));
+			}
+			elseif ($rapport_0 < $rapport_1) {
+				$delta_l = (int) (($image->get_largeur() * $hauteur - $image->get_hauteur() * $largeur) / (2 * $hauteur));
+				$delta_h = 0;
+			}
+			else {
+				$delta_l = 0;
+				$delta_h = 0;
+			}
+			return array($delta_l, $delta_h);
+		}
+
 		// Grand merci à http://www.jonefox.com/ !!!
 		private function png_has_transparency($filename) {
 			if (strlen($filename) == 0 || !file_exists($filename)) return false;
@@ -314,6 +325,8 @@
 			if (!($img_0->is_null())) {
 				$img_0->set_largeur_standard($img_media->get_width_standard());
 				$img_0->set_hauteur_standard($img_media->get_height_standard());
+				$img_0->set_largeur_reduite($img_media->get_width_reduite());
+				$img_0->set_hauteur_reduite($img_media->get_height_reduite());
 				$img_0->remplacer($img_1, $type_ajustement);
 			}
 		}

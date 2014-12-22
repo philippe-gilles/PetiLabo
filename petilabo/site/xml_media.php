@@ -121,6 +121,7 @@ class img_media {
 	private $alt = null;private $legende = null;private $copyright = null;
 	private $lien = null;
 	private $width_standard = 0;private $height_standard = 0;
+	private $width_reduite = 0;private $height_reduite = 0;
 	private $width = 0;private $height = 0;
 	private $style_legende = null;
 	private $base = null;private $version = 0;
@@ -140,6 +141,8 @@ class img_media {
 	public function set_copyright($param) {$this->copyright = $param;}
 	public function set_width_standard($param) {$this->width_standard = $param;}
 	public function set_height_standard($param) {$this->height_standard = $param;}
+	public function set_width_reduite($param) {$this->width_reduite = $param;}
+	public function set_height_reduite($param) {$this->height_reduite = $param;}
 	public function set_width($param) {$this->width = $param;}
 	public function set_height($param) {$this->height = $param;}
 	public function set_style_legende($param) {$this->style_legende = $param;}
@@ -168,6 +171,8 @@ class img_media {
 	public function get_copyright() {return $this->copyright;}
 	public function get_width_standard() {return $this->width_standard;}
 	public function get_height_standard() {return $this->height_standard;}
+	public function get_width_reduite() {return $this->width_reduite;}
+	public function get_height_reduite() {return $this->height_reduite;}
 	public function get_width() {return $this->width;}
 	public function get_height() {return $this->height;}
 	public function get_style_legende() {return $this->style_legende;}
@@ -270,6 +275,8 @@ class xml_media {
 							$lien = $xml_media->lire_n_valeur(_MEDIA_IMAGE_LIEN, $cpt);
 							$largeur_standard = $xml_media->lire_n_valeur(_MEDIA_IMAGE_LARGEUR_STANDARD, $cpt);
 							$hauteur_standard = $xml_media->lire_n_valeur(_MEDIA_IMAGE_HAUTEUR_STANDARD, $cpt);
+							$largeur_reduite = $xml_media->lire_n_valeur(_MEDIA_IMAGE_LARGEUR_REDUITE, $cpt);
+							$hauteur_reduite = $xml_media->lire_n_valeur(_MEDIA_IMAGE_HAUTEUR_REDUITE, $cpt);
 							
 							// Création de l'objet images
 							$image = new img_media($source, $nom);
@@ -282,6 +289,8 @@ class xml_media {
 							$image->set_base($base);$image->set_version($version);
 							$image->set_width_standard($largeur_standard);
 							$image->set_height_standard($hauteur_standard);
+							$image->set_width_reduite($largeur_reduite);
+							$image->set_height_reduite($hauteur_reduite);
 							$image->set_width($width);$image->set_height($height);
 							$image->set_style_legende($nom_style);
 							$key = (strlen($suffixe) > 0)?$nom."_".$suffixe:$nom;
