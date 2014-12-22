@@ -153,9 +153,15 @@ class img_media {
 		$extension = $this->get_extension();
 		$image_vide = _IMAGE_VIDE_1X1.".".$extension;
 		@copy(_PHP_PATH_ROOT."images/".$image_vide, $this->src);
-		@copy(_PHP_PATH_ROOT."images/".$image_vide, $this->src_reduite);
-		@rename($this->src, $this->dest);$this->src = $this->dest;
-		@rename($this->src_reduite, $this->dest_reduite);$this->src_reduite = $this->dest_reduite;
+		if (($this->get_width_reduite() > 0) || ($this->get_height_reduite() > 0)) {
+			@copy(_PHP_PATH_ROOT."images/".$image_vide, $this->src_reduite);
+		}
+		@rename($this->src, $this->dest);
+		$this->src = $this->dest;
+		if (($this->get_width_reduite() > 0) || ($this->get_height_reduite() > 0)) {
+			@rename($this->src_reduite, $this->dest_reduite);
+			$this->src_reduite = $this->dest_reduite;
+		}
 		list($this->width, $this->height) = @getimagesize($this->src);
 	}
 

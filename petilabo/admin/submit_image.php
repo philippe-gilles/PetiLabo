@@ -67,12 +67,12 @@
 					elseif (($this->get_largeur_standard() > 0) && ($this->get_hauteur_standard() <= 0)) {
 						$delta_l = 0;$delta_h = 0;
 						$largeur = $this->get_largeur_standard();
-						$hauteur = $image->get_hauteur() * (float) (((float) $this->get_largeur_standard()) / ((float) $image->get_largeur()));
+						$hauteur = $image->get_hauteur() * (float) (((float) $this->get_largeur_standard()) / ((float) max($image->get_largeur(),1)));
 					}
 					elseif (($this->get_largeur_standard() <= 0) && ($this->get_hauteur_standard() > 0)) {
 						$delta_l = 0;$delta_h = 0;
 						$hauteur = $this->get_hauteur_standard();
-						$largeur = $image->get_largeur() * (float) (((float) $this->get_hauteur_standard()) / ((float) $image->get_hauteur()));
+						$largeur = $image->get_largeur() * (float) (((float) $this->get_hauteur_standard()) / ((float) max($image->get_hauteur(),1)));
 					}
 					if (($this->get_largeur_standard() > 0) || ($this->get_hauteur_standard() > 0)) {
 						$image->retailler($largeur, $hauteur, $delta_l, $delta_h);
@@ -198,12 +198,12 @@
 			elseif (($this->get_largeur_reduite() > 0) && ($this->get_hauteur_reduite() <= 0)) {
 				$delta_l = 0;$delta_h = 0;
 				$largeur = $this->get_largeur_reduite();
-				$hauteur = $image->get_hauteur() * (float) (((float) $this->get_largeur_reduite()) / ((float) $image->get_largeur()));
+				$hauteur = $image->get_hauteur() * (float) (((float) $this->get_largeur_reduite()) / ((float) max($image->get_largeur(),1)));
 			}
 			elseif (($this->get_largeur_reduite() <= 0) && ($this->get_hauteur_reduite() > 0)) {
 				$delta_l = 0;$delta_h = 0;
 				$hauteur = $this->get_hauteur_reduite();
-				$largeur = $image->get_largeur() * (float) (((float) $this->get_hauteur_reduite()) / ((float) $image->get_hauteur()));
+				$largeur = $image->get_largeur() * (float) (((float) $this->get_hauteur_reduite()) / ((float) max($image->get_hauteur(),1)));
 			}
 			if (($this->get_largeur_reduite() > 0) || ($this->get_hauteur_reduite() > 0)) {
 				$image->retailler($largeur, $hauteur, $delta_l, $delta_h);
@@ -212,14 +212,16 @@
 			}
 		}
 		private function calculer_delta(&$image, $largeur, $hauteur) {
-			$rapport_1 = (float) (((float) $image->get_largeur()) / ((float) $image->get_hauteur()));
-			$rapport_0 = (float) (((float) $largeur) / ((float) $hauteur));
+			if ($image->get_hauteur() == 0) {$rapport_1 = 1;}
+			else {$rapport_1 = (float) (((float) $image->get_largeur()) / ((float) $image->get_hauteur()));}
+			if ($hauteur == 0) {$rapport_0 = 1;}
+			else {$rapport_0 = (float) (((float) $largeur) / ((float) $hauteur));}
 			if ($rapport_0 > $rapport_1) {
 				$delta_l = 0;
-				$delta_h = (int) (($image->get_hauteur() * $largeur - $image->get_largeur() * $hauteur) / (2 * $largeur));
+				$delta_h = (int) (($image->get_hauteur() * $largeur - $image->get_largeur() * $hauteur) / (2 * max($largeur, 1)));
 			}
 			elseif ($rapport_0 < $rapport_1) {
-				$delta_l = (int) (($image->get_largeur() * $hauteur - $image->get_hauteur() * $largeur) / (2 * $hauteur));
+				$delta_l = (int) (($image->get_largeur() * $hauteur - $image->get_hauteur() * $largeur) / (2 * max($hauteur,1)));
 				$delta_h = 0;
 			}
 			else {
