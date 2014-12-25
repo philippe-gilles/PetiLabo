@@ -220,7 +220,15 @@ class mail_util {
 					$comptage_envois = $obj_ip->get_comptage_envois();
 					$delai_echec = $horodatage_reference - $horodatage_echec;
 					$delai_succes = $horodatage_reference - $horodatage_succes;
-					$ret = (($delai_echec > $this->delai_apres_echec) && ($delai_succes > $this->delai_apres_succes) && ($comptage_envois < $this->max_envois_par_jour));
+					$ret = (($delai_echec > $this->delai_apres_echec) && ($delai_succes > $this->delai_apres_succes))?true:false;
+					if ($ret) {
+						if (($delai_echec <= 86400) || ($delai_succes <= 86400)) {
+							$ret = ($comptage_envois < $this->max_envois_par_jour)?true:false;
+						}
+						else {
+							$obj_ip->set_comptage_envois(0);
+						}
+					}
 				}
 			}
 		}
