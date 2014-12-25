@@ -30,7 +30,7 @@ define("_EDIT_LABEL_META_DESCR", "Méta description");
 define("_EDIT_SYMBOLE_LABEL", "15c");
 define("_EDIT_SYMBOLE_IMAGE", "03e");
 define("_EDIT_SYMBOLE_ALT", "02b");
-define("_EDIT_SYMBOLE_COPY", "0a3");
+define("_EDIT_SYMBOLE_COPY", "1f9");
 define("_EDIT_SYMBOLE_INFO", "075");
 define("_EDIT_SYMBOLE_ICONE", "005");
 define("_EDIT_SYMBOLE_LEGENDE", "02d");
