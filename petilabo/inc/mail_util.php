@@ -246,7 +246,6 @@ class mail_util {
 
 	private function lire_config() {
 		$nom_config = _XML_PATH_MAIL._XML_MAIL_CONFIG._XML_EXT;
-		if (@file_exists($nom_config)) {@chmod($nom_config, 0600);}
 		$xml_config_mail = new xml_struct();
 		$ret = $xml_config_mail->ouvrir($nom_config);
 		if ($ret) {
@@ -278,7 +277,6 @@ class mail_util {
 			$this->anti_flooding = $xml_journal->ouvrir($nom_journal);
 		}
 		if  ($this->anti_flooding) {
-			@chmod($nom_journal, 0600);
 			$nb_ip = $xml_journal->compter_enfants();
 			for ($cpt_ip = 0; $cpt_ip < $nb_ip; $cpt_ip++) {
 				$ip = $xml_journal->lire_balise_enfant($cpt_ip);

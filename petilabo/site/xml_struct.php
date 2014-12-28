@@ -7,7 +7,9 @@ class xml_struct {
 
 	// Méthodes publiques
 	public function ouvrir($fichier) {
-		if (file_exists($fichier)) {
+		if (@file_exists($fichier)) {
+			// Sécurité : lisible uniquement par le serveur
+			@chmod($fichier, 0600);
 			// Ouverture avec gestion des éventuels xi:include
 			$this->xml = new SimpleXMLElement($fichier, 0, true);
 			$dom = dom_import_simplexml($this->xml);
@@ -183,6 +185,7 @@ class xml_struct {
 		$this->pointeur = &$this->reperes[$nom];
 	}
 	public function enregistrer($fichier) {
+		// Méthode pour un enregistrement formatté
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		$dom->preserveWhiteSpace = false;
 		$dom->formatOutput = true;
