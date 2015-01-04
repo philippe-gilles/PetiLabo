@@ -1,6 +1,6 @@
 <?php
 /* 
-    Page PHP PetiLabo 2.0.beta
+    Page PHP PetiLabo 2.0
 */
 
 require_once "petilabo/path.php";

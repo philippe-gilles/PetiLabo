@@ -1,5 +1,5 @@
 #
-# .htaccess PetiLabo v2.0.beta
+# .htaccess PetiLabo v2.0
 #
 
 # Variables d'environnement OVH
@@ -35,7 +35,8 @@ RewriteRule ^(en|es|it|de|nl|pt)/(.*)$ $2?l=$1 [QSA,L]
 	php_value session.cookie_httponly True
 </IfModule>
 
-# 6G BLACKLIST/FIREWALL (beta)
+# Sécurité
+# Version allégée de Perishable Press 6G Beta
 # @ http://perishablepress.com/6g-beta/
 
 # 6G:[REQUEST STRINGS]
@@ -77,13 +78,6 @@ RewriteRule ^(en|es|it|de|nl|pt)/(.*)$ $2?l=$1 [QSA,L]
 	Deny from env=keep_out
 	</limit>
 </ifModule>
-
-# 6G:[REFERRERS]
-<IfModule mod_rewrite.c>
-	RewriteCond %{HTTP_REFERER} (<|>|'|%0A|%0D|%27|%3C|%3E|%00) [NC,OR]
-	RewriteCond %{HTTP_REFERER} ([a-zA-Z0-9]{32}) [NC]
-	RewriteRule .* - [F,L]
-</IfModule>
 
 # 6G:[BAD IPS]
 <Limit GET POST PUT>
