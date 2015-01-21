@@ -1,3 +1,4 @@
+// Récupération de la query string d'une URL
 (function($) {
     $.QueryString = (function(a) {
         if (a == "") return {};
@@ -11,6 +12,20 @@
         return b;
     })(window.location.search.substr(1).split('&'))
 })(jQuery);
+
+// Egalisation des hauteurs de blocs (stylés) dans un contenu
+function ajuster_hauteurs_egales() {
+	$("div.contenu_hauteurs_egales").each( function() {
+		var $children = $(this).find("div[class*='int_']");
+		var max = 0;
+		$children.each(function() {
+			hauteur = $(this).css("height", "auto").height();
+			if (hauteur > max) {max = hauteur;}
+		});
+		$children.css("height", max+'px');
+	});
+}
+
 /* Fonctions pour le survol des légendes */
 function montrer_legende(cadre) {
 	cadre_legende = cadre.find(".survol_legende");
@@ -25,6 +40,7 @@ function cacher_legende(cadre) {
 		cadre_legende.stop().fadeOut("fast");
 	}
 }
+
 $(document).ready(function() {
 	/* Activation du survol des légendes sur les images fixes */
 	$(".image_cadre").mouseenter(function() {montrer_legende($(this));});
@@ -145,7 +161,7 @@ $(document).ready(function() {
 		var the_id = $(this).attr("href");  
 		$('html, body').animate({scrollTop:$(the_id).offset().top},'slow');  
 		return false;  
-	}); 
+	});
 	/* Changement de mois dans un calendrier de réservation */
 	$("select.select_resa").change(function() {
 		var id = $(this).attr("id");
@@ -157,4 +173,9 @@ $(document).ready(function() {
 			$("#"+div_id).animate({scrollTop:pos},'slow');
 		}
 	});
+});
+
+$(window).load(function() {
+	ajuster_hauteurs_egales();
+	$(window).resize(ajuster_hauteurs_egales);
 });
