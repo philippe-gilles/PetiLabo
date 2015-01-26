@@ -60,7 +60,8 @@ class obj_galerie extends obj_editable {
 			$classe = "vue_galerie_horizontale";
 		}
 		echo "<script type=\"text/javascript\">"._HTML_FIN_LIGNE;
-		$param = "{mode:'fade',pages:false";
+		$param = ($this->has_navigation)?"{":"{controls:false,";
+		$param .= "mode:'fade',pages:false";
 		$param .= ",pagerCustom:'#onglets_".$this->nom."'}";
 		echo "$('div.".$classe." ul#vue_".$this->nom."').bxSlider(".$param.");"._HTML_FIN_LIGNE;
 		echo "</script>"._HTML_FIN_LIGNE;
