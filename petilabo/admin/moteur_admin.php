@@ -60,10 +60,12 @@
 		}
 
 		public function ecrire_corps() {
+			$obj_admin = new obj_admin($this->nom_page, $this->page->get_meta_multilingue(), $this->site->get_nb_langues(), $this->page->get_meta_multilingue(), $this->page->get_meta_noindex());
+			if ($obj_admin) {$obj_admin->afficher(_PETILABO_MODE_EDIT, $this->langue_page);}
 			$titre_editable = $this->page->get_meta_titre_editable();
 			$descr_editable = $this->page->get_meta_descr_editable();
-			$obj = new obj_meta($this->texte, $titre_editable, $descr_editable);
-			if ($obj) {$obj->afficher(_PETILABO_MODE_EDIT, $this->langue_page);}
+			$obj_meta = new obj_meta($this->texte, $titre_editable, $descr_editable);
+			if ($obj_meta) {$obj_meta->afficher(_PETILABO_MODE_EDIT, $this->langue_page);}
 			$nb_contenus = $this->page->get_nb_contenus();
 			for ($cpt_cont = 0;$cpt_cont < $nb_contenus;$cpt_cont++) {
 				$obj_contenu = $this->page->get_contenu($cpt_cont);

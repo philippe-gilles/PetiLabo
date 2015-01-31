@@ -1,0 +1,7 @@
+html{font-family:sans-serif;font-size:100%;}
+body{background:url('../images/bg.png') repeat;padding:20px;}
+h1{font-size:1.8em;color:#000;margin:30px auto;text-align:center;}
+.container{margin:0 auto;width:70%;background:#fff;border:1px solid #aaa;padding:10px;}
+p.update_bouton_retour{text-align:center;margin:15px auto 10px auto;}
+p.update_bouton_retour a{text-decoration:none;color:#fff;background:#800;padding:10px;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;}
+p.update_bouton_retour a:hover{background:#666;}

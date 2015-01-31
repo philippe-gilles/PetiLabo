@@ -8,8 +8,14 @@
 	define("_PHP_PREFIXE_OBJETS", "obj_");
 	define("_PHP_PREFIXE_SITE", "xml_");
 	define("_PXP_EXT", ".php");
+	
+	// Chemins pour les téléchargements
+	define("_PETIXML_CHEMIN_VERSION_TXT", "http://www.petixml.net/update/");
+	define("_PETIXML_FICHIER_VERSION_TXT", "version.txt");
+	define("_PETIXML_PREFIXE_FICHIER_ZIP", "petilabo-");
+	define("_PETIXML_SUFFIXE_FICHIER_ZIP", ".zip");
 
-	// Compatibilit� ascendante < V2.0
+	// Compatibilité ascendante < V2.0
 	function inclure_admin($fichier) {@require_once $fichier._PXP_EXT;}
 
 	// Autoload >= V2.0

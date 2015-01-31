@@ -1,6 +1,24 @@
 table, td {border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;}
 /* Administration */
 .bloc {opacity:0.3;}
+div.panneau_admin{width:98%;margin:0 auto;background:#000;color:#fff;padding:10px 1%;text-align:center;}
+div.panneau_admin h1{font-size:1.5em;color:#eee;}
+div.panneau_admin table{margin:0 auto;text-align:left;border-spacing: 4em 1em;}
+div.panneau_admin table td{padding:6px;}
+div.panneau_admin p{margin:6px;}
+div.panneau_admin p.admin_annotation {padding:3px 0;color:#eee;font-style:italic;}
+div.panneau_admin p.admin_info_site{width:12em;position:relative;}
+div.panneau_admin p.admin_info_site span.icone_prefixe, div.panneau_admin p.admin_info_version span.icone_prefixe{font-family:'FontAwesome',sans-serif;font-size:130%;color:#eee;padding-right:10px;}
+div.panneau_admin p.admin_info_site span.taille_suffixe{position:absolute;padding-top:3px;left:7.5em;width:5em;}
+div.panneau_admin p.admin_bouton_version {margin-top:20px;}
+div.panneau_admin p.admin_bouton_version a{text-decoration:none;color:#fff;background:#800;padding:10px;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;}
+div.panneau_admin p.admin_bouton_version a:hover{background:#666;}
+@media screen and (max-width:800px) {
+div.panneau_admin table{border-spacing: 2em 1em;}
+}
+@media screen and (max-width:650px) {
+div.panneau_admin table{border-spacing: 1em 1em;}
+}
 /* Edition */
 .tab_edit_inactif{display:none;}
 .tab_edit_actif{display:block;}
