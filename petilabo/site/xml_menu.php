@@ -368,7 +368,7 @@ class xml_menu {
 			if (strlen($fond) > 0) {
 				$css .= "background:".$fond.";";
 			}
-			$css .= "line-height:".((float) (1.2 + ($espace_v / 2)))."em;";
+			$css .= "line-height:".(1+(float) $espace_v).";";
 			$css .= "padding:0 ".((float) $espace_h)."em;";
 			$css .= "}"._CSS_FIN_LIGNE;
 			if (($hover) && ((strlen($couleur_survol) > 0) || (strlen($fond_survol) > 0))) {
@@ -389,7 +389,7 @@ class xml_menu {
 				if (strlen($fond_survol) > 0) {
 					$css .= "background:".$fond_survol.";";
 				}
-				$css .= "line-height:".((float) (1.2 + ($espace_v / 2)))."em;";
+				$css .= "line-height:".(1+(float) $espace_v).";";
 				$css .= "padding:0 ".((float) $espace_h)."em;";
 				$css .= "}"._CSS_FIN_LIGNE;
 			}
