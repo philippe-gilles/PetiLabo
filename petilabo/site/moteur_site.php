@@ -80,6 +80,10 @@
 				$this->html->charger_js("js/form.js");
 			}
 			
+			// Passage du paramètre largeur_responsive à Javascript
+			$largeur_responsive = $this->site->get_largeur_responsive();
+			$responsive_js = (int) ((strlen($largeur_responsive) > 0)?trim(str_replace("px", "", $largeur_responsive)):"1");
+			$this->html->ecrire_js("var largeur_responsive=".$responsive_js.";");
 			// Chargement systématique des animations
 			$this->html->charger_js("js/anims.js");
 			$this->html->charger_js_ie("js/ie.js");

@@ -45,6 +45,11 @@
 			$this->html->charger_js(_HTTP_LOG_ADMIN."/js/lb.ajax.js");
 			$this->html->charger_js(_HTTP_LOG_ADMIN."/js/upload.js");
 			$this->html->charger_js(_HTTP_LOG_ADMIN."/js/jqueryte.js");
+			// Passage du paramètre largeur_responsive à Javascript
+			$largeur_responsive = $this->site->get_largeur_responsive();
+			$responsive_js = (int) ((strlen($largeur_responsive) > 0)?trim(str_replace("px", "", $largeur_responsive)):"1");
+			$this->html->ecrire_js("var largeur_responsive=".$responsive_js.";");
+			// Chargement des animations
 			$this->html->charger_js(_HTTP_LOG_ADMIN."/js/anims.js");
 			$this->html->charger_js_ie(_HTTP_LOG_ADMIN."/js/ie.js");
 			$this->charger_xml_js(true);

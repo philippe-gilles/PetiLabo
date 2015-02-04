@@ -15,27 +15,35 @@
 
 // Egalisation des hauteurs de blocs (stylés) dans un contenu
 function ajuster_hauteurs_egales() {
-	$("div.contenu_hauteurs_egales").each( function() {
-		var $children = $(this).find("div[class*='int_']");
-		var max = 0;
-		$children.each(function() {
-			hauteur = $(this).css("height", "auto").height();
-			if (hauteur > max) {max = hauteur;}
+	var largeur_courante = $("body").width()+20;
+	if (largeur_courante >= largeur_responsive) {
+		$("div.contenu_hauteurs_egales").each( function() {
+			var children = $(this).find("div[class*='int_']");
+			var max = 0;
+			children.each(function() {
+				hauteur = $(this).css("height", "auto").height();
+				if (hauteur > max) {max = hauteur;}
+			});
+			children.css("height", max+'px');
 		});
-		$children.css("height", max+'px');
-	});
+	}
+	else {
+		$("div.contenu_hauteurs_egales").each( function() {
+			$(this).find("div[class*='int_']").css("height", "auto");
+		});
+	}
 }
 
 /* Fonctions pour le survol des légendes */
 function montrer_legende(cadre) {
-	cadre_legende = cadre.find(".survol_legende");
+	var cadre_legende = cadre.find(".survol_legende");
 	if (cadre_legende) {
 		// cadre_legende.stop().fadeIn("fast");
 		cadre_legende.stop().fadeTo("fast",0.8);
 	}
 }
 function cacher_legende(cadre) {
-	cadre_legende = cadre.find(".survol_legende");
+	var cadre_legende = cadre.find(".survol_legende");
 	if (cadre_legende) {
 		cadre_legende.stop().fadeOut("fast");
 	}
