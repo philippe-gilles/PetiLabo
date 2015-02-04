@@ -87,12 +87,16 @@ class xml_struct {
 		return $ret;
 	}
 	public function lire_html_n($balise, $index) {
+		$dom = new DOMDocument('1.0', 'UTF-8');
+		$dom->preserveWhiteSpace = false;
+		$dom->formatOutput = true;
 		$ret = null;
 		if ($this->pointeur) {
 			$tab = &$this->pointeur->$balise;
 			$elt = $tab[$index];
 			foreach ($elt as $elt_html) {
-				$ret .= $elt_html->asXML();
+				$dom->loadXML($elt_html->asXML());
+				$ret .= $dom->saveHTML();
 			}
 		}
 		return $ret;
