@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <petilabo>
 	<!-- Sections -->
-	<texte nom="legal_section_legale">Informations légales</texte>
-	<texte nom="legal_section_protection">Données personnelles</texte>
-	<texte nom="legal_section_cookies">Cookies</texte>
-	<texte nom="legal_section_copyright">Copyright</texte>
+	<texte nom="legal_section_legale">{en}Legal notice{fr}Informations légales</texte>
+	<texte nom="legal_section_protection">{en}Personal data{fr}Données personnelles</texte>
+	<texte nom="legal_section_cookies">{en}Cookies{fr}Cookies</texte>
+	<texte nom="legal_section_copyright">{en}Copyright{fr}Copyright</texte>
 	<!-- Section légale -->
-	<texte nom="legal_le_site">Le site</texte>
-	<texte nom="legal_est_edite">est édité par</texte>
-	<texte nom="legal_responsable">Responsable de la publication</texte>
-	<texte nom="legal_hebergement">Hébergement</texte>
+	<texte nom="legal_le_site">{en}The website{fr}Le site</texte>
+	<texte nom="legal_est_edite">{en}is edited by{fr}est édité par</texte>
+	<texte nom="legal_responsable">{en}Publication supervisor{fr}Responsable de la publication</texte>
+	<texte nom="legal_hebergement">{en}Hosting{fr}Hébergement</texte>
 	<!-- Section protection -->
-	<texte nom="legal_protection">Les données personnelles collectées via le formulaire de contact sont uniquement destinées à un usage interne. En aucun cas ces données ne seront cédées, communiquées ou vendues à des tiers. Votre adresse e-mail ne sera ni stockée dans une base de données ni réutilisée (sauf pour répondre à une demande de contact e-mail). Conformément à la législation, vous disposez d'un droit d'accès, de modification, de rectification et de suppression des données qui vous concernent.</texte>
-	<texte nom="legal_cnil">est déclaré à la CNIL sous le n°</texte>
+	<texte nom="legal_protection">{en}The personal data collected through the contact form are for internal use only. The data will not be sold to a third party under any circumstances. Your email address will not be reused or stored in a database (except in response to an e-mail contact request). According to the law, you have a right to access, modify, rectify and delete your personal data.{fr}Les données personnelles collectées via le formulaire de contact sont uniquement destinées à un usage interne. En aucun cas ces données ne seront cédées, communiquées ou vendues à des tiers. Votre adresse e-mail ne sera ni stockée dans une base de données ni réutilisée (sauf pour répondre à une demande de contact e-mail). Conformément à la législation, vous disposez d'un droit d'accès, de modification, de rectification et de suppression des données qui vous concernent.</texte>
+	<texte nom="legal_cnil">{en}is registered at the CNIL under the n°{fr}est déclaré à la CNIL sous le n°</texte>
 	<!-- Section cookie -->
-	<texte nom="legal_cookies_petilabo">Par principe, la plateforme PetiLabo ne nécessite aucun cookie pour fonctionner.</texte>
-	<texte nom="legal_cookies_site">, cependant, intègre le cookie Google Analytics à des fins de mesure d'audience. Conformément à la loi européenne sur les cookies, vous pouvez à tout moment accepter ou refuser ce cookie au moyen des boutons ci-dessous.</texte>
+	<texte nom="legal_cookies_petilabo">{en}As a matter of principle, the PetiLabo platform does not require any cookies to work.{fr}Par principe, la plateforme PetiLabo ne nécessite aucun cookie pour fonctionner.</texte>
+	<texte nom="legal_cookies_site">{en}, however, integrates Google Analytics cookies for audience measurement. In accordance with the European law on cookies, you can always accept or refuse the cookies using the buttons below.{fr}, cependant, intègre le cookie Google Analytics à des fins de mesure d'audience. Conformément à la loi européenne sur les cookies, vous pouvez à tout moment accepter ou refuser ce cookie au moyen des boutons ci-dessous.</texte>
 	<!-- Section copyright -->
-	<texte nom="legal_propriete">est propriétaire des droits de propriété intellectuelle ou bien détient les droits d'usage sur tous les éléments accessibles sur le site, notamment les textes, images et vidéos.</texte>
-	<texte nom="legal_reproduction">Toute reproduction, représentation, modification, publication, adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite, sauf autorisation préalable de</texte>
-	<texte nom="legal_infraction">Toute exploitation non autorisée du site sera considérée comme contrefaçon et sera poursuivie conformément aux dispositions des articles L.335-2 et suivants du Code de Propriété Intellectuelle.</texte>
+	<texte nom="legal_propriete">{en}owns the intellectual property rights or has rights to use all the items available on the website, including texts, images and videos.{fr}est propriétaire des droits de propriété intellectuelle ou bien détient les droits d'usage sur tous les éléments accessibles sur le site, notamment les textes, images et vidéos.</texte>
+	<texte nom="legal_reproduction">{en}Any reproduction, modification, publication, or adaptation of part or all of the website, regardless of the means or processes used, is prohibited without prior permission from{fr}Toute reproduction, représentation, modification, publication, adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite, sauf autorisation préalable de</texte>
+	<texte nom="legal_infraction">{en}Any unauthorized use of the website will be considered as counterfeiting and will be prosecuted in accordance with the Code de Propriété Intellectuelle articles L.335-2 and following.{fr}Toute exploitation non autorisée du site sera considérée comme contrefaçon et sera poursuivie conformément aux dispositions des articles L.335-2 et suivants du Code de Propriété Intellectuelle.</texte>
 </petilabo>
