@@ -9,10 +9,10 @@ class obj_saut extends obj_html {
 
 	public function afficher($mode, $langue) {
 		if (!(strcmp($mode, _PETILABO_MODE_SITE))) {
-			echo "<p style=\"font-size:".$this->hauteur."em;line-height:".$this->hauteur."em;\"><br /></p>"._HTML_FIN_LIGNE;
+			echo "<p style=\"font-size:".$this->hauteur."em;line-height:1;\"><br /></p>"._HTML_FIN_LIGNE;
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_ADMIN))) {
-			echo "<p style=\"font-size:".$this->hauteur."em;line-height:".$this->hauteur."em;\"><br /></p>"._HTML_FIN_LIGNE;
+			echo "<p style=\"font-size:".$this->hauteur."em;line-height:1;\"><br /></p>"._HTML_FIN_LIGNE;
 		}
 	}
 }
