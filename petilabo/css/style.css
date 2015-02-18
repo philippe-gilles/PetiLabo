@@ -25,6 +25,7 @@ a:focus {outline:0;}
 .texte_d {text-align:right;}
 .texte_j {text-align:justify;}
 .titre_legal {font-size:1.6em;font-weight:bold;text-align:left;margin-top:0.8em;margin-bottom:0.8em;}
+.saut_de_ligne{line-height:1;}
 /* Menus */
 .wrap_menu {margin:0.5em 0;}
 .item_menu {display:inline-block;text-decoration:none;vertical-align:top;margin:0.1em;}
