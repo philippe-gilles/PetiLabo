@@ -53,6 +53,10 @@ $(document).ready(function() {
 	/* Activation du survol des légendes sur les images fixes */
 	$(".image_cadre").mouseenter(function() {montrer_legende($(this));});
 	$(".image_cadre").mouseleave(function() {cacher_legende($(this));});
+	$(".image_cadre_gauche").mouseenter(function() {montrer_legende($(this));});
+	$(".image_cadre_gauche").mouseleave(function() {cacher_legende($(this));});
+	$(".image_cadre_droite").mouseenter(function() {montrer_legende($(this));});
+	$(".image_cadre_droite").mouseleave(function() {cacher_legende($(this));});
 
 	/* Activation du survol des légendes sur les vues de galeries */
 	$('div[class^="vue_galerie_"]').mouseenter(function() {montrer_legende($(this));});

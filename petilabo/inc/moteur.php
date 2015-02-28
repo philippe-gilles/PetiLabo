@@ -255,13 +255,15 @@
 		}
 		// Ecriture des images
 		protected function ecrire_bloc_image($mode, $occ) {
+			// Lecture de l'attribut "alignement"
+			$alignement = $this->page->lire_attribut_n(_PAGE_IMAGE, $occ, _PAGE_ATTR_ALIGNEMENT);
 			// Lecture de l'id image
 			$valeur = $this->page->lire_valeur_n(_PAGE_IMAGE, $occ);
 			$src = $this->parser_id_crochets_actu($valeur);
 			$image = $this->media->get_image($src);
 			if (!($image)) {return null;}
 			// Création de l'objet "image"
-			$obj = $this->parser_image($image);
+			$obj = $this->parser_image($image, $alignement);
 			if ($obj) {$obj->afficher($mode, $this->langue_page);}
 			return $obj;
 		}
@@ -773,7 +775,7 @@
 			}
 		}
 
-		private function parser_image(&$image) {
+		private function parser_image(&$image, $alignement) {
 			// Lecture du style de légende
 			$nom_style = $image->get_style_legende();
 			$style = (strlen($nom_style) > 0)?$this->media->get_style($nom_style):null;
@@ -782,7 +784,7 @@
 			$access_key = $this->url_accesskey($lien);
 			$lien_multilingue = $this->url_multilingue($lien);
 			// Création de l'objet "image"
-			$obj = new obj_image($image, $style, $this->texte, $lien_multilingue, $access_key);
+			$obj = new obj_image($image, $alignement, $style, $this->texte, $lien_multilingue, $access_key);
 			return $obj;
 		}
 

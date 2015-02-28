@@ -61,8 +61,9 @@ class obj_image extends obj_editable {
 	private $id_copyright = null;
 	private $url_lien = null;
 	private $touche_lien = null;
+	private $alignement = null;
 
-	public function __construct(&$obj_media, &$obj_style, &$obj_texte, $url_lien, $touche_lien) {
+	public function __construct(&$obj_media, $alignement, &$obj_style, &$obj_texte, $url_lien, $touche_lien) {
 		$this->obj_media = $obj_media;
 		$this->obj_style = $obj_style;
 		$this->obj_texte = $obj_texte;
@@ -71,6 +72,7 @@ class obj_image extends obj_editable {
 		$this->id_copyright = $obj_media->get_copyright();
 		$this->url_lien = $url_lien;
 		$this->touche_lien = $touche_lien;
+		$this->alignement = $alignement;
 
 		$this->id_info = $this->obj_media->get_legende();
 		if (strlen($this->id_info) > 0) {
@@ -137,9 +139,18 @@ class obj_image extends obj_editable {
 		$style = "max-width:".$this->obj_media->get_width()."px;max-height:".$this->obj_media->get_height()."px";
 		if ($this->obj_legende) {
 			$a_html = ($this->fabriquer_html_lien($mode, $this->url_lien, $this->touche_lien, "legende_avec_lien"))._HTML_FIN_LIGNE;
+			if (!(strcmp($this->alignement, _STYLE_ATTR_ALIGNEMENT_GAUCHE))) {
+				$classe_image_cadre = "image_cadre_gauche";
+			}
+			elseif (!(strcmp($this->alignement, _STYLE_ATTR_ALIGNEMENT_DROITE))) {
+				$classe_image_cadre = "image_cadre_droite";
+			}
+			else {
+				$classe_image_cadre = "image_cadre";
+			}
 			if ($this->obj_legende->get_est_exterieur()) {
 				$style_exterieur = str_replace(_CSS_CLASSE_SURVOL, "", $this->obj_legende->get_style());
-				echo "<div class=\"image_cadre\">"._HTML_FIN_LIGNE;
+				echo "<div class=\"".$classe_image_cadre."\">"._HTML_FIN_LIGNE;
 				echo "<div class=\""._CSS_PREFIXE_EXTERIEUR.$style_exterieur."\" style=\"".$style."\">"._HTML_FIN_LIGNE;
 				printf($a_html, "<img class=\"image_dans_cadre\" src=\"".$src."\" alt=\"".$alt."\" />");
 				$this->obj_legende->afficher($mode, $langue);
@@ -151,7 +162,7 @@ class obj_image extends obj_editable {
 					$this->obj_legende->afficher($mode, $langue);
 				}
 				else {
-					echo "<div class=\"image_cadre\" style=\"".$style."\">"._HTML_FIN_LIGNE;
+					echo "<div class=\"".$classe_image_cadre."\" style=\"".$style."\">"._HTML_FIN_LIGNE;
 					printf($a_html, "<img class=\"image_dans_cadre\" src=\"".$src."\" alt=\"".$alt."\" />");
 					$this->obj_legende->afficher($mode, $langue);
 					echo "</div>"._HTML_FIN_LIGNE;
@@ -160,7 +171,14 @@ class obj_image extends obj_editable {
 		}
 		else {
 			$a_html = ($this->fabriquer_html_lien($mode, $this->url_lien, $this->touche_lien))._HTML_FIN_LIGNE;
-			printf($a_html, "<img class=\"image_cadre\" style=\"".$style."\" src=\"".$src."\" alt=\"".$alt."\" />");
+			if ((!(strcmp($this->alignement, _STYLE_ATTR_ALIGNEMENT_GAUCHE))) || (!(strcmp($this->alignement, _STYLE_ATTR_ALIGNEMENT_DROITE)))) {
+				$p_wrapper="<p class=\"p_image_cadre ".$this->extraire_classe_alignement($this->alignement)."\">%s</p>";
+			}
+			else {
+				$p_wrapper="%s";
+			}
+			$img = sprintf($a_html, "<img class=\"image_cadre\" style=\"".$style."\" src=\"".$src."\" alt=\"".$alt."\" />");
+			printf($p_wrapper, $img);
 		}
 	}
 	

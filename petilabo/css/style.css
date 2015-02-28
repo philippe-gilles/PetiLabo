@@ -37,7 +37,10 @@ a:focus {outline:0;}
 a.drapeau{-webkit-transition:opacity 100ms linear;-moz-transition:opacity 100ms linear;transition:opacity 100ms linear;}
 a.drapeau:hover{opacity:0.6;}
 /* Images et légendes */
+.p_image_cadre{margin:0;padding:0;}
 .image_cadre {width:100%;margin:0 auto;position:relative;}
+.image_cadre_gauche {width:100%;margin-left:0!important;margin-right:auto!important;margin-top:0;margin-bottom:0;position:relative;}
+.image_cadre_droite {width:100%;margin-left:auto!important;margin-right:0!important;margin-top:0;margin-bottom:0;position:relative;}
 .image_dans_cadre {display:inline;vertical-align:middle;width:100%;}
 .cadre_legende {position:absolute;overflow:hidden;}
 .survol_legende {display:none;}
