@@ -25,4 +25,5 @@
 	<texte nom="trad_petilabo_poursuite">{de}Notez qu'en visitant de nouvelles pages sur ce site, vous acceptez implicitement ce cookie.{en}Note that visiting new pages on this site means that you implicitly accept this cookie.{es}Observe que visitando otras páginas en este sitio, usted acepta implícitamente esta cookie.{fr}Notez qu'en visitant de nouvelles pages sur ce site, vous acceptez implicitement ce cookie.{it}Please note that visiting new pages on this site, you implicitly agree to this cookie.{nl}Notez qu'en visitant de nouvelles pages sur ce site, vous acceptez implicitement ce cookie.{pt}Notez qu'en visitant de nouvelles pages sur ce site, vous acceptez implicitement ce cookie.</texte>
 	<texte nom="trad_petilabo_accepter">{de}Ich nehme{en}I agree{es}Acepto{fr}J'accepte{it}Acconsento{nl}Ik accepteer{pt}Aceito</texte>
 	<texte nom="trad_petilabo_refuser">{de}Ich weigere{en}I disagree{es}Me niego{fr}Je refuse{it}Rifiuto{nl}Ik weiger{pt}Me recuso</texte>
+	<texte nom="trad_ouvrir_carte_dans">{de}Die Karte öffnen in{en}Open the map in{es}Abrir la mapa en{fr}Ouvrir la carte dans{it}Aprire la carta in{nl}Open de kaart in{pt}Abra o mapa em</texte>
 </petilabo>

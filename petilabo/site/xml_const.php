@@ -131,6 +131,7 @@
 	define("_PAGE_ATTR_CARTE_ORIENTATION", "orientation");
 	define("_PAGE_ATTR_LIEN_PJ", "lien");
 	define("_PAGE_ATTR_FORMULAIRE_STYLE", "style");
+	define("_PAGE_ATTR_SOURCE_CARTE", "source");
 	define("_PAGE_ATTR_SOURCE_VIDEO", "source");
 	define("_PAGE_ATTR_SOCIAL_TAILLE", "taille");
 	define("_PAGE_ATTR_CREDITS_TAILLE", "taille");
@@ -153,6 +154,8 @@
 	define("_PAGE_ATTR_LIEN_FICHIER", "fichier");
 	define("_PAGE_ATTR_FORMULAIRE_COURT", "court");
 	define("_PAGE_ATTR_FORMULAIRE_LONG", "long");
+	define("_PAGE_ATTR_SOURCE_GOOGLE", "google");
+	define("_PAGE_ATTR_SOURCE_OSM", "osm");
 	define("_PAGE_ATTR_SOURCE_YOUTUBE", "youtube");
 	define("_PAGE_ATTR_SOURCE_DAILYMOTION", "dailymotion");
 	define("_PAGE_ATTR_SOURCE_VIMEO", "vimeo");
