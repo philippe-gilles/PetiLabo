@@ -296,9 +296,16 @@ class html {
 	public function fermer_tab() {
 		echo "</div>"._HTML_FIN_LIGNE;
 	}
-	public function charger_police($police) {
+	public function charger_police($src_police, $famille_police, $police) {
 		if (strlen($police) > 0) {
-			echo "<link href=\"http://fonts.googleapis.com/css?family=".strtr($police, " ", "+")."\" rel=\"stylesheet\" type=\"text/css\" />\n";
+			if (strcmp($src_police, _STYLE_ATTR_POLICE_SOURCE_OFL)) {
+				$police_google = strtr($police, " ", "+");
+				echo "<link href=\"http://fonts.googleapis.com/css?family=".$police_google."\" rel=\"stylesheet\" type=\"text/css\" />\n";
+			}
+			else if (strlen($famille_police) > 0) {
+				$police_ofl = strtr($famille_police, " '", "--");
+				echo "<link href=\"http://openfontlibrary.org/face/".$police_ofl."\" rel=\"stylesheet\" type=\"text/css\" />\n";
+			}
 		}
 	}
 	public function charger_css($fichier) {

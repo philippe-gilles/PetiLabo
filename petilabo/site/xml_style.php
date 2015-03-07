@@ -71,12 +71,16 @@ class style_bloc {
 
 class style_texte {
 	// Propriétés
-	private $police = null;
+	private $police = null;private $src_police = null;private $famille_police = null;
 	private $couleur = null;private $couleur_lien = null;private $couleur_survol = null;
 	private $taille = 0;private $alignement = null;private $decoration = null;
 
 	// Manipulateurs
-	public function set_police($param) {$this->police = $param;}
+	public function set_police($police, $famille_police, $src_police) {
+		$this->famille_police = strtolower($this->normaliser_famille_police($famille_police));
+		$this->src_police = $this->normaliser_src_police($src_police);
+		$this->police = $this->normaliser_police($police);
+	}
 	public function set_couleur($param) {$this->couleur = $param;}
 	public function set_couleur_lien($param) {$this->couleur_lien = $param;}
 	public function set_couleur_survol($param) {$this->couleur_survol = $param;}
@@ -86,6 +90,8 @@ class style_texte {
 
 	// Accesseurs
 	public function get_police() {return $this->police;}
+	public function get_src_police() {return $this->src_police;}
+	public function get_famille_police() {return $this->famille_police;}
 	public function get_couleur() {return $this->couleur;}
 	public function get_couleur_lien() {return $this->couleur_lien;}
 	public function get_couleur_survol() {return $this->couleur_survol;}
@@ -106,6 +112,24 @@ class style_texte {
 	private function normaliser_decoration($param) {
 		$param = trim(strtolower($param));
 		$ret = ((strcmp($param, _STYLE_ATTR_DECORATION_GRAS)) && (strcmp($param, _STYLE_ATTR_DECORATION_ITALIQUE)))?null:$param;
+		return $ret;
+	}
+	private function normaliser_famille_police($param) {
+		$param = trim(ucwords(strtolower($param)));
+		$ret = preg_replace('!\s+!', ' ', $param);
+		$ret = str_replace(" Ui ", " UI ", $ret);
+		return $ret;
+	}
+	private function normaliser_src_police($param) {
+		$param = trim(strtolower($param));
+		$ret = (strcmp($param, _STYLE_ATTR_POLICE_SOURCE_OFL))?_STYLE_ATTR_POLICE_SOURCE_GOOGLE:_STYLE_ATTR_POLICE_SOURCE_OFL;
+		return $ret;
+	}
+	private function normaliser_police($param) {
+		$ret = $this->normaliser_famille_police($param);
+		if (strcmp($this->src_police, _STYLE_ATTR_POLICE_SOURCE_GOOGLE)) {
+			$ret = str_replace("font", "Font", str_replace(" ", "", strtr($ret, "'", " ")));
+		}
 		return $ret;
 	}
 }
@@ -186,7 +210,7 @@ class xml_style {
 		$xml_style = new xml_struct();
 		$ret = $xml_style->ouvrir($nom);
 		if ($ret) {
-			// Traitement des styles de bloc
+			// Traitement des styles de contenu
 			$nb_styles = $xml_style->compter_elements(_STYLE_CONTENU);
 			$xml_style->pointer_sur_balise(_STYLE_CONTENU);
 			for ($cpt = 0;$cpt < $nb_styles; $cpt++) {
@@ -256,16 +280,28 @@ class xml_style {
 			for ($cpt = 0;$cpt < $nb_styles; $cpt++) {
 				$nom = $xml_style->lire_n_attribut(_STYLE_TEXTE_ATTR_NOM, $cpt);
 				if (strlen($nom) > 0) {
-					$police = $xml_style->lire_n_valeur(_STYLE_TEXTE_POLICE, $cpt);
 					$couleur = $xml_style->lire_n_valeur(_STYLE_TEXTE_COULEUR, $cpt);
 					$couleur_lien = $xml_style->lire_n_valeur(_STYLE_TEXTE_COULEUR_LIEN, $cpt);
 					$couleur_survol = $xml_style->lire_n_valeur(_STYLE_TEXTE_COULEUR_SURVOL, $cpt);
 					$taille = $xml_style->lire_n_valeur(_STYLE_TEXTE_TAILLE, $cpt);
 					$alignement = $xml_style->lire_n_valeur(_STYLE_TEXTE_ALIGNEMENT, $cpt);
 					$decoration = $xml_style->lire_n_valeur(_STYLE_TEXTE_DECORATION, $cpt);
+					$police = $xml_style->lire_n_valeur(_STYLE_TEXTE_POLICE, $cpt);
+					// En cas de police on va lire la source et la famille de la police
+					if (strlen($police) > 0) {
+						$xml_style->creer_repere($nom);
+						$xml_style->pointer_sur_index($cpt);
+						$xml_style->pointer_sur_balise(_STYLE_TEXTE_POLICE);
+						$src_police = $xml_style->lire_attribut(_STYLE_TEXTE_ATTR_POLICE_SOURCE);
+						$famille_police = $xml_style->lire_attribut(_STYLE_TEXTE_ATTR_POLICE_FAMILLE);
+						$xml_style->pointer_sur_repere($nom);
+					}
+					else {
+						$src_police = null;$famille_police = null;
+					}
 					// Création du style de texte
 					$style = new style_texte();
-					$style->set_police($police);
+					$style->set_police($police, $famille_police, $src_police);
 					$style->set_couleur($couleur);
 					$style->set_couleur_lien($couleur_lien);
 					$style->set_couleur_survol($couleur_survol);

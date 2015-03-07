@@ -145,7 +145,9 @@
 					if ((strlen($police) > 0) && (strcmp(trim(strtolower($police)), "serif"))) {
 						// On vérifie que la police n'a pas été déjà chargée
 						if (!(in_array($police, $this->polices))) {
-							$this->html->charger_police($police);
+							$src_police = $style->get_src_police();
+							$famille_police = $style->get_famille_police();
+							$this->html->charger_police($src_police, $famille_police, $police);
 							$this->polices[] = $police;
 						}
 					}

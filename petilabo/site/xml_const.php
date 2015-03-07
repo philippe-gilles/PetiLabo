@@ -284,6 +284,8 @@
 	define("_STYLE_BLOC_ATTR_NOM", "nom");
 	define("_STYLE_BLOC_ATTR_TYPE_BORDURE", "type");
 	define("_STYLE_TEXTE_ATTR_NOM", "nom");
+	define("_STYLE_TEXTE_ATTR_POLICE_SOURCE", "source");
+	define("_STYLE_TEXTE_ATTR_POLICE_FAMILLE", "famille");
 	define("_STYLE_FORMULAIRE_ATTR_NOM", "nom");
 	define("_STYLE_ACTUALITE_ATTR_NOM", "nom");
 
@@ -294,6 +296,8 @@
 	define("_STYLE_ATTR_ALIGNEMENT_JUSTIFIE", "justifie");
 	define("_STYLE_ATTR_DECORATION_GRAS", "gras");
 	define("_STYLE_ATTR_DECORATION_ITALIQUE", "italique");
+	define("_STYLE_ATTR_POLICE_SOURCE_GOOGLE", "google");
+	define("_STYLE_ATTR_POLICE_SOURCE_OFL", "ofl");
 	define("_STYLE_ATTR_TYPE_BORDURE_COULEUR", "couleur");
 	define("_STYLE_ATTR_TYPE_BORDURE_MOTIF", "motif");
 	define("_STYLE_ATTR_TYPE_BORDURE_OMBRE", "ombre");
