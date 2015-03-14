@@ -296,7 +296,7 @@
 				$largeur = $image->get_width();
 				$largeur_max = ($largeur > $largeur_max)?$largeur:$largeur_max;
 				// Création de l'objet "image"
-				$obj_image = $this->parser_image($image);
+				$obj_image = $this->parser_image($image, _STYLE_ATTR_ALIGNEMENT_CENTRE);
 				if ($obj_image) {$obj->ajouter_image($obj_image);}
 			}
 			$obj->afficher($mode, $this->langue_page, $largeur_max);
@@ -331,7 +331,7 @@
 				$image = $this->media->get_image($nom_image);
 				if (!($image)) {continue;}
 				// Création de l'objet "image"
-				$obj_image = $this->parser_image($image);
+				$obj_image = $this->parser_image($image, _STYLE_ATTR_ALIGNEMENT_CENTRE);
 				if ($obj_image) {$obj->ajouter_image($obj_image);}
 			}
 			$obj->afficher($mode, $this->langue_page);
@@ -356,7 +356,7 @@
 				$image = $this->media->get_image($nom_image);
 				if (!($image)) {continue;}
 				// Création de l'objet "image"
-				$obj_image = $this->parser_image($image);
+				$obj_image = $this->parser_image($image, _STYLE_ATTR_ALIGNEMENT_CENTRE);
 				if ($obj_image) {$obj->ajouter_image($obj_image);}
 			}
 			$obj->afficher($mode, $this->langue_page);
@@ -389,7 +389,7 @@
 				$image = $this->media->get_image($nom_image);
 				if (!($image)) {continue;}
 				// Création de l'objet "image"
-				$obj_image = $this->parser_image($image);
+				$obj_image = $this->parser_image($image, _STYLE_ATTR_ALIGNEMENT_CENTRE);
 				if ($obj_image) {$obj->ajouter_image($obj_image);}
 			}
 			// Affichage de la galerie en fonction de la position
