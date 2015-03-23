@@ -11,113 +11,56 @@ class style_menu {
 	private $espace_horizontal = 0;
 
 	// Manipulateurs
-	public function set_style_texte($param) {
-		$this->style_texte = $param;
-	}
-	public function set_couleur($param) {
-		$this->couleur = $param;
-	}
-	public function set_fond($param) {
-		$this->fond = $param;
-	}
-	public function set_couleur_survol($param) {
-		$this->couleur_survol = $param;
-	}
-	public function set_fond_survol($param) {
-		$this->fond_survol = $param;
-	}
-	public function set_espace_vertical($param) {
-		$this->espace_vertical = (float) $param;
-	}
-	public function set_espace_horizontal($param) {
-		$this->espace_horizontal = (float) $param;
-	}
+	public function set_style_texte($param) {$this->style_texte = $param;}
+	public function set_couleur($param) {$this->couleur = $param;}
+	public function set_fond($param) {$this->fond = $param;}
+	public function set_couleur_survol($param) {$this->couleur_survol = $param;}
+	public function set_fond_survol($param) {$this->fond_survol = $param;}
+	public function set_espace_vertical($param) {$this->espace_vertical = (float) $param;}
+	public function set_espace_horizontal($param) {$this->espace_horizontal = (float) $param;}
 
 	// Accesseurs
-	public function get_style_texte() {
-		return $this->style_texte;
-	}
-	public function get_couleur() {
-		return $this->couleur;
-	}
-	public function get_fond() {
-		return $this->fond;
-	}
-	public function get_couleur_survol() {
-		return $this->couleur_survol;
-	}
-	public function get_fond_survol() {
-		return $this->fond_survol;
-	}
-	public function get_espace_vertical() {
-		return ((float) $this->espace_vertical);
-	}
-	public function get_espace_horizontal() {
-		return ((float) $this->espace_horizontal);
-	}
+	public function get_style_texte() {return $this->style_texte;}
+	public function get_couleur() {return $this->couleur;}
+	public function get_fond() {return $this->fond;}
+	public function get_couleur_survol() {return $this->couleur_survol;}
+	public function get_fond_survol() {return $this->fond_survol;}
+	public function get_espace_vertical() {return ((float) $this->espace_vertical);}
+	public function get_espace_horizontal() {return ((float) $this->espace_horizontal);}
 }
 
 class item_menu {
 	// Propriétés
-	private $label = null;
-	private $icone = null;
-	private $lien = null;
-	private $lien_editable = null;
+	private $label = null;private $icone = null;
+	private $lien = null;private $lien_editable = null;
 	private $liste_cibles = null;
 	private $info = null;
 	private $style = null;
 
 	// Manipulateurs
-	public function set_label($param) {
-		$this->label = $param;
-	}
-
-	public function set_icone($param) {
-		$this->icone = $param;
-	}
+	public function set_label($param) {$this->label = $param;}
+	public function set_icone($param) {$this->icone = $param;}
 	public function set_lien($param) {
 		$param_w3c = str_replace("&", "&amp;", $param);
 		$this->lien = $param_w3c;
 	}
-	public function set_lien_editable($param) {
-		$this->lien_editable = $param;
-	}
-	public function set_liste_cibles($param) {
-		$this->liste_cibles = $param;
-	}
-	public function set_info($param) {
-		$this->info = $param;
-	}
-	public function set_style($param) {
-		$this->style = $param;
-	}
+	public function set_lien_editable($param) {$this->lien_editable = $param;}
+	public function set_liste_cibles($param) {$this->liste_cibles = $param;}
+	public function set_info($param) {$this->info = $param;}
+	public function set_style($param) {$this->style = $param;}
 	
 	// Accesseurs
-	public function get_label() {
-		return $this->label;
-	}
-	public function get_icone() {
-		return $this->icone;
-	}
-	public function get_lien() {
-		return $this->lien;
-	}
-	public function get_lien_editable() {
-		return $this->lien_editable;
-	}
+	public function get_label() {return $this->label;}
+	public function get_icone() {return $this->icone;}
+	public function get_lien() {return $this->lien;}
+	public function get_lien_editable() {return $this->lien_editable;}
 	public function is_lien_editable() {
 		$ret = (strlen($this->lien_editable) > 0)?true:false;
 		return $ret;
 	}
-	public function get_liste_cibles() {
-		return $this->liste_cibles;
-	}
-	public function get_info() {
-		return $this->info;
-	}
-	public function get_style() {
-		return $this->style;
-	}
+	public function get_liste_cibles() {return $this->liste_cibles;}
+	public function get_info() {return $this->info;}
+	public function get_style() {return $this->style;}
 }
 
 class menu {
@@ -128,34 +71,17 @@ class menu {
 		$this->liste_items[] = $nom_item;
 		if ($is_editable) {$this->has_editable = true;}
 	}
-
-	function get_nb_items() {
-		return count($this->liste_items);
-	}
-	
-	function get_has_editable() {
-		return $this->has_editable;
-	}
-
-	function get_item($index) {
-		return $this->liste_items[$index];
-	}
+	function get_nb_items() {return count($this->liste_items);}
+	function get_has_editable() {return $this->has_editable;}
+	function get_item($index) {return $this->liste_items[$index];}
 }
 
 class liste_cibles {
 	private $liste_cibles = array();
 	
-	function ajouter_cible($lien, $nom_cible) {
-		$this->liste_cibles[] = array($lien, $nom_cible);
-	}
-
-	function get_nb_cibles() {
-		return count($this->liste_cibles);
-	}
-
-	function get_cible($index) {
-		return $this->liste_cibles[$index];
-	}
+	function ajouter_cible($lien, $nom_cible) {$this->liste_cibles[] = array($lien, $nom_cible);}
+	function get_nb_cibles() {return count($this->liste_cibles);}
+	function get_cible($index) {return $this->liste_cibles[$index];}
 
 	function get_lien_cible($index) {
 		$lien = null;
@@ -309,49 +235,37 @@ class xml_menu {
 					}
 				}
 			}
-
 		}
-
 		return $ret;
 	}
-	
-	
 	function get_liste_cibles($nom) {
 		$ret = null;
 		if (array_key_exists($nom, $this->listes_cibles)) {
 			$ret = $this->listes_cibles[$nom];
 		}
-		
 		return $ret;
 	}
-	
 	function get_menu($nom) {
 		$ret = null;
 		if (array_key_exists($nom, $this->menus)) {
 			$ret = $this->menus[$nom];
 		}
-		
 		return $ret;
 	}
-	
 	function get_style($nom) {
 		$ret = null;
 		if (array_key_exists($nom, $this->styles)) {
 			$ret = $this->styles[$nom];
 		}
-		
 		return $ret;
 	}
-	
 	function get_item($nom) {
 		$ret = null;
 		if (array_key_exists($nom, $this->items)) {
 			$ret = $this->items[$nom];
 		}
-		
 		return $ret;
 	}
-
 	public function extraire_css($hover=true) {
 		$css = "";
 		foreach ($this->styles as $nom_style => $style) {
@@ -362,39 +276,26 @@ class xml_menu {
 			$espace_v = (float) $style->get_espace_vertical();
 			$espace_h = (float) $style->get_espace_horizontal();
 			$css .= "."._CSS_PREFIXE_MENU.$nom_style." {";
-			if (strlen($couleur) > 0) {
-				$css .= "color:".$couleur.";";
-			}
-			if (strlen($fond) > 0) {
-				$css .= "background:".$fond.";";
-			}
+			if (strlen($couleur) > 0) {$css .= "color:".$couleur.";";}
+			if (strlen($fond) > 0) {$css .= "background:".$fond.";";}
 			$css .= "line-height:".(1+(float) $espace_v).";";
 			$css .= "padding:0 ".((float) $espace_h)."em;";
 			$css .= "}"._CSS_FIN_LIGNE;
 			if (($hover) && ((strlen($couleur_survol) > 0) || (strlen($fond_survol) > 0))) {
 				// Style pour hover
 				$css .= "."._CSS_PREFIXE_MENU.$nom_style.":hover {";
-				if (strlen($couleur_survol) > 0) {
-					$css .= "color:".$couleur_survol.";";
-				}
-				if (strlen($fond_survol) > 0) {
-					$css .= "background:".$fond_survol.";";
-				}
+				if (strlen($couleur_survol) > 0) {$css .= "color:".$couleur_survol.";";}
+				if (strlen($fond_survol) > 0) {$css .= "background:".$fond_survol.";";}
 				$css .= "}"._CSS_FIN_LIGNE;
 				// Style pour lien actif
 				$css .= "."._CSS_PREFIXE_MENU.$nom_style._MENU_STYLE_EXT_ACTIF." {";
-				if (strlen($couleur_survol) > 0) {
-					$css .= "color:".$couleur_survol.";";
-				}
-				if (strlen($fond_survol) > 0) {
-					$css .= "background:".$fond_survol.";";
-				}
+				if (strlen($couleur_survol) > 0) {$css .= "color:".$couleur_survol.";";}
+				if (strlen($fond_survol) > 0) {$css .= "background:".$fond_survol.";";}
 				$css .= "line-height:".(1+(float) $espace_v).";";
 				$css .= "padding:0 ".((float) $espace_h)."em;";
 				$css .= "}"._CSS_FIN_LIGNE;
 			}
 		}
-		
 		return $css;
 	}
 }

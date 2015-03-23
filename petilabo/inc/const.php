@@ -61,6 +61,7 @@
 	define("_XML_MENU", "menu");
 	define("_XML_PAGE", "page");
 	define("_XML_CONTENU", "contenu");
+	define("_XML_ANALITIX", "analitix");
 	define("_XML_MAIL_CONFIG", "config");
 	define("_XML_MAIL_JOURNAL", "journal");
 	define("_XML_MAIL_MODELE_JOURNAL", "modele");

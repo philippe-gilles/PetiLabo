@@ -3,6 +3,7 @@
 	// La classe moteur_admin hérite de la classe moteur
 	class moteur_admin extends moteur {
 		private $fragment = null;
+		private $config_analitix = null;
 
 		// Méthodes publiques
 		public function __construct($nom_page, $fragment = null) {
@@ -21,6 +22,12 @@
 			$this->charger_xml();
 			// Chargement de la langue
 			$this->charger_langue();
+			// Mesure d'audience
+			$pa = $this->page->get_meta_pa();
+			if (strlen($pa) > 0) {
+				$this->config_analitix = new xml_analitix();
+				if ($this->config_analitix) {$this->config_analitix->ouvrir($pa, false);}
+			}
 		}
 		public function ouvrir_entete() {
 			$this->html->ouvrir($this->langue_page);
@@ -45,6 +52,7 @@
 			$this->html->charger_js(_HTTP_LOG_ADMIN."/js/lb.ajax.js");
 			$this->html->charger_js(_HTTP_LOG_ADMIN."/js/upload.js");
 			$this->html->charger_js(_HTTP_LOG_ADMIN."/js/jqueryte.js");
+			$this->html->charger_js(_HTTP_LOG_ADMIN."/js/simple-chart.js");
 			// Passage du paramètre largeur_responsive à Javascript
 			$largeur_responsive = $this->site->get_largeur_responsive();
 			$responsive_js = (int) ((strlen($largeur_responsive) > 0)?trim(str_replace("px", "", $largeur_responsive)):"1");
@@ -66,7 +74,10 @@
 
 		public function ecrire_corps() {
 			$obj_admin = new obj_admin($this->nom_page, $this->page->get_meta_multilingue(), $this->site->get_nb_langues(), $this->page->get_meta_multilingue(), $this->page->get_meta_noindex());
-			if ($obj_admin) {$obj_admin->afficher(_PETILABO_MODE_EDIT, $this->langue_page);}
+			if ($obj_admin) {
+				if ($this->config_analitix) {$obj_admin->ajouter_statistiques($this->config_analitix->get_filtre_pays(), $this->config_analitix->get_filtre_referents());}
+				$obj_admin->afficher(_PETILABO_MODE_EDIT, $this->langue_page);
+			}
 			$titre_editable = $this->page->get_meta_titre_editable();
 			$descr_editable = $this->page->get_meta_descr_editable();
 			$obj_meta = new obj_meta($this->texte, $titre_editable, $descr_editable);

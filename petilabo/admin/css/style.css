@@ -19,6 +19,23 @@ div.panneau_admin table{border-spacing: 2em 1em;}
 @media screen and (max-width:650px) {
 div.panneau_admin table{border-spacing: 1em 1em;}
 }
+/* Stats */
+p.admin_onglets_stats{text-align:center;color:#fff;margin:0;padding:12px 0;}
+p.admin_onglets_stats a, p.admin_onglets_stats a:visited{background:#333;padding:9px 12px;color:#fff;margin-right:15px;text-decoration:none;}
+p.admin_onglets_stats a:hover {background:#666;text-decoration:none;}
+div.admin_courbe_wrapper{background:#f8f8f8;width:100%;margin:0 auto;overflow:hidden;height:273px;position:relative;}
+div.admin_courbe_stats{position:absolute;top:5px;left:0;width:100%;height:250px;}
+p.admin_msg_erreur {font-weight:bold;color:#880000;text-align:center;padding:25px;}
+table.admin_tab_stats_wrapper{width:100%;border-spacing:0.3em!important;}
+table.admin_tab_stats_wrapper td{vertical-align:top;}
+table.admin_tab_stats_content{width:100%;border-spacing:0!important;border-collapse:collapse;}
+table.admin_tab_stats_content tr{padding:0!important;margin:0!important;}
+table.admin_tab_stats_content td{padding:0!important;border-spacing:0;border:1px solid #888;}
+table.admin_tab_stats_content td.admin_cellule_pc{width:66px!important;}
+p.stats_section, p.stats_label, p.stats_valeur{text-align:left;padding:3px;margin:0!important;font-size: 16px;}
+p.stats_label{color:#222;}
+p.stats_valeur{color:#444;font-weight:bold;text-align:right;}
+p.stats_section{color:#000;font-weight:bold;}
 /* Edition */
 .tab_edit_inactif{display:none;}
 .tab_edit_actif{display:block;}
@@ -87,3 +104,25 @@ ul.tabs li.active a {background:url('../../images/drapeaux.png') no-repeat;color
 ul.tabs li.active a:hover {color:#fff;}
 .tab_container {position:relative;clear:both;width:100%;border:0;padding:0;margin:0 0 15px 0;background:#eee;}
 .tab_content {padding:0;margin:0;}
+/* SimpleChart */
+.SimpleChart {position: relative;}
+.SimpleChart #tip {background-color: #f0f0f0;border: 1px solid #d0d0d0;position: absolute;left: -200px;top: 30px;}
+.down-triangle {width: 0;height: 0;border-top: 10px solid #d0d0d0;border-left: 6px solid transparent;border-right: 6px solid transparent;position: absolute;left: -200px;}
+.SimpleChart #highlighter {position: absolute;left: -200px;}
+.-simple-chart-holder {float: left;position: relative;width: 100%;background-color: #fff;border: 1px solid #cecece;/*padding: 6px;*/}
+.SimpleChart .legendsli {list-style: none;}
+.SimpleChart .legendsli span {float: left;vertical-align: middle;}
+.SimpleChart .legendsli span.legendindicator {position: relative;top: 5px;}
+.SimpleChart .legendsli span.legendindicator .line {width: 30px;height: 3px;}
+.SimpleChart .legendsli span.legendindicator .circle {width: 12px;height: 12px;border-radius: 20px;position: relative;top: -5px;right: 20px;}
+/******Starts::Horizontal Alignment of Legends******/
+.simple-chart-legends {background: #E7E7E7;border: 1px solid #d6d7dd;padding: 5px;margin: 2px 0px;}
+.simple-chart-legends ul {}
+.simple-chart-legends ul li {display: inline;border-right: 1px solid #d6d7dd;float: left;padding: 10px;}
+.simple-chart-legends ul li:last-child {border-right: 0px;}
+.simple-chart-legends.vertical {margin: 0px 10px;}
+.simple-chart-legends.vertical ul li {display: block;border: 0px;border-bottom: 1px solid #d6d7dd;}
+.simple-chart-legends.vertical ul li:last-child {border-bottom: 0px;}
+.simple-chart-legends .legendvalue {padding-left: 2px;background: #fff;}
+/******Starts::Horizontal Alignment of Legends******/
+.simple-chart-Header {position: absolute;font-size: 16px;color:#333;font-weight:bold;}

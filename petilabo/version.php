@@ -1,3 +1,3 @@
 <?php
 	// Version de PetiLabo
-	define("_VERSION_PETILABO", "2.0.3");
+	define("_VERSION_PETILABO", "2.1.0");

@@ -1,4 +1,6 @@
 <?php
+	require_once(_PHP_PATH_INCLUDE."visites.php");
+	
 	// La classe moteur_site hérite de la classe moteur
 	class moteur_site extends moteur {
 	
@@ -32,6 +34,17 @@
 			
 			// Chargement de la langue
 			$this->charger_langue();
+			
+			// Comptage de la visite
+			$pa = $this->page->get_meta_pa();
+			if (strlen($pa) > 0) {
+				$analitix = new xml_analitix();
+				if (!($analitix)) {return;}
+				$config = $analitix->ouvrir($pa, true);
+				if (!($config)) {return;}
+				Visites::IP_a_bloquer($analitix->get_filtre_ip());
+				Visites::Ajouter_visite($this->nom_page, $this->langue_page);
+			}
 		}
 		public function ouvrir_entete() {
 			$tab_langues = array("href" => array(), "hreflang" =>array());

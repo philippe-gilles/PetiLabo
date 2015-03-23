@@ -3,13 +3,10 @@
 class xml_page {
 	// Propriétés
 	private $page = null;
-	private $meta_titre = null;
-	private $meta_descr = null;
-	private $meta_titre_editable = null;
-	private $meta_descr_editable = null;
-	private $meta_multilingue = null;
-	private $meta_noindex = null;
-	private $meta_ga = null;
+	private $meta_titre = null;private $meta_descr = null;
+	private $meta_titre_editable = null;private $meta_descr_editable = null;
+	private $meta_multilingue = null;private $meta_noindex = null;
+	private $meta_ga = null;private $meta_pa = null;
 	private $contenu = array();
 	private $librairie = array();
 	private $nb_actus = 0;
@@ -147,7 +144,9 @@ class xml_page {
 		return $ret;
 	}
 	public function get_meta_ga() {return $this->meta_ga;}
+	public function get_meta_pa() {return $this->meta_pa;}
 	public function get_nb_actus() {return $this->nb_actus;}
+	public function has_pa() {return ((strlen($this->meta_pa) > 0)?true:false);}
 	public function has_ga() {return ((strlen($this->meta_ga) > 0)?true:false);}
 	public function has_bx() {return $this->has_bx;}
 	public function has_rs() {return $this->has_rs;}
@@ -161,6 +160,7 @@ class xml_page {
 		$this->meta_titre_editable = $this->page->lire_valeur(_PAGE_META_TITRE_EDITABLE);
 		$this->meta_descr_editable = $this->page->lire_valeur(_PAGE_META_DESCR_EDITABLE);
 		$this->meta_ga = $this->page->lire_valeur(_PAGE_META_GOOGLE_ANALYTICS);
+		$this->meta_pa = $this->page->lire_valeur(_PAGE_META_PETILABO_ANALITIX);
 		$multilingue = trim(strtolower($this->page->lire_valeur(_PAGE_META_MULTILINGUE)));
 		$this->meta_multilingue = (strlen($multilingue) > 0)?$multilingue:_XML_TRUE;
 		$noindex = trim(strtolower($this->page->lire_valeur(_PAGE_META_NOINDEX)));

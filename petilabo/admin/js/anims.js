@@ -156,6 +156,16 @@ $(document).ready(function() {
 			tab.slideDown("slow").css("display", "block");
 		}
 	});
+	/* Onglets dans les statistiques de visites */
+	$("p.admin_onglets_stats a").click(function() {
+		var id = $(this).attr("id");
+		var tab = id.replace("onglet_", "");
+		$("p.admin_onglets_stats a").css("background", "#333").attr("href", "#");
+		$(this).css("background", "#666").removeAttr("href");
+		$("div.admin_courbe_stats").css("display", "none");
+		$("#"+tab).css("display", "block");
+		return false;
+	});
 	/* Onglets dans le formulaire texte */
 	$(document).on("click", "ul.tabs li", function() {
 		$("ul.tabs li").removeClass("active");
@@ -244,4 +254,7 @@ $(document).ready(function() {
 			else {$("#id_nb_nuits").html("pour "+nb_nuits+" nuits");}
 		}
 	});
+	$("#geoloc").css("display", "none");
 });
+
+$(window).load(function() {$("#visites_uniques").css("display", "none");$("#visites").css("display", "none");});

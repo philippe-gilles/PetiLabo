@@ -1,5 +1,6 @@
 <?php
 	// Chemins pour les inclusions
+	define("_DB_PATH_ROOT", "analitix/");
 	define("_XML_PATH_ROOT", "xml/");
 	define("_PHP_PATH_ROOT", "petilabo/");
 	define("_PHP_PATH_INCLUDE", _PHP_PATH_ROOT."inc/");
@@ -7,6 +8,7 @@
 	define("_PHP_PATH_SITE", _PHP_PATH_ROOT."site/");
 	define("_PHP_PREFIXE_OBJETS", "obj_");
 	define("_PHP_PREFIXE_SITE", "xml_");
+	define("_DB_EXT", ".db");
 	define("_PXP_EXT", ".php");
 
 	// Compatibilité ascendante < V2.0

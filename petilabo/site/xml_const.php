@@ -83,6 +83,7 @@
 	define("_PAGE_META_DESCR_EDITABLE", "meta_descr_editable");
 	define("_PAGE_META_MULTILINGUE", "meta_multilingue");
 	define("_PAGE_META_GOOGLE_ANALYTICS", "meta_google_analytics");
+	define("_PAGE_META_PETILABO_ANALITIX", "meta_petilabo_analitix");
 	define("_PAGE_META_NOINDEX", "meta_noindex");
 
 	// Balises éléments pour le fichier XML page
@@ -314,6 +315,21 @@
 	
 	// Attributs pour le fichier XML style
 	define("_DOCUMENT_ATTR_NOM", "nom");
+	
+	// Balises pour le fichier XML analitix (analitix.xml)
+	define("_ANALITIX_LISTE_IP", "liste_ip");
+	define("_ANALITIX_IP", "ip");
+	define("_ANALITIX_LISTE_PAYS", "liste_pays");
+	define("_ANALITIX_PAYS", "pays");
+	define("_ANALITIX_LISTE_REFERENTS", "liste_referents");
+	define("_ANALITIX_REFERENT", "referent");
+	define("_ANALITIX_CONFIG", "configuration");
+	define("_ANALITIX_CONFIG_FILTRE_IP", "filtre_ip");
+	define("_ANALITIX_CONFIG_FILTRE_PAYS", "filtre_pays");
+	define("_ANALITIX_CONFIG_FILTRE_REFERENTS", "filtre_referents");
+
+	// Attributs pour le fichier XML analitix
+	define("_ANALITIX_ATTR_NOM", "nom");
 
 	// Balises pour le fichier XML config mail
 	define("_MAIL_CONFIG_DELAI_SUCCES", "delai_apres_succes");
