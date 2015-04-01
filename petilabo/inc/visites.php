@@ -23,8 +23,8 @@ class Visites {
 		if (self::Is_bot($agent)) {return;}
 		$referer = self::Get_referer();
 		if (self::Is_spam($referer)) {return;}
-		$ip = strtoupper($langue).$ip;
 		$ip = ((self::Is_mobile($agent))?_DB_VISITES_INDICATEUR_MOBILE:"").$ip;
+		$ip = strtoupper($langue).$ip;
 		$ip .= _DB_VISITES_INDICATEUR_REFERER.(self::Beautify_referer($referer));
 		$date_courante = date("ymd");
 		$date_peremtion = date("ymd", strtotime("-"._DB_VISITES_DUREE_ARCHIVAGE." days"));
