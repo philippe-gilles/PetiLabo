@@ -73,7 +73,7 @@
 		}
 
 		public function ecrire_corps() {
-			$obj_admin = new obj_admin($this->nom_page, $this->page->get_meta_multilingue(), $this->site->get_nb_langues(), $this->page->get_meta_multilingue(), $this->page->get_meta_noindex());
+			$obj_admin = new obj_admin($this->nom_page, $this->page->get_meta_multilingue(), $this->site->get_nb_langues(), $this->page->get_meta_noindex());
 			if ($obj_admin) {
 				if ($this->config_analitix) {$obj_admin->ajouter_statistiques($this->config_analitix->get_filtre_pays(), $this->config_analitix->get_filtre_referents());}
 				$obj_admin->afficher(_PETILABO_MODE_EDIT, $this->langue_page);
