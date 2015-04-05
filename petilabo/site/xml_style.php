@@ -4,87 +4,77 @@ define("_PADDING_INT_BLOC_RIGHT", "10");
 define("_PADDING_INT_BLOC_BOTTOM", "10");
 define("_PADDING_INT_BLOC_LEFT", "10");
 
-class style_contenu {
-	// Propriétés
-	private $nom = null;
-	private $marge_haut = 0;private $marge_bas = 0;
-	private $couleur_fond = null;private $motif_fond = null;private $papierpeint_fond = null;
-	private $type_special = null;
-
-	public function __construct($nom) {$this->nom = $nom;}
-
-	// Manipulateurs
-	public function set_marge_haut($param) {$this->marge_haut = (int) $param;}
-	public function set_marge_bas($param) {$this->marge_bas = (int) $param;}
-	public function set_couleur_fond($param) {$this->couleur_fond = $param;}
-	public function set_motif_fond($param) {$this->motif_fond = $param;}
-	public function set_papierpeint_fond($param) {$this->papierpeint_fond = $param;}
-	public function set_type_special($param) {$this->type_special = $param;}
-
-	// Accesseurs
-	public function get_nom() {return $this->nom;}
-	public function get_marge_haut() {return $this->marge_haut;}
-	public function get_marge_bas() {return $this->marge_bas;}
-	public function get_couleur_fond() {return $this->couleur_fond;}
-	public function get_motif_fond() {return $this->motif_fond;}
-	public function get_papierpeint_fond() {return $this->papierpeint_fond;}
-	public function get_type_special() {return $this->type_special;}
+class style_contenu extends xml_abstract {
+	public function __construct($nom) {
+		$this->enregistrer_chaine("nom", $nom);
+		$this->enregistrer_entier("marge_haut", 0, _STYLE_CONTENU_MARGE_HAUT);
+		$this->enregistrer_entier("marge_bas", 0, _STYLE_CONTENU_MARGE_BAS);
+		$this->enregistrer_chaine("couleur_fond", null, _STYLE_CONTENU_COULEUR_FOND);
+		$this->enregistrer_chaine("motif_fond", null, _STYLE_CONTENU_MOTIF_FOND);
+		$this->enregistrer_chaine("papierpeint_fond", null, _STYLE_CONTENU_PAPIERPEINT_FOND);
+		$this->enregistrer_chaine("type_special", null, _STYLE_CONTENU_TYPE_SPECIAL);
+	}
 }
 
-class style_bloc {
-	// Propriétés
-	private $nom = null;
-	private $marge_haut = 0;private $marge_bas = 0;private $marge_gauche = 0;private $marge_droite = 0;
-	private $couleur_fond = null;private $motif_fond = null;private $papierpeint_fond = null;
-	private $bordure = null;private $type_bordure = null;
-	private $titre_bandeau = null;private $style_titre_bandeau = null;
-
-	public function __construct($nom) {$this->nom = $nom;}
-
-	// Manipulateurs
-	public function set_marge_haut($param) {$this->marge_haut = (int) $param;}
-	public function set_marge_bas($param) {$this->marge_bas = (int) $param;}
-	public function set_marge_gauche($param) {$this->marge_gauche = (int) $param;}
-	public function set_marge_droite($param) {$this->marge_droite = (int) $param;}
-	public function set_couleur_fond($param) {$this->couleur_fond = $param;}
-	public function set_motif_fond($param) {$this->motif_fond = $param;}
-	public function set_papierpeint_fond($param) {$this->papierpeint_fond = $param;}
-	public function set_bordure($param) {$this->bordure = $param;}
-	public function set_type_bordure($param) {$this->type_bordure = $param;}
-	public function set_titre_bandeau($param) {$this->titre_bandeau = $param;}
-	public function set_style_titre_bandeau($param) {$this->style_titre_bandeau = $param;}
-
-	// Accesseurs
-	public function get_nom() {return $this->nom;}
-	public function get_marge_haut() {return $this->marge_haut;}
-	public function get_marge_bas() {return $this->marge_bas;}
-	public function get_marge_gauche() {return $this->marge_gauche;}
-	public function get_marge_droite() {return $this->marge_droite;}
-	public function get_couleur_fond() {return $this->couleur_fond;}
-	public function get_motif_fond() {return $this->motif_fond;}
-	public function get_papierpeint_fond() {return $this->papierpeint_fond;}
-	public function get_bordure() {return $this->bordure;}
-	public function get_type_bordure() {return $this->type_bordure;}
-	public function get_titre_bandeau() {return $this->titre_bandeau;}
-	public function get_style_titre_bandeau() {return $this->style_titre_bandeau;}
+class style_bloc extends xml_abstract {
+	public function __construct($nom) {
+		$this->enregistrer_chaine("nom", $nom);
+		$this->enregistrer_entier("marge_haut", 0, _STYLE_BLOC_MARGE_HAUT);
+		$this->enregistrer_entier("marge_bas", 0, _STYLE_BLOC_MARGE_BAS);
+		$this->enregistrer_entier("marge_gauche", 0, _STYLE_BLOC_MARGE_GAUCHE);
+		$this->enregistrer_entier("marge_droite", 0, _STYLE_BLOC_MARGE_DROITE);
+		$this->enregistrer_chaine("couleur_fond", null, _STYLE_BLOC_COULEUR_FOND);
+		$this->enregistrer_chaine("motif_fond", null, _STYLE_BLOC_MOTIF_FOND);
+		$this->enregistrer_chaine("papierpeint_fond", null, _STYLE_BLOC_PAPIERPEINT_FOND);
+		$this->enregistrer_chaine("bordure");$this->enregistrer_chaine("type_bordure");
+	}
+}					
+					
+class style_formulaire extends xml_abstract {
+	public function __construct() {
+		$this->enregistrer_chaine("couleur_texte_champ", null, _STYLE_FORMULAIRE_TEXTE_CHAMP);
+		$this->enregistrer_chaine("couleur_fond_champ", null, _STYLE_FORMULAIRE_FOND_CHAMP);
+		$this->enregistrer_chaine("couleur_fond_saisie", null, _STYLE_FORMULAIRE_FOND_SAISIE);
+		$this->enregistrer_chaine("couleur_texte_bouton", null, _STYLE_FORMULAIRE_TEXTE_BOUTON);
+		$this->enregistrer_chaine("couleur_fond_bouton", null, _STYLE_FORMULAIRE_FOND_BOUTON);
+		$this->enregistrer_chaine("couleur_texte_statut", null, _STYLE_FORMULAIRE_TEXTE_STATUT);
+	}
+}
+					
+class style_actu extends xml_abstract {
+	public function __construct() {
+		$this->enregistrer_chaine("marge_gauche_titre", null, _STYLE_ACTUALITE_GAUCHE_TITRE);
+		$this->enregistrer_chaine("marge_haut_titre", null, _STYLE_ACTUALITE_HAUT_TITRE);
+		$this->enregistrer_chaine("couleur_titre", null, _STYLE_ACTUALITE_COULEUR_TITRE);
+		$this->enregistrer_chaine("fond_titre", null, _STYLE_ACTUALITE_FOND_TITRE);
+		$this->enregistrer_chaine("marge_gauche_sous_titre", null, _STYLE_ACTUALITE_GAUCHE_STITRE);
+		$this->enregistrer_chaine("marge_haut_sous_titre", null, _STYLE_ACTUALITE_HAUT_STITRE);
+		$this->enregistrer_chaine("couleur_sous_titre", null, _STYLE_ACTUALITE_COULEUR_STITRE);
+		$this->enregistrer_chaine("fond_sous_titre", null, _STYLE_ACTUALITE_FOND_STITRE);
+		$this->enregistrer_chaine("marge_gauche_resume", null, _STYLE_ACTUALITE_GAUCHE_RESUME);
+		$this->enregistrer_chaine("marge_haut_resume", null, _STYLE_ACTUALITE_HAUT_RESUME);
+		$this->enregistrer_chaine("couleur_resume", null, _STYLE_ACTUALITE_COULEUR_RESUME);
+		$this->enregistrer_chaine("fond_resume", null, _STYLE_ACTUALITE_FOND_RESUME);
+	}
 }
 
-class style_texte {
+class style_texte extends xml_abstract {
 	// Propriétés
 	private $police = null;private $src_police = null;private $famille_police = null;
-	private $couleur = null;private $couleur_lien = null;private $couleur_survol = null;
-	private $taille = 0;private $alignement = null;private $decoration = null;
+	private $alignement = null;private $decoration = null;
 
+	public function __construct() {
+		$this->enregistrer_chaine("couleur", null, _STYLE_TEXTE_COULEUR);
+		$this->enregistrer_chaine("couleur_lien", null, _STYLE_TEXTE_COULEUR_LIEN);
+		$this->enregistrer_chaine("couleur_survol", null, _STYLE_TEXTE_COULEUR_SURVOL);
+		$this->enregistrer_flottant("taille", 0, _STYLE_TEXTE_TAILLE);
+	}
 	// Manipulateurs
 	public function set_police($police, $famille_police, $src_police) {
 		$this->famille_police = strtolower($this->normaliser_famille_police($famille_police));
 		$this->src_police = $this->normaliser_src_police($src_police);
 		$this->police = $this->normaliser_police($police);
 	}
-	public function set_couleur($param) {$this->couleur = $param;}
-	public function set_couleur_lien($param) {$this->couleur_lien = $param;}
-	public function set_couleur_survol($param) {$this->couleur_survol = $param;}
-	public function set_taille($param) {$this->taille = (float) $param;}
 	public function set_alignement($param) {$this->alignement = $this->normaliser_alignement($param);}
 	public function set_decoration($param) {$this->decoration = $this->normaliser_decoration($param);}
 
@@ -92,10 +82,6 @@ class style_texte {
 	public function get_police() {return $this->police;}
 	public function get_src_police() {return $this->src_police;}
 	public function get_famille_police() {return $this->famille_police;}
-	public function get_couleur() {return $this->couleur;}
-	public function get_couleur_lien() {return $this->couleur_lien;}
-	public function get_couleur_survol() {return $this->couleur_survol;}
-	public function get_taille() {return $this->taille;}
 	public function get_alignement() {return $this->alignement;}
 	public function get_decoration() {return $this->decoration;}
 	
@@ -134,69 +120,6 @@ class style_texte {
 	}
 }
 
-class style_formulaire {
-	// Propriétés
-	private $couleur_texte_champ = null;
-	private $couleur_fond_champ = null;
-	private $couleur_fond_saisie = null;
-	private $couleur_texte_bouton = null;
-	private $couleur_fond_bouton = null;
-	private $couleur_texte_statut = null;
-
-	// Manipulateurs
-	public function set_couleur_texte_champ($param) {$this->couleur_texte_champ = $param;}
-	public function set_couleur_fond_champ($param) {$this->couleur_fond_champ = $param;}
-	public function set_couleur_fond_saisie($param) {$this->couleur_fond_saisie = $param;}
-	public function set_couleur_texte_bouton($param) {$this->couleur_texte_bouton = $param;}
-	public function set_couleur_fond_bouton($param) {$this->couleur_fond_bouton = $param;}
-	public function set_couleur_texte_statut($param) {$this->couleur_texte_statut = $param;}
-	// Accesseurs
-	public function get_couleur_texte_champ() {return $this->couleur_texte_champ;}
-	public function get_couleur_fond_champ() {return $this->couleur_fond_champ;}
-	public function get_couleur_fond_saisie() {return $this->couleur_fond_saisie;}
-	public function get_couleur_texte_bouton() {return $this->couleur_texte_bouton;}
-	public function get_couleur_fond_bouton() {return $this->couleur_fond_bouton;}
-	public function get_couleur_texte_statut() {return $this->couleur_texte_statut;}
-}
-
-class style_actu {
-	// Propriétés
-	private $marge_gauche_titre = null;private $marge_haut_titre = null;
-	private $couleur_titre = null;private $fond_titre = null;
-	private $marge_gauche_sous_titre = null;private $marge_haut_sous_titre = null;
-	private $couleur_sous_titre = null;private $fond_sous_titre = null;
-	private $marge_gauche_resume = null;private $marge_haut_resume = null;
-	private $couleur_resume = null;private $fond_resume = null;
-	
-	// Manipulateurs
-	public function set_marge_gauche_titre($param) {$this->marge_gauche_titre = $param;}
-	public function set_marge_haut_titre($param) {$this->marge_haut_titre = $param;}
-	public function set_couleur_titre($param) {$this->couleur_titre = $param;}
-	public function set_fond_titre($param) {$this->fond_titre = $param;}
-	public function set_marge_gauche_sous_titre($param) {$this->marge_gauche_sous_titre = $param;}
-	public function set_marge_haut_sous_titre($param) {$this->marge_haut_sous_titre = $param;}
-	public function set_couleur_sous_titre($param) {$this->couleur_sous_titre = $param;}
-	public function set_fond_sous_titre($param) {$this->fond_sous_titre = $param;}
-	public function set_marge_gauche_resume($param) {$this->marge_gauche_resume = $param;}
-	public function set_marge_haut_resume($param) {$this->marge_haut_resume = $param;}
-	public function set_couleur_resume($param) {$this->couleur_resume = $param;}
-	public function set_fond_resume($param) {$this->fond_resume = $param;}
-
-	// Accesseurs
-	public function get_marge_gauche_titre() {return $this->marge_gauche_titre;}
-	public function get_marge_haut_titre() {return $this->marge_haut_titre;}
-	public function get_couleur_titre() {return $this->couleur_titre;}
-	public function get_fond_titre() {return $this->fond_titre;}
-	public function get_marge_gauche_sous_titre() {return $this->marge_gauche_sous_titre;}
-	public function get_marge_haut_sous_titre() {return $this->marge_haut_sous_titre;}
-	public function get_couleur_sous_titre() {return $this->couleur_sous_titre;}
-	public function get_fond_sous_titre() {return $this->fond_sous_titre;}
-	public function get_marge_gauche_resume() {return $this->marge_gauche_resume;}
-	public function get_marge_haut_resume() {return $this->marge_haut_resume;}
-	public function get_couleur_resume() {return $this->couleur_resume;}
-	public function get_fond_resume() {return $this->fond_resume;}
-}
-
 class xml_style {
 	// Propriétés
 	private $styles_contenus = array();
@@ -216,20 +139,8 @@ class xml_style {
 			for ($cpt = 0;$cpt < $nb_styles; $cpt++) {
 				$nom = $xml_style->lire_n_attribut(_STYLE_CONTENU_ATTR_NOM, $cpt);
 				if (strlen($nom) > 0) {
-					$marge_haut = $xml_style->lire_n_valeur(_STYLE_CONTENU_MARGE_HAUT, $cpt);
-					$marge_bas = $xml_style->lire_n_valeur(_STYLE_CONTENU_MARGE_BAS, $cpt);
-					$couleur_fond = $xml_style->lire_n_valeur(_STYLE_CONTENU_COULEUR_FOND, $cpt);
-					$motif_fond = $xml_style->lire_n_valeur(_STYLE_CONTENU_MOTIF_FOND, $cpt);
-					$papierpeint_fond = $xml_style->lire_n_valeur(_STYLE_CONTENU_PAPIERPEINT_FOND, $cpt);
-					$type_special = $xml_style->lire_n_valeur(_STYLE_CONTENU_TYPE_SPECIAL, $cpt);
-					// Création du style de bloc
 					$style = new style_contenu($nom);
-					$style->set_marge_haut($marge_haut);
-					$style->set_marge_bas($marge_bas);
-					$style->set_couleur_fond($couleur_fond);
-					$style->set_motif_fond($motif_fond);
-					$style->set_papierpeint_fond($papierpeint_fond);
-					$style->set_type_special($type_special);
+					$style->load($xml_style, $cpt);
 					$this->styles_contenus[$nom] = $style;
 				}
 			}
@@ -240,13 +151,8 @@ class xml_style {
 			for ($cpt = 0;$cpt < $nb_styles; $cpt++) {
 				$nom = $xml_style->lire_n_attribut(_STYLE_BLOC_ATTR_NOM, $cpt);
 				if (strlen($nom) > 0) {
-					$marge_haut = $xml_style->lire_n_valeur(_STYLE_BLOC_MARGE_HAUT, $cpt);
-					$marge_bas = $xml_style->lire_n_valeur(_STYLE_BLOC_MARGE_BAS, $cpt);
-					$marge_gauche = $xml_style->lire_n_valeur(_STYLE_BLOC_MARGE_GAUCHE, $cpt);
-					$marge_droite = $xml_style->lire_n_valeur(_STYLE_BLOC_MARGE_DROITE, $cpt);
-					$couleur_fond = $xml_style->lire_n_valeur(_STYLE_BLOC_COULEUR_FOND, $cpt);
-					$motif_fond = $xml_style->lire_n_valeur(_STYLE_BLOC_MOTIF_FOND, $cpt);
-					$papierpeint_fond = $xml_style->lire_n_valeur(_STYLE_BLOC_PAPIERPEINT_FOND, $cpt);
+					$style = new style_bloc($nom);
+					$style->load($xml_style, $cpt);
 					$bordure = $xml_style->lire_n_valeur(_STYLE_BLOC_BORDURE, $cpt);
 					// En cas de bordure on va lire le type de bordure
 					if (strlen($bordure) > 0) {
@@ -259,17 +165,7 @@ class xml_style {
 					else {
 						$type_bordure = null;
 					}
-					// Création du style de bloc
-					$style = new style_bloc($nom);
-					$style->set_marge_haut($marge_haut);
-					$style->set_marge_bas($marge_bas);
-					$style->set_marge_gauche($marge_gauche);
-					$style->set_marge_droite($marge_droite);
-					$style->set_couleur_fond($couleur_fond);
-					$style->set_motif_fond($motif_fond);
-					$style->set_papierpeint_fond($papierpeint_fond);
-					$style->set_bordure($bordure);
-					$style->set_type_bordure($type_bordure);
+					$style->set_bordure($bordure);$style->set_type_bordure($type_bordure);
 					$this->styles_blocs[$nom] = $style;
 				}
 			}
@@ -280,10 +176,8 @@ class xml_style {
 			for ($cpt = 0;$cpt < $nb_styles; $cpt++) {
 				$nom = $xml_style->lire_n_attribut(_STYLE_TEXTE_ATTR_NOM, $cpt);
 				if (strlen($nom) > 0) {
-					$couleur = $xml_style->lire_n_valeur(_STYLE_TEXTE_COULEUR, $cpt);
-					$couleur_lien = $xml_style->lire_n_valeur(_STYLE_TEXTE_COULEUR_LIEN, $cpt);
-					$couleur_survol = $xml_style->lire_n_valeur(_STYLE_TEXTE_COULEUR_SURVOL, $cpt);
-					$taille = $xml_style->lire_n_valeur(_STYLE_TEXTE_TAILLE, $cpt);
+					$style = new style_texte();
+					$style->load($xml_style, $cpt);
 					$alignement = $xml_style->lire_n_valeur(_STYLE_TEXTE_ALIGNEMENT, $cpt);
 					$decoration = $xml_style->lire_n_valeur(_STYLE_TEXTE_DECORATION, $cpt);
 					$police = $xml_style->lire_n_valeur(_STYLE_TEXTE_POLICE, $cpt);
@@ -299,15 +193,8 @@ class xml_style {
 					else {
 						$src_police = null;$famille_police = null;
 					}
-					// Création du style de texte
-					$style = new style_texte();
 					$style->set_police($police, $famille_police, $src_police);
-					$style->set_couleur($couleur);
-					$style->set_couleur_lien($couleur_lien);
-					$style->set_couleur_survol($couleur_survol);
-					$style->set_taille($taille);
-					$style->set_alignement($alignement);
-					$style->set_decoration($decoration);
+					$style->set_alignement($alignement);$style->set_decoration($decoration);
 					$this->styles_textes[$nom] = $style;
 				}
 			}
@@ -318,20 +205,8 @@ class xml_style {
 			for ($cpt = 0;$cpt < $nb_styles; $cpt++) {
 				$nom = $xml_style->lire_n_attribut(_STYLE_FORMULAIRE_ATTR_NOM, $cpt);
 				if (strlen($nom) > 0) {
-					$couleur_texte_champ = $xml_style->lire_n_valeur(_STYLE_FORMULAIRE_TEXTE_CHAMP, $cpt);
-					$couleur_fond_champ = $xml_style->lire_n_valeur(_STYLE_FORMULAIRE_FOND_CHAMP, $cpt);
-					$couleur_fond_saisie = $xml_style->lire_n_valeur(_STYLE_FORMULAIRE_FOND_SAISIE, $cpt);
-					$couleur_texte_bouton = $xml_style->lire_n_valeur(_STYLE_FORMULAIRE_TEXTE_BOUTON, $cpt);
-					$couleur_fond_bouton = $xml_style->lire_n_valeur(_STYLE_FORMULAIRE_FOND_BOUTON, $cpt);
-					$couleur_texte_statut = $xml_style->lire_n_valeur(_STYLE_FORMULAIRE_TEXTE_STATUT, $cpt);
-					// Création du style de formulaire
 					$style = new style_formulaire();
-					$style->set_couleur_texte_champ($couleur_texte_champ);
-					$style->set_couleur_fond_champ($couleur_fond_champ);
-					$style->set_couleur_fond_saisie($couleur_fond_saisie);
-					$style->set_couleur_texte_bouton($couleur_texte_bouton);
-					$style->set_couleur_fond_bouton($couleur_fond_bouton);
-					$style->set_couleur_texte_statut($couleur_texte_statut);
+					$style->load($xml_style, $cpt);
 					$this->styles_formulaires[$nom] = $style;
 				}
 			}
@@ -342,37 +217,13 @@ class xml_style {
 			for ($cpt = 0;$cpt < $nb_styles; $cpt++) {
 				$nom = $xml_style->lire_n_attribut(_STYLE_ACTUALITE_ATTR_NOM, $cpt);
 				if (strlen($nom) > 0) {
-					$marge_gauche_titre = $xml_style->lire_n_valeur(_STYLE_ACTUALITE_GAUCHE_TITRE, $cpt);
-					$marge_haut_titre = $xml_style->lire_n_valeur(_STYLE_ACTUALITE_HAUT_TITRE, $cpt);
-					$couleur_titre = $xml_style->lire_n_valeur(_STYLE_ACTUALITE_COULEUR_TITRE, $cpt);
-					$fond_titre = $xml_style->lire_n_valeur(_STYLE_ACTUALITE_FOND_TITRE, $cpt);
-					$marge_gauche_sous_titre = $xml_style->lire_n_valeur(_STYLE_ACTUALITE_GAUCHE_STITRE, $cpt);
-					$marge_haut_sous_titre = $xml_style->lire_n_valeur(_STYLE_ACTUALITE_HAUT_STITRE, $cpt);
-					$couleur_sous_titre = $xml_style->lire_n_valeur(_STYLE_ACTUALITE_COULEUR_STITRE, $cpt);
-					$fond_sous_titre = $xml_style->lire_n_valeur(_STYLE_ACTUALITE_FOND_STITRE, $cpt);
-					$marge_gauche_resume = $xml_style->lire_n_valeur(_STYLE_ACTUALITE_GAUCHE_RESUME, $cpt);
-					$marge_haut_resume = $xml_style->lire_n_valeur(_STYLE_ACTUALITE_HAUT_RESUME, $cpt);
-					$couleur_resume = $xml_style->lire_n_valeur(_STYLE_ACTUALITE_COULEUR_RESUME, $cpt);
-					$fond_resume = $xml_style->lire_n_valeur(_STYLE_ACTUALITE_FOND_RESUME, $cpt);
 					// Création du style d'actualité
 					$style = new style_actu();
-					$style->set_marge_gauche_titre($marge_gauche_titre);
-					$style->set_marge_haut_titre($marge_haut_titre);
-					$style->set_couleur_titre($couleur_titre);
-					$style->set_fond_titre($fond_titre);
-					$style->set_marge_gauche_sous_titre($marge_gauche_sous_titre);
-					$style->set_marge_haut_sous_titre($marge_haut_sous_titre);
-					$style->set_couleur_sous_titre($couleur_sous_titre);
-					$style->set_fond_sous_titre($fond_sous_titre);
-					$style->set_marge_gauche_resume($marge_gauche_resume);
-					$style->set_marge_haut_resume($marge_haut_resume);
-					$style->set_couleur_resume($couleur_resume);
-					$style->set_fond_resume($fond_resume);
+					$style->load($xml_style, $cpt);
 					$this->styles_actus[$nom] = $style;
 				}
 			}
 		}
-
 		return $ret;
 	}
 

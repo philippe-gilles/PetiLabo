@@ -1,60 +1,39 @@
 <?php
 
-class xml_site {
-	// Propriétés issues du fichier site.xml
-	private $style_paragraphe = null;
-	private $style_titre_1 = null;private $style_titre_2 = null;private $style_titre_3 = null;
-	private $couleur_exterieur = null;private $motif_exterieur = null;private $papierpeint_exterieur = null;
-	private $couleur_interieur = null;private $motif_interieur = null;
-	private $largeur = null;private $largeur_max = null;private $largeur_responsive = null;private $largeur_min = null;
-
-	// Propriétés issues du fichier general.xml
-	private $url_racine = null;
-	private $proprietaire = null;private $adresse = null;private $telephone = null;
-	private $rcs = null;private $siret = null;
-	private $redacteur = null;private $hebergeur = null;
-	private $cnil = null;
+class xml_site extends xml_abstract {
 	private $codes_langues = array();
 	private $modules = array();
 	private $plan = array();
 	private $social = array();
 	private $loi_cookie = null;
-	private $pied_de_page = null;
 
+	public function __construct() {
+		// Propriétés issues du fichier site.xml
+		$this->enregistrer_chaine("style_titre_1", null);$this->enregistrer_chaine("style_titre_2", null);
+		$this->enregistrer_chaine("style_titre_3", null);$this->enregistrer_chaine("style_paragraphe", null);
+		$this->enregistrer_chaine("couleur_exterieur", null);$this->enregistrer_chaine("motif_exterieur", null);
+		$this->enregistrer_chaine("papierpeint_exterieur", null);$this->enregistrer_chaine("couleur_interieur", null);
+		$this->enregistrer_chaine("motif_interieur", null);$this->enregistrer_chaine("largeur", null);
+		$this->enregistrer_chaine("largeur_max", null);$this->enregistrer_chaine("largeur_responsive", null);
+		$this->enregistrer_chaine("largeur_min", null);
+		// Propriétés issues du fichier general.xml
+		$this->enregistrer_chaine("url_racine", null);$this->enregistrer_chaine("proprietaire", null);
+		$this->enregistrer_chaine("adresse", null);$this->enregistrer_chaine("telephone", null);
+		$this->enregistrer_chaine("rcs", null);$this->enregistrer_chaine("siret", null);
+		$this->enregistrer_chaine("redacteur", null);$this->enregistrer_chaine("hebergeur", null);
+		$this->enregistrer_chaine("cnil", null);$this->enregistrer_chaine("pied_de_page", null);
+	}
 	// Accesseurs
-	public function get_style_titre_1() {return $this->style_titre_1;}
-	public function get_style_titre_2() {return $this->style_titre_2;}
-	public function get_style_titre_3() {return $this->style_titre_3;}
 	public function get_style_titre($niveau) {
 		switch ($niveau) {
-			case 1 : $ret = $this->style_titre_1;break;
-			case 2 : $ret = $this->style_titre_2;break;
-			case 3 : $ret = $this->style_titre_3;break;
+			case 1 : $ret = $this->get_style_titre_1();break;
+			case 2 : $ret = $this->get_style_titre_2();break;
+			case 3 : $ret = $this->get_style_titre_3();break;
 			default : $ret = null;
 		}
 		return $ret;
 	}
-	public function get_style_paragraphe() {return $this->style_paragraphe;}
-	public function get_couleur_exterieur() {return $this->couleur_exterieur;}
-	public function get_motif_exterieur() {return $this->motif_exterieur;}
-	public function get_papierpeint_exterieur() {return $this->papierpeint_exterieur;}
-	public function get_couleur_interieur() {return $this->couleur_interieur;}
-	public function get_motif_interieur() {return $this->motif_interieur;}
-	public function get_largeur() {return $this->largeur;}
-	public function get_largeur_max() {return $this->largeur_max;}
-	public function get_largeur_responsive() {return $this->largeur_responsive;}
-	public function get_largeur_min() {return $this->largeur_min;}
-	public function get_url_racine() {return $this->url_racine;}
-	public function get_proprietaire() {return $this->proprietaire;}
-	public function get_adresse() {return $this->adresse;}
-	public function get_telephone() {return $this->telephone;}
-	public function get_rcs() {return $this->rcs;}
-	public function get_siret() {return $this->siret;}
-	public function get_redacteur() {return $this->redacteur;}
-	public function get_hebergeur() {return $this->hebergeur;}
-	public function get_cnil() {return $this->cnil;}
 	public function get_social() {return $this->social;}
-	public function get_pied_de_page() {return $this->pied_de_page;}
 	public function get_nb_langues() {return count($this->codes_langues);}
 	public function get_code_langue($index) {return $this->codes_langues[$index];}
 	public function has_social() {return ((count($this->social) > 0)?true:false);}
@@ -146,24 +125,15 @@ class xml_site {
 			if (strlen($lien) > 0) {$this->social[_SITE_SOCIAL_FLICKR]=$lien;}
 
 			// Autres éléments du fichier general.xml
-			$racine = $xml_site->lire_valeur(_SITE_RACINE);
-			$this->url_racine = (strlen($racine) > 0)?$racine:$this->url_racine;
-			$proprietaire = $xml_site->lire_valeur(_SITE_PROPRIETAIRE);
-			$this->proprietaire = (strlen($proprietaire) > 0)?$proprietaire:$this->proprietaire;
-			$adresse = $xml_site->lire_valeur(_SITE_ADR_PROPRIETAIRE);
-			$this->adresse = (strlen($adresse) > 0)?$adresse:$this->adresse;
-			$telephone = $xml_site->lire_valeur(_SITE_TEL_PROPRIETAIRE);
-			$this->telephone = (strlen($telephone) > 0)?$telephone:$this->telephone;
-			$rcs = $xml_site->lire_valeur(_SITE_RCS_PROPRIETAIRE);
-			$this->rcs = (strlen($rcs) > 0)?$rcs:$this->rcs;
-			$siret = $xml_site->lire_valeur(_SITE_SIRET_PROPRIETAIRE);
-			$this->siret = (strlen($siret) > 0)?$siret:$this->siret;
-			$redacteur = $xml_site->lire_valeur(_SITE_REDACTEUR);
-			$this->redacteur = (strlen($redacteur) > 0)?$redacteur:$this->redacteur;
-			$hebergeur = $xml_site->lire_valeur(_SITE_HEBERGEUR);
-			$this->hebergeur = (strlen($hebergeur) > 0)?$hebergeur:$this->hebergeur;
-			$cnil = $xml_site->lire_valeur(_SITE_CNIL);
-			$this->cnil = (strlen($cnil) > 0)?$cnil:$this->cnil;
+			$this->ins_url_racine($xml_site->lire_valeur(_SITE_RACINE));
+			$this->ins_proprietaire($xml_site->lire_valeur(_SITE_PROPRIETAIRE));
+			$this->ins_adresse($xml_site->lire_valeur(_SITE_ADR_PROPRIETAIRE));
+			$this->ins_telephone($xml_site->lire_valeur(_SITE_TEL_PROPRIETAIRE));
+			$this->ins_rcs($xml_site->lire_valeur(_SITE_RCS_PROPRIETAIRE));
+			$this->ins_siret($xml_site->lire_valeur(_SITE_SIRET_PROPRIETAIRE));
+			$this->ins_redacteur($xml_site->lire_valeur(_SITE_REDACTEUR));
+			$this->ins_hebergeur($xml_site->lire_valeur(_SITE_HEBERGEUR));
+			$this->ins_cnil($xml_site->lire_valeur(_SITE_CNIL));
 			$loi_cookie = $xml_site->lire_valeur(_SITE_LOI_COOKIE);
 			if (strlen($loi_cookie) > 0) {
 				if ((strcmp($loi_cookie, _SITE_ATTR_LOI_COOKIE_MOYEN)) && (strcmp($loi_cookie, _SITE_ATTR_LOI_COOKIE_FORT))) {
@@ -173,63 +143,61 @@ class xml_site {
 					$this->loi_cookie = $loi_cookie;
 				}
 			}
-			$pdp = $xml_site->lire_valeur(_SITE_PIED_DE_PAGE);
-			$this->pied_de_page = (strlen($pdp) > 0)?$pdp:$this->pied_de_page;
+			$this->ins_pied_de_page($xml_site->lire_valeur(_SITE_PIED_DE_PAGE));
 
 			// Elements du fichier site.xml
-			$this->style_titre_1 = $xml_site->lire_valeur(_SITE_STYLE_TITRE_1);
-			$this->style_titre_2 = $xml_site->lire_valeur(_SITE_STYLE_TITRE_2);
-			$this->style_titre_3 = $xml_site->lire_valeur(_SITE_STYLE_TITRE_3);
-			$this->style_paragraphe = $xml_site->lire_valeur(_SITE_STYLE_TEXTE);
-			$this->couleur_exterieur = $xml_site->lire_valeur(_SITE_COULEUR_EXTERIEUR);
-			$this->motif_exterieur = $xml_site->lire_valeur(_SITE_MOTIF_EXTERIEUR);
-			$this->papierpeint_exterieur = $xml_site->lire_valeur(_SITE_PAPIERPEINT_EXTERIEUR);
-			$this->couleur_interieur = $xml_site->lire_valeur(_SITE_COULEUR_INTERIEUR);
-			$this->motif_interieur = $xml_site->lire_valeur(_SITE_MOTIF_INTERIEUR);
-			$this->largeur = $xml_site->lire_valeur(_SITE_LARGEUR);
-			$this->largeur_max = $xml_site->lire_valeur(_SITE_LARGEUR_MAX);
-			$this->largeur_responsive = $xml_site->lire_valeur(_SITE_LARGEUR_RESPONSIVE);
-			$this->largeur_min = $xml_site->lire_valeur(_SITE_LARGEUR_MIN);
+			$this->set_style_titre_1($xml_site->lire_valeur(_SITE_STYLE_TITRE_1));
+			$this->set_style_titre_2($xml_site->lire_valeur(_SITE_STYLE_TITRE_2));
+			$this->set_style_titre_3($xml_site->lire_valeur(_SITE_STYLE_TITRE_3));
+			$this->set_style_paragraphe($xml_site->lire_valeur(_SITE_STYLE_TEXTE));
+			$this->set_couleur_exterieur($xml_site->lire_valeur(_SITE_COULEUR_EXTERIEUR));
+			$this->set_motif_exterieur($xml_site->lire_valeur(_SITE_MOTIF_EXTERIEUR));
+			$this->set_papierpeint_exterieur($xml_site->lire_valeur(_SITE_PAPIERPEINT_EXTERIEUR));
+			$this->set_couleur_interieur($xml_site->lire_valeur(_SITE_COULEUR_INTERIEUR));
+			$this->set_motif_interieur($xml_site->lire_valeur(_SITE_MOTIF_INTERIEUR));
+			$this->set_largeur($xml_site->lire_valeur(_SITE_LARGEUR));
+			$this->set_largeur_max($xml_site->lire_valeur(_SITE_LARGEUR_MAX));
+			$this->set_largeur_responsive($xml_site->lire_valeur(_SITE_LARGEUR_RESPONSIVE));
+			$this->set_largeur_min($xml_site->lire_valeur(_SITE_LARGEUR_MIN));
 		}
 		return $ret;
 	}
 
 	public function extraire_css() {
 		$ret = ".exterieur {";
-		if (strlen($this->papierpeint_exterieur) > 0) {
-			$ret .= "background: url('"._XML_PATH_IMAGES_SITE.$this->papierpeint_exterieur."') no-repeat center center fixed;";
+		if (strlen($this->get_papierpeint_exterieur()) > 0) {
+			$ret .= "background: url('"._XML_PATH_IMAGES_SITE.$this->get_papierpeint_exterieur()."') no-repeat center center fixed;";
 			$ret .= "-webkit-background-size: cover;";
 			$ret .= "-moz-background-size: cover;";
 			$ret .= "-o-background-size: cover;";
 			$ret .= "background-size: cover;";
 		}
-		elseif (strlen($this->motif_exterieur) > 0) {
-			$ret .= "background:url('"._XML_PATH_IMAGES_SITE.$this->motif_exterieur."') repeat;";
+		elseif (strlen($this->get_motif_exterieur()) > 0) {
+			$ret .= "background:url('"._XML_PATH_IMAGES_SITE.$this->get_motif_exterieur()."') repeat;";
 		}
-		elseif (strlen($this->couleur_exterieur)) {
-			$ret .= "background:".$this->couleur_exterieur.";";
+		elseif (strlen($this->get_couleur_exterieur())) {
+			$ret .= "background:".$this->get_couleur_exterieur().";";
 		}
 		$ret .= "}"._CSS_FIN_LIGNE;
 		
 		$ret .= ".interieur {";
-		if (strlen($this->motif_interieur) > 0) {
-			$ret .= "background:url('"._XML_PATH_IMAGES_SITE.$this->motif_interieur."') repeat;";
+		if (strlen($this->get_motif_interieur()) > 0) {
+			$ret .= "background:url('"._XML_PATH_IMAGES_SITE.$this->get_motif_interieur()."') repeat;";
 		}
-		elseif (strlen($this->couleur_interieur)) {
-			$ret .= "background:".$this->couleur_interieur.";";
+		elseif (strlen($this->get_couleur_interieur())) {
+			$ret .= "background:".$this->get_couleur_interieur().";";
 		}
 		$ret .= "}"._CSS_FIN_LIGNE;
 		// Partie responsive
-		if (strlen($this->largeur_responsive) > 0) {
-			$ret .= "@media screen and (max-width:".$this->largeur_responsive.") {";
+		if (strlen($this->get_largeur_responsive()) > 0) {
+			$ret .= "@media screen and (max-width:".$this->get_largeur_responsive().") {";
 			$ret .= ".bloc{display:block!important;width:96%!important;padding:0 2%!important;}}"._CSS_FIN_LIGNE;
 		}
 		return $ret;
 	}
-
 	public function extraire_css_ie() {
 		$ret = "";
-		$papierpeint = $this->papierpeint_exterieur;
+		$papierpeint = $this->get_papierpeint_exterieur();
 		if (strlen($papierpeint) > 0) {
 			list($largeur_pp, $hauteur_pp) = @getimagesize(_XML_PATH_IMAGES_SITE.$papierpeint);
 			if (($largeur_pp > 0) && ($hauteur_pp > 0)) {

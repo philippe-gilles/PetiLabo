@@ -1,30 +1,10 @@
 <?php
 
-class document {
-	// Propriétés
-	private $fichier = null;
-	private $info = null;
-	private $legende = null;
-
-	public function set_fichier($param) {
-		$this->fichier = $param;
-	}
-	public function set_info($param) {
-		$this->info = $param;
-	}
-	public function set_legende($param) {
-		$this->legende = $param;
-	}
-	
-	// Accesseurs
-	public function get_fichier() {
-		return $this->fichier;
-	}
-	public function get_info() {
-		return $this->info;
-	}
-	public function get_legende() {
-		return $this->legende;
+class document extends xml_abstract {
+	public function __construct() {
+		$this->enregistrer_chaine("fichier", null);
+		$this->enregistrer_chaine("info", null);
+		$this->enregistrer_chaine("legende", null);
 	}
 }
 
@@ -45,32 +25,21 @@ class xml_document {
 					$fichier = $xml_doc->lire_n_valeur(_DOCUMENT_DOC_FICHIER, $cpt);
 					$info = $xml_doc->lire_n_valeur(_DOCUMENT_DOC_INFO, $cpt);
 					$legende = $xml_doc->lire_n_valeur(_DOCUMENT_DOC_LEGENDE, $cpt);
-
 					// Création de l'objet document si le nom de fichier n'est pas vide
 					if (strlen($fichier) > 0) {
 						$doc = new document();
 						$doc->set_fichier(_XML_PATH_FICHIERS.$fichier);
-						if (strlen($info) > 0) {
-							$doc->set_info($info);
-						}
-						if (strlen($legende) > 0) {
-							$doc->set_legende($legende);
-						}
+						$doc->ins_info($info);$doc->ins_legende($legende);
 						$this->docs[$nom] = $doc;
 					}
 				}
 			}
 		}
-
 		return $ret;
 	}
-	
 	function get_document($nom) {
 		$ret = null;
-		if (array_key_exists($nom, $this->docs)) {
-			$ret = $this->docs[$nom];
-		}
-		
+		if (array_key_exists($nom, $this->docs)) {$ret = $this->docs[$nom];}
 		return $ret;
 	}
 }

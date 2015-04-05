@@ -121,32 +121,15 @@ class xml_texte {
 		}
 		return $ret;
 	}
-	public function get_label_precedent($langue) {return $this->get_texte("trad_petilabo_precedent", $langue);}
-	public function get_label_suivant($langue) {return $this->get_texte("trad_petilabo_suivant", $langue);}
-	public function get_label_fermer($langue) {return $this->get_texte("trad_petilabo_fermer", $langue);}
-	public function get_label_nom($langue) {return $this->get_texte("trad_petilabo_nom", $langue);}
-	public function get_label_prenom($langue) {return $this->get_texte("trad_petilabo_prenom", $langue);}
-	public function get_label_tel($langue) {return $this->get_texte("trad_petilabo_tel", $langue);}
-	public function get_label_email($langue) {return $this->get_texte("trad_petilabo_email", $langue);}
-	public function get_label_message($langue) {return $this->get_texte("trad_petilabo_message", $langue);}
-	public function get_label_captcha($langue) {return $this->get_texte("trad_petilabo_captcha", $langue);}
-	public function get_label_envoyer($langue) {return $this->get_texte("trad_petilabo_envoyer", $langue);}
-	public function get_label_mentions($langue) {return $this->get_texte("trad_petilabo_mentions", $langue);}
-	public function get_label_credits($langue) {return $this->get_texte("trad_petilabo_credits", $langue);}
-	public function get_label_plan($langue) {return $this->get_texte("trad_petilabo_plan", $langue);}
-	public function get_label_webmaster($langue) {return $this->get_texte("trad_petilabo_webmaster", $langue);}
-	public function get_label_pied_de_page($langue) {return $this->get_texte("trad_petilabo_pied_de_page", $langue);}
-	public function get_label_social($langue) {return $this->get_texte("trad_petilabo_social", $langue);}
-	public function get_label_accesskey($langue) {return $this->get_texte("trad_petilabo_accesskey", $langue);}
-	public function get_label_appeler_tel($langue) {return $this->get_texte("trad_petilabo_appeler_tel", $langue);}
-	public function get_label_appeler_skype($langue) {return $this->get_texte("trad_petilabo_appeler_skype", $langue);}
-	public function get_label_le_site($langue) {return $this->get_texte("trad_petilabo_le_site", $langue);}
-	public function get_label_installer_ga($langue) {return $this->get_texte("trad_petilabo_installer_ga", $langue);}
-	public function get_label_utiliser_ga($langue) {return $this->get_texte("trad_petilabo_utiliser_ga", $langue);}
-	public function get_label_poursuite_ga($langue) {return $this->get_texte("trad_petilabo_poursuite", $langue);}
-	public function get_label_accepter($langue) {return $this->get_texte("trad_petilabo_accepter", $langue);}
-	public function get_label_refuser($langue) {return $this->get_texte("trad_petilabo_refuser", $langue);}
-	
+	// Fonction générique pour les appels à la traduction
+	public function __call($methode, $arguments) {
+		if (!(strncmp($methode, "get_label_", 10))) {
+			$identifiant = "trad_petilabo_".substr($methode, 10);
+			$langue = $arguments[0];
+			return $this->get_texte($identifiant, $langue);
+		}
+		else {var_dump("ERREUR", $methode, $arguments);echo "<br/>\n";}
+	}	
 	public function get_tab_mois($langue) {return self::$tab_mois[$langue];}
 	public function get_tab_semaine($langue) {return self::$tab_semaine[$langue];}
 	public function get_tab_statut_resa($langue) {return self::$tab_statut_resa[$langue];}

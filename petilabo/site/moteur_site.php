@@ -122,7 +122,7 @@
 				else {
 					$texte_ga = $this->texte->get_label_utiliser_ga($this->langue_page);
 				}
-				$poursuite = $this->texte->get_label_poursuite_ga($this->langue_page);
+				$poursuite = $this->texte->get_label_poursuite($this->langue_page);
 				$accepter = $this->texte->get_label_accepter($this->langue_page);
 				$refuser = $this->texte->get_label_refuser($this->langue_page);
 				if (!($this->cookies->is_set())) {

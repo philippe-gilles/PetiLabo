@@ -6,18 +6,19 @@ define("_IMAGE_EXTENSION_JPG", "jpg");
 define("_IMAGE_EXTENSION_PNG", "png");
 define("_IMAGE_EXTENSION_GIF", "gif");
 
-class style_media {
-	// Propriétés
-	private $nom = null;
+class style_media extends xml_abstract {
 	private $marge_ext_haut = 0;private $marge_ext_bas = 0;private $marge_ext_gauche = 0;private $marge_ext_droite = 0;
 	private $marge_int_haut = 0;private $marge_int_bas = 0;private $marge_int_gauche = 0;private $marge_int_droite = 0;
-	private $couleur_fond = null;private $couleur_texte = null;private $survol = false;
-	private $style_texte = null;private $lien_souligne = false;private $niveau_titre = 0;
+	private $survol = false;private $lien_souligne = false;private $niveau_titre = 0;
 	
 	// Constructeur
 	public function __construct($nom) {
-		$this->nom = $nom;
+		$this->enregistrer_chaine("nom", $nom);
+		$this->enregistrer_chaine("style_texte", $nom, _MEDIA_STYLE_LEGENDE_STYLE_TEXTE);
+		$this->enregistrer_chaine("couleur_fond", $nom, _MEDIA_STYLE_LEGENDE_COULEUR_FOND);
+		$this->enregistrer_chaine("couleur_texte", $nom, _MEDIA_STYLE_LEGENDE_COULEUR_TEXTE);
 	}
+
 	// Manipulateurs
 	public function set_marge_haut($param) {
 		if ($param >= 0) {
@@ -59,9 +60,6 @@ class style_media {
 			$this->marge_ext_droite = - ((float) $param);
 		}
 	}
-	public function set_couleur_fond($param) {$this->couleur_fond = $param;}
-	public function set_couleur_texte($param) {$this->couleur_texte = $param;}
-	public function set_style_texte($param) {$this->style_texte = $param;}
 
 	public function set_lien_souligne($param) {
 		$str = trim(strtolower($param));
@@ -80,7 +78,6 @@ class style_media {
 	}
 
 	// Accesseurs
-	public function get_nom() {return $this->nom;}
 	public function get_marge_int_haut() {return $this->marge_int_haut;}
 	public function get_marge_int_bas() {return $this->marge_int_bas;}
 	public function get_marge_int_gauche() {return $this->marge_int_gauche;}
@@ -105,89 +102,48 @@ class style_media {
 		$ret = ($marges_ext > 0)?true:false;
 		return $ret;
 	}
-	public function get_couleur_fond() {return $this->couleur_fond;}
-	public function get_couleur_texte() {return $this->couleur_texte;}
-	public function get_style_texte() {return $this->style_texte;}
 	public function get_lien_souligne() {return $this->lien_souligne;}
 	public function get_niveau_titre() {return $this->niveau_titre;}
 	public function get_survol() {return $this->survol;}
 }
 
-class img_media {
-	// Propriétés
-	private $nom = null;private $source = null;
-	private $src = null;private $src_reduite = null;
-	private $dest = null;private $dest_reduite = null;
-	private $alt = null;private $legende = null;private $copyright = null;
-	private $lien = null;
-	private $width_standard = 0;private $height_standard = 0;
-	private $width_reduite = 0;private $height_reduite = 0;
-	private $width = 0;private $height = 0;
-	private $style_legende = null;
-	private $base = null;private $version = 0;
-
+class img_media extends xml_abstract {
 	public function __construct($source, $nom) {
-		$this->source = $source;
-		$this->nom = $nom;
+		$this->enregistrer_chaine("source", $source);$this->enregistrer_chaine("nom", $nom);
+		$this->enregistrer_entier("width_standard", 0, _MEDIA_IMAGE_LARGEUR_STANDARD);
+		$this->enregistrer_entier("height_standard", 0, _MEDIA_IMAGE_HAUTEUR_STANDARD);
+		$this->enregistrer_entier("width_reduite", 0, _MEDIA_IMAGE_LARGEUR_REDUITE);
+		$this->enregistrer_entier("height_reduite", 0, _MEDIA_IMAGE_HAUTEUR_REDUITE);
+		$this->enregistrer_chaine("alt", null, _MEDIA_IMAGE_ALT);
+		$this->enregistrer_chaine("lien", null, _MEDIA_IMAGE_LIEN);
+		$this->enregistrer_chaine("copyright");
+		$this->enregistrer_chaine("src");$this->enregistrer_chaine("src_reduite");
+		$this->enregistrer_chaine("dest");$this->enregistrer_chaine("dest_reduite");
+		$this->enregistrer_chaine("legende");$this->enregistrer_chaine("style_legende");
+		$this->enregistrer_entier("width");$this->enregistrer_entier("height");
+		$this->enregistrer_chaine("base");$this->enregistrer_entier("version");
 	}
-
-	// Manipulateurs
-	public function set_src($param) {$this->src = $param;}
-	public function set_src_reduite($param) {$this->src_reduite = $param;}
-	public function set_dest($param) {$this->dest = $param;}
-	public function set_dest_reduite($param) {$this->dest_reduite = $param;}
-	public function set_alt($param) {$this->alt = $param;}
-	public function set_legende($param) {$this->legende = $param;}
-	public function set_copyright($param) {$this->copyright = $param;}
-	public function set_width_standard($param) {$this->width_standard = $param;}
-	public function set_height_standard($param) {$this->height_standard = $param;}
-	public function set_width_reduite($param) {$this->width_reduite = $param;}
-	public function set_height_reduite($param) {$this->height_reduite = $param;}
-	public function set_width($param) {$this->width = $param;}
-	public function set_height($param) {$this->height = $param;}
-	public function set_style_legende($param) {$this->style_legende = $param;}
-	public function set_lien($param) {$this->lien = $param;}
-	public function set_base($param) {$this->base = $param;}
-	public function set_version($param) {$this->version = $param;}
 	public function set_vide() {
 		$extension = $this->get_extension();
 		$image_vide = _IMAGE_VIDE_1X1.".".$extension;
-		@copy(_PHP_PATH_ROOT."images/".$image_vide, $this->src);
+		@copy(_PHP_PATH_ROOT."images/".$image_vide, $this->get_src());
 		if (($this->get_width_reduite() > 0) || ($this->get_height_reduite() > 0)) {
-			@copy(_PHP_PATH_ROOT."images/".$image_vide, $this->src_reduite);
+			@copy(_PHP_PATH_ROOT."images/".$image_vide, $this->get_src_reduite());
 		}
-		@rename($this->src, $this->dest);
-		$this->src = $this->dest;
+		@rename($this->get_src(), $this->get_dest());
+		$this->set_src($this->get_dest());
 		if (($this->get_width_reduite() > 0) || ($this->get_height_reduite() > 0)) {
-			@rename($this->src_reduite, $this->dest_reduite);
-			$this->src_reduite = $this->dest_reduite;
+			@rename($this->get_src_reduite(), $this->get_dest_reduite());
+			$this->set_src_reduit($this->get_dest_reduite());
 		}
-		list($this->width, $this->height) = @getimagesize($this->src);
+		list($width, $height) = @getimagesize($this->get_src());
+		$this->set_width($width);$this->set_height($height);
 	}
 
 	// Accesseurs
-	public function get_source() {return $this->source;}
-	public function get_nom() {return $this->nom;}
-	public function get_src() {return $this->src;}
-	public function get_src_reduite() {return $this->src_reduite;}
-	public function get_dest() {return $this->dest;}
-	public function get_dest_reduite() {return $this->dest_reduite;}
-	public function get_alt() {return $this->alt;}
-	public function get_legende() {return $this->legende;}
-	public function get_copyright() {return $this->copyright;}
-	public function get_width_standard() {return $this->width_standard;}
-	public function get_height_standard() {return $this->height_standard;}
-	public function get_width_reduite() {return $this->width_reduite;}
-	public function get_height_reduite() {return $this->height_reduite;}
-	public function get_width() {return $this->width;}
-	public function get_height() {return $this->height;}
-	public function get_style_legende() {return $this->style_legende;}
-	public function get_lien() {return $this->lien;}
-	public function get_base() {return $this->base;}
-	public function get_version() {return $this->version;}
-	public function get_est_vide() {return (($this->width == 1) && ($this->height == 1)); }
+	public function get_est_vide() {return (($this->get_width() == 1) && ($this->get_height() == 1)); }
 	public function get_extension() {
-		$ext = strtolower(@pathinfo($this->src, PATHINFO_EXTENSION));
+		$ext = strtolower(@pathinfo($this->get_src(), PATHINFO_EXTENSION));
 		$ret = ($ext == _IMAGE_EXTENSION_JPEG)?_IMAGE_EXTENSION_JPG:$ext;
 		return $ret;
 	}
@@ -195,14 +151,13 @@ class img_media {
 
 class galerie_media {
 	private $liste_elems = array();
-	
+
 	function ajouter_elem($nom_elem) {$this->liste_elems[] = $nom_elem;}
 	function get_nb_elems() {return count($this->liste_elems);}
 	function get_elem($index) {return $this->liste_elems[$index];}
 }
 	
 class xml_media {
-	// Propriétés
 	private $styles = array();
 	private $images = array();
 	private $galeries = array();
@@ -222,29 +177,20 @@ class xml_media {
 					$marge_bas = $xml_media->lire_n_valeur(_MEDIA_STYLE_LEGENDE_MARGE_BAS, $cpt);
 					$marge_gauche = $xml_media->lire_n_valeur(_MEDIA_STYLE_LEGENDE_MARGE_GAUCHE, $cpt);
 					$marge_droite = $xml_media->lire_n_valeur(_MEDIA_STYLE_LEGENDE_MARGE_DROITE, $cpt);
-					$couleur_fond = $xml_media->lire_n_valeur(_MEDIA_STYLE_LEGENDE_COULEUR_FOND, $cpt);
-					$couleur_texte = $xml_media->lire_n_valeur(_MEDIA_STYLE_LEGENDE_COULEUR_TEXTE, $cpt);
-					$style_texte = $xml_media->lire_n_valeur(_MEDIA_STYLE_LEGENDE_STYLE_TEXTE, $cpt);
 					$lien_souligne = $xml_media->lire_n_valeur(_MEDIA_STYLE_LEGENDE_LIEN_SOULIGNE, $cpt);
 					$niveau_titre = $xml_media->lire_n_valeur(_MEDIA_STYLE_LEGENDE_NIVEAU_TITRE, $cpt);
 					$survol = $xml_media->lire_n_valeur(_MEDIA_STYLE_LEGENDE_SURVOL, $cpt);
 					
 					// Création de l'objet images
 					$style = new style_media($nom);
-					$style->set_marge_haut($marge_haut);
-					$style->set_marge_bas($marge_bas);
-					$style->set_marge_gauche($marge_gauche);
-					$style->set_marge_droite($marge_droite);
-					$style->set_couleur_fond($couleur_fond);
-					$style->set_couleur_texte($couleur_texte);
-					$style->set_style_texte($style_texte);
+					$style->load($xml_media, $cpt);
+					$style->set_marge_haut($marge_haut);$style->set_marge_bas($marge_bas);
+					$style->set_marge_gauche($marge_gauche);$style->set_marge_droite($marge_droite);
 					$style->set_lien_souligne($lien_souligne);
-					$style->set_niveau_titre($niveau_titre);
-					$style->set_survol($survol);
+					$style->set_niveau_titre($niveau_titre);$style->set_survol($survol);
 					$this->styles[$nom] = $style;
 				}
 			}
-
 			// Traitement des images
 			$xml_media->pointer_sur_origine();
 			$nb_images = $xml_media->compter_elements(_MEDIA_IMAGE);
@@ -263,8 +209,9 @@ class xml_media {
 
 						// Vérifications
 						if (file_exists($src)) {
+							$image = new img_media($source, $nom);
+							$image->load($xml_media, $cpt);
 							list($width, $height) = @getimagesize($src);
-							$alt = $xml_media->lire_n_valeur(_MEDIA_IMAGE_ALT, $cpt);
 							$legende = $xml_media->lire_n_valeur(_MEDIA_IMAGE_LEGENDE, $cpt);
 							// En cas de légende on va lire l'attribut de style
 							if (strlen($legende) > 0) {
@@ -278,25 +225,12 @@ class xml_media {
 								$nom_style = null;
 							}
 							$copyright = $xml_media->lire_n_valeur(_MEDIA_IMAGE_COPYRIGHT, $cpt);
-							$lien = $xml_media->lire_n_valeur(_MEDIA_IMAGE_LIEN, $cpt);
-							$largeur_standard = $xml_media->lire_n_valeur(_MEDIA_IMAGE_LARGEUR_STANDARD, $cpt);
-							$hauteur_standard = $xml_media->lire_n_valeur(_MEDIA_IMAGE_HAUTEUR_STANDARD, $cpt);
-							$largeur_reduite = $xml_media->lire_n_valeur(_MEDIA_IMAGE_LARGEUR_REDUITE, $cpt);
-							$hauteur_reduite = $xml_media->lire_n_valeur(_MEDIA_IMAGE_HAUTEUR_REDUITE, $cpt);
-							
-							// Création de l'objet images
-							$image = new img_media($source, $nom);
 							$image->set_src($src);$image->set_src_reduite($src_reduite);
 							$image->set_dest($dest);$image->set_dest_reduite($dest_reduite);
-							$image->set_alt($alt);$image->set_legende($legende);
+							$image->set_legende($legende);
 							$key_copy = (strlen($suffixe) > 0)?$copyright."_".$suffixe:$copyright;
 							$image->set_copyright($key_copy);
-							$image->set_lien($lien);
 							$image->set_base($base);$image->set_version($version);
-							$image->set_width_standard($largeur_standard);
-							$image->set_height_standard($hauteur_standard);
-							$image->set_width_reduite($largeur_reduite);
-							$image->set_height_reduite($hauteur_reduite);
 							$image->set_width($width);$image->set_height($height);
 							$image->set_style_legende($nom_style);
 							$key = (strlen($suffixe) > 0)?$nom."_".$suffixe:$nom;
@@ -305,7 +239,6 @@ class xml_media {
 					}
 				}
 			}
-
 			// Traitement des galeries
 			$xml_media->pointer_sur_origine();
 			$nb_gals = $xml_media->compter_elements(_MEDIA_GALERIE);
@@ -331,7 +264,6 @@ class xml_media {
 
 		return $ret;
 	}
-	
 	function get_nb_galeries() {return count($this->galeries);}
 	function get_galerie($nom) {return $this->galeries[$nom];}
 	function get_nb_images() {return count($this->images);}
@@ -344,7 +276,6 @@ class xml_media {
 		$image = $this->get_image($nom);
 		return $image;
 	}
-
 	public function extraire_css() {
 		$css = "";
 		foreach ($this->styles as $nom_style => $style) {
@@ -395,16 +326,13 @@ class xml_media {
 		
 		return $css;
 	}
-	
 	private function format_pc($str_prop, $str_pc) {
 		$pc = (int) $str_pc;
 		$ret = $str_prop.":";
 		$ret .= ($pc == 0)?$pc:$pc."%";
 		$ret .= ";";
-		
 		return $ret;
 	}
-	
 	private function parser_extension($fichier) {
 		$point = (int) strpos($fichier, ".");
 		if ($point > 0) {
@@ -417,7 +345,6 @@ class xml_media {
 		}
 		return (array($base, $ext));
 	}
-	
 	private function parser_version($dir, $dir_reduite, $base, $ext) {
 		$version = 0;
 		$src = $dir."/".$base.$ext;

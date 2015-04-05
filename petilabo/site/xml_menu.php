@@ -1,66 +1,37 @@
 <?php
 
-class style_menu {
-	// Propriétés
-	private $style_texte = null;
-	private $couleur = null;
-	private $fond = null;
-	private $couleur_survol = null;
-	private $fond_survol = null;
-	private $espace_vertical = 0;
-	private $espace_horizontal = 0;
+class style_menu extends xml_abstract {
+	public function __construct() {
+		$this->enregistrer_chaine("style_texte", null, _MENU_STYLE_TEXTE);
+		$this->enregistrer_chaine("fond", null, _MENU_STYLE_FOND);
+		$this->enregistrer_chaine("couleur_survol", null, _MENU_STYLE_COULEUR_SURVOL);
+		$this->enregistrer_chaine("fond_survol", null, _MENU_STYLE_FOND_SURVOL);
+		$this->enregistrer_flottant("espace_vertical", 0, _MENU_STYLE_ESPACE_VERTICAL);
+		$this->enregistrer_flottant("espace_horizontal", 0, _MENU_STYLE_ESPACE_HORIZONTAL);
+	}
+}					
+					
+class item_menu extends xml_abstract {
+	private $lien = null;
+	
+	public function __construct() {
+		$this->enregistrer_chaine("label", null, _MENU_ITEM_LABEL);
+		$this->enregistrer_chaine("icone", null, _MENU_ITEM_ICONE);
+		$this->enregistrer_chaine("info", null, _MENU_ITEM_INFO);
+		$this->enregistrer_chaine("lien_editable");
+		$this->enregistrer_chaine("liste_cibles");
+		$this->enregistrer_chaine("style");
+	}
 
-	// Manipulateurs
-	public function set_style_texte($param) {$this->style_texte = $param;}
-	public function set_couleur($param) {$this->couleur = $param;}
-	public function set_fond($param) {$this->fond = $param;}
-	public function set_couleur_survol($param) {$this->couleur_survol = $param;}
-	public function set_fond_survol($param) {$this->fond_survol = $param;}
-	public function set_espace_vertical($param) {$this->espace_vertical = (float) $param;}
-	public function set_espace_horizontal($param) {$this->espace_horizontal = (float) $param;}
-
-	// Accesseurs
-	public function get_style_texte() {return $this->style_texte;}
-	public function get_couleur() {return $this->couleur;}
-	public function get_fond() {return $this->fond;}
-	public function get_couleur_survol() {return $this->couleur_survol;}
-	public function get_fond_survol() {return $this->fond_survol;}
-	public function get_espace_vertical() {return ((float) $this->espace_vertical);}
-	public function get_espace_horizontal() {return ((float) $this->espace_horizontal);}
-}
-
-class item_menu {
-	// Propriétés
-	private $label = null;private $icone = null;
-	private $lien = null;private $lien_editable = null;
-	private $liste_cibles = null;
-	private $info = null;
-	private $style = null;
-
-	// Manipulateurs
-	public function set_label($param) {$this->label = $param;}
-	public function set_icone($param) {$this->icone = $param;}
 	public function set_lien($param) {
 		$param_w3c = str_replace("&", "&amp;", $param);
 		$this->lien = $param_w3c;
 	}
-	public function set_lien_editable($param) {$this->lien_editable = $param;}
-	public function set_liste_cibles($param) {$this->liste_cibles = $param;}
-	public function set_info($param) {$this->info = $param;}
-	public function set_style($param) {$this->style = $param;}
-	
-	// Accesseurs
-	public function get_label() {return $this->label;}
-	public function get_icone() {return $this->icone;}
 	public function get_lien() {return $this->lien;}
-	public function get_lien_editable() {return $this->lien_editable;}
 	public function is_lien_editable() {
-		$ret = (strlen($this->lien_editable) > 0)?true:false;
+		$ret = (strlen($this->get_lien_editable()) > 0)?true:false;
 		return $ret;
 	}
-	public function get_liste_cibles() {return $this->liste_cibles;}
-	public function get_info() {return $this->info;}
-	public function get_style() {return $this->style;}
 }
 
 class menu {
@@ -91,7 +62,6 @@ class liste_cibles {
 		}
 		return $lien;
 	}
-
 	function get_valeur_cible($index) {
 		$valeur = null;
 		$elt = $this->liste_cibles[$index];
@@ -119,25 +89,11 @@ class xml_menu {
 			for ($cpt = 0;$cpt < $nb_styles; $cpt++) {
 				$nom = $xml_menu->lire_n_attribut(_MENU_ATTR_STYLE_NOM, $cpt);
 				if (strlen($nom) > 0) {
-					$style_texte = $xml_menu->lire_n_valeur(_MENU_STYLE_TEXTE, $cpt);
-					$fond = $xml_menu->lire_n_valeur(_MENU_STYLE_FOND, $cpt);
-					$couleur_survol = $xml_menu->lire_n_valeur(_MENU_STYLE_COULEUR_SURVOL, $cpt);
-					$fond_survol = $xml_menu->lire_n_valeur(_MENU_STYLE_FOND_SURVOL, $cpt);
-					$espace_vertical = $xml_menu->lire_n_valeur(_MENU_STYLE_ESPACE_VERTICAL, $cpt);
-					$espace_horizontal = $xml_menu->lire_n_valeur(_MENU_STYLE_ESPACE_HORIZONTAL, $cpt);
-	
-					// Création de l'objet style
 					$style = new style_menu();
-					$style->set_style_texte($style_texte);
-					$style->set_fond($fond);
-					$style->set_couleur_survol($couleur_survol);
-					$style->set_fond_survol($fond_survol);
-					$style->set_espace_vertical($espace_vertical);
-					$style->set_espace_horizontal($espace_horizontal);
+					$style->load($xml_menu, $cpt);
 					$this->styles[$nom] = $style;
 				}
 			}
-			
 			// Traitement des items
 			$xml_menu->pointer_sur_origine();
 			$nb_items = $xml_menu->compter_elements(_MENU_ITEM);
@@ -145,11 +101,10 @@ class xml_menu {
 			for ($cpt = 0;$cpt < $nb_items; $cpt++) {
 				$nom = $xml_menu->lire_n_attribut(_MENU_ATTR_ITEM_NOM, $cpt);
 				if (strlen($nom) > 0) {
-					$label = $xml_menu->lire_n_valeur(_MENU_ITEM_LABEL, $cpt);
-					$icone = $xml_menu->lire_n_valeur(_MENU_ITEM_ICONE, $cpt);
+					$item = new item_menu();
+					$item->load($xml_menu, $cpt);
 					$lien = $xml_menu->lire_n_valeur(_MENU_ITEM_LIEN, $cpt);
 					$lien_editable = $xml_menu->lire_n_valeur(_MENU_ITEM_LIEN_EDITABLE, $cpt);
-
 					// En cas de lien éditable on va lire l'éventuelle liste de cibles
 					if (strlen($lien_editable) > 0) {
 						$xml_menu->creer_repere($nom);
@@ -161,20 +116,12 @@ class xml_menu {
 					else {
 						$nom_liste_cibles = null;
 					}
-					
-					$info = $xml_menu->lire_n_valeur(_MENU_ITEM_INFO, $cpt);
-					$style = $xml_menu->lire_n_valeur(_MENU_ITEM_STYLE, $cpt);
-
-					// Création de l'objet item
-					$item = new item_menu();
-					$item->set_label($label);
-					$item->set_icone($icone);
 					if (strlen($lien) > 0) {$item->set_lien($lien);}
 					if (strlen($lien_editable) > 0) {
 						$item->set_lien_editable($lien_editable);
 						$item->set_liste_cibles($nom_liste_cibles);
 					}
-					if (strlen($info) > 0) {$item->set_info($info);}
+					$style = $xml_menu->lire_n_valeur(_MENU_ITEM_STYLE, $cpt);
 					if (strlen($style) > 0) {
 						if (array_key_exists($style, $this->styles)) {
 							$item->set_style($style);
@@ -183,7 +130,6 @@ class xml_menu {
 					$this->items[$nom] = $item;
 				}
 			}
-
 			// Traitement des menus
 			$xml_menu->pointer_sur_origine();
 			$nb_menus = $xml_menu->compter_elements(_MENU_MENU);
@@ -208,7 +154,6 @@ class xml_menu {
 					}
 				}
 			}
-			
 			// Traitement des listes de cibles pour liens éditables
 			$xml_menu->pointer_sur_origine();
 			$nb_liste_cibles = $xml_menu->compter_elements(_MENU_LISTE_CIBLES);

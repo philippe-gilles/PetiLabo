@@ -1,20 +1,19 @@
 <?php
 
-class xml_page {
-	// Propriétés
+class xml_page extends xml_abstract {
 	private $page = null;
-	private $meta_titre = null;private $meta_descr = null;
-	private $meta_titre_editable = null;private $meta_descr_editable = null;
 	private $meta_multilingue = null;private $meta_noindex = null;
-	private $meta_ga = null;private $meta_pa = null;
+	private $has_rs = false;private $has_lb = false;
+	private $has_bx = false;private $has_form = false;
 	private $contenu = array();
 	private $librairie = array();
-	private $nb_actus = 0;
-	private $has_rs = false;
-	private $has_lb = false;
-	private $has_bx = false;
-	private $has_form = false;
 
+	public function __construct() {
+		$this->enregistrer_chaine("meta_titre", null);$this->enregistrer_chaine("meta_descr", null);
+		$this->enregistrer_chaine("meta_titre_editable", null);$this->enregistrer_chaine("meta_descr_editable", null);
+		$this->enregistrer_chaine("meta_ga", null);$this->enregistrer_chaine("meta_pa", null);
+		$this->enregistrer_entier("nb_actus", 0);
+	}
 	public function ouvrir($nom, $lib_only = false) {
 		$this->page = new xml_struct();
 		$ret = $this->page->ouvrir($nom);
@@ -71,7 +70,7 @@ class xml_page {
 					// On contrôle l'existence d'un module d'actualité
 					$nb_actus = (int) $this->page->lire_valeur(_PAGE_BANNIERE_ACTU);
 					if ($nb_actus > 0) {
-						$this->nb_actus = $nb_actus;
+						$this->set_nb_actus($nb_actus);
 						$this->has_rs = true;
 					}
 					// On contrôle l'existence d'une lightbox
@@ -131,10 +130,6 @@ class xml_page {
 	public function get_contenu($index) {return $this->contenu[$index];}
 	public function get_nb_librairies() {return count($this->librairie);}
 	public function get_librairie($index) {return $this->librairie[$index];}
-	public function get_meta_titre() {return $this->meta_titre;}
-	public function get_meta_descr() {return $this->meta_descr;}
-	public function get_meta_titre_editable() {return $this->meta_titre_editable;}
-	public function get_meta_descr_editable() {return $this->meta_descr_editable;}
 	public function get_meta_multilingue() {
 		$ret = (strcmp($this->meta_multilingue, _XML_FALSE))?true:false;
 		return $ret;
@@ -143,9 +138,6 @@ class xml_page {
 		$ret = (strcmp($this->meta_noindex, _XML_TRUE))?false:true;
 		return $ret;
 	}
-	public function get_meta_ga() {return $this->meta_ga;}
-	public function get_meta_pa() {return $this->meta_pa;}
-	public function get_nb_actus() {return $this->nb_actus;}
 	public function has_pa() {return ((strlen($this->meta_pa) > 0)?true:false);}
 	public function has_ga() {return ((strlen($this->meta_ga) > 0)?true:false);}
 	public function has_bx() {return $this->has_bx;}
@@ -155,12 +147,12 @@ class xml_page {
 
 	private function lire_balises_meta() {
 		// Lecture des meta titre et description
-		$this->meta_titre = $this->page->lire_valeur(_PAGE_META_TITRE);
-		$this->meta_descr = $this->page->lire_valeur(_PAGE_META_DESCR);
-		$this->meta_titre_editable = $this->page->lire_valeur(_PAGE_META_TITRE_EDITABLE);
-		$this->meta_descr_editable = $this->page->lire_valeur(_PAGE_META_DESCR_EDITABLE);
-		$this->meta_ga = $this->page->lire_valeur(_PAGE_META_GOOGLE_ANALYTICS);
-		$this->meta_pa = $this->page->lire_valeur(_PAGE_META_PETILABO_ANALITIX);
+		$this->set_meta_titre($this->page->lire_valeur(_PAGE_META_TITRE));
+		$this->set_meta_descr($this->page->lire_valeur(_PAGE_META_DESCR));
+		$this->set_meta_titre_editable($this->page->lire_valeur(_PAGE_META_TITRE_EDITABLE));
+		$this->set_meta_descr_editable($this->page->lire_valeur(_PAGE_META_DESCR_EDITABLE));
+		$this->set_meta_ga($this->page->lire_valeur(_PAGE_META_GOOGLE_ANALYTICS));
+		$this->set_meta_pa($this->page->lire_valeur(_PAGE_META_PETILABO_ANALITIX));
 		$multilingue = trim(strtolower($this->page->lire_valeur(_PAGE_META_MULTILINGUE)));
 		$this->meta_multilingue = (strlen($multilingue) > 0)?$multilingue:_XML_TRUE;
 		$noindex = trim(strtolower($this->page->lire_valeur(_PAGE_META_NOINDEX)));
