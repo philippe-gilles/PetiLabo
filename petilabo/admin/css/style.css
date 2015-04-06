@@ -50,8 +50,8 @@ p.stats_section{color:#000;font-weight:bold;}
 .symbole_inactif {color:#aaa;}
 .cellule_texte {background:#eee;text-align:left;}
 .texte_edit {margin:0;padding:0;text-align:left;font-weight:normal;word-wrap: break-word;}
-.texte_actif {color:#000;}
-.texte_inactif {color:#aaa;}
+.texte_actif, .texte_actif a {color:#000;}
+.texte_inactif, .texte_inactif a {color:#aaa;}
 .icone_edit{font-family:'FontAwesome',sans-serif;text-align:left;margin:0;padding:0;font-weight:normal;font-size:1.4em;color:#000;}
 .image_edit {border:1px solid #666;max-height:60px;text-align:left;}
 .champ {display:block;margin:0;padding:0;}
@@ -60,6 +60,11 @@ p.stats_section{color:#000;font-weight:bold;}
 .texte_champ_simple_lien{margin-top:15px!important;height:auto!important;padding:5px 3px!important;}
 .select_champ {font-family:sans-serif;width:10em;}
 .select_lien {font-family:sans-serif;font-size:1em;display:block;color:#444;border:1px solid #aaa;height:auto;width:auto;min-width:50%;max-width:100%;padding:5px 0!important;margin:0;}
+td.admin_source_element{font-family:sans-serif;width:55px;text-align:center;font-size:0.7em;color:#fff;vertical-align:middle;}
+td.admin_source_element_page{background:#005}td.admin_source_element_site{background:#050;}
+td.admin_source_element_module{background:#505}td.admin_source_element_librairie{background:#055;}
+td.admin_source_element_interne{background:#500;}td.admin_source_element_vide{background:#555;}
+td.admin_source_element_fichier{background:#500;}
 /* Formulaire de suppression des images */
 .bouton {display:block;width:150px;font-size:1.2em;margin:15px auto 5px auto;}
 .bouton_suppr {font-family:'FontAwesome',sans-serif;display:block;width:50px;font-size:1.2em;margin:15px 0 5px 0;color:#b00;}

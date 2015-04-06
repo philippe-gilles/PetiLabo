@@ -2,14 +2,11 @@
 
 class obj_item extends obj_editable {
 	private $obj_texte = null;
-	private $obj_item = null;
-	private $obj_style_item = null;
-	private $id_label = null;
-	private $id_icone = null;
+	private $obj_item = null;private $obj_style_item = null;
+	private $id_label = null;private $id_icone = null;
 	private $id_info = null;
 	private $style = null;
-	private $lien = null;
-	private $cible = null;
+	private $lien = null;private $cible = null;
 	private $is_editable = false;
 	private $id_liste = null;
 	private $is_active = false;
@@ -92,29 +89,29 @@ class obj_item extends obj_editable {
 		$this->ouvrir_ligne();
 		$this->ecrire_cellule_categorie(_EDIT_LABEL_ITEM, _EDIT_COULEUR, $nb_lignes);
 		if (strlen($this->id_icone)>0) {
-			$icone = $this->check_icone($this->obj_texte, $this->id_icone, $langue);
+			list($icone, $src_icone) = $this->check_src_icone($this->obj_texte, $this->id_icone, $langue);
 			$this->ecrire_cellule_symbole_texte_simple(_EDIT_TYPE_ICONE, $this->id_icone, _EDIT_SYMBOLE_ICONE, "Modifier le code de l'icône");
 			$this->ecrire_cellule_icone($icone);
-			$this->fermer_ligne();
-			$trad_info = $this->check_texte($this->obj_texte, $this->id_info, $langue);
+			$this->fermer_ligne($src_icone);
+			list($trad_info, $src_info) = $this->check_src_texte($this->obj_texte, $this->id_info, $langue);
 			$this->ouvrir_ligne();
 			$this->ecrire_cellule_symbole_texte_brut($this->id_info, _EDIT_SYMBOLE_INFO, "Modifier le texte de l'infobulle");
 			$this->ecrire_cellule_texte($this->id_info, $trad_info);
-			$this->fermer_ligne();
+			$this->fermer_ligne($src_info);
 		}
 		if (strlen($this->id_label)>0) {
-			$trad_label = $this->check_texte($this->obj_texte, $this->id_label, $langue);
+			list($trad_label, $src_label) = $this->check_src_texte($this->obj_texte, $this->id_label, $langue);
 			$this->ouvrir_ligne();
 			$this->ecrire_cellule_symbole_texte($this->id_label, _EDIT_SYMBOLE_LABEL, "Modifier le texte de l'item de menu");
 			$this->ecrire_cellule_texte($this->id_label, $trad_label);
-			$this->fermer_ligne();
+			$this->fermer_ligne($src_label);
 		}
 		if ($this->is_editable) {
-			$trad_label = $this->check_texte($this->obj_texte, $this->lien, $langue);
+			list($trad_lien, $src_lien) = $this->check_src_texte($this->obj_texte, $this->lien, $langue);
 			$this->ouvrir_ligne();
 			$this->ecrire_cellule_symbole_lien_editable($this->lien, _EDIT_SYMBOLE_LIEN, "Modifier le lien de l'item de menu", $this->id_liste);
-			$this->ecrire_cellule_texte($this->lien, $trad_label);
-			$this->fermer_ligne();
+			$this->ecrire_cellule_texte($this->lien, $trad_lien);
+			$this->fermer_ligne($src_lien);
 		}
 		$this->fermer_tableau();
 	}

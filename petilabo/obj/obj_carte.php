@@ -47,13 +47,13 @@ class obj_carte extends obj_editable {
 			echo "</div>"._HTML_FIN_LIGNE;
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_EDIT))) {
-			$texte = $this->check_texte($this->obj_texte, $this->id_texte, $langue);
+			list($texte, $src) = $this->check_src_texte($this->obj_texte, $this->id_texte, $langue);
 			$this->ouvrir_tableau_simple();
 			$this->ouvrir_ligne();
 			$this->ecrire_cellule_categorie(_EDIT_LABEL_PLAN, _EDIT_COULEUR, 1);
 			$this->ecrire_cellule_symbole_texte_simple(_EDIT_TYPE_PLAN, $this->id_texte, _EDIT_SYMBOLE_PLAN, "Modifier l'adresse du plan");
 			$this->ecrire_cellule_texte($this->id_texte, $texte);
-			$this->fermer_ligne();
+			$this->fermer_ligne($src);
 			$this->fermer_tableau();
 		}
 	}

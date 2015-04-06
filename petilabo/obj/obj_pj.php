@@ -77,22 +77,22 @@ class obj_pj extends obj_editable {
 	}
 	
 	protected function afficher_edit($langue) {
-		$trad_info = $this->check_texte($this->obj_texte, $this->id_info, $langue);
-		$trad_legende = $this->check_texte($this->obj_texte, $this->id_legende, $langue);
+		list($trad_info, $src_info) = $this->check_src_texte($this->obj_texte, $this->id_info, $langue);
+		list($trad_legende, $src_legende) = $this->check_src_texte($this->obj_texte, $this->id_legende, $langue);
 		$this->ouvrir_tableau_simple();
 		$this->ouvrir_ligne();
 		$this->ecrire_cellule_categorie(_EDIT_LABEL_PJ, _EDIT_COULEUR, 3);
 		$this->ecrire_cellule_symbole_pj($this->nom, _EDIT_SYMBOLE_LIEN);
 		$this->ecrire_cellule_texte($this->nom, strtolower($this->base));
-		$this->fermer_ligne();
+		$this->fermer_ligne("fichier");
 		$this->ouvrir_ligne();
 		$this->ecrire_cellule_symbole_texte_brut($this->id_info, _EDIT_SYMBOLE_INFO,"Modifier le texte de l'infobulle");
 		$this->ecrire_cellule_texte($this->id_info, $trad_info);
-		$this->fermer_ligne();
+		$this->fermer_ligne($src_info);
 		$this->ouvrir_ligne();
 		$this->ecrire_cellule_symbole_texte($this->id_legende, _EDIT_SYMBOLE_LEGENDE, "Modifier la description du fichier");
 		$this->ecrire_cellule_texte($this->id_legende, $trad_legende);
-		$this->fermer_ligne();
+		$this->fermer_ligne($src_legende);
 		$this->fermer_tableau();
 	}
 	

@@ -23,14 +23,13 @@ class obj_symbole extends obj_editable {
 			else {echo "<p class=\"".$classe."\">.</p>"._HTML_FIN_LIGNE;}
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_EDIT))) {
-			$icone = $this->check_texte($this->obj_texte, $this->id_texte, $langue);
+			list($icone, $src_icone) = $this->check_src_icone($this->obj_texte, $this->id_texte, $langue);
 			$this->ouvrir_tableau_simple();
 			$this->ouvrir_ligne();
-			$icone = $this->obj_texte->get_icone($this->id_texte, $langue);
 			$this->ecrire_cellule_categorie(_EDIT_LABEL_SYMBOLE, _EDIT_COULEUR, 1);
 			$this->ecrire_cellule_symbole_texte_simple(_EDIT_TYPE_ICONE, $this->id_texte, _EDIT_SYMBOLE_ICONE, "Modifier le code du symbole");
 			$this->ecrire_cellule_icone($icone);
-			$this->fermer_ligne();
+			$this->fermer_ligne($src_icone);
 			$this->fermer_tableau();
 		}
 	}

@@ -58,7 +58,14 @@ class obj_editable extends obj_html {
 	protected function ouvrir_ligne() {
 		echo "<tr>";
 	}
-	protected function fermer_ligne() {
+	protected function fermer_ligne($src = null) {
+		if (strlen($src) > 0) {
+			if (!(strncmp($src, "librairie", 9))) {$src = "librairie";}
+			echo "<td class=\"admin_source_element admin_source_element_".$src."\">".ucwords($src)."</td>";
+		}
+		else {
+			echo "<td class=\"admin_source_element admin_source_element_vide\">-</td>";
+		}
 		echo "</tr>";
 	}
 	protected function ecrire_cellule_categorie($label, $couleur, $nb_lignes) {
@@ -190,10 +197,26 @@ class obj_editable extends obj_html {
 		else {$id = null;$trad = null;}
 		return $trad;
 	}
+	protected function check_src_texte(&$obj_texte, &$id, $langue) {
+		if ($obj_texte->existe_texte($id)) {
+			$trad = $obj_texte->get_texte($id, $langue);
+			$src = $obj_texte->get_source($id);
+		}
+		else {$id = null;$trad = null;$src = null;}
+		return array($trad, $src);
+	}
 	protected function check_icone(&$obj_texte, &$id, $langue) {
 		if ($obj_texte->existe_texte($id)) {$trad = $obj_texte->get_icone($id, $langue);}
 		else {$id = null;$trad = null;}
 		return $trad;
+	}
+	protected function check_src_icone(&$obj_texte, &$id, $langue) {
+		if ($obj_texte->existe_texte($id)) {
+			$trad = $obj_texte->get_icone($id, $langue);
+			$src = $obj_texte->get_source($id);
+		}
+		else {$id = null;$trad = null;$src = null;}
+		return array($trad, $src);
 	}
 	private function build_param($id) {
 		$ret = "";

@@ -35,11 +35,11 @@ class obj_legende_image extends obj_editable {
 			}
 		}
 		else {
-			$legende = $this->check_texte($this->obj_texte, $this->id_texte, $langue);
+			list($legende, $src_legende) = $this->check_src_texte($this->obj_texte, $this->id_texte, $langue);
 			$this->ouvrir_ligne();
 			$this->ecrire_cellule_symbole_texte($this->id_texte, _EDIT_SYMBOLE_LEGENDE, "Modifier la légende de l'image");
 			$this->ecrire_cellule_texte($this->id_texte, $legende);
-			$this->fermer_ligne();
+			$this->fermer_ligne($src_legende);
 		}
 	}
 
@@ -208,17 +208,17 @@ class obj_image extends obj_editable {
 			$this->ecrire_cellule_categorie(_EDIT_LABEL_IMAGE, _EDIT_COULEUR, $nb_lignes);
 			$this->ecrire_cellule_symbole_image($this->obj_media->get_nom(), _EDIT_SYMBOLE_IMAGE);
 			$this->ecrire_cellule_image($src);
-			$this->fermer_ligne();
-			$alt = $this->check_texte($this->obj_texte, $this->id_alt, $langue);
+			$this->fermer_ligne("fichier");
+			list($alt, $src_alt) = $this->check_src_texte($this->obj_texte, $this->id_alt, $langue);
 			$this->ouvrir_ligne();
 			$this->ecrire_cellule_symbole_texte_brut($this->id_alt, _EDIT_SYMBOLE_ALT, "Modifier le texte alternatif de l'image");
 			$this->ecrire_cellule_texte($this->id_alt, $alt);
-			$this->fermer_ligne();
-			$copyright = $this->check_texte($this->obj_texte, $this->id_copyright, $langue);
+			$this->fermer_ligne($src_alt);
+			list($copyright, $src_copyright) = $this->check_src_texte($this->obj_texte, $this->id_copyright, $langue);
 			$this->ouvrir_ligne();
 			$this->ecrire_cellule_symbole_texte_simple(_EDIT_TYPE_COPY, $this->id_copyright, _EDIT_SYMBOLE_COPY, "Modifier le copyright de l'image");
 			$this->ecrire_cellule_texte($this->id_copyright, $copyright);
-			$this->fermer_ligne();
+			$this->fermer_ligne($src_copyright);
 			if ($this->obj_legende) {
 				$this->obj_legende->set_id_tab($this->id_tab);
 				$this->obj_legende->afficher(_PETILABO_MODE_EDIT, $langue);

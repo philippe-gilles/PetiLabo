@@ -401,7 +401,7 @@ class moteur {
 			case _XML_BAS :
 				$obj->afficher($mode, $this->langue_page, false, false);
 				break;
-			case _PAGE_ATTR_POSITION_GAUCHE :
+			case _XML_GAUCHE :
 				$obj->afficher($mode, $this->langue_page, true, true);
 				break;
 			default :

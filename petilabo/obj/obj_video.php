@@ -40,7 +40,7 @@ class obj_video extends obj_editable {
 			}
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_EDIT))) {
-			$texte = $this->check_texte($this->obj_texte, $this->id_texte, $langue);
+			list($texte, $src_texte) = $this->check_src_texte($this->obj_texte, $this->id_texte, $langue);
 			$src = (strlen($texte) > 0)?$this->get_src($texte):null;
 			$this->ouvrir_tableau_simple();
 			$this->ouvrir_ligne();
@@ -48,7 +48,7 @@ class obj_video extends obj_editable {
 			$this->ecrire_cellule_categorie($cat, _EDIT_COULEUR, 1);
 			$this->ecrire_cellule_symbole_texte_simple(_EDIT_TYPE_VIDEO, $this->id_texte, _EDIT_SYMBOLE_VIDEO, "Modifier l'identifiant de la vidéo");
 			$this->ecrire_cellule_video($this->id_texte, $texte, $src);
-			$this->fermer_ligne();
+			$this->fermer_ligne($src_texte);
 			$this->fermer_tableau();
 		}
 	}

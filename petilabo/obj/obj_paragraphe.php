@@ -30,13 +30,13 @@ class obj_paragraphe extends obj_editable {
 			else {echo "<p class=\"".$classe."\">...</p>"._HTML_FIN_LIGNE;}
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_EDIT))) {
-			$texte = $this->check_texte($this->obj_texte, $this->id_texte, $langue);
+			list($texte, $src) = $this->check_src_texte($this->obj_texte, $this->id_texte, $langue);
 			$this->ouvrir_tableau_simple();
 			$this->ouvrir_ligne();
 			$this->ecrire_cellule_categorie(_EDIT_LABEL_TEXTE, _EDIT_COULEUR, 1);
 			$this->ecrire_cellule_symbole_texte($this->id_texte, _EDIT_SYMBOLE_LABEL, "Modifier le texte du paragraphe");
 			$this->ecrire_cellule_texte($this->id_texte, $texte);
-			$this->fermer_ligne();
+			$this->fermer_ligne($src);
 			$this->fermer_tableau();
 		}
 	}
