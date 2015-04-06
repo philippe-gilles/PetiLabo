@@ -20,7 +20,7 @@ class xml_document {
 			$nb_docs = $xml_doc->compter_elements(_DOCUMENT_DOC);
 			$xml_doc->pointer_sur_balise(_DOCUMENT_DOC);
 			for ($cpt = 0;$cpt < $nb_docs; $cpt++) {
-				$nom = $xml_doc->lire_n_attribut(_DOCUMENT_ATTR_NOM, $cpt);
+				$nom = $xml_doc->lire_n_attribut(_XML_NOM, $cpt);
 				if (strlen($nom) > 0) {
 					$fichier = $xml_doc->lire_n_valeur(_DOCUMENT_DOC_FICHIER, $cpt);
 					$info = $xml_doc->lire_n_valeur(_DOCUMENT_DOC_INFO, $cpt);

@@ -139,10 +139,10 @@ class obj_image extends obj_editable {
 		$style = "max-width:".$this->obj_media->get_width()."px;max-height:".$this->obj_media->get_height()."px";
 		if ($this->obj_legende) {
 			$a_html = ($this->fabriquer_html_lien($mode, $this->url_lien, $this->touche_lien, "legende_avec_lien"))._HTML_FIN_LIGNE;
-			if (!(strcmp($this->alignement, _STYLE_ATTR_ALIGNEMENT_GAUCHE))) {
+			if (!(strcmp($this->alignement, _XML_GAUCHE))) {
 				$classe_image_cadre = "image_cadre_gauche";
 			}
-			elseif (!(strcmp($this->alignement, _STYLE_ATTR_ALIGNEMENT_DROITE))) {
+			elseif (!(strcmp($this->alignement, _XML_DROITE))) {
 				$classe_image_cadre = "image_cadre_droite";
 			}
 			else {
@@ -171,7 +171,7 @@ class obj_image extends obj_editable {
 		}
 		else {
 			$a_html = ($this->fabriquer_html_lien($mode, $this->url_lien, $this->touche_lien))._HTML_FIN_LIGNE;
-			if ((!(strcmp($this->alignement, _STYLE_ATTR_ALIGNEMENT_GAUCHE))) || (!(strcmp($this->alignement, _STYLE_ATTR_ALIGNEMENT_DROITE)))) {
+			if ((!(strcmp($this->alignement, _XML_GAUCHE))) || (!(strcmp($this->alignement, _XML_DROITE)))) {
 				$p_wrapper="<p class=\"p_image_cadre ".$this->extraire_classe_alignement($this->alignement)."\">%s</p>";
 			}
 			else {

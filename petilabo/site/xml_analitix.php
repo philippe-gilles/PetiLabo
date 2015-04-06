@@ -21,7 +21,7 @@ class xml_analitix {
 			for ($cpt = 0;$cpt < $nb_config; $cpt++) {
 				$xml_analitix->pointer_sur_repere(_ANALITIX_CONFIG);
 				$xml_analitix->pointer_sur_index($cpt);
-				$nom_attr = (string) $xml_analitix->lire_attribut(_ANALITIX_ATTR_NOM);
+				$nom_attr = (string) $xml_analitix->lire_attribut(_XML_NOM);
 				if (!(strcmp($nom_config, $nom_attr))) {
 					$this->nom_config = $nom_config;
 					$this->nom_fitre_ip = $xml_analitix->lire_n_valeur(_ANALITIX_CONFIG_FILTRE_IP, $cpt);
@@ -39,7 +39,7 @@ class xml_analitix {
 				for ($cpt = 0;$cpt < $nb_liste_ip; $cpt++) {
 					$xml_analitix->pointer_sur_repere(_ANALITIX_LISTE_IP);
 					$xml_analitix->pointer_sur_index($cpt);
-					$nom_attr = (string) $xml_analitix->lire_attribut(_ANALITIX_ATTR_NOM);
+					$nom_attr = (string) $xml_analitix->lire_attribut(_XML_NOM);
 					if (!(strcmp($this->nom_fitre_ip, $nom_attr))) {
 						$nb_ip = $xml_analitix->compter_elements(_ANALITIX_IP);
 						for ($cpt_ip = 0; $cpt_ip < $nb_ip; $cpt_ip++) {
@@ -61,7 +61,7 @@ class xml_analitix {
 				for ($cpt = 0;$cpt < $nb_liste_pays; $cpt++) {
 					$xml_analitix->pointer_sur_repere(_ANALITIX_LISTE_PAYS);
 					$xml_analitix->pointer_sur_index($cpt);
-					$nom_attr = (string) $xml_analitix->lire_attribut(_ANALITIX_ATTR_NOM);
+					$nom_attr = (string) $xml_analitix->lire_attribut(_XML_NOM);
 					if (!(strcmp($this->nom_fitre_pays, $nom_attr))) {
 						$nb_pays = $xml_analitix->compter_elements(_ANALITIX_PAYS);
 						for ($cpt_pays = 0; $cpt_pays < $nb_pays; $cpt_pays++) {
@@ -81,7 +81,7 @@ class xml_analitix {
 				for ($cpt = 0;$cpt < $nb_liste_ref; $cpt++) {
 					$xml_analitix->pointer_sur_repere(_ANALITIX_LISTE_REFERENTS);
 					$xml_analitix->pointer_sur_index($cpt);
-					$nom_attr = (string) $xml_analitix->lire_attribut(_ANALITIX_ATTR_NOM);
+					$nom_attr = (string) $xml_analitix->lire_attribut(_XML_NOM);
 					if (!(strcmp($this->nom_fitre_ref, $nom_attr))) {
 						$nb_ref = $xml_analitix->compter_elements(_ANALITIX_REFERENT);
 						for ($cpt_ref = 0; $cpt_ref < $nb_ref; $cpt_ref++) {

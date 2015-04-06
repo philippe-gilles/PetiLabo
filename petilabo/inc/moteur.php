@@ -211,7 +211,7 @@
 			$niveau = (int) $this->page->lire_attribut_n(_PAGE_TITRE, $occ, _PAGE_ATTR_NIVEAU_TITRE);
 			$niveau = min(max($niveau, 1), 3);
 			// Lecture de l'attribut "style"
-			$style_inline = $this->page->lire_attribut_n(_PAGE_TITRE, $occ, _PAGE_ATTR_STYLE_PARAGRAPHE);
+			$style_inline = $this->page->lire_attribut_n(_PAGE_TITRE, $occ, _XML_STYLE);
 			$style_titre = (strlen($style_inline) > 0)?$style_inline:$this->site->get_style_titre($niveau);
 			// Création de l'objet "titre"
 			$obj = new obj_titre($this->texte, $niveau, $style_titre, $id_texte);
@@ -224,7 +224,7 @@
 			$id_valeur = $this->page->lire_valeur_n(_PAGE_PARAGRAPHE, $occ);
 			$id_texte = $this->parser_id_crochets_actu($id_valeur);
 			// Lecture de l'attribut "style"
-			$style_inline = $this->page->lire_attribut_n(_PAGE_PARAGRAPHE, $occ, _PAGE_ATTR_STYLE_PARAGRAPHE);
+			$style_inline = $this->page->lire_attribut_n(_PAGE_PARAGRAPHE, $occ, _XML_STYLE);
 			$style = (strlen($style_inline) > 0)?$style_inline:$this->site->get_style_paragraphe();
 			// Lecture du lien téléphonique
 			$lien_telephonique = $this->page->lire_attribut_n(_PAGE_PARAGRAPHE, $occ, _PAGE_ATTR_LIEN_TELEPHONIQUE);
@@ -239,7 +239,7 @@
 			$id_valeur = $this->page->lire_valeur_n(_PAGE_SYMBOLE, $occ);
 			$id_texte = $this->parser_id_crochets_actu($id_valeur);
 			// Lecture de l'attribut "style"
-			$style_inline = $this->page->lire_attribut_n(_PAGE_SYMBOLE, $occ, _PAGE_ATTR_STYLE_PARAGRAPHE);
+			$style_inline = $this->page->lire_attribut_n(_PAGE_SYMBOLE, $occ, _XML_STYLE);
 			$style = (strlen($style_inline) > 0)?$style_inline:$this->site->get_style_paragraphe();
 			// Création de l'objet "symbole"
 			$obj = new obj_symbole($this->texte, $style, $id_texte);
@@ -258,7 +258,7 @@
 		// Ecriture des images
 		protected function ecrire_bloc_image($mode, $occ) {
 			// Lecture de l'attribut "alignement"
-			$alignement = $this->page->lire_attribut_n(_PAGE_IMAGE, $occ, _PAGE_ATTR_ALIGNEMENT);
+			$alignement = $this->page->lire_attribut_n(_PAGE_IMAGE, $occ, _XML_ALIGNEMENT);
 			// Lecture de l'id image
 			$valeur = $this->page->lire_valeur_n(_PAGE_IMAGE, $occ);
 			$src = $this->parser_id_crochets_actu($valeur);
@@ -296,7 +296,7 @@
 				$largeur = $image->get_width();
 				$largeur_max = ($largeur > $largeur_max)?$largeur:$largeur_max;
 				// Création de l'objet "image"
-				$obj_image = $this->parser_image($image, _STYLE_ATTR_ALIGNEMENT_CENTRE);
+				$obj_image = $this->parser_image($image, _XML_CENTRE);
 				if ($obj_image) {$obj->ajouter_image($obj_image);}
 			}
 			$obj->afficher($mode, $this->langue_page, $largeur_max);
@@ -321,7 +321,7 @@
 			// Lecture de l'attribut "largeur_standard"
 			$largeur_max = (int) $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _MEDIA_ATTR_LARGEUR);
 			// Lecture de l'attribut "nbcols"
-			$nb_cols = (int) $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _PAGE_ATTR_NBCOLS_VIGNETTE);
+			$nb_cols = (int) $this->page->lire_attribut_n(_PAGE_CARROUSEL, $occ, _PAGE_ATTR_NBCOLS);
 			// Création de l'objet carrousel
 			$obj = new obj_carrousel($this->texte, $nom_gal, $has_navigation, $has_boutons, $has_auto, $largeur_max, $nb_cols);
 			if (!($obj)) {return null;}
@@ -331,7 +331,7 @@
 				$image = $this->media->get_image($nom_image);
 				if (!($image)) {continue;}
 				// Création de l'objet "image"
-				$obj_image = $this->parser_image($image, _STYLE_ATTR_ALIGNEMENT_CENTRE);
+				$obj_image = $this->parser_image($image, _XML_CENTRE);
 				if ($obj_image) {$obj->ajouter_image($obj_image);}
 			}
 			$obj->afficher($mode, $this->langue_page);
@@ -345,7 +345,7 @@
 			$gal = $this->media->get_galerie($nom_gal);
 			if (!($gal)) {return null;}
 			// Lecture de l'attribut "nbcols"
-			$cols = $this->page->lire_attribut_n(_PAGE_VIGNETTES, $occ, _PAGE_ATTR_NBCOLS_VIGNETTE);
+			$cols = $this->page->lire_attribut_n(_PAGE_VIGNETTES, $occ, _PAGE_ATTR_NBCOLS);
 			$nb_cols = max($cols, 1);
 			// Création de l'objet vignettes
 			$obj = new obj_vignettes($this->texte, $nom_gal, $nb_cols);
@@ -356,7 +356,7 @@
 				$image = $this->media->get_image($nom_image);
 				if (!($image)) {continue;}
 				// Création de l'objet "image"
-				$obj_image = $this->parser_image($image, _STYLE_ATTR_ALIGNEMENT_CENTRE);
+				$obj_image = $this->parser_image($image, _XML_CENTRE);
 				if ($obj_image) {$obj->ajouter_image($obj_image);}
 			}
 			$obj->afficher($mode, $this->langue_page);
@@ -376,10 +376,10 @@
 			$boutons = $this->page->lire_attribut_n(_PAGE_GALERIE, $occ, _MEDIA_ATTR_BOUTONS);
 			$has_boutons = (!(strcmp(trim(strtolower($boutons)), _XML_TRUE)))?true:false;
 			// Lecture de l'attribut "nbcols"
-			$cols = $this->page->lire_attribut_n(_PAGE_GALERIE, $occ, _PAGE_ATTR_NBCOLS_VIGNETTE);
+			$cols = $this->page->lire_attribut_n(_PAGE_GALERIE, $occ, _PAGE_ATTR_NBCOLS);
 			$nb_cols = max($cols, 1);
 			// Lecture de l'attribut "position"
-			$position = $this->page->lire_attribut_n(_PAGE_GALERIE, $occ, _PAGE_ATTR_POSITION_GALERIE);
+			$position = $this->page->lire_attribut_n(_PAGE_GALERIE, $occ, _PAGE_ATTR_POSITION);
 			// Création de l'objet galerie
 			$obj = new obj_galerie($this->texte, $nom_gal, $has_navigation, $has_boutons, $nb_cols);
 			if (!($obj)) {return null;}
@@ -389,15 +389,15 @@
 				$image = $this->media->get_image($nom_image);
 				if (!($image)) {continue;}
 				// Création de l'objet "image"
-				$obj_image = $this->parser_image($image, _STYLE_ATTR_ALIGNEMENT_CENTRE);
+				$obj_image = $this->parser_image($image, _XML_CENTRE);
 				if ($obj_image) {$obj->ajouter_image($obj_image);}
 			}
 			// Affichage de la galerie en fonction de la position
 			switch ($position) {
-				case _PAGE_ATTR_POSITION_DROITE :
+				case _XML_DROITE :
 					$obj->afficher($mode, $this->langue_page, true, false);
 					break;
-				case _PAGE_ATTR_POSITION_BAS :
+				case _XML_BAS :
 					$obj->afficher($mode, $this->langue_page, false, false);
 					break;
 				case _PAGE_ATTR_POSITION_GAUCHE :
@@ -417,7 +417,7 @@
 			$menu = $this->menu->get_menu($nom_menu);
 			if (!($menu)) {return null;}
 			// Lecture de l'attribut "alignement"
-			$alignement = $this->page->lire_attribut_n(_PAGE_MENU, $occ, _PAGE_ATTR_ALIGNEMENT);
+			$alignement = $this->page->lire_attribut_n(_PAGE_MENU, $occ, _XML_ALIGNEMENT);
 			// Création de l'objet menu
 			$obj = new obj_menu($this->texte, $nom_menu, $alignement);
 			$nb_items = $menu->get_nb_items();
@@ -460,7 +460,7 @@
 			$id_valeur = $this->page->lire_valeur_n(_PAGE_CARTE, $occ);
 			$id_texte = $this->parser_id_crochets_actu($id_valeur);
 			// Lecture de l'attribut "source"
-			$val_source = $this->page->lire_attribut_n(_PAGE_CARTE, $occ, _PAGE_ATTR_SOURCE_CARTE);
+			$val_source = $this->page->lire_attribut_n(_PAGE_CARTE, $occ, _PAGE_ATTR_SOURCE);
 			if (strlen($val_source) > 0) {$source = strcmp($val_source, _PAGE_ATTR_SOURCE_OSM)?_PAGE_ATTR_SOURCE_GOOGLE:_PAGE_ATTR_SOURCE_OSM;}
 			else {$source = _PAGE_ATTR_SOURCE_GOOGLE;}
 			// Lecture de l'attribut "zoom"
@@ -478,7 +478,7 @@
 		// Ecriture des videos 
 		protected function ecrire_bloc_video($mode, $occ) {
 			// Lecture de l'attribut source
-			$source = $this->page->lire_attribut_n(_PAGE_VIDEO, $occ, _PAGE_ATTR_SOURCE_VIDEO);
+			$source = $this->page->lire_attribut_n(_PAGE_VIDEO, $occ, _PAGE_ATTR_SOURCE);
 			if (strlen($source) > 0) {
 				// Lecture de l'id texte
 				$id_valeur = $this->page->lire_valeur_n(_PAGE_VIDEO, $occ);
@@ -496,7 +496,7 @@
 			$pj = $this->document->get_document($id_pj);
 			if (!($pj)) {return null;}
 			// Lecture de l'attribut "lien"
-			$type_lien = $this->page->lire_attribut_n(_PAGE_PJ, $occ, _PAGE_ATTR_LIEN_PJ);
+			$type_lien = $this->page->lire_attribut_n(_PAGE_PJ, $occ, _XML_LIEN);
 			$lien = ((strcmp($type_lien, _PAGE_ATTR_LIEN_IMAGE)) && (strcmp($type_lien, _PAGE_ATTR_LIEN_FICHIER)))?_PAGE_ATTR_LIEN_LEGENDE:$type_lien;
 			// Préparation du style par défaut
 			$style = $this->site->get_style_paragraphe();
@@ -511,7 +511,7 @@
 			$val_form = trim(strtolower($this->page->lire_valeur_n(_PAGE_FORM_CONTACT, $occ)));
 			$form_court = (strcmp($val_form, _PAGE_ATTR_FORMULAIRE_COURT))?false:true;
 			// Lecture de l'attribut "style"
-			$style = $this->page->lire_attribut_n(_PAGE_FORM_CONTACT, $occ, _PAGE_ATTR_FORMULAIRE_STYLE);
+			$style = $this->page->lire_attribut_n(_PAGE_FORM_CONTACT, $occ, _XML_STYLE);
 			// Préparation du style par défaut
 			$style_p = $this->site->get_style_paragraphe();
 			// Création de l'objet formulaire
@@ -522,7 +522,7 @@
 		// Ecriture des drapeaux
 		protected function ecrire_bloc_drapeaux($mode, $occ) {
 			// Lecture de l'attribut "alignement"
-			$alignement = $this->page->lire_attribut_n(_PAGE_DRAPEAUX, $occ, _PAGE_ATTR_ALIGNEMENT);
+			$alignement = $this->page->lire_attribut_n(_PAGE_DRAPEAUX, $occ, _XML_ALIGNEMENT);
 			// Création de l'objet drapeaux
 			$obj = new obj_drapeaux($this->texte, $alignement, $this->page->get_meta_multilingue());
 			if (!($obj)) return null;
@@ -558,7 +558,7 @@
 			$chapitre_photographique = ((strlen($chapitre) == 0) || (!(strcmp($chapitre, _PAGE_ATTR_CHAPITRE_PHOTOGRAPHIQUE))))?true:false;
 			$sections_chapitre = (strlen($chapitre) == 0)?true:false;
 			// Lecture de l'attribut taille
-			$taille_vignette = (int) $this->page->lire_attribut_n(_PAGE_CREDITS, $occ, _PAGE_ATTR_CREDITS_TAILLE);
+			$taille_vignette = (int) $this->page->lire_attribut_n(_PAGE_CREDITS, $occ, _XML_TAILLE);
 			// En cas de crédits techniques on charge les textes supplémentaires
 			if ($chapitre_technique) {
 				$ret = $this->texte->ouvrir(_XML_SOURCE_INTERNE, _XML_PATH_INTERNE._XML_CREDITS._XML_EXT);
@@ -642,7 +642,7 @@
 			$forme = $this->page->lire_valeur_n(_PAGE_SOCIAL, $occ);
 			$forme_carree = (strcmp($forme, _PAGE_ATTR_FORME_ROND))?true:false;
 			// Lecture de l'attribut "taille"
-			$taille = (int) $this->page->lire_attribut_n(_PAGE_SOCIAL, $occ, _PAGE_ATTR_SOCIAL_TAILLE);
+			$taille = (int) $this->page->lire_attribut_n(_PAGE_SOCIAL, $occ, _XML_TAILLE);
 			$grande_taille = ($taille < 33)?false:true;
 			// Récupération des données du partage
 			$titre_editable = $this->page->get_meta_titre_editable();
@@ -662,9 +662,9 @@
 		// Ecriture du bouton admin
 		protected function ecrire_bloc_bouton_admin($mode, $occ) {
 			// Lecture de l'attribut "alignement"
-			$alignement = $this->page->lire_attribut_n(_PAGE_BOUTON_ADMIN, $occ, _PAGE_ATTR_ALIGNEMENT);
+			$alignement = $this->page->lire_attribut_n(_PAGE_BOUTON_ADMIN, $occ, _XML_ALIGNEMENT);
 			// Lecture de l'attribut "style"
-			$style_inline = $this->page->lire_attribut_n(_PAGE_BOUTON_ADMIN, $occ, _PAGE_ATTR_STYLE_BOUTON);
+			$style_inline = $this->page->lire_attribut_n(_PAGE_BOUTON_ADMIN, $occ, _XML_STYLE);
 			// Création de l'objet bouton admin
 			$obj = new obj_bouton_admin($this->nom_page, $alignement, $style_inline);
 			if ($obj) {$obj->afficher($mode, $this->langue_page);}

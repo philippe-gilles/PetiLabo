@@ -39,7 +39,7 @@ class xml_page extends xml_abstract {
 				}
 				if ($lib_only) {continue;}
 				$signet_contenu = $this->page->lire_n_attribut(_PAGE_ATTR_CONTENU_SIGNET, $cpt_cont);
-				$style_contenu = $this->page->lire_n_attribut(_PAGE_ATTR_CONTENU_STYLE, $cpt_cont);
+				$style_contenu = $this->page->lire_n_attribut(_XML_STYLE, $cpt_cont);
 				$semantique_contenu = $this->page->lire_n_attribut(_PAGE_ATTR_CONTENU_SEMANTIQUE, $cpt_cont);
 				$obj_contenu = new xml_contenu($signet_contenu, $style_contenu, $semantique_contenu);
 				$this->page->pointer_sur_index($cpt_cont);
@@ -53,9 +53,9 @@ class xml_page extends xml_abstract {
 					$this->page->pointer_sur_repere(_PAGE_BLOC);
 					$this->page->pointer_sur_index($cpt_bloc);
 					$this->page->creer_repere($repere_bloc);
-					$taille_bloc = $this->page->lire_attribut(_PAGE_ATTR_BLOC_TAILLE);
-					$style_bloc = $this->page->lire_attribut(_PAGE_ATTR_BLOC_STYLE);
-					$position_bloc = $this->page->lire_attribut(_PAGE_ATTR_BLOC_POSITION);
+					$taille_bloc = $this->page->lire_attribut(_XML_TAILLE);
+					$style_bloc = $this->page->lire_attribut(_XML_STYLE);
+					$position_bloc = $this->page->lire_attribut(_PAGE_ATTR_POSITION);
 					$obj_contenu->ajouter_bloc($repere_bloc, $taille_bloc, $style_bloc, $position_bloc);
 					
 					// On contrôle l'existence d'un carrousel

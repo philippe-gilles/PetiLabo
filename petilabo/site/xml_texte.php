@@ -54,7 +54,7 @@ class xml_texte {
 			$nb_textes = $this->xml_struct->compter_elements(_TEXTE_TEXTE);
 			for ($cpt = 0;$cpt < $nb_textes; $cpt++) {
 				$this->xml_struct->pointer_sur_balise(_TEXTE_TEXTE);
-				$nom = $this->xml_struct->lire_n_attribut(_TEXTE_ATTR_NOM, $cpt);
+				$nom = $this->xml_struct->lire_n_attribut(_XML_NOM, $cpt);
 				if (strlen($nom) > 0) {
 					$texte = $this->xml_struct->lire_n($cpt);
 					$key = (strlen($suffixe) > 0)?$nom."_".$suffixe:$nom;

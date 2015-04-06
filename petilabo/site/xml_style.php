@@ -9,8 +9,8 @@ class style_contenu extends xml_abstract {
 		$this->enregistrer_chaine("nom", $nom);
 		$this->enregistrer_entier("marge_haut", 0, _STYLE_CONTENU_MARGE_HAUT);
 		$this->enregistrer_entier("marge_bas", 0, _STYLE_CONTENU_MARGE_BAS);
-		$this->enregistrer_chaine("couleur_fond", null, _STYLE_CONTENU_COULEUR_FOND);
-		$this->enregistrer_chaine("motif_fond", null, _STYLE_CONTENU_MOTIF_FOND);
+		$this->enregistrer_chaine("couleur_fond", null, _XML_COULEUR_FOND);
+		$this->enregistrer_chaine("motif_fond", null, _XML_MOTIF_FOND);
 		$this->enregistrer_chaine("papierpeint_fond", null, _STYLE_CONTENU_PAPIERPEINT_FOND);
 		$this->enregistrer_chaine("type_special", null, _STYLE_CONTENU_TYPE_SPECIAL);
 	}
@@ -23,8 +23,8 @@ class style_bloc extends xml_abstract {
 		$this->enregistrer_entier("marge_bas", 0, _STYLE_BLOC_MARGE_BAS);
 		$this->enregistrer_entier("marge_gauche", 0, _STYLE_BLOC_MARGE_GAUCHE);
 		$this->enregistrer_entier("marge_droite", 0, _STYLE_BLOC_MARGE_DROITE);
-		$this->enregistrer_chaine("couleur_fond", null, _STYLE_BLOC_COULEUR_FOND);
-		$this->enregistrer_chaine("motif_fond", null, _STYLE_BLOC_MOTIF_FOND);
+		$this->enregistrer_chaine("couleur_fond", null, _XML_COULEUR_FOND);
+		$this->enregistrer_chaine("motif_fond", null, _XML_MOTIF_FOND);
 		$this->enregistrer_chaine("papierpeint_fond", null, _STYLE_BLOC_PAPIERPEINT_FOND);
 		$this->enregistrer_chaine("bordure");$this->enregistrer_chaine("type_bordure");
 	}
@@ -58,16 +58,26 @@ class style_actu extends xml_abstract {
 	}
 }
 
+class style_puce extends xml_abstract {
+	public function __construct() {
+		$this->enregistrer_chaine("icone", null, _XML_ICONE);
+		$this->enregistrer_chaine("couleur", null, _XML_COULEUR);
+		$this->enregistrer_flottant("taille", 0, _XML_TAILLE);
+		$this->enregistrer_chaine("ombre", null, _STYLE_PUCE_OMBRE);
+	}
+}
+
 class style_texte extends xml_abstract {
 	// Propriétés
 	private $police = null;private $src_police = null;private $famille_police = null;
 	private $alignement = null;private $decoration = null;
 
 	public function __construct() {
-		$this->enregistrer_chaine("couleur", null, _STYLE_TEXTE_COULEUR);
-		$this->enregistrer_chaine("couleur_lien", null, _STYLE_TEXTE_COULEUR_LIEN);
-		$this->enregistrer_chaine("couleur_survol", null, _STYLE_TEXTE_COULEUR_SURVOL);
-		$this->enregistrer_flottant("taille", 0, _STYLE_TEXTE_TAILLE);
+		$this->enregistrer_chaine("couleur", null, _XML_COULEUR);
+		$this->enregistrer_chaine("couleur_lien", null, _XML_COULEUR_LIEN);
+		$this->enregistrer_chaine("couleur_survol", null, _XML_COULEUR_SURVOL);
+		$this->enregistrer_chaine("puce", null, _STYLE_TEXTE_PUCE);
+		$this->enregistrer_flottant("taille", 0, _XML_TAILLE);
 	}
 	// Manipulateurs
 	public function set_police($police, $famille_police, $src_police) {
@@ -89,8 +99,8 @@ class style_texte extends xml_abstract {
 		$ret = $param;
 		if (strlen($ret) > 0) {
 			$ret = trim(strtolower($ret));
-			if ((strcmp($ret, _STYLE_ATTR_ALIGNEMENT_GAUCHE)) && (strcmp($ret, _STYLE_ATTR_ALIGNEMENT_DROITE))  && (strcmp($ret, _STYLE_ATTR_ALIGNEMENT_JUSTIFIE))) {
-				$ret = _STYLE_ATTR_ALIGNEMENT_CENTRE;
+			if ((strcmp($ret, _XML_GAUCHE)) && (strcmp($ret, _XML_DROITE))  && (strcmp($ret, _XML_JUSTIFIE))) {
+				$ret = _XML_CENTRE;
 			}
 		}
 		return $ret;
@@ -124,6 +134,7 @@ class xml_style {
 	// Propriétés
 	private $styles_contenus = array();
 	private $styles_blocs = array();
+	private $styles_puces = array();
 	private $styles_textes = array();
 	private $styles_formulaires = array();
 	private $styles_actus = array();
@@ -137,7 +148,7 @@ class xml_style {
 			$nb_styles = $xml_style->compter_elements(_STYLE_CONTENU);
 			$xml_style->pointer_sur_balise(_STYLE_CONTENU);
 			for ($cpt = 0;$cpt < $nb_styles; $cpt++) {
-				$nom = $xml_style->lire_n_attribut(_STYLE_CONTENU_ATTR_NOM, $cpt);
+				$nom = $xml_style->lire_n_attribut(_XML_NOM, $cpt);
 				if (strlen($nom) > 0) {
 					$style = new style_contenu($nom);
 					$style->load($xml_style, $cpt);
@@ -149,7 +160,7 @@ class xml_style {
 			$nb_styles = $xml_style->compter_elements(_STYLE_BLOC);
 			$xml_style->pointer_sur_balise(_STYLE_BLOC);
 			for ($cpt = 0;$cpt < $nb_styles; $cpt++) {
-				$nom = $xml_style->lire_n_attribut(_STYLE_BLOC_ATTR_NOM, $cpt);
+				$nom = $xml_style->lire_n_attribut(_XML_NOM, $cpt);
 				if (strlen($nom) > 0) {
 					$style = new style_bloc($nom);
 					$style->load($xml_style, $cpt);
@@ -169,16 +180,28 @@ class xml_style {
 					$this->styles_blocs[$nom] = $style;
 				}
 			}
+			// Traitement des styles de puce
+			$xml_style->pointer_sur_origine();
+			$nb_styles = $xml_style->compter_elements(_STYLE_PUCE);
+			$xml_style->pointer_sur_balise(_STYLE_PUCE);
+			for ($cpt = 0;$cpt < $nb_styles; $cpt++) {
+				$nom = $xml_style->lire_n_attribut(_XML_NOM, $cpt);
+				if (strlen($nom) > 0) {
+					$style = new style_puce();
+					$style->load($xml_style, $cpt);
+					$this->styles_puces[$nom] = $style;
+				}
+			}
 			// Traitement des styles de texte
 			$xml_style->pointer_sur_origine();
 			$nb_styles = $xml_style->compter_elements(_STYLE_TEXTE);
 			$xml_style->pointer_sur_balise(_STYLE_TEXTE);
 			for ($cpt = 0;$cpt < $nb_styles; $cpt++) {
-				$nom = $xml_style->lire_n_attribut(_STYLE_TEXTE_ATTR_NOM, $cpt);
+				$nom = $xml_style->lire_n_attribut(_XML_NOM, $cpt);
 				if (strlen($nom) > 0) {
 					$style = new style_texte();
 					$style->load($xml_style, $cpt);
-					$alignement = $xml_style->lire_n_valeur(_STYLE_TEXTE_ALIGNEMENT, $cpt);
+					$alignement = $xml_style->lire_n_valeur(_XML_ALIGNEMENT, $cpt);
 					$decoration = $xml_style->lire_n_valeur(_STYLE_TEXTE_DECORATION, $cpt);
 					$police = $xml_style->lire_n_valeur(_STYLE_TEXTE_POLICE, $cpt);
 					// En cas de police on va lire la source et la famille de la police
@@ -203,7 +226,7 @@ class xml_style {
 			$nb_styles = $xml_style->compter_elements(_STYLE_FORMULAIRE);
 			$xml_style->pointer_sur_balise(_STYLE_FORMULAIRE);
 			for ($cpt = 0;$cpt < $nb_styles; $cpt++) {
-				$nom = $xml_style->lire_n_attribut(_STYLE_FORMULAIRE_ATTR_NOM, $cpt);
+				$nom = $xml_style->lire_n_attribut(_XML_NOM, $cpt);
 				if (strlen($nom) > 0) {
 					$style = new style_formulaire();
 					$style->load($xml_style, $cpt);
@@ -215,7 +238,7 @@ class xml_style {
 			$nb_styles = $xml_style->compter_elements(_STYLE_ACTUALITE);
 			$xml_style->pointer_sur_balise(_STYLE_ACTUALITE);
 			for ($cpt = 0;$cpt < $nb_styles; $cpt++) {
-				$nom = $xml_style->lire_n_attribut(_STYLE_ACTUALITE_ATTR_NOM, $cpt);
+				$nom = $xml_style->lire_n_attribut(_XML_NOM, $cpt);
 				if (strlen($nom) > 0) {
 					// Création du style d'actualité
 					$style = new style_actu();
@@ -229,6 +252,7 @@ class xml_style {
 
 	public function get_style_contenu($nom) {return (isset($this->styles_contenus[$nom])?$this->styles_contenus[$nom]:null);}
 	public function get_style_bloc($nom) {return $this->styles_blocs[$nom];}
+	public function get_style_puce($nom) {return $this->styles_puces[$nom];}
 	public function get_style_texte($nom) {return $this->styles_textes[$nom];}
 	public function get_style_formulaire($nom) {return $this->styles_formulaires[$nom];}
 	public function get_style_actu($nom) {return $this->styles_actus[$nom];}
@@ -278,7 +302,7 @@ class xml_style {
 				$bordure = $style->get_bordure();
 				$type_bordure = $style->get_type_bordure();
 				switch ($type_bordure) {
-					case _STYLE_ATTR_TYPE_BORDURE_COULEUR :
+					case _XML_COULEUR :
 						$css .= "background:".$bordure.";";
 						break;
 					case _STYLE_ATTR_TYPE_BORDURE_MOTIF :
@@ -359,6 +383,30 @@ class xml_style {
 				}
 				$css .= "padding:0;";
 				$css .= "}"._CSS_FIN_LIGNE;
+				// Gestion des puces
+				$nom_puce = $style->get_puce();
+				if (strlen($nom_puce) > 0) {
+					$puce = isset($this->styles_puces[$nom_puce])?$this->styles_puces[$nom_puce]:null;
+					if ($puce) {
+						$icone_puce = $puce->get_icone();
+						if (strlen($icone_puce) > 0) {
+							$taille_puce = ($puce->get_taille() < 0.1)?1.0:$puce->get_taille();
+							$indentation = round($taille_puce*2.4, 1);
+							$taille_pc = (int) ($taille_puce * 100);
+							$couleur_puce = $puce->get_couleur();
+							$ombre_puce = strtolower(trim($puce->get_ombre()));
+							$css .= "."._CSS_PREFIXE_TEXTE.$nom_style. "{";
+							$css .= "text-indent:-".$indentation."em;padding-left:".$indentation."em!important;";
+							$css .= "}"._CSS_FIN_LIGNE;
+							$css .= "."._CSS_PREFIXE_TEXTE.$nom_style. ":before{font-family:'FontAwesome';";
+							$css .= "font-size:".$taille_pc."%;content:'\\f".$icone_puce."';";
+							$css .= "padding-left:0.8em;padding-right:0.8em;";
+							if (strlen($couleur_puce) > 0) {$css .= "color:".$couleur_puce.";";}
+							if (!(strcmp($ombre_puce, _XML_TRUE))) {$css .= "text-shadow:2px 2px 3px #aaa;";}
+							$css .= "}"._CSS_FIN_LIGNE;
+						}
+					}
+				}
 				// Style équivalent pour les icones
 				$css .= "."._CSS_PREFIXE_ICONE.$nom_style. "{";
 				$css .= "font-family:'FontAwesome',sans-serif;";
@@ -503,13 +551,13 @@ class xml_style {
 	private function extraire_css_alignement($param) {
 		$ret = "";
 		if (strlen($param) > 0) {
-			if (!(strcmp($param, _STYLE_ATTR_ALIGNEMENT_GAUCHE))) {
+			if (!(strcmp($param, _XML_GAUCHE))) {
 				$ret = "text-align:left;";
 			}
-			elseif (!(strcmp($param, _STYLE_ATTR_ALIGNEMENT_DROITE))) {
+			elseif (!(strcmp($param, _XML_DROITE))) {
 				$ret = "text-align:right;";
 			}
-			elseif (!(strcmp($param, _STYLE_ATTR_ALIGNEMENT_JUSTIFIE))) {
+			elseif (!(strcmp($param, _XML_JUSTIFIE))) {
 				$ret = "text-align:justify;";
 			}
 			else {

@@ -39,9 +39,9 @@ class obj_html {
 	}
 	protected function extraire_classe_alignement($alignement) {
 		switch ($alignement) {
-			case _STYLE_ATTR_ALIGNEMENT_GAUCHE :
+			case _XML_GAUCHE :
 				$classe = "texte_g";break;
-			case _STYLE_ATTR_ALIGNEMENT_DROITE :
+			case _XML_DROITE :
 				$classe = "texte_d";break;
 			default :
 				$classe = "texte_c";break;

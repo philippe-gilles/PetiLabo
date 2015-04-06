@@ -9,6 +9,28 @@
 	define("_XML_SOURCE_MODULE", "module");
 	define("_XML_SOURCE_LIBRAIRIE", "librairie");
 	define("_XML_SOURCE_INTERNE", "interne");
+	
+	// Balises, attributs et valeurs transversaux
+	define("_XML_NOM", "nom");
+	define("_XML_GAUCHE", "gauche");
+	define("_XML_CENTRE", "centre");
+	define("_XML_DROITE", "droite");
+	define("_XML_JUSTIFIE", "justifie");
+	define("_XML_HAUT", "haut");
+	define("_XML_MILIEU", "milieu");
+	define("_XML_BAS", "bas");
+	define("_XML_COULEUR", "couleur");
+	define("_XML_COULEUR_FOND", "couleur_fond");
+	define("_XML_COULEUR_LIEN", "couleur_lien");
+	define("_XML_COULEUR_SURVOL", "couleur_survol");
+	define("_XML_COULEUR_ACTIF", "couleur_actif");
+	define("_XML_MOTIF_FOND", "motif_fond");
+	define("_XML_TAILLE", "taille");
+	define("_XML_STYLE", "style");
+	define("_XML_ALIGNEMENT", "alignement");
+	define("_XML_LIEN", "lien");
+	define("_XML_LIEN_EDITABLE", "lien_editable");
+	define("_XML_ICONE", "icone");
 
 	// Balises pour le fichier XML site (general.xml)
 	define("_SITE_RACINE", "racine");
@@ -72,9 +94,6 @@
 
 	// Balises pour le fichier XML texte
 	define("_TEXTE_TEXTE", "texte");
-	
-	// Attributs pour le fichier XML texte
-	define("_TEXTE_ATTR_NOM", "nom");
 
 	// Balises méta pour le fichier XML page
 	define("_PAGE_META_TITRE", "meta_titre");
@@ -115,38 +134,18 @@
 	define("_PAGE_CODE_HTML", "html");
 	
 	// Attributs pour le fichier XML page
-	define("_PAGE_ATTR_CONTENU_STYLE", "style");
+	define("_PAGE_ATTR_SOURCE", "source");
+	define("_PAGE_ATTR_NBCOLS", "cols");
+	define("_PAGE_ATTR_POSITION", "position");
 	define("_PAGE_ATTR_CONTENU_SIGNET", "signet");
 	define("_PAGE_ATTR_CONTENU_SEMANTIQUE", "semantique");
-	define("_PAGE_ATTR_BLOC_TAILLE", "taille");
-	define("_PAGE_ATTR_BLOC_STYLE", "style");
-	define("_PAGE_ATTR_BLOC_POSITION", "position");
-	define("_PAGE_ATTR_ALIGNEMENT", "alignement");
 	define("_PAGE_ATTR_NIVEAU_TITRE", "niveau");
-	define("_PAGE_ATTR_NBCOLS_VIGNETTE", "cols");
-	define("_PAGE_ATTR_STYLE_PARAGRAPHE", "style");
 	define("_PAGE_ATTR_LIEN_TELEPHONIQUE", "telephone");
-	define("_PAGE_ATTR_NBCOLS_GALERIE", "cols");
-	define("_PAGE_ATTR_POSITION_GALERIE", "position");
 	define("_PAGE_ATTR_CARTE_ZOOM", "zoom");
 	define("_PAGE_ATTR_CARTE_ORIENTATION", "orientation");
-	define("_PAGE_ATTR_LIEN_PJ", "lien");
-	define("_PAGE_ATTR_FORMULAIRE_STYLE", "style");
-	define("_PAGE_ATTR_SOURCE_CARTE", "source");
-	define("_PAGE_ATTR_SOURCE_VIDEO", "source");
-	define("_PAGE_ATTR_SOCIAL_TAILLE", "taille");
-	define("_PAGE_ATTR_CREDITS_TAILLE", "taille");
-	define("_PAGE_ATTR_STYLE_BOUTON", "style");
 	
 	// Valeurs possibles pour les attributs du fichier XML page
 	define("_PAGE_ATTR_CONTENU_SRC", "src");
-	define("_PAGE_ATTR_ALIGNEMENT_HAUT", "haut");
-	define("_PAGE_ATTR_ALIGNEMENT_MILIEU", "milieu");
-	define("_PAGE_ATTR_ALIGNEMENT_BAS", "bas");
-	define("_PAGE_ATTR_POSITION_HAUT", "haut");
-	define("_PAGE_ATTR_POSITION_BAS", "bas");
-	define("_PAGE_ATTR_POSITION_GAUCHE", "gauche");
-	define("_PAGE_ATTR_POSITION_DROITE", "droite");
 	define("_PAGE_ATTR_LIEN_IMAGE", "image");
 	define("_PAGE_ATTR_CARTE_PORTRAIT", "portrait");
 	define("_PAGE_ATTR_CARTE_PAYSAGE", "paysage");
@@ -175,7 +174,6 @@
 	define("_MEDIA_STYLE_LEGENDE_MARGE_BAS", "marge_bas");
 	define("_MEDIA_STYLE_LEGENDE_MARGE_GAUCHE", "marge_gauche");
 	define("_MEDIA_STYLE_LEGENDE_MARGE_DROITE", "marge_droite");
-	define("_MEDIA_STYLE_LEGENDE_COULEUR_FOND", "couleur_fond");
 	define("_MEDIA_STYLE_LEGENDE_COULEUR_TEXTE", "couleur_texte");
 	define("_MEDIA_STYLE_LEGENDE_STYLE_TEXTE", "style_texte");
 	define("_MEDIA_STYLE_LEGENDE_LIEN_SOULIGNE", "lien_souligne");
@@ -185,7 +183,6 @@
 	define("_MEDIA_IMAGE_SRC", "fichier");
 	define("_MEDIA_IMAGE_ALT", "alt");
 	define("_MEDIA_IMAGE_LEGENDE", "legende");
-	define("_MEDIA_IMAGE_LIEN", "lien");
 	define("_MEDIA_IMAGE_LARGEUR_STANDARD", "largeur_standard");
 	define("_MEDIA_IMAGE_HAUTEUR_STANDARD", "hauteur_standard");
 	define("_MEDIA_IMAGE_LARGEUR_REDUITE", "largeur_reduite");
@@ -195,8 +192,6 @@
 	define("_MEDIA_GALERIE_ELEMENT", "element");
 	
 	// Attributs pour le fichier XML media
-	define("_MEDIA_ATTR_NOM", "nom");
-	define("_MEDIA_ATTR_STYLE", "style");
 	define("_MEDIA_ATTR_NAVIGATION", "navigation");
 	define("_MEDIA_ATTR_BOUTONS", "boutons");
 	define("_MEDIA_ATTR_AUTO", "auto");
@@ -205,41 +200,27 @@
 	// Balises pour le fichier XML menu
 	define("_MENU_STYLE", "style_item");
 	define("_MENU_STYLE_TEXTE", "style_texte");
-	define("_MENU_STYLE_COULEUR", "couleur");
-	define("_MENU_STYLE_COULEUR_SURVOL", "couleur_survol");
 	define("_MENU_STYLE_FOND", "fond");
 	define("_MENU_STYLE_FOND_SURVOL", "fond_survol");
-	define("_MENU_STYLE_COULEUR_ACTIF", "couleur_actif");
 	define("_MENU_STYLE_FOND_ACTIF", "fond_actif");
 	define("_MENU_STYLE_ESPACE_VERTICAL", "espace_vertical");
 	define("_MENU_STYLE_ESPACE_HORIZONTAL", "espace_horizontal");
 	define("_MENU_STYLE_EXT_ACTIF", "_actif");
 	define("_MENU_ITEM", "item");
 	define("_MENU_ITEM_LABEL", "label");
-	define("_MENU_ITEM_ICONE", "icone");
-	define("_MENU_ITEM_LIEN", "lien");
-	define("_MENU_ITEM_LIEN_EDITABLE", "lien_editable");
 	define("_MENU_ITEM_INFO", "info");
-	define("_MENU_ITEM_STYLE", "style");
 	define("_MENU_MENU", "menu");
 	define("_MENU_MENU_CHOIX", "choix");
 	define("_MENU_LISTE_CIBLES", "liste_cibles");
 	define("_MENU_LISTE_CIBLES_CIBLE", "cible");
 	
 	// Attributs pour le fichier XML menu
-	define("_MENU_ATTR_STYLE_NOM", "nom");
-	define("_MENU_ATTR_ITEM_NOM", "nom");
 	define("_MENU_ATTR_ITEM_LIEN_EDITABLE_LISTE", "liste");
-	define("_MENU_ATTR_NOM", "nom");
-	define("_MENU_ATTR_LISTE_CIBLES_NOM", "nom");
-	define("_MENU_ATTR_LISTE_CIBLES_LIEN", "lien");
 
 	// Balises pour le fichier XML style
 	define("_STYLE_CONTENU", "style_contenu");
 	define("_STYLE_CONTENU_MARGE_HAUT", "marge_haut");
 	define("_STYLE_CONTENU_MARGE_BAS", "marge_bas");
-	define("_STYLE_CONTENU_COULEUR_FOND", "couleur_fond");
-	define("_STYLE_CONTENU_MOTIF_FOND", "motif_fond");
 	define("_STYLE_CONTENU_PAPIERPEINT_FOND", "papierpeint_fond");
 	define("_STYLE_CONTENU_TYPE_SPECIAL", "type_special");
 	define("_STYLE_BLOC", "style_bloc");
@@ -247,17 +228,13 @@
 	define("_STYLE_BLOC_MARGE_BAS", "marge_bas");
 	define("_STYLE_BLOC_MARGE_GAUCHE", "marge_gauche");
 	define("_STYLE_BLOC_MARGE_DROITE", "marge_droite");
-	define("_STYLE_BLOC_COULEUR_FOND", "couleur_fond");
-	define("_STYLE_BLOC_MOTIF_FOND", "motif_fond");
 	define("_STYLE_BLOC_PAPIERPEINT_FOND", "papierpeint_fond");
 	define("_STYLE_BLOC_BORDURE", "bordure");
+	define("_STYLE_PUCE", "style_puce");
+	define("_STYLE_PUCE_OMBRE", "ombre");
 	define("_STYLE_TEXTE", "style_texte");
 	define("_STYLE_TEXTE_POLICE", "police");
-	define("_STYLE_TEXTE_COULEUR", "couleur");
-	define("_STYLE_TEXTE_COULEUR_LIEN", "couleur_lien");
-	define("_STYLE_TEXTE_COULEUR_SURVOL", "couleur_survol");
-	define("_STYLE_TEXTE_TAILLE", "taille");
-	define("_STYLE_TEXTE_ALIGNEMENT", "alignement");
+	define("_STYLE_TEXTE_PUCE", "puce");
 	define("_STYLE_TEXTE_DECORATION", "decoration");
 	define("_STYLE_FORMULAIRE", "style_formulaire");
 	define("_STYLE_FORMULAIRE_TEXTE_CHAMP", "couleur_texte_champ");
@@ -281,25 +258,15 @@
 	define("_STYLE_ACTUALITE_FOND_RESUME", "fond_resume");
 	
 	// Attributs pour le fichier XML style
-	define("_STYLE_CONTENU_ATTR_NOM", "nom");
-	define("_STYLE_BLOC_ATTR_NOM", "nom");
 	define("_STYLE_BLOC_ATTR_TYPE_BORDURE", "type");
-	define("_STYLE_TEXTE_ATTR_NOM", "nom");
 	define("_STYLE_TEXTE_ATTR_POLICE_SOURCE", "source");
 	define("_STYLE_TEXTE_ATTR_POLICE_FAMILLE", "famille");
-	define("_STYLE_FORMULAIRE_ATTR_NOM", "nom");
-	define("_STYLE_ACTUALITE_ATTR_NOM", "nom");
 
 	// Valeurs possibles pour les attributs du fichier XML style
-	define("_STYLE_ATTR_ALIGNEMENT_GAUCHE", "gauche");
-	define("_STYLE_ATTR_ALIGNEMENT_CENTRE", "centre");
-	define("_STYLE_ATTR_ALIGNEMENT_DROITE", "droite");
-	define("_STYLE_ATTR_ALIGNEMENT_JUSTIFIE", "justifie");
 	define("_STYLE_ATTR_DECORATION_GRAS", "gras");
 	define("_STYLE_ATTR_DECORATION_ITALIQUE", "italique");
 	define("_STYLE_ATTR_POLICE_SOURCE_GOOGLE", "google");
 	define("_STYLE_ATTR_POLICE_SOURCE_OFL", "ofl");
-	define("_STYLE_ATTR_TYPE_BORDURE_COULEUR", "couleur");
 	define("_STYLE_ATTR_TYPE_BORDURE_MOTIF", "motif");
 	define("_STYLE_ATTR_TYPE_BORDURE_OMBRE", "ombre");
 	define("_STYLE_ATTR_TYPE_BORDURE_SCOTCH", "scotch");
@@ -313,9 +280,6 @@
 	define("_DOCUMENT_DOC_INFO", "info");
 	define("_DOCUMENT_DOC_LEGENDE", "legende");
 	
-	// Attributs pour le fichier XML style
-	define("_DOCUMENT_ATTR_NOM", "nom");
-	
 	// Balises pour le fichier XML analitix (analitix.xml)
 	define("_ANALITIX_LISTE_IP", "liste_ip");
 	define("_ANALITIX_IP", "ip");
@@ -327,9 +291,6 @@
 	define("_ANALITIX_CONFIG_FILTRE_IP", "filtre_ip");
 	define("_ANALITIX_CONFIG_FILTRE_PAYS", "filtre_pays");
 	define("_ANALITIX_CONFIG_FILTRE_REFERENTS", "filtre_referents");
-
-	// Attributs pour le fichier XML analitix
-	define("_ANALITIX_ATTR_NOM", "nom");
 
 	// Balises pour le fichier XML config mail
 	define("_MAIL_CONFIG_DELAI_SUCCES", "delai_apres_succes");
@@ -353,4 +314,3 @@
 	define("_MODULE_ACTU_SOMMAIRE_3", "sommaire_3");
 	define("_MODULE_ACTU_SOMMAIRE_4", "sommaire_4");
 	define("_MODULE_ACTU_SOMMAIRE_5", "sommaire_5");
-	define("_MODULE_ACTU_STYLE", "style");

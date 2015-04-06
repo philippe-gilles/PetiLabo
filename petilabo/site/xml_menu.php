@@ -4,7 +4,7 @@ class style_menu extends xml_abstract {
 	public function __construct() {
 		$this->enregistrer_chaine("style_texte", null, _MENU_STYLE_TEXTE);
 		$this->enregistrer_chaine("fond", null, _MENU_STYLE_FOND);
-		$this->enregistrer_chaine("couleur_survol", null, _MENU_STYLE_COULEUR_SURVOL);
+		$this->enregistrer_chaine("couleur_survol", null, _XML_COULEUR_SURVOL);
 		$this->enregistrer_chaine("fond_survol", null, _MENU_STYLE_FOND_SURVOL);
 		$this->enregistrer_flottant("espace_vertical", 0, _MENU_STYLE_ESPACE_VERTICAL);
 		$this->enregistrer_flottant("espace_horizontal", 0, _MENU_STYLE_ESPACE_HORIZONTAL);
@@ -16,7 +16,7 @@ class item_menu extends xml_abstract {
 	
 	public function __construct() {
 		$this->enregistrer_chaine("label", null, _MENU_ITEM_LABEL);
-		$this->enregistrer_chaine("icone", null, _MENU_ITEM_ICONE);
+		$this->enregistrer_chaine("icone", null, _XML_ICONE);
 		$this->enregistrer_chaine("info", null, _MENU_ITEM_INFO);
 		$this->enregistrer_chaine("lien_editable");
 		$this->enregistrer_chaine("liste_cibles");
@@ -87,7 +87,7 @@ class xml_menu {
 			$nb_styles = $xml_menu->compter_elements(_MENU_STYLE);
 			$xml_menu->pointer_sur_balise(_MENU_STYLE);
 			for ($cpt = 0;$cpt < $nb_styles; $cpt++) {
-				$nom = $xml_menu->lire_n_attribut(_MENU_ATTR_STYLE_NOM, $cpt);
+				$nom = $xml_menu->lire_n_attribut(_XML_NOM, $cpt);
 				if (strlen($nom) > 0) {
 					$style = new style_menu();
 					$style->load($xml_menu, $cpt);
@@ -99,17 +99,17 @@ class xml_menu {
 			$nb_items = $xml_menu->compter_elements(_MENU_ITEM);
 			$xml_menu->pointer_sur_balise(_MENU_ITEM);
 			for ($cpt = 0;$cpt < $nb_items; $cpt++) {
-				$nom = $xml_menu->lire_n_attribut(_MENU_ATTR_ITEM_NOM, $cpt);
+				$nom = $xml_menu->lire_n_attribut(_XML_NOM, $cpt);
 				if (strlen($nom) > 0) {
 					$item = new item_menu();
 					$item->load($xml_menu, $cpt);
-					$lien = $xml_menu->lire_n_valeur(_MENU_ITEM_LIEN, $cpt);
-					$lien_editable = $xml_menu->lire_n_valeur(_MENU_ITEM_LIEN_EDITABLE, $cpt);
+					$lien = $xml_menu->lire_n_valeur(_XML_LIEN, $cpt);
+					$lien_editable = $xml_menu->lire_n_valeur(_XML_LIEN_EDITABLE, $cpt);
 					// En cas de lien éditable on va lire l'éventuelle liste de cibles
 					if (strlen($lien_editable) > 0) {
 						$xml_menu->creer_repere($nom);
 						$xml_menu->pointer_sur_index($cpt);
-						$xml_menu->pointer_sur_balise(_MENU_ITEM_LIEN_EDITABLE);
+						$xml_menu->pointer_sur_balise(_XML_LIEN_EDITABLE);
 						$nom_liste_cibles = $xml_menu->lire_attribut(_MENU_ATTR_ITEM_LIEN_EDITABLE_LISTE);
 						$xml_menu->pointer_sur_repere($nom);
 					}
@@ -121,7 +121,7 @@ class xml_menu {
 						$item->set_lien_editable($lien_editable);
 						$item->set_liste_cibles($nom_liste_cibles);
 					}
-					$style = $xml_menu->lire_n_valeur(_MENU_ITEM_STYLE, $cpt);
+					$style = $xml_menu->lire_n_valeur(_XML_STYLE, $cpt);
 					if (strlen($style) > 0) {
 						if (array_key_exists($style, $this->styles)) {
 							$item->set_style($style);
@@ -138,7 +138,7 @@ class xml_menu {
 			for ($cpt = 0;$cpt < $nb_menus; $cpt++) {
 				$xml_menu->pointer_sur_repere(_MENU_MENU);
 				$xml_menu->pointer_sur_index($cpt);
-				$nom = (string) $xml_menu->lire_attribut(_MENU_ATTR_NOM);
+				$nom = (string) $xml_menu->lire_attribut(_XML_NOM);
 				if (strlen($nom) > 0) {
 					$nb_items = $xml_menu->compter_elements(_MENU_MENU_CHOIX);
 					if ($nb_items > 0) {
@@ -162,7 +162,7 @@ class xml_menu {
 			for ($cpt = 0;$cpt < $nb_liste_cibles; $cpt++) {
 				$xml_menu->pointer_sur_repere(_MENU_LISTE_CIBLES);
 				$xml_menu->pointer_sur_index($cpt);
-				$nom = (string) $xml_menu->lire_attribut(_MENU_ATTR_LISTE_CIBLES_NOM);
+				$nom = (string) $xml_menu->lire_attribut(_XML_NOM);
 				if (strlen($nom) > 0) {
 					$nb_cibles = $xml_menu->compter_elements(_MENU_LISTE_CIBLES_CIBLE);
 					if ($nb_cibles > 0) {
@@ -173,7 +173,7 @@ class xml_menu {
 							$xml_menu->pointer_sur_repere($repere);
 							$valeur = (string) $xml_menu->lire_valeur_n(_MENU_LISTE_CIBLES_CIBLE, $cpt_cible);
 							$xml_menu->pointer_sur_balise_n(_MENU_LISTE_CIBLES_CIBLE, $cpt_cible);
-							$lien = (string) $xml_menu->lire_attribut(_MENU_ATTR_LISTE_CIBLES_LIEN);
+							$lien = (string) $xml_menu->lire_attribut(_XML_LIEN);
 							$liste_cibles->ajouter_cible($lien, $valeur);
 						}
 						$this->listes_cibles[$nom] = $liste_cibles;

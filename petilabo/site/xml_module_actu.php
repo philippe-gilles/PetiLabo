@@ -11,7 +11,7 @@ class xml_module_actu {
 		$this->xml_struct = new xml_struct();
 		$ret = $this->xml_struct->ouvrir($nom);
 		if ($ret) {
-			$this->style = $this->xml_struct->lire_valeur(_MODULE_ACTU_STYLE);
+			$this->style = $this->xml_struct->lire_valeur(_XML_STYLE);
 			$this->sommaire[0] = $this->xml_struct->lire_valeur(_MODULE_ACTU_SOMMAIRE_1);
 			$this->sommaire[1] = $this->xml_struct->lire_valeur(_MODULE_ACTU_SOMMAIRE_2);
 			$this->sommaire[2] = $this->xml_struct->lire_valeur(_MODULE_ACTU_SOMMAIRE_3);

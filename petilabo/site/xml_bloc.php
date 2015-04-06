@@ -40,8 +40,8 @@ class xml_bloc extends xml_abstract {
 		$ret = $param;
 		if (strlen($ret) > 0) {
 			$ret = trim(strtolower($ret));
-			if ((strcmp($ret, _PAGE_ATTR_ALIGNEMENT_HAUT)) && (strcmp($ret, _PAGE_ATTR_ALIGNEMENT_BAS))) {
-				$ret = _PAGE_ATTR_ALIGNEMENT_MILIEU;
+			if ((strcmp($ret, _XML_HAUT)) && (strcmp($ret, _XML_BAS))) {
+				$ret = _XML_MILIEU;
 			}
 		}
 		return $ret;

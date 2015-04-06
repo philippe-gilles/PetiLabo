@@ -15,7 +15,7 @@ class style_media extends xml_abstract {
 	public function __construct($nom) {
 		$this->enregistrer_chaine("nom", $nom);
 		$this->enregistrer_chaine("style_texte", $nom, _MEDIA_STYLE_LEGENDE_STYLE_TEXTE);
-		$this->enregistrer_chaine("couleur_fond", $nom, _MEDIA_STYLE_LEGENDE_COULEUR_FOND);
+		$this->enregistrer_chaine("couleur_fond", $nom, _XML_COULEUR_FOND);
 		$this->enregistrer_chaine("couleur_texte", $nom, _MEDIA_STYLE_LEGENDE_COULEUR_TEXTE);
 	}
 
@@ -115,7 +115,7 @@ class img_media extends xml_abstract {
 		$this->enregistrer_entier("width_reduite", 0, _MEDIA_IMAGE_LARGEUR_REDUITE);
 		$this->enregistrer_entier("height_reduite", 0, _MEDIA_IMAGE_HAUTEUR_REDUITE);
 		$this->enregistrer_chaine("alt", null, _MEDIA_IMAGE_ALT);
-		$this->enregistrer_chaine("lien", null, _MEDIA_IMAGE_LIEN);
+		$this->enregistrer_chaine("lien", null, _XML_LIEN);
 		$this->enregistrer_chaine("copyright");
 		$this->enregistrer_chaine("src");$this->enregistrer_chaine("src_reduite");
 		$this->enregistrer_chaine("dest");$this->enregistrer_chaine("dest_reduite");
@@ -171,7 +171,7 @@ class xml_media {
 			$nb_styles = $xml_media->compter_elements(_MEDIA_STYLE_LEGENDE);
 			$xml_media->pointer_sur_balise(_MEDIA_STYLE_LEGENDE);
 			for ($cpt = 0;$cpt < $nb_styles; $cpt++) {
-				$nom = $xml_media->lire_n_attribut(_MEDIA_ATTR_NOM, $cpt);
+				$nom = $xml_media->lire_n_attribut(_XML_NOM, $cpt);
 				if (strlen($nom) > 0) {
 					$marge_haut = $xml_media->lire_n_valeur(_MEDIA_STYLE_LEGENDE_MARGE_HAUT, $cpt);
 					$marge_bas = $xml_media->lire_n_valeur(_MEDIA_STYLE_LEGENDE_MARGE_BAS, $cpt);
@@ -196,7 +196,7 @@ class xml_media {
 			$nb_images = $xml_media->compter_elements(_MEDIA_IMAGE);
 			$xml_media->pointer_sur_balise(_MEDIA_IMAGE);
 			for ($cpt = 0;$cpt < $nb_images; $cpt++) {
-				$nom = $xml_media->lire_n_attribut(_MEDIA_ATTR_NOM, $cpt);
+				$nom = $xml_media->lire_n_attribut(_XML_NOM, $cpt);
 				if (strlen($nom) > 0) {
 					$fichier = $xml_media->lire_n_valeur(_MEDIA_IMAGE_SRC, $cpt);
 					if (strlen($fichier) > 0) {
@@ -218,7 +218,7 @@ class xml_media {
 								$xml_media->creer_repere($nom);
 								$xml_media->pointer_sur_index($cpt);
 								$xml_media->pointer_sur_balise(_MEDIA_IMAGE_LEGENDE);
-								$nom_style = $xml_media->lire_attribut(_MEDIA_ATTR_STYLE);
+								$nom_style = $xml_media->lire_attribut(_XML_STYLE);
 								$xml_media->pointer_sur_repere($nom);
 							}
 							else {
@@ -247,7 +247,7 @@ class xml_media {
 			for ($cpt = 0;$cpt < $nb_gals; $cpt++) {
 				$xml_media->pointer_sur_repere(_MEDIA_GALERIE);
 				$xml_media->pointer_sur_index($cpt);
-				$nom = (string) $xml_media->lire_attribut(_MEDIA_ATTR_NOM);
+				$nom = (string) $xml_media->lire_attribut(_XML_NOM);
 				if (strlen($nom) > 0) {
 					$nb_elems = $xml_media->compter_elements(_MEDIA_GALERIE_ELEMENT);
 					if ($nb_elems > 0) {

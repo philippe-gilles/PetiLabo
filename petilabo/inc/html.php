@@ -375,8 +375,8 @@ class html {
 		return $style;
 	}
 	private function extraire_classe_bloc($position) {
-		if (!(strcmp($position, _PAGE_ATTR_ALIGNEMENT_HAUT))) {$classe = "bloc_h";}
-		elseif (!(strcmp($position, _PAGE_ATTR_ALIGNEMENT_BAS))) {$classe = "bloc_b";}
+		if (!(strcmp($position, _XML_HAUT))) {$classe = "bloc_h";}
+		elseif (!(strcmp($position, _XML_BAS))) {$classe = "bloc_b";}
 		else {$classe = "bloc_m";}
 		
 		return $classe;
