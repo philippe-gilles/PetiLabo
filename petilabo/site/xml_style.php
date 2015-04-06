@@ -257,7 +257,7 @@ class xml_style {
 	public function get_style_formulaire($nom) {return $this->styles_formulaires[$nom];}
 	public function get_style_actu($nom) {return $this->styles_actus[$nom];}
 
-	public function extraire_css() {
+	public function extraire_css($trad_icone_methode) {
 		$css = "";
 		// Styles de contenu
 		foreach ($this->styles_contenus as $nom_style => $style) {
@@ -390,6 +390,7 @@ class xml_style {
 					if ($puce) {
 						$icone_puce = $puce->get_icone();
 						if (strlen($icone_puce) > 0) {
+							$icone_puce = $trad_icone_methode($icone_puce, true);
 							$taille_puce = ($puce->get_taille() < 0.1)?1.0:$puce->get_taille();
 							$indentation = round($taille_puce*2.4, 1);
 							$taille_pc = (int) ($taille_puce * 100);
@@ -399,7 +400,7 @@ class xml_style {
 							$css .= "text-indent:-".$indentation."em;padding-left:".$indentation."em!important;";
 							$css .= "}"._CSS_FIN_LIGNE;
 							$css .= "."._CSS_PREFIXE_TEXTE.$nom_style. ":before{font-family:'FontAwesome';";
-							$css .= "font-size:".$taille_pc."%;content:'\\f".$icone_puce."';";
+							$css .= "font-size:".$taille_pc."%;content:'\\".$icone_puce."';";
 							$css .= "padding-left:0.8em;padding-right:0.8em;";
 							if (strlen($couleur_puce) > 0) {$css .= "color:".$couleur_puce.";";}
 							if (!(strcmp($ombre_puce, _XML_TRUE))) {$css .= "text-shadow:2px 2px 3px #aaa;";}

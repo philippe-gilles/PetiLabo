@@ -95,21 +95,23 @@ class xml_texte {
 	}
 	public function get_icone($nom, $langue) {
 		$val = $this->get_texte($nom, $langue);
+		$ret = $this->get_val_icone($val, false);
+		return $ret;
+	}
+	public function get_val_icone($val, $css) {
+		$ret = null;
 		if (strlen($val) > 0) {
 			$val = str_replace("fa-", "", $val);
 			if (array_key_exists($val, self::$tab_icones)) {$val = self::$tab_icones[$val];}
-			$ret = "&#xf".$val.";";
+			$ret = ($css)?"f".$val:"&#xf".$val.";";
 		}
-		else {$ret = null;}
 		return $ret;
 	}
 	public function get_source($nom) {return $this->sources[$nom];}
 	
 	public function ajouter_langue($param) {
 		$existe = array_key_exists($param, $this->nom_langues);
-		if ($existe) {
-			$this->liste_langues[] = $param;
-		}
+		if ($existe) {$this->liste_langues[] = $param;}
 		return $existe;
 	}
 	public function verifier_langue($param) {
