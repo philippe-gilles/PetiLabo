@@ -192,11 +192,6 @@ class obj_editable extends obj_html {
 		$etiquette = $titre.$separateur."<span style=\"font-size:0.8em;font-style:italic;\">(".$nom.")</span>";
 		return $etiquette;
 	}
-	protected function check_texte(&$obj_texte, &$id, $langue) {
-		if ($obj_texte->existe_texte($id)) {$trad = $obj_texte->get_texte($id, $langue);}
-		else {$id = null;$trad = null;}
-		return $trad;
-	}
 	protected function check_src_texte(&$obj_texte, &$id, $langue) {
 		if ($obj_texte->existe_texte($id)) {
 			$trad = $obj_texte->get_texte($id, $langue);
@@ -204,11 +199,6 @@ class obj_editable extends obj_html {
 		}
 		else {$id = null;$trad = null;$src = null;}
 		return array($trad, $src);
-	}
-	protected function check_icone(&$obj_texte, &$id, $langue) {
-		if ($obj_texte->existe_texte($id)) {$trad = $obj_texte->get_icone($id, $langue);}
-		else {$id = null;$trad = null;}
-		return $trad;
 	}
 	protected function check_src_icone(&$obj_texte, &$id, $langue) {
 		if ($obj_texte->existe_texte($id)) {

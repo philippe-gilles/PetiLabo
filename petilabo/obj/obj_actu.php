@@ -152,40 +152,4 @@ class obj_actu extends obj_editable {
 			$this->fermer_tableau();
 		}
 	}
-	
-	// TODO : A migrer dans la V2.0
-	private function edit_actu($no_actu) {
-		$this->ouvrir_tableau_simple();
-		$this->ouvrir_ligne();
-		$titre = _EDIT_LABEL_ACTUALITE."&nbsp;n°".$no_actu;
-		$this->ecrire_cellule_categorie($titre, _EDIT_COULEUR, 5);
-		$this->ecrire_cellule_symbole_image($image->get_nom(), _EDIT_SYMBOLE_IMAGE);
-		$this->ecrire_cellule_image($image->get_src());
-		$this->fermer_ligne();
-		$id_titre = $this->obj_texte->get_id_titre_actu($no_actu);
-		$trad_titre = $this->check_texte($id_titre);
-		$this->ouvrir_ligne();
-		$this->ecrire_cellule_symbole_texte($id_titre, _EDIT_SYMBOLE_LABEL, "Modifier le titre de l'actualité");
-		$this->ecrire_cellule_texte($id_titre, $this->relook_texte($trad_titre));
-		$this->fermer_ligne();
-		$id_sous_titre = $this->obj_texte->get_id_sous_titre_actu($no_actu);
-		$trad_sous_titre = $this->check_texte($id_sous_titre);
-		$this->ouvrir_ligne();
-		$this->ecrire_cellule_symbole_texte($id_sous_titre, _EDIT_SYMBOLE_LABEL, "Modifier le sous-titre de l'actualité");
-		$this->ecrire_cellule_texte($id_sous_titre, $this->relook_texte($trad_sous_titre));
-		$this->fermer_ligne();
-		$id_resume = $this->obj_texte->get_id_resume_actu($no_actu);
-		$trad_resume = $this->check_texte($id_resume);
-		$this->ouvrir_ligne();
-		$this->ecrire_cellule_symbole_texte($id_resume, _EDIT_SYMBOLE_LABEL, "Modifier le résumé de l'actualité");
-		$this->ecrire_cellule_texte($id_resume, $this->relook_texte($trad_resume));
-		$this->fermer_ligne();
-		$id_texte = $this->obj_texte->get_id_texte_actu($no_actu);
-		$trad_texte = $this->check_texte($id_texte);
-		$this->ouvrir_ligne();
-		$this->ecrire_cellule_symbole_texte($id_texte, _EDIT_SYMBOLE_LABEL, "Modifier le texte d'accompagnement de l'actualité");
-		$this->ecrire_cellule_texte($id_texte, $this->relook_texte($trad_texte));
-		$this->fermer_ligne();
-		$this->fermer_tableau();
-	}
 }
