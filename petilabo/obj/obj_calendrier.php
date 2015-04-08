@@ -52,7 +52,7 @@ class obj_calendrier extends obj_editable {
 			$this->ecrire_cellule_categorie(_EDIT_LABEL_CALENDRIER, _EDIT_COULEUR, 1);
 			$this->ecrire_cellule_symbole_calendrier($this->id_cal, _EDIT_SYMBOLE_CALENDRIER);
 			$this->ecrire_cellule_texte($this->id_cal, $this->id_cal);
-			$this->fermer_ligne();
+			$this->fermer_ligne("module");
 			$this->fermer_tableau();
 		}
 	}
