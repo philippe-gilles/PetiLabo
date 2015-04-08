@@ -36,6 +36,7 @@ p.stats_section, p.stats_label, p.stats_valeur{text-align:left;padding:3px;margi
 p.stats_label{color:#222;}
 p.stats_valeur{color:#444;font-weight:bold;text-align:right;}
 p.stats_section{color:#000;font-weight:bold;}
+div#stats{z-index:4;}div#visites_uniques{z-index:3;}div#visites{z-index:2;}div#geoloc{z-index:1;}
 /* Edition */
 .tab_edit_inactif{display:none;}
 .tab_edit_actif{display:block;}
