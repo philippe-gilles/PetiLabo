@@ -3,30 +3,18 @@ require_once(_PHP_PATH_INCLUDE."visites.php");
 
 define("_DB_VISITES_COURBES_LARGEUR", "800");
 define("_DB_VISITES_COURBES_HAUTEUR", "200");
-define("_DB_VISITES_TABLEAU_MAX_LIGNES", "9");
-define("_DB_VISITES_LABEL_PAYS_INCONNU", "Non identifié");
-define("_DB_VISITES_LABEL_SERVEUR_LOCAL", "Serveur local");
+define("_DB_VISITES_TABLEAU_MAX_LIGNES", "10");
 
 class obj_admin extends obj_editable {
 	private $nom_page = null;
-	private $version_txt = null;
-	private $version_php = null;
-	private $taille_php = 0;
-	private $taille_xml = 0;
-	private $stat_total_visites = 0;
-	private $stat_total_visites_mobiles = 0;
-	private $stat_total_visiteurs = 0;
-	private $stat_total_visiteurs_recurrents = 0;
-	private $db_ip = array();
-	private $db_ip_geolocalisation = array();
-	private $db_visites = array();
-	private $db_visites_uniques = array();
-	private $db_visites_mobiles = array();
-	private $db_visites_referers = array();
-	private $db_visites_pays = array();
-	private $db_visites_langues = array();
-	private $pays_a_bloquer = array();
-	private $ref_a_bloquer = array();
+	private $version_txt = null;private $version_php = null;
+	private $taille_php = 0;private $taille_xml = 0;
+	private $stat_total_visites = 0;private $stat_total_visites_mobiles = 0;
+	private $stat_total_visiteurs = 0;private $stat_total_visiteurs_recurrents = 0;
+	private $db_ip = array();private $db_ip_geolocalisation = array();
+	private $db_visites = array();private $db_visites_uniques = array();
+	private $db_visites_mobiles = array();private $db_visites_referers = array();
+	private $db_visites_pays = array();private $db_visites_langues = array();
 	private $db_tab_mois = array("", "janv", "fév", "mars", "avr", "mai", "juin", "juil", "août", "sept", "oct", "nov", "déc");
 	private $config_stat = false;
 
@@ -42,17 +30,15 @@ class obj_admin extends obj_editable {
 		$this->taille_php = $this->taille_repertoire(_PHP_PATH_ROOT);
 		$this->taille_xml = $this->taille_repertoire(_XML_PATH_ROOT);
 		$annee = date("Y");$mois = date("m");$jour = date("j");
-		for ($cpt = 29;$cpt >= 0;$cpt--) {
+		for ($cpt = (((int) _DB_VISITES_DUREE_ARCHIVAGE) - 2);$cpt >= 0;$cpt--) {
 			$date = date("ymd", mktime(0, 0, 0, $mois, $jour-$cpt, $annee));
 			$this->db_visites[$date] = 0;
 			$this->db_visites_uniques[$date] = array();
 			$this->db_visites_mobiles[$date] = 0;
 		}
 	}
-	public function ajouter_statistiques($pays_a_bloquer, $ref_a_bloquer) {
+	public function ajouter_statistiques() {
 		$this->config_stat = true;
-		$this->pays_a_bloquer = $pays_a_bloquer;
-		$this->ref_a_bloquer = $ref_a_bloquer;
 	}
 	public function afficher($mode, $langue) {
 		echo "<div class=\"panneau_admin\">\n";
@@ -109,16 +95,14 @@ class obj_admin extends obj_editable {
 				$champs = explode("|", $ligne);
 				if (count($champs) != 3) {continue;}
 				list($date_db, $ip_db, $nb_db) = $champs;
-				if (!(preg_match("/^[0-9]{6}$/", $date_db))) {continue;}
+				if (!(isset($this->db_visites[$date_db]))) {continue;}
 				$nb_visites = (int) $nb_db;
-				if (($nb_visites < 1) || ($nb_visites > 99)) {continue;}
+				if (($nb_visites < 1) || ($nb_visites > ((int) _DB_VISITES_LIMITE_FLOODING))) {continue;}
 				list($langue, $visite_mobile, $visite_referer, $ip_stricte, $pays) = $this->parser_ip_db($ip_db);
-				if (in_array($pays, $this->pays_a_bloquer)) {continue;}
-				if (in_array($visite_referer, $this->ref_a_bloquer)) {continue;}
 				if (array_key_exists($ip_stricte, $this->db_ip)) {$this->db_ip[$ip_stricte] += $nb_db;}
 				else {$this->db_ip[$ip_stricte] = $nb_db;}
 				$this->db_visites[$date_db] += $nb_db;$this->stat_total_visites += $nb_db;
-				if (!(in_array($ip_stricte, $this->db_visites_uniques[$date_db]))) {$this->db_visites_uniques[$date_db][] = $ip_stricte;}
+				if (!(@in_array($ip_stricte, $this->db_visites_uniques[$date_db]))) {$this->db_visites_uniques[$date_db][] = $ip_stricte;}
 				if ($visite_mobile) {$this->db_visites_mobiles[$date_db] += $nb_db;$this->stat_total_visites_mobiles += $nb_db;}
 				if (array_key_exists($visite_referer, $this->db_visites_referers)) {$this->db_visites_referers[$visite_referer] += $nb_db;}
 				else {$this->db_visites_referers[$visite_referer] = $nb_db;}
@@ -211,7 +195,8 @@ class obj_admin extends obj_editable {
 		$nb_lignes = 0;
 		foreach ($this->db_visites_pays as $pays => $nb) {
 			if ($nb_lignes >= ((int) _DB_VISITES_TABLEAU_MAX_LIGNES)) {continue;}
-			$this->afficher_stat_pc($pays, $nb, $this->stat_total_visites);
+			if (!(strcmp($pays, _DB_VISITES_LABEL_GEOLOC_INCONNUE))) {continue;}
+			$this->afficher_stat_pc_pays($pays, $nb, $this->stat_total_visites);
 			$nb_lignes += 1;
 		}
 		echo "</table></td><td>";
@@ -246,35 +231,18 @@ class obj_admin extends obj_editable {
 	private function afficher_stat_pc($label, $valeur, $total) {
 		echo "<tr><td><p class=\"stats_label\">".$label."</p></td><td class=\"admin_cellule_pc\"><p class=\"stats_valeur\">".$valeur."</p></td><td class=\"admin_cellule_pc\"><p class=\"stats_valeur\">".round((100.0 * ((float) $valeur)/((float) $total)),1)."%</p></td></tr>";
 	}
+	private function afficher_stat_pc_pays($label, $valeur, $total) {
+		echo "<tr><td><p class=\"stats_label\">".$label."<a class=\"symbole symbole_geo\" href=\"form_analitix.php?"._PARAM_ID."=".urlencode($label)."\" title=\"".$label." : voir les détails sur une carte du pays\">&#xf14c;</a></p></td><td class=\"admin_cellule_pc\"><p class=\"stats_valeur\">".$valeur."</p></td><td class=\"admin_cellule_pc\"><p class=\"stats_valeur\">".round((100.0 * ((float) $valeur)/((float) $total)),1)."%</p></td></tr>";
+	}
 	private function parser_ip_db($ip_db) {
 		$langue = substr($ip_db, 0, 2);$ip_db = substr($ip_db, 2);
 		$visite_mobile = (!(strcmp(substr($ip_db, 0, 1), _DB_VISITES_INDICATEUR_MOBILE)));
 		if ($visite_mobile) {$ip_db = substr($ip_db, 1);}
 		$champs = explode(_DB_VISITES_INDICATEUR_REFERER, $ip_db, 2);
-		if (count($champs) > 1) {list($ip_stricte, $referer) = $champs;}
-		else {$referer = _DB_VISITES_REFERER_DIRECT;$ip_stricte = $champs[0];}
-		$pays = $this->get_ip_geolocalisation($ip_stricte);
+		if (count($champs) > 1) {list($ip_augmentee, $referer) = $champs;}
+		else {$referer = _DB_VISITES_REFERER_DIRECT;$ip_augmentee = $champs[0];}
+		$elements_ip = explode(_DB_VISITES_SEPARATEUR_IP, $ip_augmentee, 5);
+		$ip_stricte = $elements_ip[0];$pays = $elements_ip[1];
 		return array($langue, $visite_mobile, $referer, $ip_stricte, $pays);
-	}
-	private function get_ip_geolocalisation($ip_stricte) {
-		if (array_key_exists($ip_stricte, $this->db_ip_geolocalisation)) {return $this->db_ip_geolocalisation[$ip_stricte];}
-		if (in_array($ip_stricte, array("localhost", "127.0.0.1", "::1"))) {return _DB_VISITES_LABEL_SERVEUR_LOCAL;}
-		$apiurl = "http://petixml.net/service/geo/query.php/api/".$ip_stricte;
-		$ret = _DB_VISITES_LABEL_PAYS_INCONNU;
-		$ch = curl_init();
-		if ($ch) {
-			curl_setopt($ch, CURLOPT_URL, $apiurl);
-			curl_setopt($ch, CURLOPT_HEADER, 0);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			$json_infos = curl_exec($ch);
-			curl_close($ch);
-			try {
-				$infos = @json_decode($json_infos, true);
-				$ret = (isset($infos['country']))?((isset($infos['country']['name']))?$infos['country']['name']:_DB_VISITES_LABEL_PAYS_INCONNU):_DB_VISITES_LABEL_PAYS_INCONNU;
-				$this->db_ip_geolocalisation[$ip_stricte] = $ret;
-			}
-			catch (Exception $e) {}
-		}
-		return $ret;
 	}
 }

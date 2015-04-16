@@ -42,8 +42,8 @@
 				if (!($analitix)) {return;}
 				$config = $analitix->ouvrir($pa, true);
 				if (!($config)) {return;}
-				Visites::IP_a_bloquer($analitix->get_filtre_ip());
-				Visites::Ajouter_visite($this->nom_page, $this->langue_page);
+				Visites::Listes_a_bloquer($analitix->get_filtre_ip(), $analitix->get_filtre_pays(), $analitix->get_filtre_referents());
+				Visites::Ajouter_visite($this->nom_page, $this->langue_page, $analitix->get_anonymisation_ip());
 			}
 		}
 		public function ouvrir_entete() {

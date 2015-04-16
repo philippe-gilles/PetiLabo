@@ -17,6 +17,7 @@ class openstreetmap {
         'cycle' => 'http://a.tile.opencyclemap.org/cycle/{Z}/{X}/{Y}.png',
     );
 
+	// Propriétés des marqueurs
     protected $tileDefaultSrc = 'mapnik';
     protected $osmLogo = 'osm-logo.png';
 	protected $markerFilename = 'osm-marker.png';
@@ -24,19 +25,39 @@ class openstreetmap {
 	protected $markerImageOffsetX = -10;protected $markerImageOffsetY = -25;
 	protected $markerShadowOffsetX = -1;protected $markerShadowOffsetY = -13;
 
-    protected $zoom = 0;
+	// Propriétés pour cartes en mode site (balise <carte>)
 	protected $lat = 0;protected $lon = 0;
 	protected $width = 400;protected $height = 400;
-    protected $markerBaseDir = null;
-	protected $image, $maptype;
+	protected $image = null;
     protected $centerX, $centerY, $offsetX, $offsetY;
+	private $isMapSite = false;
+	
+	// Propriétés pour cartes en mode admin (PetiLabo Analitix)
+	protected $from_x = 0;protected $from_y = 0;
+	protected $to_x = 0;protected $to_y = 0;
+	private $isMapAdmin = false;
+	
+	// Propriétés communes aux deux modes
+	protected $zoom = 0;
+    protected $markerBaseDir = null;
+	protected $maptype = null;
 
-    public function __construct($root, $lat, $lon, $width, $height, $zoom) {
+	public function __construct() {
+        $this->maptype = $this->tileDefaultSrc;
+	}
+    public function prepareMapSite($root, $lat, $lon, $width, $height, $zoom) {
         $this->lat = $lat;$this->lon = $lon;
         $this->width = $width;$this->height = $height;
         $this->zoom = $zoom;
-        $this->maptype = $this->tileDefaultSrc;
 	    $this->markerBaseDir = $root."images";
+		$this->isMapSite = true;
+    }
+    public function prepareMapAdmin($root, $zoom, $from_x, $from_y, $to_x, $to_y) {
+        $this->zoom = $zoom;
+        $this->from_x = $from_x;$this->from_y = $from_y;
+        $this->to_x = $to_x;$this->to_y = $to_y;
+	    $this->markerBaseDir = $root."images";
+		$this->isMapAdmin = true;
     }
 
     private function lonToTile($long, $zoom) {
@@ -54,7 +75,7 @@ class openstreetmap {
         $this->offsetY = floor((floor($this->centerY) - $this->centerY) * $this->tileSize);
     }
 
-    private function createBaseMap() {
+    private function createSiteMap() {
         $this->image = imagecreatetruecolor($this->width, $this->height);
         $startX = floor($this->centerX - ($this->width / $this->tileSize) / 2);
         $startY = floor($this->centerY - ($this->height / $this->tileSize) / 2);
@@ -80,6 +101,28 @@ class openstreetmap {
                 }
                 $destX = ($x - $startX) * $this->tileSize + $this->offsetX;
                 $destY = ($y - $startY) * $this->tileSize + $this->offsetY;
+                imagecopy($this->image, $tileImage, $destX, $destY, 0, 0, $this->tileSize, $this->tileSize);
+            }
+        }
+    }
+	
+    private function createAdminMap() {
+		$width = ((int) (1 + $this->to_x - $this->from_x)) * $this->tileSize;
+		$height = ((int) (1 + $this->to_y - $this->from_y)) * $this->tileSize;
+        $this->image = imagecreatetruecolor($width, $height);
+        for ($x = $this->from_x; $x <= $this->to_x; $x++) {
+            for ($y = $this->from_y; $y <= $this->to_y; $y++) {
+                $url = str_replace(array('{Z}', '{X}', '{Y}'), array($this->zoom, $x, $y), $this->tileSrcUrl[$this->maptype]);
+                $tileData = $this->fetchTile($url);
+                if ($tileData) {
+                    $tileImage = imagecreatefromstring($tileData);
+                } else {
+                    $tileImage = imagecreate($this->tileSize, $this->tileSize);
+                    $color = imagecolorallocate($tileImage, 255, 255, 255);
+                    @imagestring($tileImage, 1, 127, 127, 'err', $color);
+                }
+                $destX = ((int) ($x - $this->from_x)) * $this->tileSize;
+                $destY = ((int) ($y - $this->from_y)) * $this->tileSize;
                 imagecopy($this->image, $tileImage, $destX, $destY, 0, 0, $this->tileSize, $this->tileSize);
             }
         }
@@ -121,10 +164,16 @@ class openstreetmap {
     }
 
     public function makeMap($src) {
-        $this->initCoords();
-        $this->createBaseMap();
-        $this->placeMarker();
-        $this->copyrightNotice();
+		if ($this->isMapSite) {
+			$this->initCoords();
+			$this->createSiteMap();
+			$this->placeMarker();
+			$this->copyrightNotice();
+		}
+		elseif ($this->isMapAdmin) {
+			$this->createAdminMap();
+			$this->copyrightNotice();
+		}
 		if ($this->image) {
 			@imagejpeg($this->image, $src, 90);
 			@imagedestroy($this->image);

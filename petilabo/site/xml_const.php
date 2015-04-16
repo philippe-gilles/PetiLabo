@@ -291,6 +291,7 @@
 	define("_ANALITIX_CONFIG_FILTRE_IP", "filtre_ip");
 	define("_ANALITIX_CONFIG_FILTRE_PAYS", "filtre_pays");
 	define("_ANALITIX_CONFIG_FILTRE_REFERENTS", "filtre_referents");
+	define("_ANALITIX_CONFIG_ANONYMISATION_IP", "anonymisation_ip");
 
 	// Balises pour le fichier XML config mail
 	define("_MAIL_CONFIG_DELAI_SUCCES", "delai_apres_succes");

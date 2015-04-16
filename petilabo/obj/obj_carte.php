@@ -95,7 +95,8 @@ class obj_carte extends obj_editable {
 		if (!(strcmp($this->orientation, _PAGE_ATTR_CARTE_PORTRAIT))) {$width = 400;$height = 600;}
 		elseif (!(strcmp($this->orientation, _PAGE_ATTR_CARTE_CARRE))) {$width = 400;$height = 400;}
 		else {$width = 600;$height = 400;}
-		$osm = new openstreetmap(_PHP_PATH_ROOT, (float) $lat, (float) $lon, $width, $height, $this->niveau_zoom);
+		$osm = new openstreetmap();
+		$osm->prepareMapSite(_PHP_PATH_ROOT, (float) $lat, (float) $lon, $width, $height, $this->niveau_zoom);
 		$osm->makeMap($carte_locale);
 	}
 	private function get_ref_carte($texte) {

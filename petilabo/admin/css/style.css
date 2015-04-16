@@ -32,7 +32,8 @@ table.admin_tab_stats_content{width:100%;border-spacing:0!important;border-colla
 table.admin_tab_stats_content tr{padding:0!important;margin:0!important;}
 table.admin_tab_stats_content td{padding:0!important;border-spacing:0;border:1px solid #888;}
 table.admin_tab_stats_content td.admin_cellule_pc{width:66px!important;}
-p.stats_section, p.stats_label, p.stats_valeur{text-align:left;padding:3px;margin:0!important;font-size: 16px;}
+p.stats_section{text-align:left;padding:3px;margin:0!important;font-size: 16px;}
+p.stats_label, p.stats_valeur{text-align:left;padding:2px;margin:0!important;font-size: 15px;}
 p.stats_label{color:#222;}
 p.stats_valeur{color:#444;font-weight:bold;text-align:right;}
 p.stats_section{color:#000;font-weight:bold;}
@@ -46,6 +47,8 @@ div#stats{z-index:4;}div#visites_uniques{z-index:3;}div#visites{z-index:2;}div#g
 .nom_categorie{margin:0;padding:0;font-weight:bold;color:#fff;}
 .cellule_symbole {width:50px;background:#ccc;text-align:center;}
 .symbole {font-family:'FontAwesome',sans-serif;margin:0;padding:0;font-weight:normal;font-size:1.6em;}
+.symbole_geo{padding-left:0.7em;font-size:1em!important;color:#600;text-decoration:none;}
+.symbole_geo:hover{color:#555;text-decoration:none;}
 .symbole_actif {color:#555;text-decoration:none;}
 .symbole_actif:hover {color:#000;text-decoration:none;}
 .symbole_inactif {color:#aaa;}
@@ -95,6 +98,8 @@ p#id_nb_nuits{font-size:0.9em;margin-top:0.2em;}
   font-style: normal;
 }
 /* Lightbox */
+.analitix_lb{font-size:100%;background:#fff;padding:5px 20px 5px 10px;width:auto;max-width:798px;margin:5px auto;position:relative;}
+.analitix_img{width:100%;overflow:auto;position:relative;}
 .form_lb {font-size:100%;position:relative;background:#fff;padding:20px;width:auto;max-width:500px;margin:20px auto;}
 .titre_zone {font-size:1em;font-weight:bold;margin:0.5em 0;}
 .texte_zone {font-size:0.8em;font-weight:normal;margin:0.2em 0;}

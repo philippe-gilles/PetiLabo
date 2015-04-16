@@ -208,7 +208,7 @@ class obj_editable extends obj_html {
 		else {$id = null;$trad = null;$src = null;}
 		return array($trad, $src);
 	}
-	private function build_param($id) {
+	protected function build_param($id) {
 		$ret = "";
 		if (strlen($id) > 0) {$ret .= _PARAM_ID."=".$id;}
 		if (strlen($this->id_tab) > 0) { $ret .= "&"._PARAM_POINT_RETOUR."=".$this->id_tab;}

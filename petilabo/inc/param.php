@@ -1,55 +1,55 @@
 <?php
-	class param {
-		public function get($name, $htmlentities = true) {
-			if (is_null($name)) {$ret = null;}
-			else if (strlen($name) == 0) {$ret = null;}
-			else {
-				if (isset($_GET[$name])) {
-					$ret = $_GET[$name];
-					if (strlen($ret) == 0) {$ret = null;}
-					else {$ret = $this->clean_param($ret, $htmlentities);}
-				}
-				else {$ret = null;}
+class param {
+	public function get($name, $htmlentities = true) {
+		if (is_null($name)) {$ret = null;}
+		else if (strlen($name) == 0) {$ret = null;}
+		else {
+			if (isset($_GET[$name])) {
+				$ret = $_GET[$name];
+				if (strlen($ret) == 0) {$ret = null;}
+				else {$ret = $this->clean_param($ret, $htmlentities);}
 			}
-			return $ret;
+			else {$ret = null;}
 		}
-		public function post($name, $htmlentities = true) {
-			if (is_null($name)) {$ret = null;}
-			else if (strlen($name) == 0) {$ret = null;}
-			else {
-				if (isset($_POST[$name])) {
-					$ret = $_POST[$name];
-					if (strlen($ret) == 0) {$ret = null;}
-					else {$ret = $this->clean_param($ret, $htmlentities);}
-				}
-				else {$ret = null;}
-			}
-			return $ret;
-		}
-		public function post_stripquotes($name) {
-			$ret = $this->post($name, false);
-			if (get_magic_quotes_gpc()) {
-				if (!(is_null($ret))) {
-					$ret = stripslashes($ret);
-				}
-			}
-			return $ret;
-		}
-		private function clean_param($str, $htmlentities = true) {
-			if (!is_null($str)) {
-				// Protection contre le null byte poisonning
-				$str = str_replace("\0", '', $str);
-				// Traitement des magic quotes
-				if (get_magic_quotes_gpc()) {
-					$str = stripslashes($str);
-				}
-				// Suppression des espaces à gauche et à droite
-				$str = trim($str);
-				// Element de protection contre les attaques XSS
-				if ($htmlentities) {
-					$str = htmlentities($str, ENT_COMPAT | ENT_XHTML, "UTF-8");
-				}
-			}
-			return $str;
-		}
+		return $ret;
 	}
+	public function post($name, $htmlentities = true) {
+		if (is_null($name)) {$ret = null;}
+		else if (strlen($name) == 0) {$ret = null;}
+		else {
+			if (isset($_POST[$name])) {
+				$ret = $_POST[$name];
+				if (strlen($ret) == 0) {$ret = null;}
+				else {$ret = $this->clean_param($ret, $htmlentities);}
+			}
+			else {$ret = null;}
+		}
+		return $ret;
+	}
+	public function post_stripquotes($name) {
+		$ret = $this->post($name, false);
+		if (get_magic_quotes_gpc()) {
+			if (!(is_null($ret))) {
+				$ret = stripslashes($ret);
+			}
+		}
+		return $ret;
+	}
+	private function clean_param($str, $htmlentities = true) {
+		if (!is_null($str)) {
+			// Protection contre le null byte poisonning
+			$str = str_replace("\0", '', $str);
+			// Traitement des magic quotes
+			if (get_magic_quotes_gpc()) {
+				$str = stripslashes($str);
+			}
+			// Suppression des espaces à gauche et à droite
+			$str = trim($str);
+			// Element de protection contre les attaques XSS
+			if ($htmlentities) {
+				$str = htmlentities($str, ENT_COMPAT | ENT_XHTML, "UTF-8");
+			}
+		}
+		return $str;
+	}
+}

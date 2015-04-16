@@ -9,6 +9,7 @@ class xml_analitix {
 	private $nom_fitre_ref = null;
 	private $liste_ref = array();
 	private $nom_config = null;
+	private $anonymisation_ip = true;
 
 	public function ouvrir($nom_config, $en_ligne) {
 		$xml_analitix = new xml_struct();
@@ -27,6 +28,8 @@ class xml_analitix {
 					$this->nom_fitre_ip = $xml_analitix->lire_n_valeur(_ANALITIX_CONFIG_FILTRE_IP, $cpt);
 					$this->nom_fitre_pays = $xml_analitix->lire_n_valeur(_ANALITIX_CONFIG_FILTRE_PAYS, $cpt);
 					$this->nom_fitre_ref = $xml_analitix->lire_n_valeur(_ANALITIX_CONFIG_FILTRE_REFERENTS, $cpt);
+					$param_anonymisation = strtolower(trim($xml_analitix->lire_n_valeur(_ANALITIX_CONFIG_ANONYMISATION_IP, $cpt)));
+					$this->anonymisation_ip = (strcmp($param_anonymisation, _XML_FALSE))?true:false;
 					break;
 				}
 			}
@@ -50,8 +53,7 @@ class xml_analitix {
 					}
 				}
 			}
-			// Si on est en ligne on ne traite ni les pays ni les référents
-			if ($en_ligne) {return $ret;}
+
 			// Traitement des listes de pays
 			if (strlen($this->nom_fitre_pays) > 0) {
 				$xml_analitix->pointer_sur_origine();
@@ -98,4 +100,5 @@ class xml_analitix {
 	public function get_filtre_ip() {return $this->liste_ip;}
 	public function get_filtre_pays() {return $this->liste_pays;}
 	public function get_filtre_referents() {return $this->liste_ref;}
+	public function get_anonymisation_ip() {return $this->anonymisation_ip;}
 }
