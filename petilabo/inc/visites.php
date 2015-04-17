@@ -22,8 +22,10 @@ class Visites {
 	public static $Ref_a_bloquer = array();
 	public static function Listes_a_bloquer(&$arg1, &$arg2, &$arg3) {
 		self::$IP_a_bloquer = $arg1;self::$Pays_a_bloquer = $arg2;self::$Ref_a_bloquer = $arg3;}
-	public static function Ajouter_visite($nom_page, $langue, $anonymisation_ip) {
+	public static function Ajouter_visite($nom_page, $langue, $anonymisation_ip, $respect_dnt) {
 		// Récupération des infos
+		$dnt = (isset($_SERVER["HTTP_DNT"]))?(!(strcmp($_SERVER["HTTP_DNT"], "1"))):false;
+		if ($respect_dnt && $dnt) {return;}
 		if (strlen($nom_page) == 0) {return;}
 		$ip_stricte = self::Get_adresse_ip();
 		if (strlen($ip_stricte) == 0) {return;}

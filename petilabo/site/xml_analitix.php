@@ -10,6 +10,7 @@ class xml_analitix {
 	private $liste_ref = array();
 	private $nom_config = null;
 	private $anonymisation_ip = true;
+	private $respect_dnt = true;
 
 	public function ouvrir($nom_config, $en_ligne) {
 		$xml_analitix = new xml_struct();
@@ -30,6 +31,8 @@ class xml_analitix {
 					$this->nom_fitre_ref = $xml_analitix->lire_n_valeur(_ANALITIX_CONFIG_FILTRE_REFERENTS, $cpt);
 					$param_anonymisation = strtolower(trim($xml_analitix->lire_n_valeur(_ANALITIX_CONFIG_ANONYMISATION_IP, $cpt)));
 					$this->anonymisation_ip = (strcmp($param_anonymisation, _XML_FALSE))?true:false;
+					$param_dnt = strtolower(trim($xml_analitix->lire_n_valeur(_ANALITIX_CONFIG_RESPECT_DNT, $cpt)));
+					$this->respect_dnt = (strcmp($param_dnt, _XML_FALSE))?true:false;
 					break;
 				}
 			}
@@ -101,4 +104,5 @@ class xml_analitix {
 	public function get_filtre_pays() {return $this->liste_pays;}
 	public function get_filtre_referents() {return $this->liste_ref;}
 	public function get_anonymisation_ip() {return $this->anonymisation_ip;}
+	public function get_respect_dnt() {return $this->respect_dnt;}
 }
