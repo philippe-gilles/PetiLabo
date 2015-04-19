@@ -23,7 +23,6 @@ class moteur {
 		else {
 			if ($this->texte) {$this->langue_page = $this->texte->get_langue_par_defaut();}
 		}
-
 		// Initialisations pour le pied de page
 		$lien_legal = $this->url_multilingue(_HTML_PATH_MENTIONS_LEGALES);
 		$lien_credits = $this->url_multilingue(_HTML_PATH_CREDITS);
@@ -286,21 +285,8 @@ class moteur {
 		// Création de l'objet diaporama
 		$obj = new obj_diaporama($this->texte, $nom_gal, $has_navigation, $has_boutons);
 		if (!($obj)) {return null;}
-		// Lecture des images
-		$largeur_max = 0;
-		$nb_images = $gal->get_nb_elems();
-		for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
-			$nom_image = $gal->get_elem($cpt_img);
-			$image = $this->media->get_image($nom_image);
-			if (!($image)) {continue;}
-			// Calcul de la largeur max
-			$largeur = $image->get_width();
-			$largeur_max = ($largeur > $largeur_max)?$largeur:$largeur_max;
-			// Création de l'objet "image"
-			$obj_image = $this->parser_image($image, _XML_CENTRE);
-			if ($obj_image) {$obj->ajouter_image($obj_image);}
-		}
-		$obj->afficher($mode, $this->langue_page, $largeur_max);
+		$this->parser_collection_images($obj, $gal);
+		$obj->afficher($mode, $this->langue_page);
 		return $obj;
 	}
 	// Ecriture des carrousels
@@ -326,15 +312,7 @@ class moteur {
 		// Création de l'objet carrousel
 		$obj = new obj_carrousel($this->texte, $nom_gal, $has_navigation, $has_boutons, $has_auto, $largeur_max, $nb_cols);
 		if (!($obj)) {return null;}
-		$nb_images = $gal->get_nb_elems();
-		for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
-			$nom_image = $gal->get_elem($cpt_img);
-			$image = $this->media->get_image($nom_image);
-			if (!($image)) {continue;}
-			// Création de l'objet "image"
-			$obj_image = $this->parser_image($image, _XML_CENTRE);
-			if ($obj_image) {$obj->ajouter_image($obj_image);}
-		}
+		$this->parser_collection_images($obj, $gal);
 		$obj->afficher($mode, $this->langue_page);
 		return $obj;
 	}
@@ -351,15 +329,7 @@ class moteur {
 		// Création de l'objet vignettes
 		$obj = new obj_vignettes($this->texte, $nom_gal, $nb_cols);
 		if (!($obj)) {return null;}
-		$nb_images = $gal->get_nb_elems();
-		for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
-			$nom_image = $gal->get_elem($cpt_img);
-			$image = $this->media->get_image($nom_image);
-			if (!($image)) {continue;}
-			// Création de l'objet "image"
-			$obj_image = $this->parser_image($image, _XML_CENTRE);
-			if ($obj_image) {$obj->ajouter_image($obj_image);}
-		}
+		$this->parser_collection_images($obj, $gal);
 		$obj->afficher($mode, $this->langue_page);
 		return $obj;
 	}
@@ -384,15 +354,7 @@ class moteur {
 		// Création de l'objet galerie
 		$obj = new obj_galerie($this->texte, $nom_gal, $has_navigation, $has_boutons, $nb_cols);
 		if (!($obj)) {return null;}
-		$nb_images = $gal->get_nb_elems();
-		for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
-			$nom_image = $gal->get_elem($cpt_img);
-			$image = $this->media->get_image($nom_image);
-			if (!($image)) {continue;}
-			// Création de l'objet "image"
-			$obj_image = $this->parser_image($image, _XML_CENTRE);
-			if ($obj_image) {$obj->ajouter_image($obj_image);}
-		}
+		$this->parser_collection_images($obj, $gal);
 		// Affichage de la galerie en fonction de la position
 		switch ($position) {
 			case _XML_DROITE :
@@ -782,6 +744,22 @@ class moteur {
 		}
 	}
 
+	private function parser_collection_images(&$obj, &$gal) {
+		$largeur_max = 0;
+		$nb_images = $gal->get_nb_elems();
+		for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
+			$nom_image = $gal->get_elem($cpt_img);
+			$image = $this->media->get_image($nom_image);
+			if (!($image)) {continue;}
+			// Calcul de la largeur max
+			$largeur = $image->get_width();
+			$largeur_max = ($largeur > $largeur_max)?$largeur:$largeur_max;
+			// Création de l'objet "image"
+			$obj_image = $this->parser_image($image, _XML_CENTRE);
+			if ($obj_image) {$obj->ajouter_image($obj_image);}
+		}
+		$obj->set_largeur_max($largeur_max);
+	}
 	private function parser_image(&$image, $alignement) {
 		// Lecture du style de légende
 		$nom_style = $image->get_style_legende();

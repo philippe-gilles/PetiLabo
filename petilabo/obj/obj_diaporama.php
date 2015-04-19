@@ -1,11 +1,10 @@
 <?php
 
-class obj_diaporama extends obj_editable {
+class obj_diaporama extends obj_collection_images {
 	private $obj_texte = null;
 	private $nom = null;
 	private $has_navigation = false;
 	private $has_boutons = false;
-	private $tab_images = array();
 
 	public function __construct(&$obj_texte, $nom, $has_navigation, $has_boutons) {
 		$this->obj_texte = $obj_texte;
@@ -13,17 +12,13 @@ class obj_diaporama extends obj_editable {
 		$this->has_navigation = $has_navigation;
 		$this->has_boutons = $has_boutons;
 	}
-	
-	public function ajouter_image($obj_image) {
-		$this->tab_images[] = $obj_image;
-	}
 
-	public function afficher($mode, $langue, $largeur = 0) {
+	public function afficher($mode, $langue) {
 		if (!(strcmp($mode, _PETILABO_MODE_SITE))) {
-			$this->afficher_site($langue, $largeur);
+			$this->afficher_site($langue, $this->largeur_max);
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_ADMIN))) {
-			$this->afficher_admin($langue, $largeur);
+			$this->afficher_admin($langue, $this->largeur_max);
 		}
 		elseif (!(strcmp($mode, _PETILABO_MODE_EDIT))) {
 			$this->afficher_edit($langue);

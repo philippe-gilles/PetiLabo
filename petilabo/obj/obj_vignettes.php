@@ -1,11 +1,10 @@
 <?php
 
-class obj_vignettes extends obj_editable {
+class obj_vignettes extends obj_collection_images {
 	private $obj_texte = null;
 	private $nom = null;
 	private $nb_cols = 0;
 	private $largeur = 0;
-	private $tab_images = array();
 
 	public function __construct(&$obj_texte, $nom, $nb_cols) {
 		$this->obj_texte = $obj_texte;
@@ -13,10 +12,6 @@ class obj_vignettes extends obj_editable {
 		$this->nb_cols = (int) $nb_cols;
 		$this->largeur = floor(100/($this->nb_cols));
 		$this->largeur -= 2;
-	}
-	
-	public function ajouter_image($obj_image) {
-		$this->tab_images[] = $obj_image;
 	}
 
 	public function afficher($mode, $langue) {

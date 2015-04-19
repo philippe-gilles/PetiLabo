@@ -46,6 +46,7 @@ class moteur_admin extends moteur {
 		// CSS surchargé pour l'administration
 		$this->html->charger_css(_HTTP_LOG_ADMIN."/css/style.css");
 		$this->html->charger_css(_HTTP_LOG_ADMIN."/css/jqueryte.css");
+		echo "<link rel=\"stylesheet\" href=\"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css\" />\n";
 		$this->charger_xml_css(true);
 		// Chargement en local de JQuery
 		$this->html->charger_js("js/jquery.js");
@@ -53,6 +54,7 @@ class moteur_admin extends moteur {
 		$this->html->charger_js(_HTTP_LOG_ADMIN."/js/upload.js");
 		$this->html->charger_js(_HTTP_LOG_ADMIN."/js/jqueryte.js");
 		$this->html->charger_js(_HTTP_LOG_ADMIN."/js/simple-chart.js");
+		echo "<script src=\"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js\"></script>\n";
 		// Passage du paramètre largeur_responsive à Javascript
 		$largeur_responsive = $this->site->get_largeur_responsive();
 		$responsive_js = (int) ((strlen($largeur_responsive) > 0)?trim(str_replace("px", "", $largeur_responsive)):"1");

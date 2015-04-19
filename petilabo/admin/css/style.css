@@ -98,13 +98,14 @@ p#id_nb_nuits{font-size:0.9em;margin-top:0.2em;}
   font-style: normal;
 }
 /* Lightbox */
+div#analitix_leaflet{height:600px;}
 .analitix_lb{font-size:100%;background:#fff;padding:5px 20px 5px 10px;width:auto;max-width:798px;margin:5px auto;position:relative;}
 .analitix_img{width:100%;overflow:auto;position:relative;}
 .form_lb {font-size:100%;position:relative;background:#fff;padding:20px;width:auto;max-width:500px;margin:20px auto;}
 .titre_zone {font-size:1em;font-weight:bold;margin:0.5em 0;}
 .texte_zone {font-size:0.8em;font-weight:normal;margin:0.2em 0;}
 .erreur_zone {color:#b00;}
-#id_ajustements {margin-top:10px;}
+div#id_ajustements {margin-top:10px;}
 /* Onglets */
 ul.tabs {margin:0;padding:0;list-style:none;border:0;}
 ul.tabs li {float:left;margin:0;padding:2px 6px 4px 6px;width:32px;height:28px;background:#fff;border:1px solid #fff;}

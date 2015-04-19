@@ -1,13 +1,12 @@
 <?php
 
-class obj_galerie extends obj_editable {
+class obj_galerie extends obj_collection_images {
 	private $obj_texte = null;
 	private $nom = null;
 	private $has_navigation = false;
 	private $has_boutons = false;
 	private $nb_cols = 0;
 	private $largeur = 0;
-	private $tab_images = array();
 
 	public function __construct(&$obj_texte, $nom, $has_navigation, $has_boutons, $nb_cols) {
 		$this->obj_texte = $obj_texte;
@@ -17,10 +16,6 @@ class obj_galerie extends obj_editable {
 		$this->nb_cols = $nb_cols;
 		$this->largeur = floor(100/($this->nb_cols));
 		$this->largeur -= 2;
-	}
-	
-	public function ajouter_image($obj_image) {
-		$this->tab_images[] = $obj_image;
 	}
 
 	public function afficher($mode, $langue, $vertical = false, $vue_d_abord = false) {
