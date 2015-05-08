@@ -285,7 +285,7 @@ class moteur {
 		// Création de l'objet diaporama
 		$obj = new obj_diaporama($this->texte, $nom_gal, $has_navigation, $has_boutons);
 		if (!($obj)) {return null;}
-		$this->parser_collection_images($obj, $gal);
+		$this->parser_collection_images($obj, $gal, true);
 		$obj->afficher($mode, $this->langue_page);
 		return $obj;
 	}
@@ -312,7 +312,7 @@ class moteur {
 		// Création de l'objet carrousel
 		$obj = new obj_carrousel($this->texte, $nom_gal, $has_navigation, $has_boutons, $has_auto, $largeur_max, $nb_cols);
 		if (!($obj)) {return null;}
-		$this->parser_collection_images($obj, $gal);
+		$this->parser_collection_images($obj, $gal, false);
 		$obj->afficher($mode, $this->langue_page);
 		return $obj;
 	}
@@ -329,7 +329,7 @@ class moteur {
 		// Création de l'objet vignettes
 		$obj = new obj_vignettes($this->texte, $nom_gal, $nb_cols);
 		if (!($obj)) {return null;}
-		$this->parser_collection_images($obj, $gal);
+		$this->parser_collection_images($obj, $gal, true);
 		$obj->afficher($mode, $this->langue_page);
 		return $obj;
 	}
@@ -354,7 +354,7 @@ class moteur {
 		// Création de l'objet galerie
 		$obj = new obj_galerie($this->texte, $nom_gal, $has_navigation, $has_boutons, $nb_cols);
 		if (!($obj)) {return null;}
-		$this->parser_collection_images($obj, $gal);
+		$this->parser_collection_images($obj, $gal, true);
 		// Affichage de la galerie en fonction de la position
 		switch ($position) {
 			case _XML_DROITE :
@@ -744,7 +744,7 @@ class moteur {
 		}
 	}
 
-	private function parser_collection_images(&$obj, &$gal) {
+	private function parser_collection_images(&$obj, &$gal, $auto_largeur_max) {
 		$largeur_max = 0;
 		$nb_images = $gal->get_nb_elems();
 		for ($cpt_img = 0;$cpt_img < $nb_images;$cpt_img++) {
@@ -758,7 +758,7 @@ class moteur {
 			$obj_image = $this->parser_image($image, _XML_CENTRE);
 			if ($obj_image) {$obj->ajouter_image($obj_image);}
 		}
-		$obj->set_largeur_max($largeur_max);
+		if ($auto_largeur_max ) {$obj->set_largeur_max($largeur_max);}
 	}
 	private function parser_image(&$image, $alignement) {
 		// Lecture du style de légende

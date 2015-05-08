@@ -15,6 +15,7 @@ class obj_carrousel extends obj_collection_images {
 		$this->has_boutons = $has_boutons;
 		$this->has_auto = $has_auto;
 		$this->nb_cols = $nb_cols;
+		$this->set_largeur_max($largeur_max);
 	}
 
 	public function afficher($mode, $langue) {
@@ -38,13 +39,10 @@ class obj_carrousel extends obj_collection_images {
 			echo "</li>"._HTML_FIN_LIGNE;
 		}
 		echo "</ul></div>"._HTML_FIN_LIGNE;
-		$param = "{";
-		if ($this->has_auto) {
-			$param .= "auto:true";
-		}
+		$param = ($this->has_boutons)?"{pager:true":"{pager:false";
+		$param .= ($this->has_auto)?",auto:true":",auto:false";
 		if ($this->largeur_max > 1) {
-			$param .= ($this->has_auto)?",":"";
-			$param .= "slideWidth:".$this->largeur_max;
+			$param .= ",slideWidth:".$this->largeur_max;
 			$cols = ($this->nb_cols > 0)?$this->nb_cols:3;
 			$param .= ",minSlides:2,maxSlides:".$cols;
 			$param .= ",moveSlides:1,slideMargin:10";
