@@ -5,6 +5,8 @@ define("_DB_VISITES_TEMPORAIRE", "./analitix/");
 define("_DB_VISITES_DUREE_ARCHIVAGE", "31");
 define("_DB_VISITES_LIMITE_FLOODING", "99");
 
+define("_DB_VISITES_IP_DNT", "DNT");
+
 define("_DB_VISITES_INDICATEUR_MOBILE", "M");
 define("_DB_VISITES_INDICATEUR_REFERER", ">");
 define("_DB_VISITES_SEPARATEUR_IP", "#");
@@ -24,22 +26,31 @@ class Visites {
 		self::$IP_a_bloquer = $arg1;self::$Pays_a_bloquer = $arg2;self::$Ref_a_bloquer = $arg3;}
 	public static function Ajouter_visite($nom_page, $langue, $anonymisation_ip, $respect_dnt) {
 		// Récupération des infos
-		$dnt = (isset($_SERVER["HTTP_DNT"]))?(!(strcmp($_SERVER["HTTP_DNT"], "1"))):false;
-		if ($respect_dnt && $dnt) {return;}
 		if (strlen($nom_page) == 0) {return;}
-		$ip_stricte = self::Get_adresse_ip();
-		if (strlen($ip_stricte) == 0) {return;}
-		if (in_array($ip_stricte, self::$IP_a_bloquer)) {return;}
-		$agent = self::Get_user_agent();
-		if (strlen($agent) == 0) {return;}
-		if (self::Is_bot($agent)) {return;}
-		$referer = self::Get_referer();
-		if (self::Is_spam($referer)) {return;}
-		if (in_array($referer, self::$Ref_a_bloquer)) {return;}
-		list($pays, $ville, $long, $lat) = self::Get_IP_geolocalisation($ip_stricte);
-		if (in_array($pays, self::$Pays_a_bloquer)) {return;}
-		if ($anonymisation_ip) {$ip_stricte = md5($ip_stricte);}
-		$ip = ((self::Is_mobile($agent))?_DB_VISITES_INDICATEUR_MOBILE:"").$ip_stricte;
+		$dnt = (isset($_SERVER["HTTP_DNT"]))?(!(strcmp($_SERVER["HTTP_DNT"], "1"))):false;
+		if ($respect_dnt && $dnt) {
+			$ip = _DB_VISITES_IP_DNT;
+			$pays = _DB_VISITES_LABEL_GEOLOC_INCONNUE;
+			$ville = _DB_VISITES_LABEL_GEOLOC_INCONNUE;
+			$long = (float) _DB_VISITES_LABEL_COORD_INCONNUE;
+			$lat = (float) _DB_VISITES_LABEL_COORD_INCONNUE;
+			$referer = "";
+		}
+		else {
+			$ip_stricte = self::Get_adresse_ip();
+			if (strlen($ip_stricte) == 0) {return;}
+			if (in_array($ip_stricte, self::$IP_a_bloquer)) {return;}
+			$agent = self::Get_user_agent();
+			if (strlen($agent) == 0) {return;}
+			if (self::Is_bot($agent)) {return;}
+			$referer = self::Get_referer();
+			if (self::Is_spam($referer)) {return;}
+			if (in_array($referer, self::$Ref_a_bloquer)) {return;}
+			list($pays, $ville, $long, $lat) = self::Get_IP_geolocalisation($ip_stricte);
+			if (in_array($pays, self::$Pays_a_bloquer)) {return;}
+			if ($anonymisation_ip) {$ip_stricte = md5($ip_stricte);}
+			$ip = ((self::Is_mobile($agent))?_DB_VISITES_INDICATEUR_MOBILE:"").$ip_stricte;
+		}
 		$ip = strtoupper($langue).$ip;
 		$ip .= _DB_VISITES_SEPARATEUR_IP.($pays)._DB_VISITES_SEPARATEUR_IP.($ville);
 		$ip .= _DB_VISITES_SEPARATEUR_IP.((float) $long)._DB_VISITES_SEPARATEUR_IP.((float)$lat);
