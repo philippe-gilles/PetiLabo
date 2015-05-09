@@ -91,7 +91,7 @@ class xml_analitix {
 						$nb_ref = $xml_analitix->compter_elements(_ANALITIX_REFERENT);
 						for ($cpt_ref = 0; $cpt_ref < $nb_ref; $cpt_ref++) {
 							$valeur = $xml_analitix->lire_valeur_n(_ANALITIX_REFERENT, $cpt_ref);
-							$this->liste_ref[] = $valeur;
+							$this->liste_ref[] = filter_var($valeur, FILTER_SANITIZE_URL);
 						}
 						break;
 					}
