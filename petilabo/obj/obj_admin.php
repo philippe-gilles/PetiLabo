@@ -3,7 +3,7 @@ require_once(_PHP_PATH_INCLUDE."visites.php");
 
 define("_DB_VISITES_COURBES_LARGEUR", "800");
 define("_DB_VISITES_COURBES_HAUTEUR", "200");
-define("_DB_VISITES_TABLEAU_MAX_LIGNES", "10");
+define("_DB_VISITES_TABLEAU_MAX_LIGNES", "25");
 
 class obj_admin extends obj_editable {
 	private $nom_page = null;
@@ -152,7 +152,7 @@ class obj_admin extends obj_editable {
 		}
 		echo "</table></td><td>";
 		$this->afficher_section_stat("Principaux référents");
-		echo "<table class=\"admin_tab_stats_content\">";
+		echo "<div class=\"admin_stat_scrollable\"><table class=\"admin_tab_stats_content\">";
 		$nb_lignes = 0;
 		foreach ($this->db_visites_referers as $referer => $nb) {
 			if ($nb_lignes >= ((int) _DB_VISITES_TABLEAU_MAX_LIGNES)) {continue;}
@@ -161,7 +161,7 @@ class obj_admin extends obj_editable {
 				$nb_lignes += 1;
 			}
 		}
-		echo "</table></td></tr></table>\n";
+		echo "</table></div></td></tr></table>\n";
 		echo "</div>\n";
 	}
 	private function afficher_visiteurs() {
@@ -191,7 +191,7 @@ class obj_admin extends obj_editable {
 		echo "<div id=\"geoloc\" class=\"admin_courbe_stats\">\n";
 		echo "<table class=\"admin_tab_stats_wrapper\"><tr><td>";
 		$this->afficher_section_stat("Pays");
-		echo "<table class=\"admin_tab_stats_content\">";
+		echo "<div class=\"admin_stat_scrollable\"><table class=\"admin_tab_stats_content\">";
 		$nb_lignes = 0;
 		foreach ($this->db_visites_pays as $pays => $nb) {
 			if ($nb_lignes >= ((int) _DB_VISITES_TABLEAU_MAX_LIGNES)) {continue;}
@@ -199,7 +199,7 @@ class obj_admin extends obj_editable {
 			$this->afficher_stat_pc_pays($pays, $nb, $this->stat_total_visites);
 			$nb_lignes += 1;
 		}
-		echo "</table></td><td>";
+		echo "</table></div></td><td>";
 		$this->afficher_section_stat("Langues");
 		echo "<table class=\"admin_tab_stats_content\">";
 		foreach ($this->db_visites_langues as $langue => $nb) {$this->afficher_stat_pc($langue, $nb, $this->stat_total_visites);}

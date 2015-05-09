@@ -29,6 +29,7 @@ div.admin_courbe_stats{position:absolute;top:5px;left:0;width:100%;height:250px;
 p.admin_msg_erreur {font-weight:bold;color:#880000;text-align:center;padding:25px;}
 table.admin_tab_stats_wrapper{width:100%;border-spacing:0.3em!important;}
 table.admin_tab_stats_wrapper td{vertical-align:top;}
+table.admin_tab_stats_wrapper div.admin_stat_scrollable{width:100%;height:221px;overflow-y:auto;overflow-x:hidden;padding-right:5px;}
 table.admin_tab_stats_content{width:100%;border-spacing:0!important;border-collapse:collapse;}
 table.admin_tab_stats_content tr{padding:0!important;margin:0!important;}
 table.admin_tab_stats_content td{padding:0!important;border-spacing:0;border:1px solid #888;}
