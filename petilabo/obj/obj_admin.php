@@ -135,7 +135,7 @@ class obj_admin extends obj_editable {
 	private function afficher_stats() {
 		echo "<div id=\"stats\" class=\"admin_courbe_stats\">\n";
 		echo "<table class=\"admin_tab_stats_wrapper\"><tr><td>";
-		$this->afficher_section_stat("Totaux mensuels");
+		$this->afficher_section_stat("Totaux entre le ".date("d/m/y", mktime(0, 0, 0, date("m"), 2 + date("d") - (int) _DB_VISITES_DUREE_ARCHIVAGE, date("Y")))." et le ".date("d/m/y"));
 		echo "<table class=\"admin_tab_stats_content\" style=\"margin-bottom:8px;\">";
 		$this->afficher_stat("Nombre total de visiteurs", $this->stat_total_visiteurs);
 		$this->afficher_stat("Dont visiteurs récurrents", $this->stat_total_visiteurs_recurrents);
@@ -190,7 +190,7 @@ class obj_admin extends obj_editable {
 	private function afficher_geoloc() {
 		echo "<div id=\"geoloc\" class=\"admin_courbe_stats\">\n";
 		echo "<table class=\"admin_tab_stats_wrapper\"><tr><td>";
-		$this->afficher_section_stat("Pays");
+		$this->afficher_section_stat("Pays entre le ".date("d/m/y", mktime(0, 0, 0, date("m"), 2 + date("d") - (int) _DB_VISITES_DUREE_ARCHIVAGE, date("Y")))." et le ".date("d/m/y"));
 		echo "<div class=\"admin_stat_scrollable\"><table class=\"admin_tab_stats_content\">";
 		$nb_lignes = 0;
 		foreach ($this->db_visites_pays as $pays => $nb) {
