@@ -20,6 +20,7 @@ div.panneau_admin table{border-spacing: 2em 1em;}
 div.panneau_admin table{border-spacing: 1em 1em;}
 }
 /* Stats */
+div.admin_stat_container{font-family:Sans-serif!important;}
 p.admin_onglets_stats{text-align:center;color:#fff;margin:0;padding:12px 0;}
 p.admin_onglets_stats a, p.admin_onglets_stats a:visited{background:#333;padding:9px 12px;color:#fff;margin-right:15px;text-decoration:none;}
 p.admin_onglets_stats a:hover {background:#666;text-decoration:none;}
