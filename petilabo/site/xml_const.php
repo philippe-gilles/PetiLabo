@@ -270,9 +270,9 @@
 	define("_STYLE_ATTR_TYPE_BORDURE_MOTIF", "motif");
 	define("_STYLE_ATTR_TYPE_BORDURE_OMBRE", "ombre");
 	define("_STYLE_ATTR_TYPE_BORDURE_SCOTCH", "scotch");
-	define("_STYLE_ATTR_TYPE_SPECIAL_PLEIN_ECRAN", "plein_ecran");
-	define("_STYLE_ATTR_TYPE_SPECIAL_HAUTEURS_EGALES", "hauteurs_egales");
-	define("_STYLE_ATTR_TYPE_SPECIAL_PIED_DE_PAGE", "pied_de_page");
+	
+	// Valeurs possibles pour type_special : 
+	// plein_ecran, fixe_en_haut, fixe_en_bas, hauteurs_egales, pied_de_page
 	
 	// Balises pour les documents
 	define("_DOCUMENT_DOC", "document");

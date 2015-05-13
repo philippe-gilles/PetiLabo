@@ -1,6 +1,7 @@
 table, td {border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;}
 /* Administration */
 .bloc {opacity:0.3;}
+.contenu_fixe_en_haut, .contenu_fixe_en_bas{position:relative!important;}
 div.panneau_admin{width:98%;margin:0 auto;background:#000;color:#fff;padding:10px 1%;text-align:center;}
 div.panneau_admin h1{font-size:1.5em;color:#eee;}
 div.panneau_admin table{margin:0 auto;text-align:left;border-spacing: 4em 1em;}

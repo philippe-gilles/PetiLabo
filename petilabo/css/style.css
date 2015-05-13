@@ -10,6 +10,8 @@ a:focus {outline:0;}
 .contenu {text-align:center;width:100%;margin:0.5em 0;}
 .contenu_plein_ecran{height:100vh;}
 .contenu_pied_de_page{font-size:90%;line-height:1em;margin:0!important;border-radius:0;-moz-border-radius:0;-webkit-border-radius:0;}
+.contenu_fixe_en_haut{position:fixed;overflow:hidden;margin-top:0;border-radius:0 0 2px 2px;-moz-border-radius: 0px 0px 2px 2px;-webkit-border-radius: 0px 0px 2px 2px;z-index:999;top:0;min-height:1.5em;}
+.contenu_fixe_en_bas{position:fixed;overflow:hidden;margin-bottom:0;border-radius: 2px 2px 0px 0px;-moz-border-radius: 2px 2px 0px 0px;-webkit-border-radius: 2px 2px 0px 0px;z-index:999;bottom:0;min-height:1.5em;}
 .bloc {position:relative;text-align:center;overflow:hidden;display:inline-block;}
 .bloc_h {vertical-align:top;}
 .bloc_m {vertical-align:middle;}
