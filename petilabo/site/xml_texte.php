@@ -195,8 +195,8 @@ class xml_texte {
 	public function get_langue_par_defaut() {return self::langue_par_defaut;}
 	public function get_nb_langues() {return count($this->liste_langues);}
 	public function get_langue($index) {return $this->liste_langues[$index];}
-	public function get_nom($langue) {return $this->nom_langues[$langue];}
-	public function get_position($langue) {return $this->css_pos_langues[$langue];}
+	public function get_nom($langue) {return $this->nom_langues[strtolower($langue)];}
+	public function get_position($langue) {return $this->css_pos_langues[strtolower($langue)];}
 	public function strip_tags_attributes($texte) {
 		// Traitement des balises
 		$aAllowedTags = array("<strike>", "<u>", "<b>", "<i>", "<a>", "<br>", "<br/>", "<span>", "<font>", "<sup>");
