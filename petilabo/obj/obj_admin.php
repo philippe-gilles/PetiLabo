@@ -202,7 +202,10 @@ class obj_admin extends obj_editable {
 		echo "</table></div></td><td>";
 		$this->afficher_section_stat("Langues");
 		echo "<table class=\"admin_tab_stats_content\">";
-		foreach ($this->db_visites_langues as $langue => $nb) {$this->afficher_stat_pc($langue, $nb, $this->stat_total_visites);}
+		$xml_texte = new xml_texte();
+		foreach ($this->db_visites_langues as $langue => $nb) {
+			$this->afficher_stat_langue($xml_texte->get_nom($langue), $xml_texte->get_position($langue), $nb, $this->stat_total_visites);
+		}
 		echo "</table></td></tr></table>\n";
 		echo "</div>\n";
 	}
@@ -230,6 +233,9 @@ class obj_admin extends obj_editable {
 	}
 	private function afficher_stat_pc($label, $valeur, $total) {
 		echo "<tr><td><p class=\"stats_label\">".$label."</p></td><td class=\"admin_cellule_pc\"><p class=\"stats_valeur\">".$valeur."</p></td><td class=\"admin_cellule_pc\"><p class=\"stats_valeur\">".round((100.0 * ((float) $valeur)/((float) $total)),1)."%</p></td></tr>";
+	}
+	private function afficher_stat_langue($label, $position, $valeur, $total) {
+		echo "<tr class=\"stat_langue\"><td><p class=\"drapeau\" style=\"vertical-align:middle;background-position:".$position."\">&nbsp;</p><p class=\"stats_label stats_label_langue\">".$label."</p></td><td class=\"admin_cellule_pc\"><p class=\"stats_valeur\">".$valeur."</p><div style=\"clear:both\"></div></td><td class=\"admin_cellule_pc\"><p class=\"stats_valeur\">".round((100.0 * ((float) $valeur)/((float) $total)),1)."%</p></td></tr>";
 	}
 	private function afficher_stat_pc_pays($label, $valeur, $total) {
 		echo "<tr><td><p class=\"stats_label\">".$label."<a class=\"symbole symbole_geo\" href=\"form_analitix.php?"._PARAM_ID."=".urlencode($label)."\" title=\"".$label." : voir les détails sur une carte du pays\">&#xf14c;</a></p></td><td class=\"admin_cellule_pc\"><p class=\"stats_valeur\">".$valeur."</p></td><td class=\"admin_cellule_pc\"><p class=\"stats_valeur\">".round((100.0 * ((float) $valeur)/((float) $total)),1)."%</p></td></tr>";
