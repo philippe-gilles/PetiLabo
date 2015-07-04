@@ -208,34 +208,33 @@ class xml_media {
 						$dest = sprintf("%s%s-v%03d%s", _XML_PATH_IMAGES_SITE, $base, ((int) $version) + 1, $extension);
 
 						// Vérifications
-						if (file_exists($src)) {
-							$image = new img_media($source, $nom);
-							$image->load($xml_media, $cpt);
-							list($width, $height) = @getimagesize($src);
-							$legende = $xml_media->lire_n_valeur(_MEDIA_IMAGE_LEGENDE, $cpt);
-							// En cas de légende on va lire l'attribut de style
-							if (strlen($legende) > 0) {
-								$xml_media->creer_repere($nom);
-								$xml_media->pointer_sur_index($cpt);
-								$xml_media->pointer_sur_balise(_MEDIA_IMAGE_LEGENDE);
-								$nom_style = $xml_media->lire_attribut(_XML_STYLE);
-								$xml_media->pointer_sur_repere($nom);
-							}
-							else {
-								$nom_style = null;
-							}
-							$copyright = $xml_media->lire_n_valeur(_MEDIA_IMAGE_COPYRIGHT, $cpt);
-							$image->set_src($src);$image->set_src_reduite($src_reduite);
-							$image->set_dest($dest);$image->set_dest_reduite($dest_reduite);
-							$image->set_legende($legende);
-							$key_copy = (strlen($suffixe) > 0)?$copyright."_".$suffixe:$copyright;
-							$image->set_copyright($key_copy);
-							$image->set_base($base);$image->set_version($version);
-							$image->set_width($width);$image->set_height($height);
-							$image->set_style_legende($nom_style);
-							$key = (strlen($suffixe) > 0)?$nom."_".$suffixe:$nom;
-							$this->images[$key] = $image;
+						$image = new img_media($source, $nom);
+						$image->load($xml_media, $cpt);
+						$legende = $xml_media->lire_n_valeur(_MEDIA_IMAGE_LEGENDE, $cpt);
+						// En cas de légende on va lire l'attribut de style
+						if (strlen($legende) > 0) {
+							$xml_media->creer_repere($nom);
+							$xml_media->pointer_sur_index($cpt);
+							$xml_media->pointer_sur_balise(_MEDIA_IMAGE_LEGENDE);
+							$nom_style = $xml_media->lire_attribut(_XML_STYLE);
+							$xml_media->pointer_sur_repere($nom);
 						}
+						else {
+							$nom_style = null;
+						}
+						$copyright = $xml_media->lire_n_valeur(_MEDIA_IMAGE_COPYRIGHT, $cpt);
+						$image->set_src($src);$image->set_src_reduite($src_reduite);
+						$image->set_dest($dest);$image->set_dest_reduite($dest_reduite);
+						$image->set_legende($legende);
+						$key_copy = (strlen($suffixe) > 0)?$copyright."_".$suffixe:$copyright;
+						$image->set_copyright($key_copy);
+						$image->set_base($base);$image->set_version($version);
+						if (!(@file_exists($src))) {$image->set_vide();}
+						list($width, $height) = @getimagesize($src);
+						$image->set_width($width);$image->set_height($height);
+						$image->set_style_legende($nom_style);
+						$key = (strlen($suffixe) > 0)?$nom."_".$suffixe:$nom;
+						$this->images[$key] = $image;
 					}
 				}
 			}
