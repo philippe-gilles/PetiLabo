@@ -157,7 +157,7 @@ class obj_admin extends obj_editable {
 		foreach ($this->db_visites_referers as $referer => $nb) {
 			if ($nb_lignes >= ((int) _DB_VISITES_TABLEAU_MAX_LIGNES)) {continue;}
 			if ((strcmp($referer, _DB_VISITES_REFERER_DIRECT)) && (strcmp($referer, _DB_VISITES_REFERER_SELF))) {
-				$this->afficher_stat_pc($referer, $nb, $this->stat_total_visites);
+				$this->afficher_stat_pc_ref($referer, $nb, $this->stat_total_visites);
 				$nb_lignes += 1;
 			}
 		}
@@ -233,6 +233,9 @@ class obj_admin extends obj_editable {
 	}
 	private function afficher_stat_pc($label, $valeur, $total) {
 		echo "<tr><td><p class=\"stats_label\">".$label."</p></td><td class=\"admin_cellule_pc\"><p class=\"stats_valeur\">".$valeur."</p></td><td class=\"admin_cellule_pc\"><p class=\"stats_valeur\">".round((100.0 * ((float) $valeur)/((float) $total)),1)."%</p></td></tr>";
+	}
+	private function afficher_stat_pc_ref($label, $valeur, $total) {
+		echo "<tr><td><p class=\"stats_label\">".$label."<a class=\"symbole_ref\" href=\"http://".urlencode($label)."\" title=\"Ouvrir la page ".$label." dans un nouvel onglet\" target=\"_blank\">&#xf14c;</a></p></td><td class=\"admin_cellule_pc\"><p class=\"stats_valeur\">".$valeur."</p></td><td class=\"admin_cellule_pc\"><p class=\"stats_valeur\">".round((100.0 * ((float) $valeur)/((float) $total)),1)."%</p></td></tr>";
 	}
 	private function afficher_stat_langue($label, $position, $valeur, $total) {
 		echo "<tr class=\"stat_langue\"><td><p class=\"drapeau\" style=\"vertical-align:middle;background-position:".$position."\">&nbsp;</p><p class=\"stats_label stats_label_langue\">".$label."</p></td><td class=\"admin_cellule_pc\"><p class=\"stats_valeur\">".$valeur."</p><div style=\"clear:both\"></div></td><td class=\"admin_cellule_pc\"><p class=\"stats_valeur\">".round((100.0 * ((float) $valeur)/((float) $total)),1)."%</p></td></tr>";
