@@ -318,6 +318,7 @@ class html {
 		echo "<!--[if IE 8]>\n";
 		echo "<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\""._PHP_PATH_ROOT.$nom_dossier."/ie8_".$nom_fichier."\" />\n";
 		echo "<![endif]-->\n";
+		echo "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css\" />\n";
 	}
 	public function charger_xml_css() {
 		$fichier_css = _XML_PATH_CSS."style.css";
@@ -339,6 +340,9 @@ class html {
 	}
 	public function charger_js($fichier) {
 		echo "<script type=\"text/javascript\" src=\""._PHP_PATH_ROOT.$fichier."\"></script>\n";
+	}
+	public function charger_js_cdn($cdn) {
+		echo "<script type=\"text/javascript\" src=\"".$cdn."\"></script>\n";
 	}
 	public function charger_js_ie($fichier) {
 		echo "<!--[if lte IE 8]>\n";

@@ -115,7 +115,7 @@ class Visites {
 	private static function Is_spam($referer) {
 		if (strlen($referer) == 0) {return false;}
 		if (filter_var($referer, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {return true;}
-		return (preg_match('~(100dollars\-seo\.|best\-seo\-offer\.|best\-seo\-solution\.|burger\-imperia\.|buttons\-for\-website\.|buttons\-for\-your\-website\.|darodar\.|econom\.co|humanorightswatch\.|hundejo\.|hvd\-store\.|ilovevital\.|matt\-pc|o\-o\-6\-o\-o\.|pizza\-tycoon\.|priceg\.|semalt\.|semaltmedia\.|success\-seo\.)~', $referer));
+		return (preg_match('~(100dollars\-seo\.|best\-seo\-offer\.|best\-seo\-solution\.|burger\-imperia\.|buttons\-for\-website\.|buttons\-for\-your\-website\.|darodar\.|econom\.co|humanorightswatch\.|hundejo\.|hvd\-store\.|ilovevital\.|joostina\.ru|karmawebb\.|matt\-pc|o\-o\-6\-o\-o\.|pizza-imperia\.|pizza\-tycoon\.|priceg\.|semalt\.|semaltmedia\.|success\-seo\.)~', $referer));
 	}
 	private static function Is_bot($agent) {
 		return ((strlen($agent) > 0) && (preg_match('~(agent|amzn|amazon|archive|bot|catch|collect|copier|crawler|download|extract|facebook|feed|google|grabber|hack|holmes|htdig|larbin|lipper|msn|preview|search|seek|slurp|snagger|snif|spider|spyder|strip|suck|swipe|tineye|walker|worm|yahoo|yacy|yeti)~', $agent)));

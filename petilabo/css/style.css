@@ -157,14 +157,6 @@ form.form_ga_1 input, form.form_ga_2 input{font-size:0.9em;}
 p.incipit_ga{float:none;display:inline-block;}
 div.boutons_ga{float:none;display:inline-block;margin-top:6px;}
 }
-/* Police d'icones */
-@font-face {
-  font-family: 'FontAwesome';
-  src: url('../icon_font/fontawesome-webfont.eot?v=4.2.0');
-  src: url('../icon_font/fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('../icon_font/fontawesome-webfont.woff?v=4.2.0') format('woff'), url('../icon_font/fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('../icon_font/fontawesome-webfont.svg#fontawesomeregular?v=4.2.0') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
 /* Galerie */
 .vue_galerie_horizontale {position:relative;margin:0 auto;width:100%;}
 .vue_galerie_verticale {position:relative;margin:0 auto;width:65%;float:left;}

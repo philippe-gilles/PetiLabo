@@ -48,8 +48,10 @@ class moteur_admin extends moteur {
 		$this->html->charger_css(_HTTP_LOG_ADMIN."/css/jqueryte.css");
 		echo "<link rel=\"stylesheet\" href=\"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css\" />\n";
 		$this->charger_xml_css(true);
-		// Chargement en local de JQuery
-		$this->html->charger_js("js/jquery.js");
+		// Chargement JQuery depuis CDN
+		$this->html->charger_js_cdn("//code.jquery.com/jquery-1.12.0.min.js");
+		$this->html->charger_js_cdn("//code.jquery.com/jquery-migrate-1.2.1.min.js");
+		// Chargement plugins JQuery
 		$this->html->charger_js(_HTTP_LOG_ADMIN."/js/lb.ajax.js");
 		$this->html->charger_js(_HTTP_LOG_ADMIN."/js/upload.js");
 		$this->html->charger_js(_HTTP_LOG_ADMIN."/js/jqueryte.js");

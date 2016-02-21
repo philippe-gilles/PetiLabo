@@ -73,7 +73,8 @@ class moteur_site extends moteur {
 		// Chargement des polices utilisées dans les styles
 		$this->charger_polices_par_defaut();
 		// Chargement JS et CSS
-		$this->html->charger_js("js/jquery.js");
+		$this->html->charger_js_cdn("//code.jquery.com/jquery-1.12.0.min.js");
+		$this->html->charger_js_cdn("//code.jquery.com/jquery-migrate-1.2.1.min.js");
 		$this->html->charger_css("css/style.css");
 		$this->charger_xml_css(false);
 		// On charge les JS supplémentaires uniquement si nécessaire

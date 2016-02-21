@@ -36,7 +36,10 @@
 	$html->ecrire_meta_noindex();
 	$html->ecrire_meta_titre("Accès privé");
 	echo "<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"css/log.css\" />\n";
-	$html->charger_js("js/jquery.js");
+	// Chargement JQuery depuis CDN
+	$this->html->charger_js_cdn("//code.jquery.com/jquery-1.12.0.min.js");
+	$this->html->charger_js_cdn("//code.jquery.com/jquery-migrate-1.2.1.min.js");
+	// Chargement plugins
 	$html->charger_js(_HTTP_LOG_PREFIXE."/js/hash.js");
 	$html->charger_js(_HTTP_LOG_PREFIXE."/js/log.js");
 	$html->fermer_head();
