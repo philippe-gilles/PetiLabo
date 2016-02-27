@@ -103,7 +103,7 @@ class moteur_admin extends moteur {
 		$social = $this->texte->get_label_social($this->langue_page);
 		$tab_social = $this->site->get_social();
 		$this->html->fermer_page(true, "deconnect.php", $proprietaire, $webmaster, $social, $tab_social);
-		$this->html->ecrire_js("$('.symbole').magnificPopup({type: 'ajax',tClose:'Fermer',tLoading:'Chargement...'});");
+		$this->html->ecrire_js("$('.symbole').magnificPopup({closeOnContentClick: false, closeOnBgClick: false, type: 'ajax',tClose:'Fermer',tLoading:'Chargement...'});");
 		$this->html->fermer_body();
 		$this->html->fermer();
 	}
